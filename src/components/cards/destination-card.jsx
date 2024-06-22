@@ -22,7 +22,7 @@ export default function DestinationCard({ data }) {
       >
         <div className='flex flex-col items-center text-center'>
           <p className='font-[700] text-[36px] leading-[50px]'>{data.title}</p>
-          <p className='text-[14px] mt-[18px] leading-[34px]'>{data.description}</p>
+          <p className='text-[14px] mt-[18px] leading-[24px] max-h-[150px] overflow-hidden'>{data.description}</p>
           <Button className='h-[48px] w-[180px] border-white border-[2px] rounded-[10px] bg-transparent text-white mt-[40px]'>
             SEE MORE
           </Button>

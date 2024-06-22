@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TopChoicesCard from '../cards/top-choices-card'
 import { Button } from '@material-tailwind/react'
 
@@ -79,6 +79,18 @@ const TopChoicesData = [
 ]
 
 export default function TopChoices() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/json/japan.json');
+      const result = await response.json();
+      setData(result);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <section className='py-[60px] container mx-auto flex flex-col items-center px-[5%] lg:px-0'>
       <div className='max-w-[738px] w-full flex flex-col items-center'>
@@ -87,8 +99,8 @@ export default function TopChoices() {
           <div className='h-[3px] w-[180px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[30px] w-full mt-[48px]'>
-        {TopChoicesData.map((data, id) => {
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
+        {data?.map((data, id) => {
           return (
             <TopChoicesCard key={id} data={data} />
           )

@@ -4,6 +4,7 @@ import Destinations from "@/components/home/destinations";
 import Hero from "@/components/home/hero";
 import TopChoices from "@/components/home/top-choices";
 import Image from "next/image";
+import Loading from "./loading";
 
 export default function Home() {
   return (
@@ -12,7 +13,7 @@ export default function Home() {
       <TopChoices />
       <Attractions />
       <Destinations />
-      <Blog />
+      {/* <Blog /> */}
     </>
   );
 }

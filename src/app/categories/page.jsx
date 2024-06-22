@@ -1,11 +1,11 @@
 import Categories from '@/components/categories/categories'
-import CategoriesHero from '@/components/categories/categories-hero'
+import CommonHero from '@/components/common-hero'
 import React from 'react'
 
 export default function Page() {
   return (
     <>
-      <CategoriesHero />
+      <CommonHero title={"Categories"} bg={'/images/background/categories.jpg'}/>
       <Categories />
     </>
   )

@@ -14,7 +14,8 @@ module.exports = withMT({
         'categories': 'url("/images/background/categories.jpg")',
       },
       colors: {
-        'secondary': "#FFCC00"
+        'secondary': "#FFCC00",
+        'custom-red': "#E4322C",
       }
     },
   },

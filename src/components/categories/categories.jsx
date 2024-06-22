@@ -54,7 +54,7 @@ const CategoriesData = [
 
 export default function Categories() {
   return (
-    <section className='container mx-auto px-[5%] lg:px-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[20px] translate-y-[-100px] '>
+    <section className='container mx-auto px-[5%] lg:px-0 grid grid-cols-2 lg:grid-cols-4 gap-[20px] translate-y-[-100px] '>
       {CategoriesData.map((categories, id) => {
         return (
           <CategoriesCard key={id} data={categories} />

@@ -15,7 +15,7 @@ export default function BlogCard({ data }) {
 
         </div>
       </div>
-      <Image src={data.image} height={400} width={600} className='h-[200px] w-full md:w-[313px] object-cover' />
+      <Image src={data.image} height={400} width={600} alt='image' className='h-[200px] w-full md:w-[313px] object-cover' />
     </div>
   )
 }
