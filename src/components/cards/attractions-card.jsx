@@ -8,7 +8,7 @@ export default function AttractionsCard({ data }) {
       }}
     >
       <div className='h-[76px] w-full p-[15px] bg-[#00000080] text-white'>
-        <p>{data.title}</p>
+        <p className='uppercase'>{data.title}</p>
       </div>
     </div>
   )

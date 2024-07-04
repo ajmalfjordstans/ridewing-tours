@@ -1,5 +1,6 @@
 import React from 'react'
 import DestinationCard from '../cards/destination-card'
+import Link from 'next/link'
 
 const DestinationsData = [
   {
@@ -62,7 +63,9 @@ export default function Destinations() {
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full mt-[60px]'>
         {DestinationsData.map((data, id) => {
           return (
-            <DestinationCard key={id} data={data} />
+            <Link key={id} href={'/destinations/japan'}>
+              <DestinationCard data={data} />
+            </Link>
           )
         })}
       </div>
