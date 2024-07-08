@@ -46,7 +46,7 @@ export default function Page() {
         </div>
       </div>
       <div className='p-[20px] border-[2px] border-custom-red mt-[15px] flex justify-between items-center'>
-        <p>Price: $123</p>
+        <p>Price: <span className='font-[500]'>$123</span></p>
         <Button className='bg-custom-red' onClick={addToCartHandler}>Add to Cart</Button>
       </div>
     </section >
