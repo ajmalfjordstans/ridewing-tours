@@ -12,6 +12,7 @@ module.exports = withMT({
       backgroundImage: {
         'hero': 'url("/images/background/landing-hero.jpg")',
         'japan': 'url("/images/background/japan.jpg")',
+        'uk': 'url("/images/background/uk.jpg")',
         'categories': 'url("/images/background/categories.jpg")',
       },
       colors: {

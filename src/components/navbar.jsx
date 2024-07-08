@@ -1,21 +1,56 @@
 'use client'
-import { Button } from '@material-tailwind/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import ContactForm from './forms/contact-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCountry, setUrl } from './store/userSlice';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
-  const [showContactForm, setShowContactForm] = useState(false);
+  const [urlParams, setUrlParams] = useState({});
+  const [countryNav, setCountryNav] = useState('');
+
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedCountry = useSelector(state => state.user.selectedCountry);
+  const cartCount = useSelector(state => state.cart.items.length);
+
+  const handleCountryChange = (event) => {
+    const newCountry = event.target.value;
+    setCountryNav(newCountry)
+    dispatch(setCountry(newCountry));
+    const newUrl = `?country=${newCountry}`;
+    dispatch(setUrl(newUrl));
+    router.push(newUrl, undefined, { shallow: true });
+  };
 
   useEffect(() => {
-    if (showContactForm) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
+    //   if (urlParams) {
+    //     console.log(urlParams);
+    //     // Set the country from the URL parameter on initial load
+    //     dispatch(setCountry(urlParams));
+    //   }
+    if (countryNav === '') {
+      const newUrl = `?country=Japan`;
+      dispatch(setUrl(newUrl));
+      router.push(newUrl, undefined, { shallow: true });
     }
-  }, [showContactForm]);
+    else if (selectedCountry) {
+      const newUrl = `?country=${selectedCountry}`;
+      dispatch(setUrl(newUrl));
+      router.push(newUrl, undefined, { shallow: true });
+    }
+    // console.log("Working", urlParams);
+  }, []);
+
+  useEffect(() => {
+    const params = {};
+    searchParams.forEach((value, key) => {
+      params[key] = value;
+    });
+    setUrlParams(params);
+  }, [searchParams]);
 
   const handleMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -24,7 +59,7 @@ export default function Navbar() {
     <>
       <div className='fixed top-0 w-full bg-[red] lg:h-[100px] text-white flex items-center z-10'>
         <div className='container mx-auto px-[5%] lg:px-0 flex justify-between py-[15px] items-center'>
-          <Link href={'/'} >
+          <Link href={{ pathname: '/', query: { "country": urlParams.country } }} >
             <div className='flex items-center md:gap-3'>
               {/* <Image src={'/logo/logo.png'} height={300} width={500} alt='logo' className='h-[40px] lg:h-[70px] w-auto' /> */}
               <p className='font-semibold text-[28px] uppercase'>Ridewing</p>
@@ -32,55 +67,27 @@ export default function Navbar() {
           </Link>
           <div className="hidden lg:block font-semibold text-[16px]">
             <div className='flex gap-10 items-center'>
-              <Link href={'/'} >
-                <p className=''>HOME</p>
+              <Link href={{ pathname: '/', query: { "country": urlParams.country } }} >
+                <p className='uppercase'>HOME</p>
               </Link>
-              {/* <Link href={'/categories'} >
-                <p className=''>CATEGORIES</p>
-              </Link> */}
-              <div
-                className="relative inline-block text-left"
-                onMouseEnter={() => setIsOpen(true)}
-                onMouseLeave={() => setIsOpen(false)}
-                onClick={() => setIsOpen(true)}
-              >
-                <div className='flex gap-1 items-center'>
-                  <p className='hover:cursor-pointer' id='download'>HELP
-                  </p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                  </svg>
-                </div>
-                {isOpen && (
-                  <div className='pt-2'>
-                    <div className="origin-top-right absolute right-[-8px] w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                        <Link href={'/contact'}>
-                          <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                            CONTACT
-                          </p>
-                        </Link>
-                        {/* <Link href={'/faq'}>
-                          <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                            FAQ
-                          </p>
-                        </Link> */}
-                        <Link href={'/about'}>
-                          <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
-                            ABOUT US
-                          </p>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <Button
-                className='bg-[#FFCC00] px-3 py-2 text-white rounded-[10px] flex justify-center items-center gap-2 w-[120px] h-[50px] font-[800]'
-                onClick={() => { setShowContactForm(!showContactForm) }}
-              >
-                CONTACT
-              </Button>
+              <Link href={{ pathname: '/about', query: { "country": urlParams.country } }} >
+                <p className='uppercase'>about</p>
+              </Link>
+              <Link href={{ pathname: '/contact', query: { "country": urlParams.country } }} >
+                <p className='uppercase'>CONTACT</p>
+              </Link>
+              <select className='text-custom-red rounded-[5px] font-[400] px-[10px] outline-none' value={selectedCountry} onChange={handleCountryChange}>
+                <option value="Japan" className='p-[4px]'>Japan</option>
+                <option value="UK" className='p-[4px]'>UK</option>
+              </select>
+              <Link href={{ pathname: '/cart', query: { country: urlParams.country } }} className='relative'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+                {cartCount !== 0 &&
+                  <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
+                }
+              </Link>
             </div>
           </div>
           <div className='block lg:hidden text-black'>
@@ -128,22 +135,6 @@ export default function Navbar() {
           </div>
         </div >
       </div>
-      {showContactForm &&
-        <div className='h-[100vh] w-[100vw] top-0 left-0 absolute backdrop-blur-md flex justify-center items-center z-10'>
-          <div className='w-full max-w-[700px] mx-[5%] bg-white rounded-[50px] pt-[15px] pb-[30px] px-[15px]'>
-            {/* <Button className='rounded-full bg-custom-red w-[30px] h-[30px]'
-
-            >
-              </Button> */}
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#E4322C" className="size-10 hover:cursor-pointer"
-              onClick={() => setShowContactForm(false)}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-            <ContactForm />
-          </div>
-        </div>
-      }
     </>
   )
 }

@@ -20,10 +20,11 @@ export default function TopChoicesCard({ data }) {
               </div>
               <p className='text-secondary'>Rating</p>
             </div>
-            <div className='flex items-center gap-2'>
-              <p className='text-secondary text-[14px]'>From</p>
-              <p className='text-white text-[26px]'>{data.price}</p>
-            </div>
+            {data?.price &&
+              <div className='flex items-center gap-2'>
+                <p className='text-secondary text-[14px]'>From</p>
+                <p className='text-white text-[26px]'>{data.price}</p>
+              </div>}
           </div>
         </div>
         <div className='p-[15px]'>
@@ -32,27 +33,31 @@ export default function TopChoicesCard({ data }) {
           }
           <p className='text-[18px] mt-[10px]'>{data.title}</p>
           <div className='grid grid-cols-2 mt-[10px] gap-[5px] text-[11px]'>
-            <div className='flex items-center gap-2 '>
-              <Image src={'/logo/stopwatch.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
-              <p>{data.details.hours}</p>
-            </div>
+            {data?.details?.hours &&
+              <div className='flex items-center gap-2 '>
+                <Image src={'/logo/stopwatch.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
+                <p>{data.details.hours}</p>
+              </div>
+            }
             {/* <div className='flex items-center gap-2 '>
             <Image src={'/logo/large-group.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />
             <p>{data.details.size}</p>
           </div> */}
-            <div className='flex items-center gap-2 '>
-              <Image src={'/logo/location.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
-              <p>{data.startLocation}</p>
-            </div>
-            <div className='flex items-center gap-2 '>
-              <Image src={'/logo/language.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />
-              {data?.details?.language?.map((lang, id) => {
-                return (
-                  <p key={id}>{lang}</p>
-                )
-              })}
-            </div>
-
+            {data?.startLocation &&
+              <div className='flex items-center gap-2 '>
+                <Image src={'/logo/location.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
+                <p>{data.startLocation}</p>
+              </div>
+            }
+            {data?.details?.language &&
+              <div className='flex items-center gap-2 '>
+                <Image src={'/logo/language.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />
+                {data?.details?.language?.map((lang, id) => {
+                  return (
+                    <p key={id}>{lang}</p>
+                  )
+                })}
+              </div>}
           </div>
         </div>
       </div>

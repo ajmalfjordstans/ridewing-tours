@@ -101,6 +101,7 @@ export default function TopChoices() {
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
         {data?.map((data, id) => {
+          // console.log(data)
           return (
             <TopChoicesCard key={id} data={data} />
           )

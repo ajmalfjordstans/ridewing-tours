@@ -1,7 +1,8 @@
 [
   {
+    "id": 1,
     "url": "best-of-tokyo-day-tour",
-    "title": "BEST OF TOKYO DAY TOUR",
+    "name": "BEST OF TOKYO DAY TOUR",
     "tag": "Recommended for First-Time Visitors",
     "startLocation": "Tokyo",
     "availability": "Every day",
@@ -46,13 +47,13 @@
     },
     "pricing": [
       {
-        "title": "FROM SHINJUKU, TOKYO (SHINJUKU STATION EAST EXIT - HATO BUS STOP NO. 2)",
+        "name": "FROM SHINJUKU, TOKYO (SHINJUKU STATION EAST EXIT - HATO BUS STOP NO. 2)",
         "passengers": {
           "price": "FROM ¥15500 PER PERSON"
         }
       },
       {
-        "title": "FROM TOKYO (TOKYO STATION MARUNOUCHI SOUTH EXIT HATO BUS BOARDING AREA)", 
+        "name": "FROM TOKYO (TOKYO STATION MARUNOUCHI SOUTH EXIT HATO BUS BOARDING AREA)",
         "passengers": {
           "price": "FROM ¥18000 PER PERSON"
         }
@@ -80,8 +81,9 @@
     }
   },
   {
-    "url": "kyoto-&-nara-day-tour-from-kyoto",
-    "title": "KYOTO & NARA DAY TOUR FROM KYOTO",
+    "id": 2,
+    "url": "kyoto-and-nara-day-tour-from-kyoto",
+    "name": "KYOTO & NARA DAY TOUR FROM KYOTO",
     "tag": "Tourist Japan's Top Pick",
     "startLocation": "Kyoto",
     "availability": "Every Monday, Wednesday, Friday, Saturday",
@@ -125,7 +127,7 @@
     },
     "pricing": [
       {
-        "title": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
+        "name": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
         "passengers": {
           "price": "FROM ¥12,950 PER PERSON"
         }
@@ -153,8 +155,9 @@
     }
   },
   {
+    "id": 3,
     "url": "best-of-kyoto-day-tour",
-    "title": "BEST OF KYOTO DAY TOUR",
+    "name": "BEST OF KYOTO DAY TOUR",
     "tag": "Recommended for First-Time Visitors",
     "startLocation": "Kyoto",
     "availability": "Every day",
@@ -197,7 +200,7 @@
     },
     "pricing": [
       {
-        "title": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
+        "name": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
         "adults": {
           "price": "FROM ¥12900 PER PERSON"
         },
@@ -229,8 +232,9 @@
     }
   },
   {
+    "id": 4,
     "url": "best-of-osaka-walking-tour",
-    "title": "BEST OF OSAKA WALKING TOUR",
+    "name": "BEST OF OSAKA WALKING TOUR",
     "tag": "",
     "startLocation": "Osaka",
     "availability": "Every Monday, Tuesday, Wednesday, Thursday, Saturday",
@@ -276,7 +280,7 @@
     },
     "pricing": [
       {
-        "title": "FROM OSAKA (JR OSAKAJOKOEN STATION, EXIT 2)",
+        "name": "FROM OSAKA (JR OSAKAJOKOEN STATION, EXIT 2)",
         "passengers": {
           "price": "FROM ¥19058 PER PERSON"
         }
@@ -299,8 +303,9 @@
     }
   },
   {
-    "url": "hiroshima-&-miyajima-day-tour-from-osaka",
-    "title": "HIROSHIMA & MIYAJIMA DAY TOUR FROM OSAKA",
+    "id": 5,
+    "url": "hiroshima-and-miyajima-day-tour-from-osaka",
+    "name": "HIROSHIMA & MIYAJIMA DAY TOUR FROM OSAKA",
     "tag": "",
     "startLocation": "Osaka",
     "availability": "Every day",
@@ -342,7 +347,7 @@
     },
     "pricing": [
       {
-        "title": "FROM OSAKA (OSAKA HOTELS)",
+        "name": "FROM OSAKA (OSAKA HOTELS)",
         "passengers": {
           "price": "FROM ¥70075 PER PERSON"
         }
@@ -370,8 +375,9 @@
     }
   },
   {
-    "url": "kyoto-&-nara-day-tour-from-osaka",
-    "title": "KYOTO & NARA DAY TOUR FROM OSAKA",
+    "id": 6,
+    "url": "kyoto-and-nara-day-tour-from-osaka",
+    "name": "KYOTO & NARA DAY TOUR FROM OSAKA",
     "tag": "Recommended for First-Time Visitors",
     "startLocation": "Osaka",
     "availability": "Tuesday, Thursday, Sunday",
@@ -414,7 +420,7 @@
     },
     "pricing": [
       {
-        "title": "FROM OSAKA",
+        "name": "FROM OSAKA",
         "passengers": {
           "price": "FROM ¥12900 PER PERSON"
         }

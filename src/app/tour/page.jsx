@@ -6,36 +6,50 @@ import TourHero from './hero';
 export default function Page() {
   const searchParams = useSearchParams();
   const [urlParams, setUrlParams] = useState({});
-  const [data, setData] = useState(null);
   const [currentData, setCurrentData] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('/json/japan.json');
+      const result = await response.json();
+      // console.log("3", result);
+      return result; // Return the fetched data
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const findData = (data, params) => {
+    const selectedResult = data?.find((obj) => {
+      // console.log("1", obj.url, "===", params.destination);
+      if (obj.url === params.destination) {
+        setCurrentData(obj);
+      }
+    });
+  };
 
   useEffect(() => {
     const params = {};
     searchParams.forEach((value, key) => {
       params[key] = value;
-    });
-
-    const fetchData = async () => {
-      const response = await fetch('/json/japan.json');
-      const result = await response.json();
-      setData(result);
-    };
-    fetchData();
-    setUrlParams(params);
-  }, [searchParams]);
-
-  useEffect(() => {
-    const result = data?.find((obj) => {
-      if (obj.url === urlParams.destination) {
-        setCurrentData(obj)
+    })
+    console.log(params);
+    const initialize = async () => {
+      if (Object.keys(params).length === 0) {
+        return;
       }
-    });
-  }, [data])
-  console.log("data", currentData);
+      setUrlParams(params); // Set URL params
+      const result = await fetchData();
+      findData(result, params); // Pass the fetched data and params to findData
+    };
+
+    initialize();
+  }, [searchParams]);
+  // console.log(currentData);
   return (
     <div className='text-black mt-[80px] md:mt-[180px] container mx-auto px-[5%] lg:px-0'>
       {
-        data != null ?
+        currentData !== null ?
           <div className=''>
             <TourHero data={currentData} />
           </div>

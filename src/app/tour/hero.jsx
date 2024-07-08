@@ -2,6 +2,7 @@
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Timeline,
   TimelineItem,
@@ -12,23 +13,35 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Enquiry from '@/components/forms/enquiry-form';
+import { addItem } from '@/components/store/cartSlice';
 
 export default function TourHero({ data }) {
   const [showForm, setShowForm] = useState(false);
   // console.log(data);
+  const dispatch = useDispatch();
+  const cart = useSelector(state => state.cart.items);
+  const addToCartHandler = () => {
+    const itemExists = cart.find(item => item.id === data.id);
+    if (!itemExists) {
+      console.log("Added to cart");
+      dispatch(addItem(data));
+    } else {
+      alert("Item already exists");
+    }
+  }
   return (
     <>
       <div className=' w-full flex flex-col '>
-        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{data?.title}</p>
+        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{data?.name}</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
       <div className='grid grid-cols-4 gap-5 mt-[60px]'>
-        <Image src={data?.gallery[0]} height={700} width={800} alt='image' className='col-span-3 row-span-3 h-full w-full object-cover' />
-        <Image src={data?.gallery[1]} height={700} width={800} alt='image' className='h-full w-full object-cover' />
-        <Image src={data?.gallery[2]} height={700} width={800} alt='image' className='h-full w-full object-cover' />
-        <Image src={data?.gallery[3]} height={700} width={800} alt='image' className='h-full w-full object-cover' />
+        <Image src={data?.gallery[0]} height={700} width={800} alt='image' className='col-span-3 row-span-3 h-full w-full max-h-[81vh] object-cover' />
+        <Image src={data?.gallery[1]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
+        <Image src={data?.gallery[2]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
+        <Image src={data?.gallery[3]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
       </div>
       <div className='w-full flex flex-col md:flex-row justify-between mt-[20px] border-[1px] border-[#212529] p-[15px] bg-[#EFEFEF] gap-[20px]'>
         <div>
@@ -80,7 +93,8 @@ export default function TourHero({ data }) {
           <Button
             className='bg-custom-red mt-[5px]'
             fullWidth
-            onClick={() => { setShowForm(true) }}
+            // onClick={() => { setShowForm(true) }}
+            onClick={addToCartHandler}
           >Book Now</Button>
         </div>
       </div>
@@ -113,7 +127,7 @@ export default function TourHero({ data }) {
       </div>
       {/* Timeline */}
       <div className=' w-full flex flex-col mt-[40px]'>
-        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{data?.title} Itinerary</p>
+        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{data?.name} Itinerary</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
@@ -196,24 +210,24 @@ export default function TourHero({ data }) {
           {data?.pricing.map((price, id) => {
             return (
               <div className='grid lg:grid-cols-2 gap-3' key={id}>
-                <p className='max-w-[500px]'>{price.title}</p>
+                <p className='max-w-[500px]'>{price.name}</p>
                 <div className='flex flex-col gap-5'>
                   {price.passengers &&
                     <div className='grid grid-cols-2 items-center'>
-                      <td className='font-medium'>Passengers</td>
-                      <td>{price.passengers.price}</td>
+                      <p className='font-medium'>Passengers</p>
+                      <p>{price.passengers.price}</p>
                     </div>
                   }
                   {price.adults &&
                     <div className='grid grid-cols-2'>
-                      <td className='font-medium'>Adults</td>
-                      <td>{price.adults.price}</td>
+                      <p className='font-medium'>Adults</p>
+                      <p>{price.adults.price}</p>
                     </div>
                   }
                   {price.children &&
                     <div className='grid grid-cols-2'>
-                      <td className='font-medium'>{price.children.age}</td>
-                      <td>{price.children.price}</td>
+                      <p className='font-medium'>{price.children.age}</p>
+                      <p>{price.children.price}</p>
                     </div>
                   }
                 </div>
@@ -320,7 +334,7 @@ export default function TourHero({ data }) {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowForm(false)}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
-            <Enquiry tourPackage={data.title} />
+            <Enquiry tourPackage={data.name} />
           </div>
         </div>
       }
