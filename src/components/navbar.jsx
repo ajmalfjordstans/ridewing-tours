@@ -26,11 +26,6 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    //   if (urlParams) {
-    //     console.log(urlParams);
-    //     // Set the country from the URL parameter on initial load
-    //     dispatch(setCountry(urlParams));
-    //   }
     if (countryNav === '') {
       const newUrl = `?country=Japan`;
       dispatch(setUrl(newUrl));
@@ -70,8 +65,8 @@ export default function Navbar() {
               <Link href={{ pathname: '/', query: { "country": urlParams.country } }} >
                 <p className='uppercase'>HOME</p>
               </Link>
-              <Link href={{ pathname: '/about', query: { "country": urlParams.country } }} >
-                <p className='uppercase'>about</p>
+              <Link href={{ pathname: '/categories', query: { "country": urlParams.country } }} >
+                <p className='uppercase'>categories</p>
               </Link>
               <Link href={{ pathname: '/contact', query: { "country": urlParams.country } }} >
                 <p className='uppercase'>CONTACT</p>
@@ -118,11 +113,6 @@ export default function Navbar() {
                 <Link href={'/contact'} onClick={handleMenuToggle}>
                   <p className="" role="menuitem">
                     CONTACT
-                  </p>
-                </Link>
-                <Link href={'/faq'} onClick={handleMenuToggle}>
-                  <p className="" role="menuitem">
-                    FAQ
                   </p>
                 </Link>
                 <Link href={'/about'} onClick={handleMenuToggle}>
