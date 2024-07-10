@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   selectedCountry: 'Japan',
+  isLoggedIn: false,
   browserSetting: {
     url: ''
   },
@@ -22,8 +23,11 @@ const userSlice = createSlice({
     setTransferBooking: (state, action) => {
       state.transferBooking = action.payload;
     },
+    setLogin: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
   },
 });
 
-export const { setCountry, setUrl, setTransferBooking } = userSlice.actions;
+export const { setCountry, setUrl, setTransferBooking, setLogin } = userSlice.actions;
 export default userSlice.reducer;
