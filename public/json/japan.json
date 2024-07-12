@@ -1,450 +1,556 @@
-[
-  {
-    "id": 1,
-    "url": "best-of-tokyo-day-tour",
-    "name": "BEST OF TOKYO DAY TOUR",
-    "tag": "Recommended for First-Time Visitors",
-    "startLocation": "Tokyo",
-    "availability": "Every day",
-    "price": "¥15,939",
-    "details": {
-      "hours": "10 Hour Tour",
-      "language": [
-        "English"
-      ],
-      "guidedTour": true,
-      "entranceFeeIncluded": true,
-      "expertTourGuide": true
-    },
-    "gallery": [
-      "/images/tours/best-of-tokyo-day-tour/1.jpg",
-      "/images/tours/best-of-tokyo-day-tour/2.jpg",
-      "/images/tours/best-of-tokyo-day-tour/3.jpg",
-      "/images/tours/best-of-tokyo-day-tour/4.jpg"
-    ],
-    "description": [
-      "On our Best of Tokyo Day Tour, you’ll experience the modern and historical gems of the city, making it one of the best Tokyo tours. Join us for an exciting day in Tokyo, getting lost in the beauty of the Imperial Palace. Wander the gardens and admire the incredible architecture. Tour the incredible Senso-ji Temple – a must-do on everyone’s itinerary – before trying the authentic flavors of Uji Matcha (available 3 times a week). Visit the modern district of Odaiba and cruise along Tokyo Bay – on selective days – passing beneath the Rainbow Bridge. Finally, take your journey to the next level at Tokyo Tower, where unbelievable city views await.",
-      "Are you traveling to Tokyo for the first time? Our Best of Tokyo Day Tour is one of the best Tokyo tours. You will dive into the wonders of Japan’s capital city, from sacred history to magical views. See famous sites with your guide, eat traditional foods, and cruise along Tokyo Bay. Book your Tokyo experience today!"
-    ],
-    "highlight": [
-      "Explore the stunning Imperial Palace’s gardens, architecture, and surrounding nature",
-      "Discover the magic of the world-famous Senso-ji Temple",
-      "Ascend the Tokyo Tower and enjoy the best views of the city",
-      "On Sunday, Tuesday, Thursday, or Saturday - see the Meiji Shrine and Hamarikyu Gardens",
-      "On Monday, Wednesday, or Friday - indulge in Uji Matcha and cruise along Tokyo Bay"
-    ],
-    "itinerary": {
-      "start": "8:00 - Meet your guide in Tokyo and start your tour",
-      "itinerary": [
-        "Visit the Meiji Jingu Shrine - the most famous Shinto shrine (Sunday, Tuesday, Thursday & Saturday)",
-        "Tour the beautiful outer garden of the Imperial Palace",
-        "Visit the famous Senso-ji Temple and explore the Odaiba district",
-        "Enjoy an authentic Asakusa Uji Matcha experience and take a Symphony Cruise along Tokyo Bay (Monday, Wednesday & Friday)",
-        "Visit the Hamarikyu Gardens (Sunday, Tuesday, Thursday & Saturday)",
-        "Visit Tokyo Tower and enjoy city views from the observation deck"
-      ],
-      "end": "8:00 - Meet your guide in Tokyo and start your tour"
-    },
-    "pricing": [
-      {
-        "name": "FROM SHINJUKU, TOKYO (SHINJUKU STATION EAST EXIT - HATO BUS STOP NO. 2)",
-        "passengers": {
-          "price": "FROM ¥15500 PER PERSON"
-        }
+{
+  "destinations": [
+    {
+      "id": 1,
+      "url": "best-of-tokyo-day-tour",
+      "name": "BEST OF TOKYO DAY TOUR",
+      "tag": "Recommended for First-Time Visitors",
+      "startLocation": "Tokyo",
+      "availability": "Every day",
+      "price": "¥15,939",
+      "details": {
+        "hours": "10 Hour Tour",
+        "language": [
+          "English"
+        ],
+        "guidedTour": true,
+        "entranceFeeIncluded": true,
+        "expertTourGuide": true
       },
-      {
-        "name": "FROM TOKYO (TOKYO STATION MARUNOUCHI SOUTH EXIT HATO BUS BOARDING AREA)",
-        "passengers": {
-          "price": "FROM ¥18000 PER PERSON"
-        }
-      }
-    ],
-    "otherDetails": {
-      "includes": [
-        "Hand-picked expert tour guide",
-        "Transportation",
-        "Entrance fees: Tokyo Tower Main Deck & Tokyo Bay Cruise (on selected days)",
-        "Lunch"
+      "gallery": [
+        "/images/tours/best-of-tokyo-day-tour/1.jpg",
+        "/images/tours/best-of-tokyo-day-tour/2.jpg",
+        "/images/tours/best-of-tokyo-day-tour/3.jpg",
+        "/images/tours/best-of-tokyo-day-tour/4.jpg"
       ],
-      "excludes": [
-        "Personal travel insurance",
-        "Gratuities"
+      "description": [
+        "On our Best of Tokyo Day Tour, you’ll experience the modern and historical gems of the city, making it one of the best Tokyo tours. Join us for an exciting day in Tokyo, getting lost in the beauty of the Imperial Palace. Wander the gardens and admire the incredible architecture. Tour the incredible Senso-ji Temple – a must-do on everyone’s itinerary – before trying the authentic flavors of Uji Matcha (available 3 times a week). Visit the modern district of Odaiba and cruise along Tokyo Bay – on selective days – passing beneath the Rainbow Bridge. Finally, take your journey to the next level at Tokyo Tower, where unbelievable city views await.",
+        "Are you traveling to Tokyo for the first time? Our Best of Tokyo Day Tour is one of the best Tokyo tours. You will dive into the wonders of Japan’s capital city, from sacred history to magical views. See famous sites with your guide, eat traditional foods, and cruise along Tokyo Bay. Book your Tokyo experience today!"
       ],
-      "bring": [
-        "Water",
-        "Walking shoes"
+      "highlight": [
+        "Explore the stunning Imperial Palace’s gardens, architecture, and surrounding nature",
+        "Discover the magic of the world-famous Senso-ji Temple",
+        "Ascend the Tokyo Tower and enjoy the best views of the city",
+        "On Sunday, Tuesday, Thursday, or Saturday - see the Meiji Shrine and Hamarikyu Gardens",
+        "On Monday, Wednesday, or Friday - indulge in Uji Matcha and cruise along Tokyo Bay"
       ],
-      "information": [
-        "Some tour activities vary based on day: On Sunday, Tuesday, Thursday, or Saturday, you will visit the Meiji Shrine and see the Hamarikyu Gardens On Monday, Wednesday, or Friday - you will enjoy an authentic Uji Matcha experience and cruise along Tokyo Bay (subject to weather conditions)"
-      ],
-      "cancellationPolicy": "Cancellations made 3 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 3 days before the start of the tour will not be refunded."
-    }
-  },
-  {
-    "id": 2,
-    "url": "kyoto-and-nara-day-tour-from-kyoto",
-    "name": "KYOTO & NARA DAY TOUR FROM KYOTO",
-    "tag": "Tourist Japan's Top Pick",
-    "startLocation": "Kyoto",
-    "availability": "Every Monday, Wednesday, Friday, Saturday",
-    "price": "¥13,773",
-    "details": {
-      "hours": "9 Hour Tour",
-      "language": [
-        "English"
-      ],
-      "guidedTour": true,
-      "entranceFeeIncluded": true,
-      "expertTourGuide": true,
-      "airconditionedTransport": true
-    },
-    "gallery": [
-      "/images/tours/kyoto-&-nara-day-tour-kyoto/1.jpg",
-      "/images/tours/kyoto-&-nara-day-tour-kyoto/2.jpg",
-      "/images/tours/kyoto-&-nara-day-tour-kyoto/3.jpg",
-      "/images/tours/kyoto-&-nara-day-tour-kyoto/4.jpg"
-    ],
-    "description": [
-      "Explore 2 of Japan’s great cities on our Kyoto & Nara Day Tour from Kyoto. With your experienced guide, head to Arashiyama Bamboo Forest. Be amazed by the incredible bamboo grove before reaching Kinkakuji Temple. Admire its golden architecture and hidden details. Once you arrive in Nara, wander the beautiful Nara Park with free-roaming deer, and see the giant Buddha statue at Todaiji Temple.",
-      "Tourist Japan is keeping the perfect for you to explore 2 amazing cities will love our Kyoto & Nara Day Tour from Kyoto. Explore these 2 cities in a day with visits to Kinkakuji Temple, Arashiyama Bamboo Forest, Nara Park, and more. Be led by an experienced guide every step of the way, so book your adventure today!"
-    ],
-    "highlight": [
-      "Admire the world-renowned beauty of Arashiyama Bamboo Forest",
-      "Head to Kinkakuji Temple and discover the golden architecture",
-      "In Nara, get lost in the magical Nara Park and visit sacred sites within",
-      "See the magnificent Todaiji Temple with its giant Buddha statue"
-    ],
-    "itinerary": {
-      "start": "9:15 - Meet your guide in Kyoto and start your tour",
-      "itinerary": [
-        "Visit the world-famous Arashiyama Bamboo Forest",
-        "Enjoy free time + lunch break",
-        "See Kinkakuji Temple's golden architecture and outdoor pond",
-        "Arrive in Nara and explore Nara Park",
-        "Visit the sacred Todaiji Temple"
-      ],
-      "end": "18:00 - The tour ends in Kyoto"
-    },
-    "pricing": [
-      {
-        "name": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
-        "passengers": {
-          "price": "FROM ¥12,950 PER PERSON"
-        }
-      }
-    ],
-    "otherDetails": {
-      "includes": [
-        "Hand-picked expert tour guide",
-        "Transportation"
-      ],
-      "excludes": [
-        "Meals & drinks",
-        "Entrance fees",
-        "Personal travel insurance",
-        "Gratuities"
-      ],
-      "bring": [
-        "Water",
-        "Walking shoes"
-      ],
-      "information": [
-        "The entrance fees can be purchased the day of the tour in cash"
-      ],
-      "cancellationPolicy": "Cancellations made 5 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 5 days before the start of the tour will not be refunded."
-    }
-  },
-  {
-    "id": 3,
-    "url": "best-of-kyoto-day-tour",
-    "name": "BEST OF KYOTO DAY TOUR",
-    "tag": "Recommended for First-Time Visitors",
-    "startLocation": "Kyoto",
-    "availability": "Every day",
-    "price": "¥13,585",
-    "details": {
-      "hours": "9 Hour Tour",
-      "language": [
-        "English"
-      ],
-      "guidedTour": true,
-      "entranceFeeIncluded": true,
-      "expertTourGuide": true,
-      "airconditionedTransport": true
-    },
-    "gallery": [
-      "/images/tours/best-of-kyoto-day-tour/1.jpg",
-      "/images/tours/best-of-kyoto-day-tour/2.jpg",
-      "/images/tours/best-of-kyoto-day-tour/3.jpg",
-      "/images/tours/best-of-kyoto-day-tour/4.jpg"
-    ],
-    "description": [
-      "Experience the heart of Kyoto with our Best of Kyoto Day Tour from Kyoto. Dive into the rich history and architecture of the city’s famous sites. Visit Fushimi Inari Taisha Shrine and Kiyomizudera – a Buddhist temple filled with ancient history. Marvel at the golden pavilion of Kinkaku-ji Temple and experience the richness of Arashiyama Bamboo Forest. Your adventure will be filled with amazing moments to last a lifetime.",
-      "Our Best of Kyoto Day Tour is the perfect choice for Kyoto first-timers looking to tick all the best things to do in Kyoto. This tour offers a window into the city’s legacy from sacred shrines to magical nature. Along with a licensed guide, discover the wonders of Kyoto. Book your exciting full-day tour today!"
-    ],
-    "highlight": [
-      "Explore the hidden gems of Kyoto with a licensed local guide",
-      "Experience the golden pavilion of Kinkaku-ji Temple",
-      "Visit the Buddhist temple, Kiyomizudera, and discover its rich heritage",
-      "Uncover the wonders of Arashiyama Bamboo Forest and take epic photos"
-    ],
-    "itinerary": {
-      "start": "9:15 - Meet your local guide in Kyoto",
-      "itinerary": [
-        "Visit the iconic Fushimi Inari Taisha Shrine",
-        "See the Buddhist temple, Kiyomizudera",
-        "Admire the golden architecture of Kinkaku-ji Temple",
-        "Discover the world-famous Arashiyama Bamboo Forest"
-      ],
-      "end": "18:00 - The tour ends in Kyoto"
-    },
-    "pricing": [
-      {
-        "name": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
-        "adults": {
-          "price": "FROM ¥12900 PER PERSON"
+      "itinerary": {
+        "start": "8:00 - Meet your guide in Tokyo and start your tour",
+        "itinerary": [
+          "Visit the Meiji Jingu Shrine - the most famous Shinto shrine (Sunday, Tuesday, Thursday & Saturday)",
+          "Tour the beautiful outer garden of the Imperial Palace",
+          "Visit the famous Senso-ji Temple and explore the Odaiba district",
+          "Enjoy an authentic Asakusa Uji Matcha experience and take a Symphony Cruise along Tokyo Bay (Monday, Wednesday & Friday)",
+          "Visit the Hamarikyu Gardens (Sunday, Tuesday, Thursday & Saturday)",
+          "Visit Tokyo Tower and enjoy city views from the observation deck"
+        ],
+        "end": "8:00 - Meet your guide in Tokyo and start your tour"
+      },
+      "pricing": [
+        {
+          "name": "FROM SHINJUKU, TOKYO (SHINJUKU STATION EAST EXIT - HATO BUS STOP NO. 2)",
+          "passengers": {
+            "price": "FROM ¥15500 PER PERSON"
+          }
         },
-        "children": {
-          "age": "Children under 11 years old",
-          "price": "FROM ¥11500 PER PERSON"
+        {
+          "name": "FROM TOKYO (TOKYO STATION MARUNOUCHI SOUTH EXIT HATO BUS BOARDING AREA)",
+          "passengers": {
+            "price": "FROM ¥18000 PER PERSON"
+          }
         }
+      ],
+      "otherDetails": {
+        "includes": [
+          "Hand-picked expert tour guide",
+          "Transportation",
+          "Entrance fees: Tokyo Tower Main Deck & Tokyo Bay Cruise (on selected days)",
+          "Lunch"
+        ],
+        "excludes": [
+          "Personal travel insurance",
+          "Gratuities"
+        ],
+        "bring": [
+          "Water",
+          "Walking shoes"
+        ],
+        "information": [
+          "Some tour activities vary based on day: On Sunday, Tuesday, Thursday, or Saturday, you will visit the Meiji Shrine and see the Hamarikyu Gardens On Monday, Wednesday, or Friday - you will enjoy an authentic Uji Matcha experience and cruise along Tokyo Bay (subject to weather conditions)"
+        ],
+        "cancellationPolicy": "Cancellations made 3 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 3 days before the start of the tour will not be refunded."
       }
-    ],
-    "otherDetails": {
-      "includes": [
-        "Hand-picked expert tour guide",
-        "Transportation"
-      ],
-      "excludes": [
-        "Entrance fees",
-        "Meals & drinks",
-        "Personal travel insurance",
-        "Gratuities"
-      ],
-      "bring": [
-        "Water",
-        "Walking shoes"
-      ],
-      "information": [
-        "The entrance fees can be purchased the day of the tour in cash"
-      ],
-      "cancellationPolicy": "Cancellations made 5 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 5 days before the start of the tour will not be refunded."
-    }
-  },
-  {
-    "id": 4,
-    "url": "best-of-osaka-walking-tour",
-    "name": "BEST OF OSAKA WALKING TOUR",
-    "tag": "",
-    "startLocation": "Osaka",
-    "availability": "Every Monday, Tuesday, Wednesday, Thursday, Saturday",
-    "price": "¥18,900",
-    "details": {
-      "hours": "6 Hour Tour",
-      "language": [
-        "English"
-      ],
-      "guidedTour": true,
-      "expertTourGuide": true
     },
-    "gallery": [
-      "/images/tours/best-of-osaka-walking-tour/1.jpg",
-      "/images/tours/best-of-osaka-walking-tour/2.jpg",
-      "/images/tours/best-of-osaka-walking-tour/3.jpg",
-      "/images/tours/best-of-osaka-walking-tour/4.jpg"
-    ],
-    "description": [
-      "Discover the vibrant life of Osaka with our Best of Osaka Walking Tour. Go on a journey that blends tradition, history, and architecture. Embark on your 5-hour walking tour starting in the retro area of “Amerikamura” or “American Village”. Discover the Namba & Dotonbori neighborhood as well as Hozenji temple – an iconic Buddhist temple. The Kuromon Ichiba Market – famous for its fresh seafood is your next destination. Stroll through Shinsekai’s entertainment district, witness the stunning Osaka Castle, and learn about Osaka’s other hidden gems. See where the past meets the present and enjoy every moment of this stunning city.",
-      "For curious travelers who love to explore, our Best of Osaka Walking Tour is a great way to experience Osaka. Go on a journey that ties culture and history while listening to your local expert guide. Book your Osaka 5-hour walking tour today!"
-    ],
-    "highlight": [
-      "Get the most immersive and unique 5-hour walking tour",
-      "Explore the retro charm of Amerikamura and walk through lantern-lined cobblestone streets",
-      "Marvel at Osaka Castle, dating back to the 16th century",
-      "Experience the bustling energy of Namba, Dotonbori, and the lively Kuromon Ichiba Market"
-    ],
-    "itinerary": {
-      "start": "10:00 - Meet your local guide in Osaka and start your tour",
-      "itinerary": [
-        "Begin your 5-hour walking tour in the retro area “Amerikamura” or “American Village”",
-        "Walk the charming cobblestone streets lined with lanterns",
-        "Experience Namba & Dotonbori, the neon heart of Osaka",
-        "Stop at Hozenji, a small Buddhist temple",
-        "Visit the vibrant and lively Kuromon Ichiba Market",
-        "Stroll through Shinsekai, the entertainment district",
-        "See Osaka Castle – a 16th-century marvel",
-        "Discover the shopping street of Shinsaibashi and buy souvenirs",
-        "Learn the story of Glico Man and see Tsutenkaku, Osaka’s “Tokyo Tower”"
+    {
+      "id": 2,
+      "url": "kyoto-and-nara-day-tour-from-kyoto",
+      "name": "KYOTO & NARA DAY TOUR FROM KYOTO",
+      "tag": "Tourist Japan's Top Pick",
+      "startLocation": "Kyoto",
+      "availability": "Every Monday, Wednesday, Friday, Saturday",
+      "price": "¥13,773",
+      "details": {
+        "hours": "9 Hour Tour",
+        "language": [
+          "English"
+        ],
+        "guidedTour": true,
+        "entranceFeeIncluded": true,
+        "expertTourGuide": true,
+        "airconditionedTransport": true
+      },
+      "gallery": [
+        "/images/tours/kyoto-&-nara-day-tour-kyoto/1.jpg",
+        "/images/tours/kyoto-&-nara-day-tour-kyoto/2.jpg",
+        "/images/tours/kyoto-&-nara-day-tour-kyoto/3.jpg",
+        "/images/tours/kyoto-&-nara-day-tour-kyoto/4.jpg"
       ],
-      "end": "15:00 - The tour ends in Osaka"
-    },
-    "pricing": [
-      {
-        "name": "FROM OSAKA (JR OSAKAJOKOEN STATION, EXIT 2)",
-        "passengers": {
-          "price": "FROM ¥19058 PER PERSON"
+      "description": [
+        "Explore 2 of Japan’s great cities on our Kyoto & Nara Day Tour from Kyoto. With your experienced guide, head to Arashiyama Bamboo Forest. Be amazed by the incredible bamboo grove before reaching Kinkakuji Temple. Admire its golden architecture and hidden details. Once you arrive in Nara, wander the beautiful Nara Park with free-roaming deer, and see the giant Buddha statue at Todaiji Temple.",
+        "Tourist Japan is keeping the perfect for you to explore 2 amazing cities will love our Kyoto & Nara Day Tour from Kyoto. Explore these 2 cities in a day with visits to Kinkakuji Temple, Arashiyama Bamboo Forest, Nara Park, and more. Be led by an experienced guide every step of the way, so book your adventure today!"
+      ],
+      "highlight": [
+        "Admire the world-renowned beauty of Arashiyama Bamboo Forest",
+        "Head to Kinkakuji Temple and discover the golden architecture",
+        "In Nara, get lost in the magical Nara Park and visit sacred sites within",
+        "See the magnificent Todaiji Temple with its giant Buddha statue"
+      ],
+      "itinerary": {
+        "start": "9:15 - Meet your guide in Kyoto and start your tour",
+        "itinerary": [
+          "Visit the world-famous Arashiyama Bamboo Forest",
+          "Enjoy free time + lunch break",
+          "See Kinkakuji Temple's golden architecture and outdoor pond",
+          "Arrive in Nara and explore Nara Park",
+          "Visit the sacred Todaiji Temple"
+        ],
+        "end": "18:00 - The tour ends in Kyoto"
+      },
+      "pricing": [
+        {
+          "name": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
+          "passengers": {
+            "price": "FROM ¥12,950 PER PERSON"
+          }
         }
+      ],
+      "otherDetails": {
+        "includes": [
+          "Hand-picked expert tour guide",
+          "Transportation"
+        ],
+        "excludes": [
+          "Meals & drinks",
+          "Entrance fees",
+          "Personal travel insurance",
+          "Gratuities"
+        ],
+        "bring": [
+          "Water",
+          "Walking shoes"
+        ],
+        "information": [
+          "The entrance fees can be purchased the day of the tour in cash"
+        ],
+        "cancellationPolicy": "Cancellations made 5 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 5 days before the start of the tour will not be refunded."
       }
-    ],
-    "otherDetails": {
-      "includes": [
-        "Hand-picked expert tour guide",
-        "One none alcoholic drink & some local street food"
-      ],
-      "excludes": [
-        "Meals & drinks",
-        "Personal travel insurance",
-        "Gratuities"
-      ],
-      "bring": [
-        "Water",
-        "Walking shoes"
-      ]
-    }
-  },
-  {
-    "id": 5,
-    "url": "hiroshima-and-miyajima-day-tour-from-osaka",
-    "name": "HIROSHIMA & MIYAJIMA DAY TOUR FROM OSAKA",
-    "tag": "",
-    "startLocation": "Osaka",
-    "availability": "Every day",
-    "price": "¥72,476",
-    "details": {
-      "hours": "13 Hour Tour",
-      "language": [
-        "English"
-      ],
-      "guidedTour": true,
-      "expertTourGuide": true,
-      "airconditionedTransport": true
     },
-    "gallery": [
-      "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/1.jpg",
-      "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/1.jpg",
-      "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/2.jpg",
-      "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/3.jpg"
-    ],
-    "description": [
-      "Join our Hiroshima & Miyajima Day Tour from Osaka for an all-inclusive day trip to Hiroshima and its beautiful surroundings. Your day starts with a thrilling ride on the Shinkansen (bullet train) from your starting point. Upon arriving in Hiroshima, be prepared to explore two remarkable destinations that paint a vivid picture of the region. We’ll start with a ferry ride to picturesque Miyajima Island, where you’ll discover the stunning Itsukushima Shrine. This architectural marvel is set against a backdrop of a floating red torii gate, showcasing the perfect blend of nature and human artistry along the Seto Sea. After returning to the mainland, you’ll head to the Hiroshima Peace Memorial Park. Your visit includes the Peace Memorial Museum, which tells the powerful story of the Pacific War. Continuing to the A-Bomb Dome, a symbol of Hiroshima’s resilience and commitment to peace, your local guide will provide insights into its historical significance. As the day winds down, your tour concludes, and you’ll board the Shinkansen once more to return to Kyoto or Osaka, allowing you to reflect on the day’s experiences before returning to your starting point.",
-      "Our Hiroshima & Miyajima Day Tour from Osaka is the best way for travelers to reach this important destination and experience its past and present – all in one day. This guided tour ensures the city’s stories and memories are respected and preserved. It includes a round trip to Hiroshima via high-speed bullet train from Kyoto or Osaka, and touring from a government-licensed local guide. Book your tour today to embark on a day of reflection and exploration in Hiroshima."
-    ],
-    "highlight": [
-      "Experience the timeless charm of Miyajima Island, complete with ancient temples, free-roaming deer, lush forests, and breathtaking coastal views",
-      "Marvel at the iconic floating torii gate of Itsukushima Shrine on Miyajima Island, an architectural masterpiece set against the serene Seto Sea",
-      "Explore Hiroshima Peace Memorial Park, including a visit to the moving Peace Memorial Museum, to gain a deeper understanding of the impact of the Pacific War",
-      "Enjoy a thrilling Shinkansen ride from Osaka to Hiroshima, setting the stage for your day of exploration"
-    ],
-    "itinerary": {
-      "start": "7:30 - Board the Shinkansen bullet train to Hiroshima and depart from Osaka",
-      "itinerary": [
-        "Take a ferry to Miyajima, the Shrine Island, and learn about its cultural and spiritual significance",
-        "Marvel at the Itsukushima Shrine, a UNESCO World Heritage Site",
-        "Return to Miyajimaguchi station and head to the Hiroshima Peace Memorial Park",
-        "See the A-Bomb Dome, a commemorative symbol of peace"
+    {
+      "id": 3,
+      "url": "best-of-kyoto-day-tour",
+      "name": "BEST OF KYOTO DAY TOUR",
+      "tag": "Recommended for First-Time Visitors",
+      "startLocation": "Kyoto",
+      "availability": "Every day",
+      "price": "¥13,585",
+      "details": {
+        "hours": "9 Hour Tour",
+        "language": [
+          "English"
+        ],
+        "guidedTour": true,
+        "entranceFeeIncluded": true,
+        "expertTourGuide": true,
+        "airconditionedTransport": true
+      },
+      "gallery": [
+        "/images/tours/best-of-kyoto-day-tour/1.jpg",
+        "/images/tours/best-of-kyoto-day-tour/2.jpg",
+        "/images/tours/best-of-kyoto-day-tour/3.jpg",
+        "/images/tours/best-of-kyoto-day-tour/4.jpg"
       ],
-      "end": "21:00 - Return to your final destination of Osaka once again via Shinkansen"
-    },
-    "pricing": [
-      {
-        "name": "FROM OSAKA (OSAKA HOTELS)",
-        "passengers": {
-          "price": "FROM ¥70075 PER PERSON"
+      "description": [
+        "Experience the heart of Kyoto with our Best of Kyoto Day Tour from Kyoto. Dive into the rich history and architecture of the city’s famous sites. Visit Fushimi Inari Taisha Shrine and Kiyomizudera – a Buddhist temple filled with ancient history. Marvel at the golden pavilion of Kinkaku-ji Temple and experience the richness of Arashiyama Bamboo Forest. Your adventure will be filled with amazing moments to last a lifetime.",
+        "Our Best of Kyoto Day Tour is the perfect choice for Kyoto first-timers looking to tick all the best things to do in Kyoto. This tour offers a window into the city’s legacy from sacred shrines to magical nature. Along with a licensed guide, discover the wonders of Kyoto. Book your exciting full-day tour today!"
+      ],
+      "highlight": [
+        "Explore the hidden gems of Kyoto with a licensed local guide",
+        "Experience the golden pavilion of Kinkaku-ji Temple",
+        "Visit the Buddhist temple, Kiyomizudera, and discover its rich heritage",
+        "Uncover the wonders of Arashiyama Bamboo Forest and take epic photos"
+      ],
+      "itinerary": {
+        "start": "9:15 - Meet your local guide in Kyoto",
+        "itinerary": [
+          "Visit the iconic Fushimi Inari Taisha Shrine",
+          "See the Buddhist temple, Kiyomizudera",
+          "Admire the golden architecture of Kinkaku-ji Temple",
+          "Discover the world-famous Arashiyama Bamboo Forest"
+        ],
+        "end": "18:00 - The tour ends in Kyoto"
+      },
+      "pricing": [
+        {
+          "name": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
+          "adults": {
+            "price": "FROM ¥12900 PER PERSON"
+          },
+          "children": {
+            "age": "Children under 11 years old",
+            "price": "FROM ¥11500 PER PERSON"
+          }
         }
+      ],
+      "otherDetails": {
+        "includes": [
+          "Hand-picked expert tour guide",
+          "Transportation"
+        ],
+        "excludes": [
+          "Entrance fees",
+          "Meals & drinks",
+          "Personal travel insurance",
+          "Gratuities"
+        ],
+        "bring": [
+          "Water",
+          "Walking shoes"
+        ],
+        "information": [
+          "The entrance fees can be purchased the day of the tour in cash"
+        ],
+        "cancellationPolicy": "Cancellations made 5 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 5 days before the start of the tour will not be refunded."
       }
-    ],
-    "otherDetails": {
-      "includes": [
-        "Hand-picked expert tour guide",
-        "Miyajima visitor tax",
-        "Transportation by Shinkansen"
-      ],
-      "excludes": [
-        "Meals & drinks",
-        "Personal travel insurance",
-        "Gratuities"
-      ],
-      "bring": [
-        "Water",
-        "Walking shoes"
-      ],
-      "information": [
-        "The tour will try to visit the locations mentioned in the itinerary, however, some of these locations may be closed, if this is the case, we will try to accommodate other sites in the area"
-      ],
-      "cancellationPolicy": "Cancellations made up to 7 days before the start time of the tour will be refunded 70% (5% handling fee). Cancellations made less than 7 days before the start time of the tour will not be refunded."
-    }
-  },
-  {
-    "id": 6,
-    "url": "kyoto-and-nara-day-tour-from-osaka",
-    "name": "KYOTO & NARA DAY TOUR FROM OSAKA",
-    "tag": "Recommended for First-Time Visitors",
-    "startLocation": "Osaka",
-    "availability": "Tuesday, Thursday, Sunday",
-    "price": "¥13,433",
-    "details": {
-      "hours": "9.5 Hour Tour",
-      "language": [
-        "English"
-      ],
-      "guided-tour": true,
-      "expertTourGuide": true,
-      "airconditionedTransport": true
     },
-    "gallery": [
-      "/images/tours/kyoto-&-nara-day-tour-from-osaka/1.jpg",
-      "/images/tours/kyoto-&-nara-day-tour-from-osaka/2.jpg",
-      "/images/tours/kyoto-&-nara-day-tour-from-osaka/3.jpg",
-      "/images/tours/kyoto-&-nara-day-tour-from-osaka/1.jpg"
-    ],
-    "description": [
-      "Discover 2 of Japan’s iconic cities with our Kyoto & Nara Day Tour from Osaka. Along with your local guide, explore the wonders of Arashiyama Bamboo Forest and be amazed by the bamboo groves. Head to Kinkaku-ji Temple to admire its golden architecture and hidden details. In Nara, be swept away by the magical Nara Park with friendly deer. Finally, see the giant Buddha statue at Todai-ji Temple with your own eyes before returning to Osaka.",
-      "Travelers in Osaka looking for the perfect day trip must join our Kyoto & Nara Day Tour from Osaka – guaranteeing a day of adventures! Explore the Kinkaku-ji Temple, Arashiyama Bamboo Forest, Nara Park, and much more. Be led by an experienced guide every step of the way. Book your adventure today"
-    ],
-    "highlight": [
-      "Get lost in the world-famous Arashiyama Bamboo Forest, taking iconic photos along the way",
-      "Discover the golden architecture of Kinkaku-ji Temple",
-      "In Nara, uncover the magical Nara Park and meet local free-roaming deer",
-      "See the incredible giant Buddha statue at Todai-ji Temple"
-    ],
-    "itinerary": {
-      "start": "8:30 - Depart from Osaka and head to Kyoto",
-      "itinerary": [
-        "Visit the world-famous Arashiyama Bamboo Forest",
-        "Enjoy free time + lunch break",
-        "See Kinkaku-ji Temple's golden architecture and outdoor pond",
-        "Arrive in Nara and explore Nara Park",
-        "Visit the sacred Todai-ji Temple"
+    {
+      "id": 4,
+      "url": "best-of-osaka-walking-tour",
+      "name": "BEST OF OSAKA WALKING TOUR",
+      "tag": "",
+      "startLocation": "Osaka",
+      "availability": "Every Monday, Tuesday, Wednesday, Thursday, Saturday",
+      "price": "¥18,900",
+      "details": {
+        "hours": "6 Hour Tour",
+        "language": [
+          "English"
+        ],
+        "guidedTour": true,
+        "expertTourGuide": true
+      },
+      "gallery": [
+        "/images/tours/best-of-osaka-walking-tour/1.jpg",
+        "/images/tours/best-of-osaka-walking-tour/2.jpg",
+        "/images/tours/best-of-osaka-walking-tour/3.jpg",
+        "/images/tours/best-of-osaka-walking-tour/4.jpg"
       ],
-      "end": "18:00 - The tour ends"
-    },
-    "pricing": [
-      {
-        "name": "FROM OSAKA",
-        "passengers": {
-          "price": "FROM ¥12900 PER PERSON"
+      "description": [
+        "Discover the vibrant life of Osaka with our Best of Osaka Walking Tour. Go on a journey that blends tradition, history, and architecture. Embark on your 5-hour walking tour starting in the retro area of “Amerikamura” or “American Village”. Discover the Namba & Dotonbori neighborhood as well as Hozenji temple – an iconic Buddhist temple. The Kuromon Ichiba Market – famous for its fresh seafood is your next destination. Stroll through Shinsekai’s entertainment district, witness the stunning Osaka Castle, and learn about Osaka’s other hidden gems. See where the past meets the present and enjoy every moment of this stunning city.",
+        "For curious travelers who love to explore, our Best of Osaka Walking Tour is a great way to experience Osaka. Go on a journey that ties culture and history while listening to your local expert guide. Book your Osaka 5-hour walking tour today!"
+      ],
+      "highlight": [
+        "Get the most immersive and unique 5-hour walking tour",
+        "Explore the retro charm of Amerikamura and walk through lantern-lined cobblestone streets",
+        "Marvel at Osaka Castle, dating back to the 16th century",
+        "Experience the bustling energy of Namba, Dotonbori, and the lively Kuromon Ichiba Market"
+      ],
+      "itinerary": {
+        "start": "10:00 - Meet your local guide in Osaka and start your tour",
+        "itinerary": [
+          "Begin your 5-hour walking tour in the retro area “Amerikamura” or “American Village”",
+          "Walk the charming cobblestone streets lined with lanterns",
+          "Experience Namba & Dotonbori, the neon heart of Osaka",
+          "Stop at Hozenji, a small Buddhist temple",
+          "Visit the vibrant and lively Kuromon Ichiba Market",
+          "Stroll through Shinsekai, the entertainment district",
+          "See Osaka Castle – a 16th-century marvel",
+          "Discover the shopping street of Shinsaibashi and buy souvenirs",
+          "Learn the story of Glico Man and see Tsutenkaku, Osaka’s “Tokyo Tower”"
+        ],
+        "end": "15:00 - The tour ends in Osaka"
+      },
+      "pricing": [
+        {
+          "name": "FROM OSAKA (JR OSAKAJOKOEN STATION, EXIT 2)",
+          "passengers": {
+            "price": "FROM ¥19058 PER PERSON"
+          }
         }
+      ],
+      "otherDetails": {
+        "includes": [
+          "Hand-picked expert tour guide",
+          "One none alcoholic drink & some local street food"
+        ],
+        "excludes": [
+          "Meals & drinks",
+          "Personal travel insurance",
+          "Gratuities"
+        ],
+        "bring": [
+          "Water",
+          "Walking shoes"
+        ]
       }
-    ],
-    "otherDetails": {
-      "includes": [
-        "Hand-picked expert tour guide",
-        "Transportation"
+    },
+    {
+      "id": 5,
+      "url": "hiroshima-and-miyajima-day-tour-from-osaka",
+      "name": "HIROSHIMA & MIYAJIMA DAY TOUR FROM OSAKA",
+      "tag": "",
+      "startLocation": "Osaka",
+      "availability": "Every day",
+      "price": "¥72,476",
+      "details": {
+        "hours": "13 Hour Tour",
+        "language": [
+          "English"
+        ],
+        "guidedTour": true,
+        "expertTourGuide": true,
+        "airconditionedTransport": true
+      },
+      "gallery": [
+        "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/1.jpg",
+        "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/1.jpg",
+        "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/2.jpg",
+        "/images/tours/hiroshima-&-miyajima-day-tour-from-osaka/3.jpg"
       ],
-      "excludes": [
-        "Meals & drinks",
-        "Entrance fees",
-        "Personal travel insurance",
-        "Gratuities"
+      "description": [
+        "Join our Hiroshima & Miyajima Day Tour from Osaka for an all-inclusive day trip to Hiroshima and its beautiful surroundings. Your day starts with a thrilling ride on the Shinkansen (bullet train) from your starting point. Upon arriving in Hiroshima, be prepared to explore two remarkable destinations that paint a vivid picture of the region. We’ll start with a ferry ride to picturesque Miyajima Island, where you’ll discover the stunning Itsukushima Shrine. This architectural marvel is set against a backdrop of a floating red torii gate, showcasing the perfect blend of nature and human artistry along the Seto Sea. After returning to the mainland, you’ll head to the Hiroshima Peace Memorial Park. Your visit includes the Peace Memorial Museum, which tells the powerful story of the Pacific War. Continuing to the A-Bomb Dome, a symbol of Hiroshima’s resilience and commitment to peace, your local guide will provide insights into its historical significance. As the day winds down, your tour concludes, and you’ll board the Shinkansen once more to return to Kyoto or Osaka, allowing you to reflect on the day’s experiences before returning to your starting point.",
+        "Our Hiroshima & Miyajima Day Tour from Osaka is the best way for travelers to reach this important destination and experience its past and present – all in one day. This guided tour ensures the city’s stories and memories are respected and preserved. It includes a round trip to Hiroshima via high-speed bullet train from Kyoto or Osaka, and touring from a government-licensed local guide. Book your tour today to embark on a day of reflection and exploration in Hiroshima."
       ],
-      "bring": [
-        "Water",
-        "Walking shoes"
+      "highlight": [
+        "Experience the timeless charm of Miyajima Island, complete with ancient temples, free-roaming deer, lush forests, and breathtaking coastal views",
+        "Marvel at the iconic floating torii gate of Itsukushima Shrine on Miyajima Island, an architectural masterpiece set against the serene Seto Sea",
+        "Explore Hiroshima Peace Memorial Park, including a visit to the moving Peace Memorial Museum, to gain a deeper understanding of the impact of the Pacific War",
+        "Enjoy a thrilling Shinkansen ride from Osaka to Hiroshima, setting the stage for your day of exploration"
       ],
-      "information": [
-        "The entrance fees can be purchased the day of the tour in cash"
+      "itinerary": {
+        "start": "7:30 - Board the Shinkansen bullet train to Hiroshima and depart from Osaka",
+        "itinerary": [
+          "Take a ferry to Miyajima, the Shrine Island, and learn about its cultural and spiritual significance",
+          "Marvel at the Itsukushima Shrine, a UNESCO World Heritage Site",
+          "Return to Miyajimaguchi station and head to the Hiroshima Peace Memorial Park",
+          "See the A-Bomb Dome, a commemorative symbol of peace"
+        ],
+        "end": "21:00 - Return to your final destination of Osaka once again via Shinkansen"
+      },
+      "pricing": [
+        {
+          "name": "FROM OSAKA (OSAKA HOTELS)",
+          "passengers": {
+            "price": "FROM ¥70075 PER PERSON"
+          }
+        }
       ],
-      "cancellationPolicy": "Cancellations made 5 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 5 days before the start of the tour will not be refunded."
+      "otherDetails": {
+        "includes": [
+          "Hand-picked expert tour guide",
+          "Miyajima visitor tax",
+          "Transportation by Shinkansen"
+        ],
+        "excludes": [
+          "Meals & drinks",
+          "Personal travel insurance",
+          "Gratuities"
+        ],
+        "bring": [
+          "Water",
+          "Walking shoes"
+        ],
+        "information": [
+          "The tour will try to visit the locations mentioned in the itinerary, however, some of these locations may be closed, if this is the case, we will try to accommodate other sites in the area"
+        ],
+        "cancellationPolicy": "Cancellations made up to 7 days before the start time of the tour will be refunded 70% (5% handling fee). Cancellations made less than 7 days before the start time of the tour will not be refunded."
+      }
+    },
+    {
+      "id": 6,
+      "url": "kyoto-and-nara-day-tour-from-osaka",
+      "name": "KYOTO & NARA DAY TOUR FROM OSAKA",
+      "tag": "Recommended for First-Time Visitors",
+      "startLocation": "Osaka",
+      "availability": "Tuesday, Thursday, Sunday",
+      "price": "¥13,433",
+      "details": {
+        "hours": "9.5 Hour Tour",
+        "language": [
+          "English"
+        ],
+        "guided-tour": true,
+        "expertTourGuide": true,
+        "airconditionedTransport": true
+      },
+      "gallery": [
+        "/images/tours/kyoto-&-nara-day-tour-from-osaka/1.jpg",
+        "/images/tours/kyoto-&-nara-day-tour-from-osaka/2.jpg",
+        "/images/tours/kyoto-&-nara-day-tour-from-osaka/3.jpg",
+        "/images/tours/kyoto-&-nara-day-tour-from-osaka/1.jpg"
+      ],
+      "description": [
+        "Discover 2 of Japan’s iconic cities with our Kyoto & Nara Day Tour from Osaka. Along with your local guide, explore the wonders of Arashiyama Bamboo Forest and be amazed by the bamboo groves. Head to Kinkaku-ji Temple to admire its golden architecture and hidden details. In Nara, be swept away by the magical Nara Park with friendly deer. Finally, see the giant Buddha statue at Todai-ji Temple with your own eyes before returning to Osaka.",
+        "Travelers in Osaka looking for the perfect day trip must join our Kyoto & Nara Day Tour from Osaka – guaranteeing a day of adventures! Explore the Kinkaku-ji Temple, Arashiyama Bamboo Forest, Nara Park, and much more. Be led by an experienced guide every step of the way. Book your adventure today"
+      ],
+      "highlight": [
+        "Get lost in the world-famous Arashiyama Bamboo Forest, taking iconic photos along the way",
+        "Discover the golden architecture of Kinkaku-ji Temple",
+        "In Nara, uncover the magical Nara Park and meet local free-roaming deer",
+        "See the incredible giant Buddha statue at Todai-ji Temple"
+      ],
+      "itinerary": {
+        "start": "8:30 - Depart from Osaka and head to Kyoto",
+        "itinerary": [
+          "Visit the world-famous Arashiyama Bamboo Forest",
+          "Enjoy free time + lunch break",
+          "See Kinkaku-ji Temple's golden architecture and outdoor pond",
+          "Arrive in Nara and explore Nara Park",
+          "Visit the sacred Todai-ji Temple"
+        ],
+        "end": "18:00 - The tour ends"
+      },
+      "pricing": [
+        {
+          "name": "FROM OSAKA",
+          "passengers": {
+            "price": "FROM ¥12900 PER PERSON"
+          }
+        }
+      ],
+      "otherDetails": {
+        "includes": [
+          "Hand-picked expert tour guide",
+          "Transportation"
+        ],
+        "excludes": [
+          "Meals & drinks",
+          "Entrance fees",
+          "Personal travel insurance",
+          "Gratuities"
+        ],
+        "bring": [
+          "Water",
+          "Walking shoes"
+        ],
+        "information": [
+          "The entrance fees can be purchased the day of the tour in cash"
+        ],
+        "cancellationPolicy": "Cancellations made 5 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 5 days before the start of the tour will not be refunded."
+      }
     }
-  }
-]
+  ],
+  "attractions": [
+    {
+      "title": "Jungfraujoch",
+      "country": "Switzerland",
+      "image": "/images/temp/carousel/jungfrau.jpg",
+      "description": "Known as the 'Top of Europe,' Jungfraujoch offers stunning views of the Aletsch Glacier and surrounding peaks with year-round snow activities."
+    },
+    {
+      "title": "Mount Titlis Cable Car",
+      "country": "Switzerland",
+      "image": "/images/temp/carousel/mount.jpg",
+      "description": "The Mount Titlis Cable Car takes visitors on a scenic ride to the summit, offering panoramic views and featuring the world’s first revolving cable car."
+    },
+    {
+      "title": "Shinkansen Bullet Train",
+      "country": "Japan",
+      "image": "/images/temp/carousel/shinkansen.jpeg",
+      "description": "Japan’s high-speed bullet train offers a fast and efficient way to travel between major cities, providing comfort and scenic views along the route."
+    },
+    {
+      "title": "Swiss Travel Pass",
+      "country": "Switzerland",
+      "image": "/images/temp/carousel/swiss_travel.jpeg",
+      "description": "This all-in-one ticket provides unlimited travel on Switzerland’s public transportation network and offers free or discounted admission to many attractions."
+    },
+    {
+      "title": "Hop On Hop Off Bus",
+      "country": "United Kingdom, Switzerland, Japan, South Korea",
+      "image": "https://images.unsplash.com/photo-1556704498-49037b3a4403?q=80&w=2011&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "This service allows visitors to hop on and off at various stops throughout the city, providing flexibility to explore London, Zurich/Geneva, Tokyo, and Seoul at their own pace."
+    },
+    {
+      "title": "London Eye",
+      "country": "United Kingdom",
+      "image": "/images/temp/carousel/london_eye.jpeg",
+      "description": "This iconic Ferris wheel on the South Bank of the River Thames offers breathtaking views of the city’s skyline."
+    },
+    {
+      "title": "Tower Bridge",
+      "country": "United Kingdom",
+      "image": "/images/temp/carousel/tower_bridge.jpeg",
+      "description": "A symbol of London, this combined bascule and suspension bridge spans the River Thames and features the Tower Bridge Exhibition."
+    },
+    {
+      "title": "Mount Fuji",
+      "country": "Japan",
+      "image": "/images/temp/carousel/fuji.jpeg",
+      "description": "Japan’s highest peak and a UNESCO World Heritage site, Mount Fuji is popular for climbing and offers stunning views."
+    },
+    {
+      "title": "Tea Ceremony",
+      "country": "Japan",
+      "image": "/images/temp/carousel/tea_ceremony.jpeg",
+      "description": "A traditional Japanese tea ceremony, or 'chanoyu,' is a cultural experience that emphasizes harmony, respect, purity, and tranquility."
+    },
+    {
+      "title": "Hakone Ropeway",
+      "country": "Japan",
+      "image": "/images/temp/carousel/hakone.jpeg",
+      "description": "This aerial lift in Hakone provides scenic views of Mount Fuji and the volcanic Owakudani Valley, part of the Hakone Round Course."
+    },
+    {
+      "title": "Lake Ashi Pirate Cruise",
+      "country": "Japan",
+      "image": "/images/temp/carousel/pirate_cruise.jpeg",
+      "description": "Enjoy a scenic cruise on Lake Ashi aboard a pirate-themed ship, offering beautiful views of Mount Fuji and the surrounding nature."
+    },
+    {
+      "title": "TeamLab Borderless",
+      "country": "Japan",
+      "image": "https://images.unsplash.com/photo-1669794911682-4fded20a9cab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "An immersive digital art museum in Tokyo, where art installations change based on viewer interaction, creating a unique experience every visit."
+    },
+    {
+      "title": "Tokyo Sky Tree",
+      "country": "Japan",
+      "image": "/images/temp/carousel/sky_tree.jpg",
+      "description": "A broadcasting and observation tower in Tokyo, offering panoramic views of the city from its observation decks."
+    },
+    {
+      "title": "Nami Island",
+      "country": "South Korea",
+      "image": "/images/temp/carousel/nami_island.jpeg",
+      "description": "A picturesque half-moon-shaped island known for its beautiful tree-lined roads, cultural events, and stunning autumn foliage."
+    },
+    {
+      "title": "Petite France",
+      "country": "South Korea",
+      "image": "/images/temp/carousel/petite_france.jpeg",
+      "description": "A French-themed village in Gapyeong, featuring colorful buildings, museums, galleries, and performances with European charm."
+    },
+    {
+      "title": "DMZ (Demilitarized Zone)",
+      "country": "South Korea",
+      "image": "/images/temp/carousel/dmz.jpeg",
+      "description": "A buffer zone between North and South Korea, offering guided tours to learn about the Korean conflict and see the Joint Security Area."
+    },
+    {
+      "title": "Seoul Tower",
+      "country": "South Korea",
+      "image": "https://images.unsplash.com/photo-1541694764078-df09dec4f9c8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "description": "Also known as Namsan Seoul Tower, this iconic structure provides panoramic views of Seoul from observation decks, restaurants, and cafes."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AttractionsCard from '../cards/attractions-card'
 import { Button } from '@material-tailwind/react'
 
@@ -114,6 +114,16 @@ const AttractionsData = [
 
 export default function Attractions() {
   const [showMore, setShowMore] = useState(false)
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/json/japan.json');
+      const result = await response.json();
+      setData(result.attractions);
+    };
+    fetchData();
+  }, []);
   return (
     <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
       <div className=' w-full flex flex-col '>
@@ -123,7 +133,7 @@ export default function Attractions() {
         </div>
       </div>
       <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
-        {AttractionsData.slice(0, showMore ? AttractionsData.length : 4).map((data, id) => {
+        {data?.slice(0, showMore ? data.length : 4).map((data, id) => {
           return (
             <AttractionsCard key={id} data={data} />
           )

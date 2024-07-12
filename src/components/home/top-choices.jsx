@@ -85,9 +85,8 @@ export default function TopChoices() {
     const fetchData = async () => {
       const response = await fetch('/json/japan.json');
       const result = await response.json();
-      setData(result);
+      setData(result.destinations);
     };
-
     fetchData();
   }, []);
 

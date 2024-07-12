@@ -10,7 +10,7 @@ export default function Hero() {
         <div className='h-full flex items-center text-white '>
           <div className='flex flex-col max-w-[800px] gap-[24px] bg-custom-red bg-opacity-70 p-[20px] lg:p-[50px]'>
             <p className='font-bold text-[36px] lg:text-[75px] leading-[42px] lg:leading-[86px]'>
-              Discover {selectedCountry}&apos;s <br />Hidden Gems
+              Discover {selectedCountry}&apos;s Hidden Gems
             </p>
             <p className='text-[16px] md:text-[18px] leading-[24px] md:leading-[34px] text-white'>Embark on an unforgettable journey through the heart of Japan with our expertly curated tours. From the serene temples of Kyoto to the bustling streets of Tokyo, experience the perfect blend of tradition and modernity.</p>
             {/* <Search /> */}

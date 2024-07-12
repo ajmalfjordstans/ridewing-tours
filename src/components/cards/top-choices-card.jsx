@@ -31,7 +31,7 @@ export default function TopChoicesCard({ data }) {
           {data.tag != '' &&
             <p className='text-secondary text-[14px] border-b-[2px] border-b-secondary w-auto pb-[5px]'>{data.tag}</p>
           }
-          <p className='text-[18px] mt-[10px]'>{data.title}</p>
+          <p className='text-[18px] mt-[10px]'>{data.name}</p>
           <div className='grid grid-cols-2 mt-[10px] gap-[5px] text-[11px]'>
             {data?.details?.hours &&
               <div className='flex items-center gap-2 '>

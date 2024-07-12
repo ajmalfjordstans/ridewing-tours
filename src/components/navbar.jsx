@@ -19,6 +19,7 @@ export default function Navbar() {
   const handleCountryChange = (event) => {
     const newCountry = event.target.value;
     setCountryNav(newCountry)
+    setUrlParams(newCountry)
     dispatch(setCountry(newCountry));
     const newUrl = `?country=${newCountry}`;
     dispatch(setUrl(newUrl));
@@ -27,14 +28,15 @@ export default function Navbar() {
 
   useEffect(() => {
     const country = searchParams.get("country")
-    setUrlParams(country)
     if (country == null) {
-      const newUrl = `?country=Japan`;
+      setUrlParams("Japan")
       dispatch(setCountry("Japan"));
+      const newUrl = `?country=Japan`;
       dispatch(setUrl(newUrl));
       router.push(newUrl, undefined, { shallow: true });
     }
     else {
+      setUrlParams(country)
       const newUrl = `?country=${country}`;
       dispatch(setCountry(country));
       dispatch(setUrl(newUrl));
