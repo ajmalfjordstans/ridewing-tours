@@ -116,12 +116,17 @@ export default function Attractions() {
   const [showMore, setShowMore] = useState(false)
   const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
+    try {
       const response = await fetch('/json/japan.json');
       const result = await response.json();
       setData(result.attractions);
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+  useEffect(() => {
     fetchData();
   }, []);
   return (

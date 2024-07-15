@@ -4,17 +4,37 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCountry, setUrl } from './store/userSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { UserAuth } from '@/context/AuthContext';
+import { Button } from '@material-tailwind/react';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
   const [urlParams, setUrlParams] = useState({});
   const [countryNav, setCountryNav] = useState('Japan');
+  const [isOpen, setIsOpen] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
   const selectedCountry = useSelector(state => state.user.selectedCountry);
   const cartCount = useSelector(state => state.cart.items.length);
+  const { user, googleSignIn, logOut } = UserAuth()
+
+  const handleSignIn = async () => {
+    try {
+      await googleSignIn()
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleSignOut = async () => {
+    try {
+      await logOut()
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const handleCountryChange = (event) => {
     const newCountry = event.target.value;
@@ -66,7 +86,7 @@ export default function Navbar() {
               <p className='font-semibold text-[28px] uppercase'>Ridewing</p>
             </div>
           </Link>
-          <div className="hidden lg:block font-semibold text-[16px]">
+          <div className="hidden lg:block font-semibold text-[16px] relative">
             <div className='flex gap-10 items-center'>
               <Link href={{ pathname: '/', query: { "country": urlParams } }} >
                 <p className='uppercase'>HOME</p>
@@ -81,24 +101,46 @@ export default function Navbar() {
                 <option value="Japan" className='p-[4px]'>Japan</option>
                 <option value="UK" className='p-[4px]'>UK</option>
               </select>
-              <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                </svg>
-                {cartCount !== 0 &&
-                  <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
-                }
-              </Link>
-              <Link href={{ pathname: '/profile', query: { country: urlParams } }} className='relative'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                </svg>
-                {/* {cartCount !== 0 &&
-                  <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
-                } */}
-              </Link>
+              {!user ?
+                <Button
+                  className='bg-white text-custom-red p-[7px]'
+                  onClick={handleSignIn}
+                >Login</Button>
+                : (<>
+                  <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+                    {cartCount !== 0 &&
+                      <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
+                    }
+                  </Link>
+                  <Link href={{ pathname: '/profile', query: { country: urlParams } }} className='relative'
+                    onMouseEnter={() => setIsOpen(true)}
+                    onMouseLeave={() => {
+                      setTimeout(() => {
+                        setIsOpen(false)
+                      }, 2000)
+                    }}
+                  >
+                    {user.photoURL ? <Image src={user.photoURL} alt='profile' height={40} width={40} className='size-7 rounded-full' /> :
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-6"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      </svg>}
+                  </Link>
+                </>)}
             </div>
           </div>
+          {isOpen && (
+            <div className="origin-top-right mt-2 absolute top-[4.5rem] w-46 right-[6rem] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem" onClick={handleSignOut}>
+                  Logout
+                </p>
+              </div>
+            </div>
+          )}
           <div className='block lg:hidden text-black'>
             <div className='absolute top-7 right-4 z-[200]'>
               {showMenu ?

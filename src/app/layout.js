@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import Layout from "@/components/layout";
 import Footer from "@/components/footer";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 const poppins = Poppins({
@@ -20,9 +21,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={poppins.className}>
         <Layout>
+          <AuthContextProvider>
             <Navbar />
             {children}
             <Footer />
+          </AuthContextProvider>
         </Layout>
       </body>
     </html>
