@@ -48,7 +48,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const country = searchParams.get("country")
-    if (country == null) {
+    if (country === null || '') {
       setUrlParams("Japan")
       dispatch(setCountry("Japan"));
       const newUrl = `?country=Japan`;
@@ -62,7 +62,7 @@ export default function Navbar() {
       dispatch(setUrl(newUrl));
       router.push(newUrl, undefined, { shallow: true });
     }
-    // console.log("Working", urlParams);
+    console.log("Working", urlParams);
   }, []);
 
   // useEffect(() => {

@@ -2,10 +2,14 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 export default function TopChoicesCard({ data }) {
+  const country = useSelector(state => state.user.selectedCountry)
+  console.log(country);
   return (
-    <Link href={`/tour?destination=${data.url}`}>
+    <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": country } }}
+    >
       <div className='w-full h-[482px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
       >
         <div className='h-[305px] p-[12px] flex items-end'

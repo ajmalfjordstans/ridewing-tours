@@ -20,8 +20,9 @@ export default function Page() {
   };
 
   const findData = (data, params) => {
-    const selectedResult = data?.find((obj) => {
-      // console.log("1", obj.url, "===", params.destination);
+    // console.log(data);
+    const selectedResult = data?.destinations?.find((obj) => {
+      console.log("1", obj.url, "===", params);
       if (obj.url === params.destination) {
         setCurrentData(obj);
       }
@@ -29,11 +30,11 @@ export default function Page() {
   };
 
   useEffect(() => {
-    const params = {};
+    const params = {}
     searchParams.forEach((value, key) => {
       params[key] = value;
     })
-    console.log(params);
+    // console.log(params);
     const initialize = async () => {
       if (Object.keys(params).length === 0) {
         return;
@@ -45,7 +46,7 @@ export default function Page() {
 
     initialize();
   }, [searchParams]);
-  // console.log(currentData);
+  console.log(currentData);
   return (
     <div className='text-black mt-[80px] md:mt-[180px] container mx-auto px-[5%] lg:px-0'>
       {
