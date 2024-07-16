@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { UserAuth } from '@/context/AuthContext';
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
+import { db } from '@/app/firebase';
 
 export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -46,6 +47,20 @@ export default function Navbar() {
     router.push(newUrl, undefined, { shallow: true });
   };
 
+  const handleData = async () => {
+    try {
+      const usersRef = db.collection("japan")
+      const response = await usersRef.get()
+      let responseArr = [];
+      response.forEach(doc => {
+        responseArr.push(doc.data())
+      })
+      console.log(responseArr);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     const country = searchParams.get("country")
     if (country === null || '') {
@@ -56,6 +71,7 @@ export default function Navbar() {
       router.push(newUrl, undefined, { shallow: true });
     }
     else {
+      handleData()
       setUrlParams(country)
       const newUrl = `?country=${country}`;
       dispatch(setCountry(country));
@@ -102,10 +118,12 @@ export default function Navbar() {
                 <option value="UK" className='p-[4px]'>UK</option>
               </select>
               {!user ?
-                <Button
-                  className='bg-white text-custom-red p-[7px]'
-                  onClick={handleSignIn}
-                >Login</Button>
+                <Link href={{ pathname: '/login', query: { country: urlParams } }}>
+                  <Button
+                    className='bg-white text-custom-red py-[7px] px-[12px]'
+                  // onClick={handleSignIn}
+                  >Login</Button>
+                </Link>
                 : (<>
                   <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -114,6 +132,9 @@ export default function Navbar() {
                     {cartCount !== 0 &&
                       <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
                     }
+                  </Link>
+                  <Link href={{ pathname: '/admin', query: { country: urlParams } }} className='relative'>
+                    <p>Admin</p>
                   </Link>
                   <Link href={{ pathname: '/profile', query: { country: urlParams } }} className='relative'
                     onMouseEnter={() => setIsOpen(true)}
@@ -129,18 +150,19 @@ export default function Navbar() {
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                       </svg>}
                   </Link>
+                  {isOpen && (
+                    <div className="origin-top-right mt-2 absolute top-[30px] w-46 right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                        <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem" onClick={handleSignOut}>
+                          Logout
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </>)}
             </div>
           </div>
-          {isOpen && (
-            <div className="origin-top-right mt-2 absolute top-[4.5rem] w-46 right-[6rem] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem" onClick={handleSignOut}>
-                  Logout
-                </p>
-              </div>
-            </div>
-          )}
+
           <div className='block lg:hidden text-black'>
             <div className='absolute top-7 right-4 z-[200]'>
               {showMenu ?

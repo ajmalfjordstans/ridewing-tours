@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 export default function TopChoicesCard({ data }) {
   const country = useSelector(state => state.user.selectedCountry)
-  console.log(country);
+  // console.log(country);
   return (
     <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": country } }}
     >
