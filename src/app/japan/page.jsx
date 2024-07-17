@@ -79,7 +79,7 @@ const AttractionsData = [
 
 export default function Page() {
   return (
-    <div className='container mx-auto px-[5%] lg:px-0 mt-[80px] md:mt-[180px]'>
+    <div className='container mx-auto px-[5%] lg:px-0 mt-[80px] md:mt-[180px] pb-[150px]'>
       <div className=' w-full flex flex-col '>
         <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>Popular Attractions in Japan</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>

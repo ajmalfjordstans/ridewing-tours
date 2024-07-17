@@ -11,13 +11,13 @@ import Transfer from "@/components/home/transfer";
 
 export default function Home() {
   return (
-    <>
+    <div className="pb-[150px]">
       <Hero />
       <TopChoices />
       <Attractions />
       <Transfer />
       <Destinations />
       {/* <Blog /> */}
-    </>
+    </div>
   );
 }

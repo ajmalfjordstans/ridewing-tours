@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import TopChoicesCard from '../cards/top-choices-card'
 import { Button } from '@material-tailwind/react'
+import { useSelector } from 'react-redux'
+import Link from 'next/link'
 
 const TopChoicesData = [
   {
@@ -80,7 +82,7 @@ const TopChoicesData = [
 
 export default function TopChoices() {
   const [data, setData] = useState(null);
-
+  const country = useSelector(state => state.user.selectedCountry)
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('/json/japan.json');
@@ -102,7 +104,9 @@ export default function TopChoices() {
         {data?.map((data, id) => {
           // console.log(data)
           return (
-            <TopChoicesCard key={id} data={data} />
+            <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": country } }} key={id}>
+              <TopChoicesCard data={data} />
+            </Link>
           )
         })}
       </div>

@@ -7,7 +7,7 @@ export default function Page({ params }) {
   if (params.transfers === "airports") return <Airports />
   else
     return (
-      <section className='py-[50px] container mx-auto px-[5%] lg:px-0 mt-[100px] pt-[40px]'>
+      <section className='pb-[150px] container mx-auto px-[5%] lg:px-0 mt-[100px] pt-[40px]'>
         <div className=' w-full flex flex-col '>
           <p className='font-bold text-[32px] leading-[42px] capitalize'>{transfer}</p>
           <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>

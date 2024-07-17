@@ -4,7 +4,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   selectedCountry: 'Japan',
   isLoggedIn: false,
-  userRole: '',
   userInfo: null,
   browserSetting: {
     url: ''
@@ -30,7 +29,7 @@ const userSlice = createSlice({
     },
     setUser: (state, action) => {
       state.userInfo = action.payload
-    }
+    },
   },
 });
 

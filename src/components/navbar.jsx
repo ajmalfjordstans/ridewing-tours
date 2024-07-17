@@ -47,19 +47,19 @@ export default function Navbar() {
     router.push(newUrl, undefined, { shallow: true });
   };
 
-  const handleData = async () => {
-    try {
-      const usersRef = db.collection("japan")
-      const response = await usersRef.get()
-      let responseArr = [];
-      response.forEach(doc => {
-        responseArr.push(doc.data())
-      })
-      console.log(responseArr);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const handleData = async () => {
+  //   try {
+  //     const usersRef = db.collection("japan")
+  //     const response = await usersRef.get()
+  //     let responseArr = [];
+  //     response.forEach(doc => {
+  //       responseArr.push(doc.data())
+  //     })
+  //     console.log(responseArr);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   useEffect(() => {
     const country = searchParams.get("country")
@@ -71,7 +71,7 @@ export default function Navbar() {
       router.push(newUrl, undefined, { shallow: true });
     }
     else {
-      handleData()
+      // handleData()
       setUrlParams(country)
       const newUrl = `?country=${country}`;
       dispatch(setCountry(country));
@@ -125,17 +125,20 @@ export default function Navbar() {
                   >Login</Button>
                 </Link>
                 : (<>
-                  <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                    </svg>
-                    {cartCount !== 0 &&
-                      <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
-                    }
-                  </Link>
-                  <Link href={{ pathname: '/admin', query: { country: urlParams } }} className='relative'>
-                    <p>Admin</p>
-                  </Link>
+                  {user?.uid == 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid == 'TvX2p5F8mvYc0quBAxVbaicM83t1' ?
+                    <Link href={{ pathname: '/admin', query: { country: urlParams } }} className='relative'>
+                      <p className='uppercase'>Admin</p>
+                    </Link>
+                    :
+                    <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                      </svg>
+                      {cartCount !== 0 &&
+                        <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
+                      }
+                    </Link>
+                  }
                   <Link href={{ pathname: '/profile', query: { country: urlParams } }} className='relative'
                     onMouseEnter={() => setIsOpen(true)}
                     onMouseLeave={() => {

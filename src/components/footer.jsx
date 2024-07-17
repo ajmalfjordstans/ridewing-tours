@@ -4,9 +4,9 @@ import Subscribe from './forms/subscribe'
 
 export default function Footer() {
   return (
-    <div className='bg-white'>
-      <div className='mx-[5%] lg:mx-0'>
-        <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] h-[246px] rounded-[12px] translate-y-[50%]'>
+    <div className='bg-transparent relative'>
+      <div className='mx-[5%] lg:mx-0 absolute top-[-25%] w-full'>
+        <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] h-[246px] rounded-[12px]'>
           <p className='font-semibold text-[28px] lg:text-[48px] text-center leading-[34px] lg:leading-[60px] max-w-[60%]'>We are Open 24x7 For assistance</p>
           <p className='text-[24px] text-center lg:text-[36px] leading-[32px] lg:leading-[46px]'>Call Us now on <br /> +559876421</p>
         </div>

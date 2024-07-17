@@ -4,7 +4,7 @@ import { setLogin, setUser } from "@/components/store/userSlice";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { useContext, createContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { doc, addDoc, setDoc, collection } from "firebase/firestore";
+import { doc, addDoc, setDoc, collection, query, where, onSnapshot } from "firebase/firestore";
 
 const AuthContext = createContext()
 
@@ -17,7 +17,6 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      const signedInUser = result.user;
     } catch (error) {
       console.error('Error signing in with Google: ', error);
     }
@@ -27,10 +26,27 @@ export const AuthContextProvider = ({ children }) => {
     signOut(auth)
     dispatch(setLogin(false))
   }
+  const handleFirebaseRead = async (uid) => {
+    try {
+      let itemsArr = [];
+      const q = query(collection(db, 'users'), where('uid', '==', uid));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          itemsArr.push({ ...doc.data(), id: doc.id });
+        });
+        console.log("Document successfully read!");
+        dispatch(setUser(itemsArr[0]))
+      });
 
+      return unsubscribe; // Return the unsubscribe function to stop listening when needed
+    } catch (error) {
+      console.error("Error reading document: ", error);
+    }
+  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      dispatch(setUser(currentUser))
+      if (!user && currentUser)
+        handleFirebaseRead(currentUser.uid)
       dispatch(setLogin(true))
     })
     return () => unsubscribe()

@@ -1,7 +1,7 @@
 'use client'
 import { UserAuth } from '@/context/AuthContext'
 import { Button } from '@material-tailwind/react'
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, onSnapshot, query, QuerySnapshot, setDoc } from 'firebase/firestore'
 import Image from 'next/image'
 import React from 'react'
 import { db } from '../firebase'
@@ -17,7 +17,7 @@ export default function UserDetails({ user }) {
     }
   }
 
-  const handleFirebase = async () => {
+  const handleFirebaseUpdate = async () => {
     try {
       const docRef = doc(db, "japan", "RzYea2pgV9rjQWRNuElX");
       const topChoicesCollectionRef = collection(docRef, "top-choices");
@@ -103,36 +103,79 @@ export default function UserDetails({ user }) {
         }
       };
 
-      // You can use either addDoc or setDoc
-      // addDoc will create a new document with an auto-generated ID
       await addDoc(topChoicesCollectionRef, newDocument);
-
-      // Or you can use setDoc to create a document with a specific ID
-      // const newDocRef = doc(topChoicesCollectionRef, "customDocID");
-      // await setDoc(newDocRef, newDocument);
 
       console.log("Document successfully added!");
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   }
+  const handleFirebaseRead = async () => {
+    try {
+      let itemsArr = []
+      const q = query(collection(db, 'japan'))
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          itemsArr.push({ ...doc.data(), id: doc.id })
+        })
+      })
+
+      console.log("Document successfully read!", itemsArr);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  }
+  const handleFirebaseUserUpdate = async () => {
+    try {
+      if (user) {
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          userRole: loginType // Use loginType for the role
+        });
+        console.log("User document successfully created!");
+      }
+    } catch (err) {
+      console.error("Error setting document: ", err);
+    }
+  }
   return (
     <div className=''>
-      <Image src={user?.photoURL} alt='profile' height={400} width={400} className='h-[140px] w-[140px] rounded-full' />
+      <div className='flex gap-3'>
+        <Image src={user?.photoURL} alt='profile' height={400} width={400} className='h-[140px] w-[140px] rounded-full' />
+        {user?.uid == 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid == 'TvX2p5F8mvYc0quBAxVbaicM83t1' && <p>Admin</p>}
+      </div>
       <div className='flex gap-3 mt-[40px]'>
         <p>User Name:</p>
         <p>{user?.displayName}</p>
       </div>
+
       <div className='flex gap-3'>
         <p>Email:</p>
         <p>{user?.email}</p>
       </div>
-      <Button className="bg-custom-red mt-[20px]" role="menuitem" onClick={handleSignOut}>
+      <div className='flex gap-3'>
+        <p>User Id:</p>
+        <p>{user?.uid}</p>
+      </div>
+      <div className='flex gap-3'>
+        <p>User Role:</p>
+        <p>{user?.userRole}</p>
+      </div>
+      <Button className="bg-custom-red my-[20px]" role="menuitem" onClick={handleSignOut}>
         Logout
       </Button>
-      <Button className="bg-custom-red mt-[20px]" role="menuitem" onClick={handleFirebase}>
-        Update
-      </Button>
+      <p>Development Purpose only</p>
+      <div className='flex gap-3'>
+        <Button className="bg-custom-red mt-[20px]" role="menuitem" onClick={handleFirebaseUpdate}>
+          Update
+        </Button>
+        <Button className="bg-custom-red mt-[20px]" role="menuitem" onClick={handleFirebaseRead}>
+          Read
+        </Button>
+      </div>
     </div>
   )
 }

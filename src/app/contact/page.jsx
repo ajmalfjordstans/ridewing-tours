@@ -6,9 +6,9 @@ import React from 'react'
 
 export default function Page() {
   return (
-    <>
+    <div className='pb-[150px]'>
       <CommonHero title={"Contact Us"} bg={'/images/background/contact.jpg'} />
-      <div className='container mx-auto bg-white rounded-[50px] translate-y-[-100px] p-[30px] md:p-[100px] shadow-xl grid md:grid-cols-2 gap-10'
+      <div className='container mx-auto bg-white rounded-[50px] translate-y-[-100px] p-[30px] md:p-[100px] shadow-xl grid md:grid-cols-2 gap-10 '
         style={{
           background: 'linear-gradient(90deg, rgba(255, 255, 255, 1) 70%, rgba(228, 50, 44, 1) 70%)'
         }}
@@ -35,6 +35,6 @@ export default function Page() {
         </div>
         <GoogleMap />
       </div>
-    </>
+    </div>
   )
 }

@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 
 // Your web app's Firebase configuration
@@ -21,12 +22,14 @@ let app;
 let analytics;
 let auth;
 let db;
+let storage;
 
 if (typeof window !== 'undefined') {
   app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
   auth = getAuth(app);
   db = getFirestore(app)
+  storage = getStorage(app)
 }
 
-export { app, analytics, auth, db };
+export { app, analytics, auth, db, storage };

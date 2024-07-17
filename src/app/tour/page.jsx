@@ -48,7 +48,7 @@ export default function Page() {
   }, [searchParams]);
   console.log(currentData);
   return (
-    <div className='text-black mt-[80px] md:mt-[180px] container mx-auto px-[5%] lg:px-0'>
+    <div className='text-black mt-[80px] md:mt-[180px] container mx-auto px-[5%] lg:px-0 pb-[150px]'>
       {
         currentData !== null ?
           <div className=''>
