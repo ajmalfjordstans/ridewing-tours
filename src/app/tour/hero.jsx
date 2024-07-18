@@ -67,13 +67,13 @@ export default function TourHero({ data }) {
             }
             {data?.details.airconditionedTransport &&
               <div>
-                <p>Expert Tour Guide</p>
+                <p>Air Conditioned Transport</p>
               </div>
             }
 
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/stopwatch.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
-              <p>{data?.details.hours}</p>
+              <p>{data?.details.hours} Hour Tour</p>
             </div>
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/language.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />

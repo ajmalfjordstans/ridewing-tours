@@ -32,4 +32,14 @@ if (typeof window !== 'undefined') {
   storage = getStorage(app)
 }
 
+export const deleteImage = async (imagePath) => {
+  try {
+    const imageRef = storage.ref().child(imagePath); // Ensure 'imagePath' is the correct path in your Firebase Storage
+    await imageRef.delete();
+    console.log('Image successfully deleted');
+  } catch (error) {
+    console.error('Error deleting image:', error);
+  }
+};
+
 export { app, analytics, auth, db, storage };

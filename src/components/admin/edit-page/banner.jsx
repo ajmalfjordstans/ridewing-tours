@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { db, storage } from '../../../app/firebase'
+import { db, deleteImage, storage } from '../../../app/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
@@ -8,6 +8,7 @@ import { addDoc, collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
 
 export default function Banner() {
   const [image, setImage] = useState(null)
+  const [currentImage, setCurrentImage] = useState(null)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false);
   const [wait, setWait] = useState(false);
@@ -19,12 +20,19 @@ export default function Banner() {
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0])
+      setCurrentImage(values.background)
       setValues({ ...values, background: "" })
     }
   }
   const handleUpload = () => {
     if (!image) return;
-
+    if (currentImage) {
+      try {
+        deleteImage(values.background)
+      } catch (err) {
+        console.log(err);
+      }
+    }
     setLoading(true);
     const storageRef = ref(storage, `images/${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
@@ -93,7 +101,7 @@ export default function Banner() {
     <div className='p-[30px]'>
       <p className='text-[22px] font-[600] pb-[20px]'>Edit Home Page Banner</p>
       <div className='h-[300px] w-[500px] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
-        <Image src={values.background ? values.background : '/images/background/blank-image.jpg'} height={500} width={500} className='absolute z-1 rounded-[10px] h-full object-cover' alt='banner' />
+        <Image src={values.background !== "" ? values.background : '/images/background/image-template.jpg'} height={500} width={500} className='absolute z-1 rounded-[10px] h-full object-cover' alt='banner' />
         <input type="file" onChange={handleChange} className='relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
       </div>
       <div className='flex mt-[15px] items-center gap-3'>

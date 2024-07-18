@@ -9,7 +9,7 @@ export default function Place() {
   const [data, setData] = useState(null);
   const [showEdit, setShowEdit] = useState(false)
   const [values, setValues] = useState(null)
- 
+
   const handleFirebaseRead = async () => {
     try {
       const docRef = doc(db, 'countries/RzYea2pgV9rjQWRNuElX/landing/GO2xP38Ec7Vh9DksibdL');
@@ -42,7 +42,37 @@ export default function Place() {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
           <div className='h-full w-full shadow-lg rounded-md border-[2px] border-black flex items-center justify-center hover:cursor-pointer'
             onClick={() => {
-              setValues(null)
+              setValues({
+                url: "",
+                name: "",
+                tag: "",
+                startLocation: "",
+                availability: "",
+                price: "",
+                details: {
+                  hours: "",
+                  language: [],
+                  guidedTour: false,
+                  entranceFeeIncluded: false,
+                  expertTourGuide: false,
+                },
+                gallery: [],
+                description: [],
+                highlight: [],
+                itinerary: {
+                  start: "",
+                  itinerary: [],
+                  end: ""
+                },
+                pricing: [],
+                otherDetails: {
+                  includes: [],
+                  excludes: [],
+                  bring: [],
+                  information: [],
+                  cancellationPolicy: ""
+                }
+              })
               setShowEdit(true)
             }}
           >

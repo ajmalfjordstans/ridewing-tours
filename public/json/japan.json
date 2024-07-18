@@ -1,7 +1,6 @@
 {
   "destinations": [
     {
-      "id": 1,
       "url": "best-of-tokyo-day-tour",
       "name": "BEST OF TOKYO DAY TOUR",
       "tag": "Recommended for First-Time Visitors",
@@ -9,7 +8,7 @@
       "availability": "Every day",
       "price": "¥15,939",
       "details": {
-        "hours": "10 Hour Tour",
+        "hours": "10",
         "language": [
           "English"
         ],
@@ -82,7 +81,6 @@
       }
     },
     {
-      "id": 2,
       "url": "kyoto-and-nara-day-tour-from-kyoto",
       "name": "KYOTO & NARA DAY TOUR FROM KYOTO",
       "tag": "Tourist Japan's Top Pick",
@@ -90,7 +88,7 @@
       "availability": "Every Monday, Wednesday, Friday, Saturday",
       "price": "¥13,773",
       "details": {
-        "hours": "9 Hour Tour",
+        "hours": "9",
         "language": [
           "English"
         ],
@@ -156,7 +154,6 @@
       }
     },
     {
-      "id": 3,
       "url": "best-of-kyoto-day-tour",
       "name": "BEST OF KYOTO DAY TOUR",
       "tag": "Recommended for First-Time Visitors",
@@ -164,7 +161,7 @@
       "availability": "Every day",
       "price": "¥13,585",
       "details": {
-        "hours": "9 Hour Tour",
+        "hours": "9",
         "language": [
           "English"
         ],
@@ -233,7 +230,6 @@
       }
     },
     {
-      "id": 4,
       "url": "best-of-osaka-walking-tour",
       "name": "BEST OF OSAKA WALKING TOUR",
       "tag": "",
@@ -241,7 +237,7 @@
       "availability": "Every Monday, Tuesday, Wednesday, Thursday, Saturday",
       "price": "¥18,900",
       "details": {
-        "hours": "6 Hour Tour",
+        "hours": "6",
         "language": [
           "English"
         ],
@@ -304,7 +300,6 @@
       }
     },
     {
-      "id": 5,
       "url": "hiroshima-and-miyajima-day-tour-from-osaka",
       "name": "HIROSHIMA & MIYAJIMA DAY TOUR FROM OSAKA",
       "tag": "",
@@ -312,7 +307,7 @@
       "availability": "Every day",
       "price": "¥72,476",
       "details": {
-        "hours": "13 Hour Tour",
+        "hours": "13",
         "language": [
           "English"
         ],
@@ -376,7 +371,6 @@
       }
     },
     {
-      "id": 6,
       "url": "kyoto-and-nara-day-tour-from-osaka",
       "name": "KYOTO & NARA DAY TOUR FROM OSAKA",
       "tag": "Recommended for First-Time Visitors",
@@ -384,7 +378,7 @@
       "availability": "Tuesday, Thursday, Sunday",
       "price": "¥13,433",
       "details": {
-        "hours": "9.5 Hour Tour",
+        "hours": "9.5",
         "language": [
           "English"
         ],

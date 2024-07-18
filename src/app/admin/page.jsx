@@ -13,7 +13,7 @@ import Home from './home'
 function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu }) {
   const [showHome, setShowHome] = useState(true)
   return (
-    <div className='bg-black h-screen text-white p-[20px] w-[300px] pb-[300px] flex flex-col'>
+    <div className='bg-black h-screen text-white p-[20px] w-[300px] pb-[300px] flex flex-col sticky top-[100px]'>
       <div className='flex items-center gap-2 hover:cursor-pointer' onClick={() => setShowMenu("pages")}>
         <div className='flex items-center gap-2'>
           <Image src={'/icons/pages.svg'} height={100} width={100} alt='pages' className='size-4' />
@@ -84,7 +84,7 @@ function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu }) {
 
 
 export default function Page() {
-  const [currentPage, setCurrentPage] = useState('banner')
+  const [currentPage, setCurrentPage] = useState('place')
   const [showMenu, setShowMenu] = useState('pages')
   const user = useSelector(state => state.user.userInfo)
   const router = useRouter()
@@ -95,12 +95,18 @@ export default function Page() {
 
   useEffect(() => {
     console.log(user);
-    if (user?.userRole !== 'admin') { router.push('/profile') }
+    // Turn back on after development
+    // if (user?.userRole !== 'admin') { router.push('/profile') } 
   }, [user])
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [currentPage])
   if (user?.userRole === 'admin')
     return (
       <div className='pb-[150px] mt-[100px] flex h-full'>
-        <AdminMenu currentPage={currentPage} setCurrentPage={setCurrentPage} showMenu={showMenu} setShowMenu={setShowMenu} />
+        <div className='w-[340px] '>
+          <AdminMenu currentPage={currentPage} setCurrentPage={setCurrentPage} showMenu={showMenu} setShowMenu={setShowMenu} />
+        </div>
         <div className='w-full'>{pages[showMenu]}</div>
       </div>
     )
