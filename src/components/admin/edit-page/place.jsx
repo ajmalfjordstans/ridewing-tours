@@ -1,12 +1,31 @@
-import EditPlace from '@/components/admin/places/edit-top-choices';
+import { db } from '@/app/firebase';
+import EditPlace from '@/components/admin/edit-page/places/edit-top-choices';
 import TopChoicesCard from '@/components/cards/top-choices-card';
 import { Button } from '@material-tailwind/react';
+import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 
 export default function Place() {
   const [data, setData] = useState(null);
   const [showEdit, setShowEdit] = useState(false)
   const [values, setValues] = useState(null)
+ 
+  const handleFirebaseRead = async () => {
+    try {
+      const docRef = doc(db, 'countries/RzYea2pgV9rjQWRNuElX/landing/GO2xP38Ec7Vh9DksibdL');
+      const unsubscribe = onSnapshot(docRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          const data = { ...docSnapshot.data(), id: docSnapshot.id };
+          console.log("Document successfully read!", data);
+          setValues(data)
+        } else {
+          console.log("No such document!");
+        }
+      });
+    } catch (error) {
+      console.error("Error reading document: ", error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('/json/japan.json');

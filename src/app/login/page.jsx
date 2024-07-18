@@ -57,7 +57,7 @@ export default function Page() {
           router.push(`/profile?country=${country}`);
         } else {
           handleSignOut();
-          alert("Unauthorized login");
+          alert("Logged in as user");
         }
       } else {
         if (user?.uid === 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid === 'TvX2p5F8mvYc0quBAxVbaicM83t1') setLoginType('admin')
