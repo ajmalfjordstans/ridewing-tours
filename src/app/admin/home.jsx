@@ -1,9 +1,8 @@
 import Banner from '@/components/admin/edit-page/banner';
 import Blogs from '@/components/admin/edit-page/blogs';
 import Place from '@/components/admin/edit-page/place';
-import Attractions from '@/components/home/attractions';
-import Destinations from '@/components/home/destinations';
-import React from 'react'
+import Destinations from '@/components/admin/edit-page/destinations';
+import Attractions from '@/components/admin/edit-page/attractions';
 
 export default function Home({ currentPage }) {
 
@@ -16,7 +15,7 @@ export default function Home({ currentPage }) {
   };
   return (
     <div>
-      <p>{pages[currentPage]}</p>
+      <div>{pages[currentPage]}</div>
     </div>
   )
 }

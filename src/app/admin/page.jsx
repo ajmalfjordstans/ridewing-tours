@@ -49,7 +49,7 @@ function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu }) {
                 <Image src={'/icons/place.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Place</p>
               </div>
-              <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'popular' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('popular')}>
+              <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'attractions' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('attractions')}>
                 <Image src={'/icons/attractions.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Popular Attractions</p>
               </div>
@@ -84,7 +84,7 @@ function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu }) {
 
 
 export default function Page() {
-  const [currentPage, setCurrentPage] = useState('place')
+  const [currentPage, setCurrentPage] = useState('banner')
   const [showMenu, setShowMenu] = useState('pages')
   const user = useSelector(state => state.user.userInfo)
   const router = useRouter()
@@ -94,7 +94,7 @@ export default function Page() {
   };
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     // Turn back on after development
     // if (user?.userRole !== 'admin') { router.push('/profile') } 
   }, [user])

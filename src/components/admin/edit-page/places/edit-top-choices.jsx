@@ -3,15 +3,19 @@ import React, { useEffect, useState } from 'react'
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Button, Timeline, TimelineBody, TimelineConnector, TimelineHeader, TimelineIcon, TimelineItem } from '@material-tailwind/react';
 import Image from 'next/image';
-import { db, storage } from '@/app/firebase';
+import { createFirebaseDocument, db, storage } from '@/app/firebase';
 import Highlight from './highlight';
 import Itineraries from './itineraries';
 import Description from './description';
 import PricingComponent from './pricing';
 import IncludesExcludesComponent from './include-exclude';
 import Extras from './extras';
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useSelector } from 'react-redux';
 
 export default function EditPlace({ data, setShowEdit }) {
+  const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [imageGallery, setImageGallery] = useState(null)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false);
@@ -103,25 +107,10 @@ export default function EditPlace({ data, setShowEdit }) {
   };
 
   const handleSave = async () => {
-    alert(JSON.stringify(values))
-    try {
-      // setLoading(true)
-      // // Reference to the specific document in the "countries" collection
-      // const docRef = doc(db, 'countries', 'RzYea2pgV9rjQWRNuElX', 'top-choices');
-
-      // // The new document data you want to add
-      // const newDocument = values;
-
-      // // Document does not exist, create it
-      // await setDoc(docRef, newDocument);
-
-      console.log("Document successfully updated!", values);
-      // setLoading(false)
-      // alert("Saved");
-    } catch (error) {
-      console.error("Error updating document: ", error);
-      setLoading(false)
-    }
+    // alert(JSON.stringify(values))
+    // path - countries/$country/top-choices/
+    const result = await createFirebaseDocument(values, `countries/${selectedCountry}/top-choices/`, values?.url)
+    if (result) setShowEdit(false)
   };
 
   useEffect(() => {

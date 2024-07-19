@@ -4,8 +4,8 @@ import { Button } from '@material-tailwind/react'
 import { addDoc, collection, doc, onSnapshot, query, QuerySnapshot, setDoc } from 'firebase/firestore'
 import Image from 'next/image'
 import React from 'react'
-import { db } from '../firebase'
-import { useSelector } from 'react-redux'
+import { db, handleFirebaseReadCollection, handleFirebaseReadDocument } from '../firebase'
+import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 export default function UserDetails({ user }) {
   const { logOut } = UserAuth()
@@ -113,7 +113,7 @@ export default function UserDetails({ user }) {
   const handleFirebaseRead = async () => {
     try {
       let itemsArr = []
-      const q = query(collection(db, 'japan'))
+      const q = query(collection(db, 'users'))
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
           itemsArr.push({ ...doc.data(), id: doc.id })
@@ -121,6 +121,7 @@ export default function UserDetails({ user }) {
       })
 
       console.log("Document successfully read!", itemsArr);
+      alert(JSON.stringify(itemsArr))
     } catch (error) {
       console.error("Error adding document: ", error);
     }

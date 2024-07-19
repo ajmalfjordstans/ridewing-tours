@@ -11,6 +11,7 @@ import Transfer from "@/components/home/transfer";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Home() {
   const [landing, setLanding] = useState({
@@ -18,12 +19,12 @@ export default function Home() {
     heading: "",
     tagline: ""
   })
+  const currentCountry = useSelector(state => state.user.selectedCountry)
   const [loadingPage, setLoadingPage] = useState(false)
-  // const selectedCountry = useSelector(state => state.user.selectedCountry);
   const handleFirebaseRead = async () => {
     try {
       setLoadingPage(true)
-      const docRef = doc(db, 'countries/RzYea2pgV9rjQWRNuElX/landing/GO2xP38Ec7Vh9DksibdL');
+      const docRef = doc(db, `countries/${currentCountry}/landing/hero`);
       const unsubscribe = onSnapshot(docRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           const data = { ...docSnapshot.data(), id: docSnapshot.id };
@@ -39,7 +40,7 @@ export default function Home() {
   };
   useEffect(() => {
     handleFirebaseRead()
-  }, [])
+  }, [currentCountry])
   if (loadingPage) return <Loading />
   else
     return (

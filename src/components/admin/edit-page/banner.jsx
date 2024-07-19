@@ -5,8 +5,10 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
 import { addDoc, collection, doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
 
 export default function Banner() {
+  const currentCountry = useSelector(state => state.user.selectedCountry)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [progress, setProgress] = useState(0)
@@ -61,7 +63,7 @@ export default function Banner() {
   const handleSave = async () => {
     try {
       // Reference to the specific document in the "countries" collection
-      const docRef = doc(db, 'countries/RzYea2pgV9rjQWRNuElX/landing/GO2xP38Ec7Vh9DksibdL');
+      const docRef = doc(db, `countries/${currentCountry}/landing/hero`);
 
       // The new document data you want to add
       const newDocument = values;
@@ -77,11 +79,11 @@ export default function Banner() {
   }
   const handleFirebaseRead = async () => {
     try {
-      const docRef = doc(db, 'countries/RzYea2pgV9rjQWRNuElX/landing/GO2xP38Ec7Vh9DksibdL');
+      const docRef = doc(db, `countries/${currentCountry}/landing/hero`);
       const unsubscribe = onSnapshot(docRef, (docSnapshot) => {
         if (docSnapshot.exists()) {
           const data = { ...docSnapshot.data(), id: docSnapshot.id };
-          console.log("Document successfully read!", data);
+          // console.log("Document successfully read!", data);
           setValues(data)
         } else {
           console.log("No such document!");
@@ -93,7 +95,8 @@ export default function Banner() {
   };
   useEffect(() => {
     handleFirebaseRead()
-  }, [])
+    setCurrentImage(null)
+  }, [currentCountry])
   useEffect(() => {
     if (image && values.background == "") setWait(true)
   }, [image])
@@ -121,7 +124,7 @@ export default function Banner() {
         </div>
       </div>
       <Button onClick={handleSave} disabled={wait} className='mt-[20px]'>
-        Save
+        {wait ? "Upload Image first": "Save"}
       </Button>
     </div>
   )
