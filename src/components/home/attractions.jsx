@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import AttractionsCard from '../cards/attractions-card'
 import { Button } from '@material-tailwind/react'
+import { collection } from 'firebase/firestore';
+import { db } from '@/app/firebase';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useSelector } from 'react-redux';
 
 const AttractionsData = [
   // Switzerland
@@ -115,20 +119,13 @@ const AttractionsData = [
 export default function Attractions() {
   const [showMore, setShowMore] = useState(false)
   const [data, setData] = useState(null);
+  const currentCountry = useSelector(state => state.user.selectedCountry)
+  const query = collection(db, `countries/${currentCountry}/attractions`)
+  const [docs, firebaseLoading, error] = useCollectionData(query)
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch('/json/japan.json');
-      const result = await response.json();
-      setData(result.attractions);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  
   useEffect(() => {
-    fetchData();
-  }, []);
+    setData(docs);
+  }, [firebaseLoading, docs]);
   return (
     <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
       <div className=' w-full flex flex-col '>

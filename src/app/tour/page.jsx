@@ -2,12 +2,30 @@
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import TourHero from './hero';
+import { useSelector } from 'react-redux';
+import { collection } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 export default function Page() {
   const searchParams = useSearchParams();
   const [urlParams, setUrlParams] = useState({});
   const [currentData, setCurrentData] = useState(null);
+  const selectedCountry = useSelector(state => state.user.selectedCountry)
+  const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/top-choices`);
+  const query = collection(db, queryPath);
+  const [docs, loading, error] = useCollectionData(query);
+  const [data, setData] = useState(null)
 
+  useEffect(() => {
+    setQueryPath(`countries/${selectedCountry}/top-choices`);
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    if (!loading) {
+      setData(docs);
+    }
+  }, [loading, docs]);
   const fetchData = async () => {
     try {
       const response = await fetch('/json/japan.json');
@@ -21,8 +39,8 @@ export default function Page() {
 
   const findData = (data, params) => {
     // console.log(data);
-    const selectedResult = data?.destinations?.find((obj) => {
-      console.log("1", obj.url, "===", params);
+    const selectedResult = data?.find((obj) => {
+      // console.log("1", obj.url, "===", params);
       if (obj.url === params.destination) {
         setCurrentData(obj);
       }
@@ -40,13 +58,14 @@ export default function Page() {
         return;
       }
       setUrlParams(params); // Set URL params
-      const result = await fetchData();
-      findData(result, params); // Pass the fetched data and params to findData
+      // const result = await fetchData();
+      console.log(data);
+      if (data) findData(data, params); // Pass the fetched data and params to findData
     };
 
     initialize();
-  }, [searchParams]);
-  console.log(currentData);
+  }, [searchParams, data]);
+  // console.log(currentData);
   return (
     <div className='text-black mt-[80px] md:mt-[180px] container mx-auto px-[5%] lg:px-0 pb-[150px]'>
       {

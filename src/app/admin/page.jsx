@@ -53,14 +53,14 @@ function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu }) {
                 <Image src={'/icons/attractions.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Popular Attractions</p>
               </div>
-              <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'destinations' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('destinations')}>
+              {/* <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'destinations' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('destinations')}>
                 <Image src={'/icons/destinations.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Destinations</p>
               </div>
               <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'blogs' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('blogs')}>
                 <Image src={'/icons/blogs.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Blogs & Articles</p>
-              </div>
+              </div> */}
             </div>
           }
         </div>

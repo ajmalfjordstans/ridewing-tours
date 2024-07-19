@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -76,6 +76,7 @@ export const createDocumentWithAutoId = async (data, path) => {
 
   try {
     const docRef = await addDoc(collectionRef, data);
+    await updateDoc(docRef, { id: docRef.id });
     console.log('Document successfully created with ID: ', docRef.id);
   } catch (error) {
     console.error('Error creating document: ', error);
