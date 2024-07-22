@@ -1,14 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import BlogCard from '../cards/blog-card'
 import { Button } from '@material-tailwind/react'
 import { useSelector } from 'react-redux'
 import { collection } from 'firebase/firestore'
 import { db } from '@/app/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import Link from 'next/link'
+import BlogCard from '@/components/cards/blog-card'
 
-export default function Blog() {
+export default function Page() {
   const [data, setData] = useState(null);
   const selectedCountry = useSelector(state => state.user.selectedCountry);
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/blogs`);
@@ -26,7 +26,7 @@ export default function Blog() {
   }, [firebaseLoading, docs]);
 
   return (
-    <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
+    <section className='py-[120px] container mx-auto px-[5%] lg:px-0'>
       <div className=' w-full flex flex-col '>
         <p className='font-bold text-[32px] leading-[42px]'>Latest Blogs & Articles</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
@@ -37,18 +37,11 @@ export default function Blog() {
         :
         <>
           <div>
-            {data?.slice(0, 2).map((blog, id) => {
+            {data && data?.map((blog, id) => {
               return (
                 <BlogCard key={id} data={blog} />
               )
             })}
-          </div>
-          <div className='w-full flex justify-center'>
-            <Link href={{ pathname: '/blog', query: { "country": selectedCountry } }} >
-              <Button
-                className='h-[48px] w-[180px] border-[red] border-[2px] rounded-[10px] bg-transparent text-[red] mt-[40px]'
-              >SEE MORE</Button>
-            </Link>
           </div>
         </>}
     </section>

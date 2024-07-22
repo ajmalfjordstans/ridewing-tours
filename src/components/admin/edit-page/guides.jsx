@@ -1,15 +1,28 @@
-import { createDocumentWithAutoId, db, deleteFirebaseDocument, deleteImage, storage, updateFirebaseDocument } from '@/app/firebase';
-import Loading from '@/app/loading';
-import AttractionsCard from '@/components/cards/attractions-card';
-import { Button } from '@material-tailwind/react';
-import { collection } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import Image from 'next/image';
+import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, storage, updateFirebaseDocument } from '@/app/firebase'
+import TransferCard from '@/app/transfers/[transfers]/card'
+import TransferGuideCard from '@/app/transfers/[transfers]/guide-card'
+import { Button } from '@material-tailwind/react'
+import { collection } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useSelector } from 'react-redux';
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useSelector } from 'react-redux'
 
-export default function Attractions() {
+const Guide = [
+  { "name": "Narita International Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Haneda Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Kansai International Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Chubu Centrair International Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Fukuoka Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "New Chitose Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Naha Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Hiroshima Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Sendai Airport", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Kagoshima Airport", "image": "/images/japan-attractions/hiroshima.jpg" }
+]
+
+export default function Guides() {
   const currentCountry = useSelector(state => state.user.selectedCountry)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
@@ -17,16 +30,35 @@ export default function Attractions() {
   const [loading, setLoading] = useState(false)
   const [wait, setWait] = useState(false)
   const [progress, setProgress] = useState('')
+  const [values, setValues] = useState({
+    title: '',
+    name: '',
+    date: null,
+    languages: [] // Initialize languages as an empty array
+  })
+  const [language, setLanguage] = useState([]);
+  //Fetch Data
   const [data, setData] = useState(null);
-  const [values, setValues] = useState(null)
-  const query = collection(db, `countries/${currentCountry}/attractions`)
-  const [docs, firebaseLoading, error] = useCollectionData(query)
+  const selectedCountry = useSelector(state => state.user.selectedCountry)
+  const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/guides`);
+  const query = collection(db, queryPath);
+  const [docs, firebaseLoading, error] = useCollectionData(query);
+
+  useEffect(() => {
+    setQueryPath(`countries/${selectedCountry}/guides`);
+  }, [selectedCountry]);
+  useEffect(() => {
+    if (!loading) {
+      setData(docs);
+      // console.log("Airports", docs);
+    }
+  }, [firebaseLoading, docs]);
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0])
-      setCurrentImage(values.background)
-      setValues({ ...values, background: "" })
+      setCurrentImage(values.image)
+      setValues({ ...values, image: "" })
     }
   }
   const handleUpload = () => {
@@ -40,7 +72,7 @@ export default function Attractions() {
     }
     setLoading(true);
     setWait(true)
-    const storageRef = ref(storage, `images/countries/${currentCountry}/attractions/${image.name}`);
+    const storageRef = ref(storage, `images/countries/${selectedCountry}/guides/${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
@@ -64,26 +96,32 @@ export default function Attractions() {
       }
     );
   };
-
   const handleSave = async (id) => {
     // console.log(values);
+    // createFirebaseDocument(value, `countries/${currentCountry}/guides`, id)
     if (id) {
-      await updateFirebaseDocument(values, `countries/${currentCountry}/attractions/${id}`)
+      await updateFirebaseDocument(values, `countries/${currentCountry}/guides/${id}`)
     } else {
-      await createDocumentWithAutoId(values, `countries/${currentCountry}/attractions`)
+      await createDocumentWithAutoId(values, `countries/${currentCountry}/guides`)
     }
-    alert("Saved")
+    // alert(JSON.stringify(value))
     setShowEdit(false)
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/attractions/${id}`)
+    await deleteFirebaseDocument(`countries/${currentCountry}/guides/${id}`)
     // alert('Delete Succesfull')
   }
 
-  useEffect(() => {
-    setData(docs);
-  }, [firebaseLoading, docs]);
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && language.trim() !== '') {
+      setValues((prevValues) => ({
+        ...prevValues,
+        languages: [...(prevValues.languages || []), language.trim()]
+      }));
+      setLanguage(""); // Clear the input field
+    }
+  };
   return (
     <>
       {firebaseLoading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
@@ -102,8 +140,8 @@ export default function Attractions() {
               </div>
               {data?.map((data, id) => {
                 return (
-                  <div key={id}>
-                    <AttractionsCard data={data} />
+                  <div key={id} className='hover:cursor-pointer' >
+                    <TransferGuideCard data={data} />
                     <div className='flex mt-[15px] gap-2'>
                       <Button fullWidth className='bg-[blue]'
                         onClick={() => {
@@ -143,10 +181,37 @@ export default function Attractions() {
                 </div>
                 <div className='flex flex-col'>
                   <div>
-                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.title} onChange={(e) => setValues({ ...values, title: e.target.value })} placeholder='title' />
+                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name of guide' />
+                  </div>
+                  <div className='border-[2px] border-black rounded-[5px] p-[10px]'>
+                    <input
+                      type="text"
+                      className=' outline-none  w-full mb-[10px]'
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder='Languages (Press enter to add language)'
+                    />
+                    <div>
+                      <div className='flex gap-2'>
+                        {values?.languages?.map((language, index) => (
+                          <div className='border-[1px] border-black rounded-[3px] p-[5px] flex gap-1 items-center' key={index}>
+                            <div>{language}</div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 hover:cursor-pointer"
+                              onClick={() => setValues({ ...values, languages: values.languages.filter(value => value !== language) })}
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <textarea type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.description} onChange={(e) => setValues({ ...values, description: e.target.value })} placeholder='Description' />
                   </div>
                 </div>
-                <Button onClick={() => handleSave(values?.id)} disabled={wait} className='mt-[20px]'>
+                <Button onClick={() => handleSave(values?.id)} disabled={wait} className=' '>
                   {wait ? "Upload Image first" : "Save"}
                 </Button>
               </div>

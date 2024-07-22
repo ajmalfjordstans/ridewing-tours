@@ -50,7 +50,7 @@ export default function Home() {
         <Attractions />
         <Transfer />
         <Destinations />
-        {/* <Blog /> */}
+        <Blog />
       </div>
     );
 }

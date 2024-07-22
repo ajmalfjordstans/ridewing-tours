@@ -1,15 +1,26 @@
-import { createDocumentWithAutoId, db, deleteFirebaseDocument, deleteImage, storage, updateFirebaseDocument } from '@/app/firebase';
-import Loading from '@/app/loading';
-import AttractionsCard from '@/components/cards/attractions-card';
-import { Button } from '@material-tailwind/react';
-import { collection } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import Image from 'next/image';
+import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, updateFirebaseDocument } from '@/app/firebase'
+import TransferCard from '@/app/transfers/[transfers]/card'
+import { Button } from '@material-tailwind/react'
+import { collection } from 'firebase/firestore'
+import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { useSelector } from 'react-redux';
+import { useCollectionData } from 'react-firebase-hooks/firestore'
+import { useSelector } from 'react-redux'
 
-export default function Attractions() {
+const AirportsDetails = [
+  { "name": "Narita International Airport", "id": "NRT", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Haneda Airport", "id": "HND", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Kansai International Airport", "id": "KIX", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Chubu Centrair International Airport", "id": "NGO", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Fukuoka Airport", "id": "FUK", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "New Chitose Airport", "id": "CTS", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Naha Airport", "id": "OKA", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Hiroshima Airport", "id": "HIJ", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Sendai Airport", "id": "SDJ", "image": "/images/japan-attractions/hiroshima.jpg" },
+  { "name": "Kagoshima Airport", "id": "KOJ", "image": "/images/japan-attractions/hiroshima.jpg" }
+]
+
+export default function Airports() {
   const currentCountry = useSelector(state => state.user.selectedCountry)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
@@ -17,9 +28,9 @@ export default function Attractions() {
   const [loading, setLoading] = useState(false)
   const [wait, setWait] = useState(false)
   const [progress, setProgress] = useState('')
-  const [data, setData] = useState(null);
   const [values, setValues] = useState(null)
-  const query = collection(db, `countries/${currentCountry}/attractions`)
+  const [data, setData] = useState(null);
+  const query = collection(db, `countries/${currentCountry}/airports`)
   const [docs, firebaseLoading, error] = useCollectionData(query)
 
   const handleChange = (e) => {
@@ -40,7 +51,7 @@ export default function Attractions() {
     }
     setLoading(true);
     setWait(true)
-    const storageRef = ref(storage, `images/countries/${currentCountry}/attractions/${image.name}`);
+    const storageRef = ref(storage, `images/countries/${currentCountry}/airports/${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
@@ -64,23 +75,17 @@ export default function Attractions() {
       }
     );
   };
-
   const handleSave = async (id) => {
     // console.log(values);
-    if (id) {
-      await updateFirebaseDocument(values, `countries/${currentCountry}/attractions/${id}`)
-    } else {
-      await createDocumentWithAutoId(values, `countries/${currentCountry}/attractions`)
-    }
+    createFirebaseDocument(values, `countries/${currentCountry}/airports`, id)
     alert("Saved")
     setShowEdit(false)
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/attractions/${id}`)
+    await deleteFirebaseDocument(`countries/${currentCountry}/airports/${id}`)
     // alert('Delete Succesfull')
   }
-
   useEffect(() => {
     setData(docs);
   }, [firebaseLoading, docs]);
@@ -102,8 +107,8 @@ export default function Attractions() {
               </div>
               {data?.map((data, id) => {
                 return (
-                  <div key={id}>
-                    <AttractionsCard data={data} />
+                  <div key={id} className='hover:cursor-pointer' >
+                    <TransferCard data={data} />
                     <div className='flex mt-[15px] gap-2'>
                       <Button fullWidth className='bg-[blue]'
                         onClick={() => {
@@ -143,7 +148,10 @@ export default function Attractions() {
                 </div>
                 <div className='flex flex-col'>
                   <div>
-                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.title} onChange={(e) => setValues({ ...values, title: e.target.value })} placeholder='title' />
+                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='id' />
+                  </div>
+                  <div>
+                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='name' />
                   </div>
                 </div>
                 <Button onClick={() => handleSave(values?.id)} disabled={wait} className='mt-[20px]'>

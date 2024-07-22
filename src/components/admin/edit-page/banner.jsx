@@ -36,7 +36,7 @@ export default function Banner() {
       }
     }
     setLoading(true);
-    const storageRef = ref(storage, `images/${image.name}`);
+    const storageRef = ref(storage, `images/countries/${currentCountry}/banner/${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
@@ -124,7 +124,7 @@ export default function Banner() {
         </div>
       </div>
       <Button onClick={handleSave} disabled={wait} className='mt-[20px]'>
-        {wait ? "Upload Image first": "Save"}
+        {wait ? "Upload Image first" : "Save"}
       </Button>
     </div>
   )

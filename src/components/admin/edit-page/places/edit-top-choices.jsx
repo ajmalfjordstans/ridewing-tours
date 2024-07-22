@@ -45,7 +45,7 @@ export default function EditPlace({ data, setShowEdit }) {
       const image = imageGallery[i];
 
       if (image) {
-        const storageRef = ref(storage, `images/${values.name}/${image.name}`);
+        const storageRef = ref(storage, `images/countries/${selectedCountry}/top-choices/${image.name}`);
         const uploadTask = uploadBytesResumable(storageRef, image);
 
         // Push the upload task promise to the array
