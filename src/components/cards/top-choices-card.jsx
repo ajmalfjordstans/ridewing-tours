@@ -38,7 +38,7 @@ export default function TopChoicesCard({ data }) {
           {data?.details?.hours &&
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/stopwatch.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
-              <p>{data.details.hours}</p>
+              <p>{data.details.hours} Hours</p>
             </div>
           }
           {/* <div className='flex items-center gap-2 '>

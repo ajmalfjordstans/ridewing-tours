@@ -3,12 +3,9 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import Banner from '../../components/admin/edit-page/banner'
-import Attractions from '../../components/admin/edit-page/attractions'
-import Blogs from '../../components/admin/edit-page/blogs'
-import Destinations from '../../components/admin/edit-page/destinations'
-import Place from '../../components/admin/edit-page/place'
 import Home from './home'
+import { Button } from '@material-tailwind/react'
+import { UserAuth } from '@/context/AuthContext'
 
 function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu }) {
   const [showHome, setShowHome] = useState(true)
@@ -96,11 +93,18 @@ export default function Page() {
   const [showMenu, setShowMenu] = useState('pages')
   const user = useSelector(state => state.user.userInfo)
   const router = useRouter()
-
+  const { googleSignIn, setLoginType } = UserAuth()
   const pages = {
     pages: <Home currentPage={currentPage} />,
   };
-
+  const handleSignIn = async () => {
+    try {
+      await googleSignIn()
+      // router.push(`/profile?country=${country}`)
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
     // console.log(user);
     // Turn back on after development
@@ -109,7 +113,7 @@ export default function Page() {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [currentPage])
-  if (user?.userRole === 'admin')
+  if (user?.userRole === 'admin') {
     return (
       <div className='pb-[150px] mt-[100px] flex h-full'>
         <div className='w-[340px] '>
@@ -118,5 +122,21 @@ export default function Page() {
         <div className='w-full'>{pages[showMenu]}</div>
       </div>
     )
+  } else if (user?.userRole === 'user' || user?.userRole === 'agent') {
+    router.push('/')
+  }
+  else {
+    return (
+      <div className='fixed top-0 left-0 h-[100vh] w-[100vw] bg-[red] flex justify-center items-center z-10 flex-col'>
+        <p className='text-[28px] md:text-[38px] text-white font-bold'>RIDEWING</p>
+        <Button className="bg-white text-custom-red w-[300px] mt-[40px] capitalize" role="menuitem" onClick={handleSignIn} >
+          Login
+        </Button>
+      </div>
+    )
+  }
+  // else {
+  //   router.push('/')
+  // }
 }
 

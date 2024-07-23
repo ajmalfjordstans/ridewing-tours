@@ -5,16 +5,16 @@ import { doc, setDoc } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { db } from '../firebase'
+import { db, readFirebaseCollection } from '../firebase'
 import { setLogin, setUserRole } from '@/components/store/userSlice'
 
 export default function Page() {
-  const [loginType, setLoginType] = useState('admin')
-  const { googleSignIn } = UserAuth()
+  const { googleSignIn, loginType, setLoginType } = UserAuth()
   const router = useRouter()
   const country = useSelector(state => state.user.selectedCountry)
   const user = useSelector(state => state.user.userInfo)
   const dispatch = useDispatch()
+  const [disable, setDisable] = useState(true)
 
   const handleSignIn = async () => {
     try {
@@ -31,47 +31,21 @@ export default function Page() {
       console.log(err);
     }
   }
-  const handleFirebaseUserUpdate = async () => {
-    try {
-      if (user) {
-        await setDoc(doc(db, "users", user.uid), {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          userRole: loginType // Use loginType for the role
-        });
-        console.log("User document successfully created!");
-      }
-    } catch (err) {
-      console.error("Error setting document: ", err);
-    }
-  }
   useEffect(() => {
-    console.log("Routing"); //If user logged in route to profile page
     if (user) {
-      if (loginType === 'admin') {
-        if (user?.uid === 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid === 'TvX2p5F8mvYc0quBAxVbaicM83t1') {
-          dispatch(setLogin(true));
-          handleFirebaseUserUpdate();
-          router.push(`/profile?country=${country}`);
-        } else {
-          handleSignOut();
-          alert("Logged in as user");
-        }
-      } else {
-        if (user?.uid === 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid === 'TvX2p5F8mvYc0quBAxVbaicM83t1') setLoginType('admin')
-        dispatch(setLogin(true));
-        handleFirebaseUserUpdate();
-        router.push(`/profile?country=${country}`);
-      }
+      console.log("Routing"); //If user logged in route to profile page
+      router.push("/profile")
     }
   }, [user])
+  // If login as is chosen, enable login button
   useEffect(() => {
     console.log(loginType);
+    if (loginType == "") {
+      setDisable(true)
+    } else {
+      setDisable(false)
+    }
   }, [loginType])
-
-
   return (
     <div className='container mx-auto px-[5%] lg:px-0 pt-[120px] flex flex-col items-center w-full pb-[150px]'>
       <div className='mt-[30px]'>
@@ -83,13 +57,13 @@ export default function Page() {
           <p className={`${loginType == 'agent' ? 'bg-custom-red text-white' : ''} px-[10px] rounded-[5px] hover:cursor-pointer transition-all duration-300 text-[26px]`}
             onClick={() => setLoginType('agent')}
           >Travel Agent</p>
-          <p className={`${loginType == 'admin' ? 'bg-custom-red text-white' : ''} px-[10px] rounded-[5px] hover:cursor-pointer transition-all duration-300 text-[26px]`}
+          {/* <p className={`${loginType == 'admin' ? 'bg-custom-red text-white' : ''} px-[10px] rounded-[5px] hover:cursor-pointer transition-all duration-300 text-[26px]`}
             onClick={() => setLoginType('admin')}
-          >Admin</p>
+          >Admin</p> */}
         </div>
       </div>
-      <Button className="bg-[green] w-[300px] mt-[40px]" role="menuitem" onClick={handleSignIn}>
-        Login
+      <Button className="bg-[green] w-[300px] mt-[40px] capitalize" role="menuitem" onClick={handleSignIn} disabled={disable}>
+        {loginType == "" ? "Choose login as to login" : "Login with Google"}
       </Button>
     </div>
   )

@@ -1,6 +1,6 @@
 'use client'
-import { auth, db } from "@/app/firebase";
-import { setLogin, setUser } from "@/components/store/userSlice";
+import { auth, db, readFirebaseCollection } from "@/app/firebase";
+import { setLogin, setUser, setUserUid } from "@/components/store/userSlice";
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { useContext, createContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +11,10 @@ const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => {
 
   const dispatch = useDispatch()
+  const [firebaseUsers, setFirebaseUsers] = useState(null)
   const user = useSelector(state => state.user.userInfo)
-
-  const googleSignIn = async (loginType) => {
+  const [loginType, setLoginType] = useState('')
+  const googleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -26,6 +27,7 @@ export const AuthContextProvider = ({ children }) => {
     signOut(auth)
     dispatch(setLogin(false))
   }
+  // If Registered user ? Read from firebase
   const handleFirebaseRead = async (uid) => {
     try {
       let itemsArr = [];
@@ -36,6 +38,7 @@ export const AuthContextProvider = ({ children }) => {
         });
         console.log("Document successfully read!");
         dispatch(setUser(itemsArr[0]))
+        dispatch(setLogin(true));
       });
 
       return unsubscribe; // Return the unsubscribe function to stop listening when needed
@@ -43,17 +46,57 @@ export const AuthContextProvider = ({ children }) => {
       console.error("Error reading document: ", error);
     }
   };
+  // If not a Registered user ? update firebase
+  const handleFirebaseUserUpdate = async (currentUser) => {
+    try {
+      const user = {
+        uid: currentUser?.uid,
+        email: currentUser?.email,
+        displayName: currentUser?.displayName,
+        photoURL: currentUser?.photoURL,
+        userRole: loginType // Use loginType for the role
+      }
+      await setDoc(doc(db, "users", currentUser?.uid), user);
+      dispatch(setUser(user))
+      dispatch(setLogin(true));
+      console.log("User document successfully created!");
+    } catch (err) {
+      console.error("Error setting document: ", err);
+    }
+  }
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (!user && currentUser)
+    // Get all users registered in google firestore
+    const getFirebaseData = async (currentUser) => {
+      const response = await readFirebaseCollection('users')
+      const registeredUser = response?.some(obj => obj.uid === currentUser?.uid);
+      if (registeredUser) {
         handleFirebaseRead(currentUser.uid)
+      } else {
+        handleFirebaseUserUpdate(currentUser)
+      }
+      setFirebaseUsers(response);
+    }
+
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!user && currentUser) {
+        getFirebaseData(currentUser)
+        // if (firebaseUsers) {
+        //   const registeredUser = firebaseUsers?.some(obj => obj.uid === currentUser?.uid);
+        //   console.log(firebaseUsers);
+        //   if (registeredUser) {
+        //     handleFirebaseRead(currentUser.uid)
+        //   } else {
+        //     handleFirebaseUserUpdate(currentUser)
+        //   }
+        // }
+      }
       dispatch(setLogin(true))
     })
     return () => unsubscribe()
   }, [user])
 
   return (
-    <AuthContext.Provider value={{ user, googleSignIn, logOut }}>
+    <AuthContext.Provider value={{ user, googleSignIn, logOut, firebaseUsers, loginType, setLoginType }}>
       {children}
     </AuthContext.Provider>
   )

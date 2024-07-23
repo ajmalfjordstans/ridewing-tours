@@ -14,17 +14,19 @@ import {
 } from "@material-tailwind/react";
 import Enquiry from '@/components/forms/enquiry-form';
 import { addItem } from '@/components/store/cartSlice';
+import AddToCart from '@/components/forms/add-to-cart-form';
 
 export default function TourHero({ data }) {
   const [showForm, setShowForm] = useState(false);
+  const [bookingPackage, setBookingPackage] = useState(data)
   // console.log(data);
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart.items);
   const addToCartHandler = () => {
-    const itemExists = cart.find(item => item.id === data.id);
+    const itemExists = cart.find(item => item.id === bookingPackage.id);
     if (!itemExists) {
       console.log("Added to cart");
-      dispatch(addItem(data));
+      dispatch(addItem(bookingPackage));
     } else {
       alert("Item already exists");
     }
@@ -32,40 +34,40 @@ export default function TourHero({ data }) {
   return (
     <>
       <div className=' w-full flex flex-col '>
-        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{data?.name}</p>
+        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{bookingPackage?.name}</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
       <div className='grid grid-cols-4 gap-5 mt-[60px]'>
-        <Image src={data?.gallery[0]} height={700} width={800} alt='image' className='col-span-3 row-span-3 h-full w-full max-h-[81vh] object-cover' />
-        <Image src={data?.gallery[1]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
-        <Image src={data?.gallery[2]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
-        <Image src={data?.gallery[3]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
+        <Image src={bookingPackage?.gallery[0]} height={700} width={800} alt='image' className='col-span-3 row-span-3 h-full w-full max-h-[81vh] object-cover' />
+        <Image src={bookingPackage?.gallery[1]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
+        <Image src={bookingPackage?.gallery[2]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
+        <Image src={bookingPackage?.gallery[3]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
       </div>
       <div className='w-full flex flex-col md:flex-row justify-between mt-[20px] border-[1px] border-[#212529] p-[15px] bg-[#EFEFEF] gap-[20px]'>
         <div>
           <div className='flex gap-3 text-[16px]'>
-            <p>Starts in {data?.startLocation}</p>
-            <p>|</p><p>Available {data?.availability}</p>
+            <p>Starts in {bookingPackage?.startLocation}</p>
+            <p>|</p><p>Available {bookingPackage?.availability}</p>
           </div>
           <div className='flex gap-4 flex-wrap mt-[12px] font-bold text-[15px] leading-[18px]'>
-            {data?.details.guidedTour &&
+            {bookingPackage?.details.guidedTour &&
               <div>
                 <p>Guided Tour</p>
               </div>
             }
-            {data?.details.entranceFeeIncluded &&
+            {bookingPackage?.details.entranceFeeIncluded &&
               <div>
                 <p>Entrance Fee Included</p>
               </div>
             }
-            {data?.details.expertTourGuide &&
+            {bookingPackage?.details.expertTourGuide &&
               <div>
                 <p>Expert Tour Guide</p>
               </div>
             }
-            {data?.details.airconditionedTransport &&
+            {bookingPackage?.details.airconditionedTransport &&
               <div>
                 <p>Air Conditioned Transport</p>
               </div>
@@ -73,11 +75,11 @@ export default function TourHero({ data }) {
 
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/stopwatch.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
-              <p>{data?.details.hours} Hour Tour</p>
+              <p>{bookingPackage?.details.hours} Hour Tour</p>
             </div>
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/language.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />
-              {data?.details?.language?.map((lang, id) => {
+              {bookingPackage?.details?.language?.map((lang, id) => {
                 return (
                   <p key={id}>{lang}</p>
                 )
@@ -88,14 +90,14 @@ export default function TourHero({ data }) {
         <div>
           <div className='flex items-end gap-2'>
             <p className='font-bold text-[20px] text-custom-red'>From</p>
-            <p className='font-bold text-[30px]'>{data?.price}</p>
+            <p className='font-bold text-[30px]'>{bookingPackage?.price}</p>
           </div>
           <Button
-            className='bg-custom-red mt-[5px]'
+            className='bg-custom-red mt-[5px] capitalize'
             fullWidth
-            // onClick={() => { setShowForm(true) }}
-            onClick={addToCartHandler}
-          >Book Now</Button>
+            onClick={() => { setShowForm(true) }}
+          // onClick={addToCartHandler}
+          >Add to Cart</Button>
         </div>
       </div>
 
@@ -104,7 +106,7 @@ export default function TourHero({ data }) {
         <div className='lg:max-w-[65%]'>
           <p className='text-[30px] font-medium'>Description</p>
           <div className='flex flex-col gap-3 mt-[20px] text-[16px]'>
-            {data?.description.map((desc, id) => {
+            {bookingPackage?.description.map((desc, id) => {
               return (
                 <p key={id}>{desc}</p>
               )
@@ -114,7 +116,7 @@ export default function TourHero({ data }) {
         <div className='bg-[#F8F9F9] p-[15px]'>
           <p className='text-[24px]'>Tour Highlights</p>
           <div className='flex flex-col gap-2 mt-[24px]'>
-            {data?.highlight.map((highlight, id) => {
+            {bookingPackage?.highlight.map((highlight, id) => {
               return (
                 <div key={id} className='flex gap-3 '>
                   <div className='h-[36px] w-[36px] bg-custom-red rounded-full flex justify-center items-center text-white text-[20px]'>{id}</div>
@@ -127,15 +129,15 @@ export default function TourHero({ data }) {
       </div>
       {/* Timeline */}
       <div className=' w-full flex flex-col mt-[40px]'>
-        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{data?.name} Itinerary</p>
+        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{bookingPackage?.name} Itinerary</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
 
         <div className=" text-[16px] leading-[36px] max-w-[700px] mx-auto mt-[70px]">
-          {data?.itinerary &&
+          {bookingPackage?.itinerary &&
             <Timeline>
-              {data?.itinerary?.start &&
+              {bookingPackage?.itinerary?.start &&
                 <TimelineItem>
                   <TimelineConnector />
                   <TimelineHeader>
@@ -148,12 +150,12 @@ export default function TourHero({ data }) {
                   </TimelineHeader>
                   <TimelineBody className="pb-1 translate-y-[-45px]">
                     <p color="blue-gray">
-                      {data?.itinerary?.start}
+                      {bookingPackage?.itinerary?.start}
                     </p>
                   </TimelineBody>
                 </TimelineItem>
               }
-              {data?.itinerary?.itinerary.map((stop, id) => {
+              {bookingPackage?.itinerary?.itinerary.map((stop, id) => {
                 return (
                   <TimelineItem key={id} >
                     <TimelineConnector />
@@ -175,7 +177,7 @@ export default function TourHero({ data }) {
                   </TimelineItem>
                 )
               })}
-              {data?.itinerary?.end &&
+              {bookingPackage?.itinerary?.end &&
                 <TimelineItem>
                   <TimelineHeader>
                     <TimelineIcon className="p-2 bg-custom-red">
@@ -187,7 +189,7 @@ export default function TourHero({ data }) {
                   </TimelineHeader>
                   <TimelineBody className='translate-y-[-45px]'>
                     <p color="blue-gray">
-                      {data?.itinerary?.end}
+                      {bookingPackage?.itinerary?.end}
                     </p>
                   </TimelineBody>
                 </TimelineItem>
@@ -207,7 +209,7 @@ export default function TourHero({ data }) {
           </div>
         </div>
         <div className='w-full flex flex-col justify-between gap-[15px] mt-[60px] border-[1px] border-[#212529] px-[40px] py-[20px] bg-[#EFEFEF] font-bold text-[15px]'>
-          {data?.pricing.map((price, id) => {
+          {bookingPackage?.pricing.map((price, id) => {
             return (
               <div className='grid lg:grid-cols-2 gap-3' key={id}>
                 <p className='max-w-[500px]'>{price.name}</p>
@@ -245,7 +247,7 @@ export default function TourHero({ data }) {
                 Includes
               </p>
               <div className='flex flex-col gap-3 mt-[20px]'>
-                {data?.otherDetails.includes.map((include, id) => {
+                {bookingPackage?.otherDetails.includes.map((include, id) => {
                   return (
                     <div className='flex items-center gap-2' key={id}>
                       <div className='h-[25px] w-[25px] bg-green-800 flex justify-center items-center rounded-full'>
@@ -265,7 +267,7 @@ export default function TourHero({ data }) {
                 Excludes
               </p>
               <div className='flex flex-col gap-3 mt-[20px]'>
-                {data?.otherDetails.excludes.map((exclude, id) => {
+                {bookingPackage?.otherDetails.excludes.map((exclude, id) => {
                   return (
                     <div className='flex items-center gap-2' key={id}>
                       <div className='h-[25px] w-[25px] bg-red-800 flex justify-center items-center rounded-full'>
@@ -286,12 +288,12 @@ export default function TourHero({ data }) {
       </div >
       <div className='w-full max-w-[900px] flex flex-col gap-7 mx-auto mt-[30px]'>
         {/* What to bring */}
-        {data?.otherDetails?.bring &&
+        {bookingPackage?.otherDetails?.bring &&
           <div >
             <p className='font-bold text-[20px]'>What to Bring</p>
             <div>
               <ul className='list-disc pl-[15px] font-medium mt-[15px]'>
-                {data?.otherDetails?.bring.map((bring, id) => {
+                {bookingPackage?.otherDetails?.bring.map((bring, id) => {
                   return (
                     <li key={id}>{bring}</li>
                   )
@@ -301,12 +303,12 @@ export default function TourHero({ data }) {
           </div>
         }
 
-        {data?.otherDetails?.information &&
+        {bookingPackage?.otherDetails?.information &&
           <div>
             <p className='font-bold text-[20px]'>Essential Information</p>
             <div>
               <ul className='list-disc pl-[15px] font-medium mt-[15px]'>
-                {data?.otherDetails?.information.map((information, id) => {
+                {bookingPackage?.otherDetails?.information.map((information, id) => {
                   return (
                     <li key={id}>{information}</li>
                   )
@@ -315,13 +317,13 @@ export default function TourHero({ data }) {
             </div>
           </div>
         }
-        {data?.otherDetails?.cancellationPolicy &&
+        {bookingPackage?.otherDetails?.cancellationPolicy &&
           <div>
             <div>
-              <p className='font-bold text-[20px]'>cancellationPolicy</p>
+              <p className='font-bold text-[20px]'>Cancellation Policy</p>
               <div>
                 <ul className='list-disc pl-[15px] font-medium mt-[15px]'>
-                  <li >{data?.otherDetails?.cancellationPolicy}</li>
+                  <li >{bookingPackage?.otherDetails?.cancellationPolicy}</li>
                 </ul>
               </div>
             </div>
@@ -330,11 +332,12 @@ export default function TourHero({ data }) {
       </div>
       {showForm &&
         <div className='fixed top-0 left-0 bg-black bg-opacity-50 h-[100dvh] w-[100vw] z-[300] backdrop-blur-sm flex justify-center items-center px-[5%] '>
-          <div className='bg-[beige] p-[20px] rounded-md w-full max-w-[700px]'>
+          <div className='bg-[beige] p-[20px] rounded-md w-full max-w-[500px]'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowForm(false)}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
-            <Enquiry tourPackage={data.name} />
+            {/* <Enquiry tourPackage={bookingPackage.name} /> */}
+            <AddToCart data={bookingPackage} setData={setBookingPackage} addToCartHandler={addToCartHandler} setShowForm={setShowForm} />
           </div>
         </div>
       }

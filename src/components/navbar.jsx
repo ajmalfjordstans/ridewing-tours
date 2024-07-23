@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setCountry, setUrl } from './store/userSlice';
+import { setCountry, setUrl, setUser } from './store/userSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { UserAuth } from '@/context/AuthContext';
 import { Button } from '@material-tailwind/react';
@@ -32,6 +32,12 @@ export default function Navbar() {
   const handleSignOut = async () => {
     try {
       await logOut()
+      // setLoading(true)
+      dispatch(setUser(null))
+      setTimeout(() => {
+        router.push("/")
+        // setLoading(false)
+      }, 3000)
     } catch (err) {
       console.log(err);
     }
@@ -130,15 +136,16 @@ export default function Navbar() {
                       <p className='uppercase'>Admin</p>
                     </Link>
                     :
-                    <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                      </svg>
-                      {cartCount !== 0 &&
-                        <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
-                      }
-                    </Link>
+                    ""
                   }
+                  <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+                    {cartCount !== 0 &&
+                      <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
+                    }
+                  </Link>
                   <Link href={{ pathname: '/profile', query: { country: urlParams } }} className='relative'
                     onMouseEnter={() => setIsOpen(true)}
                     onMouseLeave={() => {

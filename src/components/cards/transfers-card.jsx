@@ -2,10 +2,12 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 export default function TransfersCard({ data }) {
+  const selectedCountry = useSelector(state => state.user.selectedCountry)
   return (
-    <Link href={`/${data.url}`}>
+    <Link href={{ pathname: `/${data.url}`, query: { country: selectedCountry } }}>
       <div className='w-full h-[400px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
       >
         <div className='h-[305px] p-[12px] flex items-end'
@@ -21,6 +23,6 @@ export default function TransfersCard({ data }) {
           <p className='text-[22px] text-center mt-[10px]'>{data.title}</p>
         </div>
       </div>
-    </Link>
+    </Link >
   )
 }

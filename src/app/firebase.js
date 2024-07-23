@@ -40,7 +40,6 @@ export const readFirebaseCollection = async (path) => {
   querySnapshot.forEach((doc) => {
     dataArray.push({ id: doc.id, ...doc.data() });
   });
-
   return dataArray;
 }
 
@@ -114,7 +113,6 @@ export const deleteFirebaseDocument = async (path) => {
     console.error('Error deleting document: ', error);
   }
 };
-
 
 export const deleteImage = async (imagePath) => {
   try {
