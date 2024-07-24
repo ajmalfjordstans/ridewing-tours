@@ -48,7 +48,7 @@ export default function Home() {
         <Hero data={landing} />
         <TopChoices />
         <Attractions />
-        <Transfer />
+        {/* <Transfer /> */}
         <Destinations />
         <Blog />
       </div>
