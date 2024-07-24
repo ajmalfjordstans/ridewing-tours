@@ -77,8 +77,8 @@ export default function Navbar() {
       dispatch(setUrl(newUrl));
       router.push(newUrl, undefined, { shallow: true });
     }
-    console.log("Working", urlParams);
-  }, []);
+    // console.log("Working", urlParams);
+  }, [dispatch, router, searchParams, urlParams]);
 
   useEffect(() => {
     setCountries(docs);

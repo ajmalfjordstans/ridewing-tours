@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 export default function AttractionsCard({ data }) {
@@ -15,10 +16,12 @@ export default function AttractionsCard({ data }) {
           <p>Loading...</p>
         </div>
       )}
-      <img
+      <Image
         src={data.image}
         alt={data.title}
         // onLoad={() => alert('loaded')}
+        height={700}
+        width={700}
         className={`w-full h-full object-cover ${isLoaded ? 'block' : 'hidden'}`}
       />
       {isLoaded && (

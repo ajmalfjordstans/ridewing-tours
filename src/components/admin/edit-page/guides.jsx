@@ -48,7 +48,7 @@ export default function Guides() {
     setQueryPath(`countries/${selectedCountry}/guides`);
   }, [selectedCountry]);
   useEffect(() => {
-    if (!loading) {
+    if (!firebaseLoading) {
       setData(docs);
       // console.log("Airports", docs);
     }

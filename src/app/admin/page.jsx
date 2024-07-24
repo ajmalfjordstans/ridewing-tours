@@ -25,7 +25,7 @@ export default function Page() {
   useEffect(() => {
     console.log(user);
     if (user?.userRole !== 'admin') { router.push('/profile') }
-  }, [user])
+  }, [user, router])
   // Scroll to 0,0 on loading
   useEffect(() => {
     window.scrollTo(0, 0)

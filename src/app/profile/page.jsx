@@ -10,7 +10,7 @@ export default function Page() {
 
   useEffect(() => {
     if (!user) router.push('/login')
-  }, [user])
+  }, [user, router])
 
   return (
     <div className='pt-[100px] pb-[150px]'>

@@ -99,7 +99,7 @@ export default function Banner() {
   }, [currentCountry])
   useEffect(() => {
     if (image && values.background == "") setWait(true)
-  }, [image])
+  }, [image, values.background])
   return (
     <div className='p-[30px]'>
       <p className='text-[22px] font-[600] pb-[20px]'>Edit Home Page Banner</p>

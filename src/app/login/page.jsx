@@ -36,7 +36,7 @@ export default function Page() {
       console.log("Routing"); //If user logged in route to profile page
       router.push("/profile")
     }
-  }, [user])
+  }, [user, router])
   // If login as is chosen, enable login button
   useEffect(() => {
     console.log(loginType);

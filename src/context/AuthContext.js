@@ -64,6 +64,7 @@ export const AuthContextProvider = ({ children }) => {
       console.error("Error setting document: ", err);
     }
   }
+
   useEffect(() => {
     // Get all users registered in google firestore
     const getFirebaseData = async (currentUser) => {
@@ -80,20 +81,20 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (!user && currentUser) {
         getFirebaseData(currentUser)
-        // if (firebaseUsers) {
-        //   const registeredUser = firebaseUsers?.some(obj => obj.uid === currentUser?.uid);
-        //   console.log(firebaseUsers);
-        //   if (registeredUser) {
-        //     handleFirebaseRead(currentUser.uid)
-        //   } else {
-        //     handleFirebaseUserUpdate(currentUser)
-        //   }
-        // }
+        if (firebaseUsers) {
+          const registeredUser = firebaseUsers?.some(obj => obj.uid === currentUser?.uid);
+          console.log(firebaseUsers);
+          if (registeredUser) {
+            handleFirebaseRead(currentUser.uid)
+          } else {
+            handleFirebaseUserUpdate(currentUser)
+          }
+        }
       }
       dispatch(setLogin(true))
     })
     return () => unsubscribe()
-  }, [user])
+  }, [user, dispatch, handleFirebaseUserUpdate, handleFirebaseRead])
 
   return (
     <AuthContext.Provider value={{ user, googleSignIn, logOut, firebaseUsers, loginType, setLoginType }}>
