@@ -51,15 +51,24 @@ export default function TopChoicesCard({ data }) {
               <p>{data.startLocation}</p>
             </div>
           }
-          {data?.details?.language &&
-            <div className='flex items-center gap-2 '>
-              <Image src={'/logo/language.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />
-              {Array.isArray(data?.details?.language) && data?.details?.language?.map((lang, id) => {
-                return (
+          {data?.details?.language && (
+            <div className="flex items-center gap-2">
+              <Image
+                src="/logo/language.svg"
+                height={100}
+                width={100}
+                alt="stopwatch"
+                className="h-[20px] w-[30px]"
+              />
+              {Array.isArray(data?.details?.language) ? (
+                data.details.language.map((lang, id) => (
                   <p key={id}>{lang}</p>
-                )
-              })}
-            </div>}
+                ))
+              ) : (
+                console.error("data.details.language is not an array", data.details.language)
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
