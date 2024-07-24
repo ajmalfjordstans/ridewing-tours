@@ -118,7 +118,7 @@ export default function Navbar() {
                   <p className='uppercase'>CONTACT</p>
                 </Link>
                 <select className='text-custom-red rounded-[5px] font-[400] px-[10px] outline-none' value={selectedCountry} onChange={handleCountryChange}>
-                  {countries && countries.map((country, id) => {
+                  {Array.isArray(countries) && countries.map((country, id) => {
                     return (
                       <option key={id} value={country.name} className='p-[4px]'>{country.name}</option>
                     )
