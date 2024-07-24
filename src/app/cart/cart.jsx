@@ -13,8 +13,8 @@ const Cart = () => {
         <p>Your cart is empty</p>
       ) : (
         <ul>
-          {items.map(item => (
-            <li key={item.id}>
+          {items.map((item, id) => (
+            <li key={id}>
               {item.name} - {item.price}
               <button onClick={() => dispatch(removeItem(item.id))}>Remove</button>
             </li>

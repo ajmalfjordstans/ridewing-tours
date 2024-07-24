@@ -2,6 +2,7 @@ import React from 'react'
 import Airports from './airports';
 import Stations from './stations';
 import Guides from './guides';
+import CustomPackage from './custom-package';
 
 export default function Page({ params }) {
   const transfer = params.transfers
@@ -9,6 +10,7 @@ export default function Page({ params }) {
   if (params.transfers === "airports") return <Airports />
   else if (params.transfers === "stations") return <Stations />
   else if (params.transfers === "guides") return <Guides />
+  else if (params.transfers === "custom-package") return <CustomPackage />
   else
     return (
       <section className='pb-[250px] container mx-auto px-[5%] lg:px-0 mt-[100px] pt-[40px]'>

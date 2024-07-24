@@ -43,11 +43,11 @@ export default function Stations() {
   }, [loading, docs]);
 
   const showFormHandler = (data) => {
-    setSelectedStation(data)
+    setSelectedStation({ ...data, transfer: "station" })
     setShowForm(true)
   }
 
-  return (<>  
+  return (<>
     <section className='pt-[50px] pb-[150px] container mx-auto px-[5%] lg:px-0 mt-[100px]'>
       <div className=' w-full flex flex-col '>
         <p className='font-bold text-[32px] leading-[42px] capitalize'>Stations in {selectedCountry}</p>

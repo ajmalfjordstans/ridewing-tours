@@ -41,13 +41,13 @@ export default function Airports() {
   }, [loading, docs]);
 
   const showFormHandler = (data) => {
-    setSelectedAirport(data)
+    setSelectedAirport({ ...data, transfer: "airport" })
     setShowForm(true)
   }
 
   return (
     <>
-      <section className='py-[50px] container mx-auto px-[5%] lg:px-0 mt-[100px] pt-[40px]'>
+      <section className='py-[50px] container mx-auto px-[5%] lg:px-0 mt-[100px] pb-[180px]'>
         <div className=' w-full flex flex-col '>
           <p className='font-bold text-[32px] leading-[42px] capitalize'>Airports in {selectedCountry}</p>
           <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>

@@ -7,6 +7,7 @@ import { db } from '@/app/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useSelector } from 'react-redux'
 import TransferGuideCard from './guide-card'
+import TransferGuideForm from '@/components/forms/transfer-guide-form'
 
 const AirportsDetails = [
   { "name": "Narita International Airport", "id": "NRT", "image": "/images/japan-attractions/hiroshima.jpg" },
@@ -46,6 +47,14 @@ export default function Guides() {
     setShowForm(true)
   }
 
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showForm])
+
   return (<>
     <section className='pt-[50px] pb-[150px] container mx-auto px-[5%] lg:px-0 mt-[100px]'>
       <div className=' w-full flex flex-col '>
@@ -71,7 +80,7 @@ export default function Guides() {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowForm(false)}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
-            <TransferForm data={selectedStation} />
+            <TransferGuideForm data={selectedStation} />
           </div>
         </div>
       }

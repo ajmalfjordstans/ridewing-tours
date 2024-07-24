@@ -279,7 +279,7 @@ export default function EditPlace({ data, setShowEdit }) {
                 value={values?.details.hours}
                 onChange={(e) => setValues({ ...values, details: { ...values.details, hours: e.target.value } })}
                 className='p-[5px] border-[2px] border-black rounded-[5px]' />
-              <p>Hour Tour</p>
+              <p>Hour</p>
             </div>
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/language.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />
