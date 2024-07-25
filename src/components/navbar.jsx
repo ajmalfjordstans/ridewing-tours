@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { UserAuth } from '@/context/AuthContext';
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
-import { db } from '@/app/firebase';
+import { db, readFirebaseCollection } from '@/app/firebase';
 import { collection } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import Loading from '@/app/loading';
@@ -18,8 +18,8 @@ export default function Navbar() {
   const [countryNav, setCountryNav] = useState('Japan');
   const [isOpen, setIsOpen] = useState(false);
   // Set available countries
-  const query = collection(db, "countries")
-  const [docs, loading, error] = useCollectionData(query)
+  // const query = collection(db, "countries")
+  // const [docs, loading, error] = useCollectionData(query)
   const [countries, setCountries] = useState(null)
 
   const dispatch = useDispatch();
@@ -28,6 +28,7 @@ export default function Navbar() {
   const selectedCountry = useSelector(state => state.user.selectedCountry);
   const cartCount = useSelector(state => state.cart.items.length);
   const { user, googleSignIn, logOut } = UserAuth()
+  const [loading, setLoading] = useState(true)
 
   const handleSignIn = async () => {
     try {
@@ -80,10 +81,26 @@ export default function Navbar() {
     // console.log("Working", urlParams);
   }, [dispatch]);
 
-  useEffect(() => {
-    setCountries(docs);
-  }, [docs])
 
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection("countries"))
+      setCountries(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+  // useEffect(() => {
+  //   setCountries(docs);
+  // }, [docs])
+
+  // Unused code
   // useEffect(() => {
   //   const params = {};
   //   searchParams.forEach((value, key) => {

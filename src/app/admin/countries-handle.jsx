@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { createFirebaseDocument, db, deleteFirebaseDocument } from '../firebase'
+import { createFirebaseDocument, db, deleteFirebaseDocument, readFirebaseCollection } from '../firebase'
 import { collection } from 'firebase/firestore'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { Button } from '@material-tailwind/react'
 
 export default function CountriesHandle() {
-  const query = collection(db, "countries")
-  const [docs, loading, error] = useCollectionData(query)
+  // const query = collection(db, "countries")
+  // const [docs, loading, error] = useCollectionData(query) 
   const [countries, setCountries] = useState(null)
   const [showInput, setShowInput] = useState(false)
   const [showDelete, setShowDelete] = useState(false)
   const [newCountry, setNewCountry] = useState("")
   const [showDeleteWarning, setShowDeleteWarning] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection("countries"))
+      setCountries(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    setCountries(docs);
-  }, [docs])
+    getData()
+  }, [])
 
   // Add new country
   const handleAddCountry = async () => {

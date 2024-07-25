@@ -1,4 +1,4 @@
-import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, updateFirebaseDocument } from '@/app/firebase'
+import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, readFirebaseCollection, updateFirebaseDocument } from '@/app/firebase'
 import TransferCard from '@/app/transfers/[transfers]/card'
 import { Button } from '@material-tailwind/react'
 import { collection } from 'firebase/firestore'
@@ -12,14 +12,29 @@ export default function Stations() {
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [wait, setWait] = useState(false)
   const [progress, setProgress] = useState('')
   const [data, setData] = useState(null);
   const [values, setValues] = useState(null)
-  const query = collection(db, `countries/${currentCountry}/stations`)
-  const [docs, firebaseLoading, error] = useCollectionData(query)
+  // const query = collection(db, `countries/${currentCountry}/stations`)
+  // const [docs, firebaseLoading, error] = useCollectionData(query)
+  const [loading, setLoading] = useState(true)
 
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(`countries/${currentCountry}/stations`))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0])
@@ -73,12 +88,12 @@ export default function Stations() {
     await deleteFirebaseDocument(`countries/${currentCountry}/stations/${id}`)
     // alert('Delete Succesfull')
   }
-  useEffect(() => {
-    setData(docs);
-  }, [firebaseLoading, docs]);
+  // useEffect(() => {
+  //   setData(docs);
+  // }, [firebaseLoading, docs]);
   return (
     <>
-      {firebaseLoading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
+      {loading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
         <>
           <div className='px-[5%]'>
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>

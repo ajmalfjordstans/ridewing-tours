@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import TransferCard from './card'
 import TransferForm from '@/components/forms/transfer-form'
 import { collection } from 'firebase/firestore'
-import { db } from '@/app/firebase'
+import { db, readFirebaseCollection } from '@/app/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useSelector } from 'react-redux'
 
@@ -28,19 +28,36 @@ export default function Stations() {
   const [data, setData] = useState(null);
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/stations`);
-  const query = collection(db, queryPath);
-  const [docs, loading, error] = useCollectionData(query);
+  // const query = collection(db, queryPath);
+  // const [docs, loading, error] = useCollectionData(query);
+
+  const [loading, setLoading] = useState(true)
+
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(queryPath))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/stations`);
   }, [selectedCountry]);
 
-  useEffect(() => {
-    if (!loading) {
-      setData(docs);
-      // console.log("Stations", docs);
-    }
-  }, [loading, docs]);
+  // useEffect(() => {
+  //   if (!loading) {
+  //     setData(docs);
+  //     // console.log("Stations", docs);
+  //   }
+  // }, [loading, docs]);
 
   const showFormHandler = (data) => {
     setSelectedStation({ ...data, transfer: "station" })
@@ -57,7 +74,7 @@ export default function Stations() {
       </div>
       {loading ? <div className='  text-[22px] font-[600] flex justify-center items-center py-[150px] '>Loading</div> :
         <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
-          {docs?.map((data, id) => {
+          {data?.map((data, id) => {
             return (
               <div key={id} className='hover:cursor-pointer' onClick={() => showFormHandler(data)}>
                 <TransferCard data={data} />

@@ -60,13 +60,11 @@ export default function TopChoicesCard({ data }) {
                 alt="stopwatch"
                 className="h-[20px] w-[30px]"
               />
-              {Array.isArray(data?.details?.language) ? (
+              {Array.isArray(data?.details?.language) &&
                 data.details.language.map((lang, id) => (
                   <p key={id}>{lang}</p>
                 ))
-              ) : (
-                console.error("data.details.language is not an array", data.details.language)
-              )}
+              }
             </div>
           )}
         </div>

@@ -10,20 +10,36 @@ import { useSelector } from 'react-redux';
 export default function Place() {
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/top-choices`);
-  const query = collection(db, queryPath);
-  const [docs, loading, error] = useCollectionData(query);
+  // const query = collection(db, queryPath);
+  // const [docs, loading, error] = useCollectionData(query);
   const [data, setData] = useState([]);
   const [showEdit, setShowEdit] = useState(false);
   const [values, setValues] = useState(false);
+  const [loading, setLoading] = useState(true)
+
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(queryPath))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/top-choices`);
   }, [selectedCountry]);
-  useEffect(() => {
-    if (!loading) {
-      setData(docs);
-    }
-  }, [loading, docs]);
+  // useEffect(() => {
+  //   if (!loading) {
+  //     setData(docs);
+  //   }
+  // }, [loading, docs]);
   return (
     <div className='px-[5%]'>
       {loading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :

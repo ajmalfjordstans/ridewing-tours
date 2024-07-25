@@ -3,7 +3,7 @@ import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import TransferForm from '@/components/forms/transfer-form'
 import { collection } from 'firebase/firestore'
-import { db } from '@/app/firebase'
+import { db, readFirebaseCollection } from '@/app/firebase'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { useSelector } from 'react-redux'
 import TransferGuideCard from './guide-card'
@@ -28,19 +28,35 @@ export default function Guides() {
   const [data, setData] = useState(null);
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/guides`);
-  const query = collection(db, queryPath);
-  const [docs, loading, error] = useCollectionData(query);
+  // const query = collection(db, queryPath);
+  // const [docs, loading, error] = useCollectionData(query);
+  const [loading, setLoading] = useState(true)
+
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(queryPath))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/guides`);
   }, [selectedCountry]);
 
-  useEffect(() => {
-    if (!loading) {
-      setData(docs);
-      // console.log("Stations", docs);
-    }
-  }, [loading, docs]);
+  // useEffect(() => {
+  //   if (!loading) {
+  //     setData(docs);
+  //     // console.log("Stations", docs);
+  //   }
+  // }, [loading, docs]);
 
   const showFormHandler = (data) => {
     setSelectedStation(data)

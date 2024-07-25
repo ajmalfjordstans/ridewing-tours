@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { collection } from 'firebase/firestore';
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
-import { createDocumentWithAutoId, db, deleteFirebaseDocument, storage, updateFirebaseDocument } from '@/app/firebase';
+import { createDocumentWithAutoId, db, deleteFirebaseDocument, readFirebaseCollection, storage, updateFirebaseDocument } from '@/app/firebase';
 import TransferGuideCard from '@/app/transfers/[transfers]/guide-card';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
@@ -15,7 +15,7 @@ export default function Blogs() {
   const [image, setImage] = useState(null);
   const [currentImage, setCurrentImage] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [wait, setWait] = useState(false);
   const [progress, setProgress] = useState('');
   const [values, setValues] = useState({
@@ -28,19 +28,35 @@ export default function Blogs() {
   const [data, setData] = useState(null);
   const selectedCountry = useSelector(state => state.user.selectedCountry);
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/blogs`);
-  const query = collection(db, queryPath);
-  const [docs, firebaseLoading, error] = useCollectionData(query);
+  // const query = collection(db, queryPath);
+  // const [docs, firebaseLoading, error] = useCollectionData(query);
+  const [loading, setLoading] = useState(true)
+
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(queryPath))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/blogs`);
   }, [selectedCountry]);
 
-  useEffect(() => {
-    if (!firebaseLoading) {
-      setData(docs);
-      // console.log(docs[0].date.seconds)
-    }
-  }, [firebaseLoading, docs]);
+  // useEffect(() => {
+  //   if (!firebaseLoading) {
+  //     setData(docs);
+  //     // console.log(docs[0].date.seconds)
+  //   }
+  // }, [firebaseLoading, docs]);
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -108,7 +124,7 @@ export default function Blogs() {
 
   return (
     <>
-      {firebaseLoading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
+      {loading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
         <>
           <div className='px-[5%]'>
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>

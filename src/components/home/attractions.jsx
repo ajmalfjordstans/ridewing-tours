@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import AttractionsCard from '../cards/attractions-card'
 import { Button } from '@material-tailwind/react'
 import { collection } from 'firebase/firestore';
-import { db } from '@/app/firebase';
+import { db, readFirebaseCollection } from '@/app/firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useSelector } from 'react-redux';
 
@@ -120,12 +120,27 @@ export default function Attractions() {
   const [showMore, setShowMore] = useState(false)
   const [data, setData] = useState(null);
   const currentCountry = useSelector(state => state.user.selectedCountry)
-  const query = collection(db, `countries/${currentCountry}/attractions`)
-  const [docs, firebaseLoading, error] = useCollectionData(query)
+  // const query = collection(db, `countries/${currentCountry}/attractions`)
+  // const [docs, firebaseLoading, error] = useCollectionData(query)
+  const [loading, setLoading] = useState(true)
+
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(`countries/${currentCountry}/attractions`))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    setData(docs);
-  }, [firebaseLoading, docs]);
+    getData()
+  }, [])
+  // useEffect(() => {
+  //   setData(docs);
+  // }, [firebaseLoading, docs]);
   return (
     <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
       <div className=' w-full flex flex-col '>

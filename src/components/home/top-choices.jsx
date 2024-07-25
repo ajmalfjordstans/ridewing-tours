@@ -6,23 +6,38 @@ import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { collection } from 'firebase/firestore'
-import { db } from '@/app/firebase'
+import { db, readFirebaseCollection } from '@/app/firebase'
 
 export default function TopChoices() {
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/top-choices`);
-  const query = collection(db, queryPath);
-  const [docs, loading, error] = useCollectionData(query);
+  // const query = collection(db, queryPath);
+  // const [docs, loading, error] = useCollectionData(query);
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true)
 
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(queryPath))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/top-choices`);
   }, [selectedCountry]);
-  useEffect(() => {
-    if (!loading) {
-      setData(docs);
-    }
-  }, [loading, docs]);
+  // useEffect(() => {
+  //   if (!loading) {
+  //     setData(docs);
+  //   }
+  // }, [loading, docs]);
 
   return (
     <>

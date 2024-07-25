@@ -1,4 +1,4 @@
-import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, storage, updateFirebaseDocument } from '@/app/firebase'
+import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, readFirebaseCollection, storage, updateFirebaseDocument } from '@/app/firebase'
 import TransferCard from '@/app/transfers/[transfers]/card'
 import TransferGuideCard from '@/app/transfers/[transfers]/guide-card'
 import { Button } from '@material-tailwind/react'
@@ -27,7 +27,7 @@ export default function Guides() {
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [wait, setWait] = useState(false)
   const [progress, setProgress] = useState('')
   const [values, setValues] = useState({
@@ -41,18 +41,34 @@ export default function Guides() {
   const [data, setData] = useState(null);
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/guides`);
-  const query = collection(db, queryPath);
-  const [docs, firebaseLoading, error] = useCollectionData(query);
+  // const query = collection(db, queryPath);
+  // const [docs, firebaseLoading, error] = useCollectionData(query);
+  const [loading, setLoading] = useState(true)
+
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(queryPath))
+      setData(response);
+      setLoading(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/guides`);
   }, [selectedCountry]);
-  useEffect(() => {
-    if (!firebaseLoading) {
-      setData(docs);
-      // console.log("Airports", docs);
-    }
-  }, [firebaseLoading, docs]);
+  // useEffect(() => {
+  //   if (!firebaseLoading) {
+  //     setData(docs);
+  //     // console.log("Airports", docs);
+  //   }
+  // }, [firebaseLoading, docs]);
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -124,7 +140,7 @@ export default function Guides() {
   };
   return (
     <>
-      {firebaseLoading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
+      {loading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
         <>
           <div className='px-[5%]'>
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
