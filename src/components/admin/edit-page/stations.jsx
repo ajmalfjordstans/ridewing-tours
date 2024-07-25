@@ -12,23 +12,23 @@ export default function Stations() {
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
-  // const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [wait, setWait] = useState(false)
   const [progress, setProgress] = useState('')
   const [data, setData] = useState(null);
   const [values, setValues] = useState(null)
   // const query = collection(db, `countries/${currentCountry}/stations`)
   // const [docs, firebaseLoading, error] = useCollectionData(query)
-  const [loading, setLoading] = useState(true)
+  const [loadingData, setLoadingData] = useState(true)
 
   const getData = async () => {
     try {
       const response = await (readFirebaseCollection(`countries/${currentCountry}/stations`))
       setData(response);
-      setLoading(false)
+      setLoadingData(false)
     } catch (error) {
       console.log("Error reading collection");
-      setLoading(false)
+      setLoadingData(false)
     }
   }
 
@@ -82,18 +82,20 @@ export default function Stations() {
     createFirebaseDocument(values, `countries/${currentCountry}/stations`, id)
     alert("Saved")
     setShowEdit(false)
+    getData()
   }
 
   const handleDelete = async (id) => {
     await deleteFirebaseDocument(`countries/${currentCountry}/stations/${id}`)
-    // alert('Delete Succesfull')
+    getData()
+    alert('Delete Succesfull')
   }
   // useEffect(() => {
   //   setData(docs);
   // }, [firebaseLoading, docs]);
   return (
     <>
-      {loading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
+      {loadingData ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
         <>
           <div className='px-[5%]'>
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
@@ -139,7 +141,7 @@ export default function Stations() {
                   </svg>
                 </div>
                 <div className='h-[150px] w-[300px] relative flex justify-center items-center rounded-[10px] overflow-hidden mx-auto'>
-                  <Image src={values.image !== "" ? values.image : '/images/background/image-template.jpg'} height={500} width={500} className='absolute z-1 rounded-[10px] h-full object-cover' alt='banner' />
+                  <Image src={values.image ? values.image : '/images/background/image-template.jpg'} height={500} width={500} className='absolute z-1 rounded-[10px] h-full object-cover' alt='banner' />
                   <input type="file" onChange={handleChange} className='relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
                 </div>
                 <div className='flex mt-[15px] items-center gap-3'>

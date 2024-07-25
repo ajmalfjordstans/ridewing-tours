@@ -28,18 +28,20 @@ export default function Place() {
     }
   }
 
+  const deletePlaceHandle = async (data) => {
+    await deleteFirebaseDocument(`countries/${selectedCountry}/top-choices/${data.id}`)
+    // console.log(id);
+    getData()
+  }
+
   useEffect(() => {
     getData()
-  }, [])
+  }, [showEdit])
 
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/top-choices`);
   }, [selectedCountry]);
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setData(docs);
-  //   }
-  // }, [loading, docs]);
+
   return (
     <div className='px-[5%]'>
       {loading ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
@@ -101,7 +103,10 @@ export default function Place() {
                             setShowEdit(true)
                           }}>Edit</Button>
                         <Button fullWidth className='bg-[red]'
-                          onClick={() => deleteFirebaseDocument(`countries/${selectedCountry}/top-choices/${data?.url}`)}
+                          onClick={() => {
+                            console.log(data);
+                            deletePlaceHandle(data)
+                          }}
                         >Delete</Button>
                       </div>
                     </div>

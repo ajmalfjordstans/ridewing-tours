@@ -27,7 +27,7 @@ export default function CountriesHandle() {
 
   useEffect(() => {
     getData()
-  }, [])
+  },)
 
   // Add new country
   const handleAddCountry = async () => {
@@ -115,9 +115,10 @@ export default function CountriesHandle() {
               <button
                 type="button"
                 className="text-gray-700 bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2"
-                onClick={() =>
+                onClick={() => {
                   setShowInput(false)
-                }
+                  setNewCountry("")
+                }}
               >Cancel</button>
             </div>
           </div>

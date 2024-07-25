@@ -135,6 +135,9 @@ export default function EditPage({ setShowSection }) {
     countries: <CountriesHandle currentPage={currentPage} />,
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [currentPage])
 
   return (
     <div className='pb-[150px] mt-[100px] flex h-full'>

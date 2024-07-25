@@ -17,7 +17,7 @@ export default function AttractionsCard({ data }) {
         </div>
       )}
       <Image
-        src={data.image}
+        src={data.image ? data.image : "/images/background/image-template.jpg"}
         alt={data.title}
         // onLoad={() => alert('loaded')}
         height={700}

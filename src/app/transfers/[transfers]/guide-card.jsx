@@ -8,8 +8,8 @@ export default function TransferGuideCard({ data }) {
     <div className='w-full h-[200px] md:h-[368px] rounded-[10px] font-bold overflow-hidden flex items-end relative'>
 
       <Image
-        src={data.image}
-        alt={data.name}
+        src={data.image ? data.image : "/images/background/image-template.jpg"}
+        alt={data?.name ? data.name : "image"}
         className={`w-full h-full object-cover `}
         height={600}
         width={600}

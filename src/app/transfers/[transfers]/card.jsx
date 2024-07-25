@@ -8,7 +8,7 @@ export default function TransferCard({ data }) {
     <div className='w-full h-[200px] md:h-[368px] rounded-[10px] font-bold overflow-hidden flex items-end relative'>
 
       <Image
-        src={data.image}
+        src={data.image ? data.image : "/images/background/image-template.jpg"}
         alt={data.name}
         className={`w-full h-full object-cover `}
         height={600}
