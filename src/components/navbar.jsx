@@ -14,12 +14,9 @@ import Loading from '@/app/loading';
 
 export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
-  const [urlParams, setUrlParams] = useState({});
-  const [countryNav, setCountryNav] = useState('Japan');
+  const [urlParams, setUrlParams] = useState(null);
+  // const [countryNav, setCountryNav] = useState('Japan');
   const [isOpen, setIsOpen] = useState(false);
-  // Set available countries
-  // const query = collection(db, "countries")
-  // const [docs, loading, error] = useCollectionData(query)
   const [countries, setCountries] = useState(null)
 
   const dispatch = useDispatch();
@@ -27,16 +24,9 @@ export default function Navbar() {
   const searchParams = useSearchParams();
   const selectedCountry = useSelector(state => state.user.selectedCountry);
   const cartCount = useSelector(state => state.cart.items.length);
-  const { user, googleSignIn, logOut } = UserAuth()
+  const { user, logOut } = UserAuth()
   const [loading, setLoading] = useState(true)
 
-  const handleSignIn = async () => {
-    try {
-      await googleSignIn()
-    } catch (err) {
-      console.log(err);
-    }
-  }
   const handleSignOut = async () => {
     try {
       await logOut()
@@ -53,8 +43,7 @@ export default function Navbar() {
 
   const handleCountryChange = (event) => {
     const newCountry = event.target.value;
-    setCountryNav(newCountry)
-    setUrlParams(newCountry)
+    // setCountryNav(newCountry)
     dispatch(setCountry(newCountry));
     const newUrl = `?country=${newCountry}`;
     dispatch(setUrl(newUrl));
@@ -68,40 +57,12 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    const country = searchParams.get("country")
-    const tour = searchParams.get("tour")
-    console.log(tour);
-    if (country === null || '') {
-      setUrlParams({ country: "Japan" })
-      dispatch(setCountry("Japan"));
-      if (tour) {
-        const newUrl = `?tour=${tour}&country=Japan`;
-        dispatch(setUrl(newUrl));
-        router.push(newUrl, undefined, { shallow: true });
-      } else {
-        const newUrl = `?country=Japan`;
-        dispatch(setUrl(newUrl));
-        router.push(newUrl, undefined, { shallow: true });
-      }
-
-    }
-    else {
-      // handleData()
-      setUrlParams(country)
-      // if (tour) {
-      // const newUrl = `?tour=${tour}&country=${country}`;
-      const newUrl = `?${convertToQueryString(urlParams)}`;
-      dispatch(setCountry(country));
-      dispatch(setUrl(newUrl));
-      router.push(newUrl, undefined, { shallow: true });
-      // } else {
-      //   const newUrl = `?country=${country}`;
-      //   dispatch(setCountry(country));
-      //   dispatch(setUrl(newUrl));
-      //   router.push(newUrl, undefined, { shallow: true });
-      // }
-    }
-    // console.log("Working", urlParams);
+    const country = searchParams.get("country") || selectedCountry
+    dispatch(setCountry(country))
+    console.log(selectedCountry);
+    const destination = searchParams.get("destination")
+    const newUrl = `?${destination != null ? "destination=" + destination + "&" : ""}country=${country}`
+    router.push(newUrl, undefined, { shallow: true });
   }, [dispatch]);
 
 
@@ -119,10 +80,6 @@ export default function Navbar() {
   useEffect(() => {
     getData()
   }, [])
-
-  // useEffect(() => {
-  //   setCountries(docs);
-  // }, [docs])
 
   useEffect(() => {
     const params = {};

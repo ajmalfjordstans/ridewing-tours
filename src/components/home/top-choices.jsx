@@ -4,21 +4,16 @@ import TopChoicesCard from '../cards/top-choices-card'
 import { Button } from '@material-tailwind/react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { collection } from 'firebase/firestore'
 import { db, readFirebaseCollection } from '@/app/firebase'
 
 export default function TopChoices() {
   const selectedCountry = useSelector(state => state.user.selectedCountry)
-  const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/top-choices`);
-  // const query = collection(db, queryPath);
-  // const [docs, loading, error] = useCollectionData(query);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true)
 
   const getData = async () => {
     try {
-      const response = await (readFirebaseCollection(queryPath))
+      const response = await (readFirebaseCollection(`countries/${selectedCountry}/top-choices`))
       setData(response);
       setLoading(false)
     } catch (error) {
@@ -29,15 +24,7 @@ export default function TopChoices() {
 
   useEffect(() => {
     getData()
-  }, [])
-  useEffect(() => {
-    setQueryPath(`countries/${selectedCountry}/top-choices`);
   }, [selectedCountry]);
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setData(docs);
-  //   }
-  // }, [loading, docs]);
 
   return (
     <>

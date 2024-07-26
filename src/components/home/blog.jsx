@@ -11,14 +11,11 @@ import Link from 'next/link'
 export default function Blog() {
   const [data, setData] = useState(null);
   const selectedCountry = useSelector(state => state.user.selectedCountry);
-  const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/blogs`);
-  // const query = collection(db, queryPath);
-  // const [docs, firebaseLoading, error] = useCollectionData(query);
   const [loading, setLoading] = useState(true)
 
   const getData = async () => {
     try {
-      const response = await (readFirebaseCollection(queryPath))
+      const response = await (readFirebaseCollection(`countries/${selectedCountry}/blogs`))
       setData(response);
       setLoading(false)
     } catch (error) {
@@ -29,17 +26,8 @@ export default function Blog() {
 
   useEffect(() => {
     getData()
-  }, [])
-
-  useEffect(() => {
-    setQueryPath(`countries/${selectedCountry}/blogs`);
   }, [selectedCountry]);
 
-  // useEffect(() => {
-  //   if (!firebaseLoading) {
-  //     setData(docs);
-  //   }
-  // }, [firebaseLoading, docs]);
 
   return (
     <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>

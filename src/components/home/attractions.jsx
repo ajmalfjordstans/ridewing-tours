@@ -122,8 +122,6 @@ export default function Attractions() {
   const [data, setData] = useState(null);
   const [showDetails, setShowDetails] = useState(null);
   const currentCountry = useSelector(state => state.user.selectedCountry)
-  // const query = collection(db, `countries/${currentCountry}/attractions`)
-  // const [docs, firebaseLoading, error] = useCollectionData(query)
   const [loading, setLoading] = useState(true)
 
   const getData = async () => {
@@ -139,10 +137,7 @@ export default function Attractions() {
 
   useEffect(() => {
     getData()
-  }, [])
-  // useEffect(() => {
-  //   setData(docs);
-  // }, [firebaseLoading, docs]);
+  }, [currentCountry])
   return (
     <>
       <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>

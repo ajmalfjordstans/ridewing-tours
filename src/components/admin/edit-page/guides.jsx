@@ -41,8 +41,6 @@ export default function Guides() {
   const [data, setData] = useState(null);
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/guides`);
-  // const query = collection(db, queryPath);
-  // const [docs, firebaseLoading, error] = useCollectionData(query);
   const [loadingData, setLoadingData] = useState(true)
 
   const getData = async () => {
@@ -63,12 +61,6 @@ export default function Guides() {
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/guides`);
   }, [selectedCountry]);
-  // useEffect(() => {
-  //   if (!firebaseLoading) {
-  //     setData(docs);
-  //     // console.log("Airports", docs);
-  //   }
-  // }, [firebaseLoading, docs]);
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {

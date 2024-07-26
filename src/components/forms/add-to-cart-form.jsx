@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 
 export default function AddToCart({ data, setData, addToCartHandler, setShowForm }) {
   const [includeTicket, setIncludeTicket] = useState(data?.details.entranceFeeIncluded);
+  const [addedTickets, setAddedTickets] = useState([]);
   const [includeGuide, setIncludeGuide] = useState(data?.details.guidedTour);
   const [guideLanguage, setGuideLanguage] = useState('');
-  // console.log(data);
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
 
   const buttonHandler = () => {
@@ -13,13 +13,26 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
       ...data,
       includeTicket,
       includeGuide,
+      additionalTickets: addedTickets,
       guideLanguage: includeGuide ? guideLanguage : null,
     };
-    // console.log(cartData)
+    console.log(cartData)
     addToCartHandler(cartData);
     setShowForm(false);
   };
 
+  const handleAdditionalTicketsChange = (ticket) => {
+    setIncludeTicket((prev) => ({
+      ...prev,
+      [ticket.name]: !prev[ticket.name]
+    }));
+
+    if (!includeTicket[ticket.name]) {
+      setAddedTickets([...addedTickets, ticket]);
+    } else {
+      setAddedTickets(addedTickets.filter((t) => t.name !== ticket.name));
+    }
+  };
   return (
     <div>
       <p className='text-center font-[600] text-[22px] pb-[20px]'>{data.name}</p>
@@ -41,6 +54,25 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
           />
           <span className='ml-2'>Admission Ticket</span>
         </label>
+        {includeTicket &&
+          (Array.isArray(data?.tickets) && data?.tickets?.map((ticket, id) => {
+            return (
+              <div key={id} className='flex gap-2 pl-[10px]'>
+                <label className='flex items-center'>
+                  <input
+                    type='checkbox'
+                    checked={!!includeTicket[ticket.name]}
+                    onChange={() => handleAdditionalTicketsChange(ticket)}
+                  />
+                  <div className='flex gap-2 w-[200px] justify-between ml-2'>
+                    <p>{ticket.name}</p>
+                    <p>{ticket.price}</p>
+                  </div>
+                </label>
+              </div>
+            )
+          }))
+        }
         <label className='flex items-center'>
           <input
             type='checkbox'

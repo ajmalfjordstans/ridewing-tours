@@ -26,6 +26,7 @@ export default function Page() {
     console.log(user);
     if (user?.userRole !== 'admin') { router.push('/profile') }
   }, [user, router])
+
   // Scroll to 0,0 on loading
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -35,7 +36,8 @@ export default function Page() {
     return (
       <AdminHome />
     )
-  } else if (user?.userRole === 'user' || user?.userRole === 'agent') {
+  }
+   else if (user?.userRole === 'user' || user?.userRole === 'agent') {
     router.push('/')
   }
   else {

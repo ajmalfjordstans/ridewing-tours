@@ -13,6 +13,7 @@ import Extras from './extras';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useSelector } from 'react-redux';
+import AdmissionTickets from './admission-tickets';
 
 export default function EditPlace({ data, setShowEdit }) {
   const selectedCountry = useSelector(state => state.user.selectedCountry)
@@ -111,6 +112,7 @@ export default function EditPlace({ data, setShowEdit }) {
     // path - countries/$country/top-choices/
     const result = await createFirebaseDocument(values, `countries/${selectedCountry}/top-choices/`, values?.url)
     if (result) setShowEdit(false)
+    window.scrollTo(0, 0)
   };
 
   useEffect(() => {
@@ -185,6 +187,14 @@ export default function EditPlace({ data, setShowEdit }) {
                 onChange={(e) => setValues({ ...values, availability: e.target.value })}
                 className='p-[5px] border-[2px] border-black rounded-[5px]' />
             </div>
+          </div>
+          <div className='flex items-center gap-2 mt-[10px]'>
+            <p>Category</p>
+            <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values?.category}
+              onChange={(e) => setValues({ ...values, category: e.target.value })}>
+              <option value="Day Tour" className='p-[4px]'>Day Tour</option>
+              <option value="Walking" className='p-[4px]'>Walking</option>
+            </select>
           </div>
           <div className='flex flex-col gap-4 flex-wrap mt-[12px] font-bold text-[15px] leading-[18px]'>
 
@@ -291,6 +301,8 @@ export default function EditPlace({ data, setShowEdit }) {
             </div>
           </div>
         </div>
+
+
         {/* Price */}
         <div>
           <div className='flex items-end gap-2'>
@@ -321,8 +333,9 @@ export default function EditPlace({ data, setShowEdit }) {
         <Itineraries values={values} setValues={setValues} />
       </div>
 
-      {/* Pricing */}
 
+      {/* Pricing */}
+      <AdmissionTickets setValues={setValues} values={values} />
       <div className='w-full flex flex-col items-center mt-[70px]'>
         <div className='max-w-[738px] w-full flex flex-col items-center'>
           <p className='font-bold text-[32px] leading-[42px]'>Pricing</p>

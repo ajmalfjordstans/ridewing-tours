@@ -83,7 +83,6 @@ export const AuthContextProvider = ({ children }) => {
         getFirebaseData(currentUser)
         if (firebaseUsers) {
           const registeredUser = firebaseUsers?.some(obj => obj.uid === currentUser?.uid);
-          // console.log(firebaseUsers);
           if (registeredUser) {
             handleFirebaseRead(currentUser.uid)
           } else {
