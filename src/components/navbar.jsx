@@ -61,22 +61,45 @@ export default function Navbar() {
     router.push(newUrl, undefined, { shallow: true });
   };
 
+  const convertToQueryString = (params) => {
+    return Object.keys(params)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+      .join('&');
+  };
+
   useEffect(() => {
     const country = searchParams.get("country")
+    const tour = searchParams.get("tour")
+    console.log(tour);
     if (country === null || '') {
-      setUrlParams("Japan")
+      setUrlParams({ country: "Japan" })
       dispatch(setCountry("Japan"));
-      const newUrl = `?country=Japan`;
-      dispatch(setUrl(newUrl));
-      router.push(newUrl, undefined, { shallow: true });
+      if (tour) {
+        const newUrl = `?tour=${tour}&country=Japan`;
+        dispatch(setUrl(newUrl));
+        router.push(newUrl, undefined, { shallow: true });
+      } else {
+        const newUrl = `?country=Japan`;
+        dispatch(setUrl(newUrl));
+        router.push(newUrl, undefined, { shallow: true });
+      }
+
     }
     else {
       // handleData()
       setUrlParams(country)
-      const newUrl = `?country=${country}`;
+      // if (tour) {
+      // const newUrl = `?tour=${tour}&country=${country}`;
+      const newUrl = `?${convertToQueryString(urlParams)}`;
       dispatch(setCountry(country));
       dispatch(setUrl(newUrl));
       router.push(newUrl, undefined, { shallow: true });
+      // } else {
+      //   const newUrl = `?country=${country}`;
+      //   dispatch(setCountry(country));
+      //   dispatch(setUrl(newUrl));
+      //   router.push(newUrl, undefined, { shallow: true });
+      // }
     }
     // console.log("Working", urlParams);
   }, [dispatch]);
@@ -96,18 +119,19 @@ export default function Navbar() {
   useEffect(() => {
     getData()
   }, [])
+
   // useEffect(() => {
   //   setCountries(docs);
   // }, [docs])
 
-  // Unused code
-  // useEffect(() => {
-  //   const params = {};
-  //   searchParams.forEach((value, key) => {
-  //     params[key] = value;
-  //   });
-  //   setUrlParams(params);
-  // }, [searchParams]);
+  useEffect(() => {
+    const params = {};
+    searchParams.forEach((value, key) => {
+      params[key] = value;
+    });
+    setUrlParams(params);
+    // console.log(params);
+  }, [searchParams]);
 
   const handleMenuToggle = () => {
     setShowMenu(!showMenu);
@@ -115,9 +139,9 @@ export default function Navbar() {
   return (
     <>
       {loading && countries != null ? <Loading /> :
-        <div className='fixed top-0 w-full bg-[red] lg:h-[100px] text-white flex items-center z-10'>
+        <div className='fixed top-0 w-screen bg-[red] lg:h-[100px] text-white flex items-center z-10'>
           <div className='container mx-auto px-[5%] lg:px-0 flex justify-between py-[15px] items-center'>
-            <Link href={{ pathname: '/', query: { "country": urlParams } }} >
+            <Link href={{ pathname: '/', query: { "country": selectedCountry } }} >
               <div className='flex items-center md:gap-3'>
                 {/* <Image src={'/logo/logo.png'} height={300} width={500} alt='logo' className='h-[40px] lg:h-[70px] w-auto' /> */}
                 <p className='font-semibold text-[28px] uppercase'>Ridewing</p>
@@ -125,13 +149,13 @@ export default function Navbar() {
             </Link>
             <div className="hidden lg:block font-semibold text-[16px] relative">
               <div className='flex gap-10 items-center'>
-                <Link href={{ pathname: '/', query: { "country": urlParams } }} >
+                <Link href={{ pathname: '/', query: { "country": selectedCountry } }} >
                   <p className='uppercase'>HOME</p>
                 </Link>
-                <Link href={{ pathname: '/categories', query: { "country": urlParams } }} >
+                <Link href={{ pathname: '/categories', query: { "country": selectedCountry } }} >
                   <p className='uppercase'>categories</p>
                 </Link>
-                <Link href={{ pathname: '/contact', query: { "country": urlParams } }} >
+                <Link href={{ pathname: '/contact', query: { "country": selectedCountry } }} >
                   <p className='uppercase'>CONTACT</p>
                 </Link>
                 <select className='text-custom-red rounded-[5px] font-[400] px-[10px] outline-none' value={selectedCountry} onChange={handleCountryChange}>
@@ -144,7 +168,7 @@ export default function Navbar() {
                   <option value="UK" className='p-[4px]'>UK</option> */}
                 </select>
                 {!user ?
-                  <Link href={{ pathname: '/login', query: { country: urlParams } }}>
+                  <Link href={{ pathname: '/login', query: { country: selectedCountry } }}>
                     <Button
                       className='bg-white text-custom-red py-[7px] px-[12px]'
                     // onClick={handleSignIn}
@@ -152,13 +176,13 @@ export default function Navbar() {
                   </Link>
                   : (<>
                     {user?.uid == 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid == 'TvX2p5F8mvYc0quBAxVbaicM83t1' ?
-                      <Link href={{ pathname: '/admin', query: { country: urlParams } }} className='relative'>
+                      <Link href={{ pathname: '/admin', query: { country: selectedCountry } }} className='relative'>
                         <p className='uppercase'>Admin</p>
                       </Link>
                       :
                       ""
                     }
-                    <Link href={{ pathname: '/cart', query: { country: urlParams } }} className='relative'>
+                    <Link href={{ pathname: '/cart', query: { country: selectedCountry } }} className='relative'>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                       </svg>
@@ -166,7 +190,7 @@ export default function Navbar() {
                         <div className='bg-white text-custom-red flex justify-center items-center rounded-full absolute top-[-10px] right-[-10px] h-[20px] w-[20px]'>{cartCount}</div>
                       }
                     </Link>
-                    <Link href={{ pathname: '/profile', query: { country: urlParams } }} className='relative'
+                    <Link href={{ pathname: '/profile', query: { country: selectedCountry } }} className='relative'
                       onMouseEnter={() => setIsOpen(true)}
                       onMouseLeave={() => {
                         setTimeout(() => {
@@ -212,23 +236,23 @@ export default function Navbar() {
               </div>
               <div className={`fixed top-0 right-0 h-full w-64 pt-12 px-6 bg-primary-light-1 shadow-lg transition-transform duration-300 ease-in-out transform bg-white ${showMenu ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className='flex flex-col gap-6 font-[500] text-[12px] lg:text-[16px]'>
-                  <Link href={{ pathname: '/', query: { "country": urlParams } }} onClick={handleMenuToggle}>
+                  <Link href={{ pathname: '/', query: { "country": selectedCountry } }} onClick={handleMenuToggle}>
                     <p className=''>HOME</p>
                   </Link>
-                  <Link href={{ pathname: '/categories', query: { "country": urlParams } }} onClick={handleMenuToggle}>
+                  <Link href={{ pathname: '/categories', query: { "country": selectedCountry } }} onClick={handleMenuToggle}>
                     <p className=''>CATEGORIES</p>
                   </Link>
-                  <Link href={{ pathname: '/contact', query: { "country": urlParams } }} onClick={handleMenuToggle}>
+                  <Link href={{ pathname: '/contact', query: { "country": selectedCountry } }} onClick={handleMenuToggle}>
                     <p className="" role="menuitem">
                       CONTACT
                     </p>
                   </Link>
-                  <Link href={{ pathname: '/cart', query: { "country": urlParams } }} onClick={handleMenuToggle}>
+                  <Link href={{ pathname: '/cart', query: { "country": selectedCountry } }} onClick={handleMenuToggle}>
                     <p className="" role="menuitem">
                       CART
                     </p>
                   </Link>
-                  <Link href={{ pathname: '/profile', query: { "country": urlParams } }} onClick={handleMenuToggle}>
+                  <Link href={{ pathname: '/profile', query: { "country": selectedCountry } }} onClick={handleMenuToggle}>
                     <p className="" role="menuitem">
                       PROFILE
                     </p>

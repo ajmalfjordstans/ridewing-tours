@@ -5,14 +5,14 @@ import Subscribe from './forms/subscribe'
 export default function Footer() {
   return (
     <div className='bg-transparent relative'>
-      <div className='mx-[5%] lg:mx-0 absolute top-[-25%] w-full'>
-        <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] h-[246px] rounded-[12px]'>
-          <p className='font-semibold text-[28px] lg:text-[48px] text-center leading-[34px] lg:leading-[60px] max-w-[60%]'>We are Open 24x7 For assistance</p>
-          <p className='text-[24px] text-center lg:text-[36px] leading-[32px] lg:leading-[46px]'>Call Us now on <br /> +559876421</p>
-        </div>
-      </div>
       <div className=' bg-[#212529] text-white'>
-        <div className='container mx-auto px-[5%] lg:px-0 pt-[200px] pb-[100px]'>
+        <div className='lg:mx-0 translate-y-[-50%] w-full'>
+          <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] h-[246px] rounded-[12px]'>
+            <p className='font-semibold text-[28px] lg:text-[48px] text-center leading-[34px] lg:leading-[60px] max-w-[60%]'>We are Open 24x7 For assistance</p>
+            <p className='text-[24px] text-center lg:text-[36px] leading-[32px] lg:leading-[46px]'>Call Us now on <br /> +559876421</p>
+          </div>
+        </div>
+        <div className='container mx-auto px-[5%] lg:px-0  pb-[100px]'>
           {/* <div className='h-[1px] w-full bg-[#FFFFFF] my-[60px]'></div> */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 text-[16px] gap-[15px]">
             <div>

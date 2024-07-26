@@ -6,6 +6,7 @@ import { collection } from 'firebase/firestore';
 import { db, readFirebaseCollection } from '@/app/firebase';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useSelector } from 'react-redux';
+import Image from 'next/image';
 
 const AttractionsData = [
   // Switzerland
@@ -119,6 +120,7 @@ const AttractionsData = [
 export default function Attractions() {
   const [showMore, setShowMore] = useState(false)
   const [data, setData] = useState(null);
+  const [showDetails, setShowDetails] = useState(null);
   const currentCountry = useSelector(state => state.user.selectedCountry)
   // const query = collection(db, `countries/${currentCountry}/attractions`)
   // const [docs, firebaseLoading, error] = useCollectionData(query)
@@ -142,26 +144,50 @@ export default function Attractions() {
   //   setData(docs);
   // }, [firebaseLoading, docs]);
   return (
-    <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
-      <div className=' w-full flex flex-col '>
-        <p className='font-bold text-[32px] leading-[42px]'>Discover Popular Attractions</p>
-        <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
-          <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
+    <>
+      <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
+        <div className=' w-full flex flex-col '>
+          <p className='font-bold text-[32px] leading-[42px]'>Discover Popular Attractions</p>
+          <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
+            <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
+          </div>
         </div>
-      </div>
-      <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
-        {data?.slice(0, showMore ? data.length : 4).map((data, id) => {
-          return (
-            <AttractionsCard key={id} data={data} />
-          )
-        })}
-      </div>
-      <div className='w-full flex justify-center'>
-        <Button
-          onClick={() => setShowMore(!showMore)}
-          className='h-[48px] w-[180px] border-[red] border-[2px] rounded-[10px] bg-transparent text-[red] mt-[40px]'
-        >SEE {showMore ? "LESS" : "MORE"}</Button>
-      </div>
-    </section>
+        <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
+          {data?.slice(0, showMore ? data.length : 4).map((data, id) => {
+            return (
+              <div key={id} className='hover:cursor-pointer' onClick={() => setShowDetails(data)}>
+                <AttractionsCard data={data} />
+              </div>
+            )
+          })}
+        </div>
+        {data?.length > 4 &&
+          <div className='w-full flex justify-center'>
+            <Button
+              onClick={() => setShowMore(!showMore)}
+              className='h-[48px] w-[180px] border-[red] border-[2px] rounded-[10px] bg-transparent text-[red] mt-[40px]'
+            >SEE {showMore ? "LESS" : "MORE"}</Button>
+          </div>
+        }
+      </section>
+      {showDetails &&
+        <div className='fixed h-full w-full top-0 left-0 backdrop-blur-md z-10 flex justify-center items-center shadow-lg '>
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">
+            <div className="bg-white rounded-lg shadow-lg max-w-3xl max-h-[80vh] overflow-y-scroll p-6">
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+                <Image src={showDetails.image ? showDetails.image : "/images/background/image-template.jpg"} alt="Popup Image" className="w-full h-auto rounded-lg mb-4" height={700} width={700} />
+                <div >
+                  <h2 className="text-2xl font-bold text-[#E4322C] mb-2">{showDetails.title}</h2>
+                  <p className="text-gray-700 mb-4">{showDetails.description}</p>
+                </div>
+              </div>
+              <button className="px-4 py-2 bg-[#FFCC00] text-white font-semibold rounded-lg hover:bg-[#E4322C] focus:outline-none"
+                onClick={() => setShowDetails(null)}
+              >Close</button>
+            </div>
+          </div>
+        </div>
+      }
+    </>
   )
 }

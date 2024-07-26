@@ -75,7 +75,7 @@ export default function Page() {
       }
       setUrlParams(params); // Set URL params
       // const result = await fetchData();
-      console.log(data);
+      // console.log(data);
       if (data) findData(data, params); // Pass the fetched data and params to findData
     };
 

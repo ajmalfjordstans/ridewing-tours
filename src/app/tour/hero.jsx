@@ -47,7 +47,7 @@ export default function TourHero({ data }) {
       </div>
       <div className='w-full flex flex-col md:flex-row justify-between mt-[20px] border-[1px] border-[#212529] p-[15px] bg-[#EFEFEF] gap-[20px]'>
         <div>
-          <div className='flex gap-3 text-[16px]'>
+          <div className='flex flex-wrap gap-3 text-[16px]'>
             <p>Starts in {bookingPackage?.startLocation}</p>
             <p>|</p><p>Available {bookingPackage?.availability}</p>
           </div>
