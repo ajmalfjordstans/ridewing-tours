@@ -93,6 +93,11 @@ export default function Navbar() {
   const handleMenuToggle = () => {
     setShowMenu(!showMenu);
   };
+
+  if (loading) {
+    return (<Loading />)
+  }
+
   return (
     <>
       {loading && countries != null ? <Loading /> :
