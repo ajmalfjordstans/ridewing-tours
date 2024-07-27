@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import Loading from '../loading'
 import { setUser } from '@/components/store/userSlice'
 import { useDispatch } from 'react-redux'
+import Profile from '@/components/profile/profile'
 
 export default function UserDetails({ user }) {
   const { logOut } = UserAuth()
@@ -19,9 +20,9 @@ export default function UserDetails({ user }) {
     try {
       await logOut()
       setLoading(true)
+      router.push("/")
       dispatch(setUser(null))
       setTimeout(() => {
-        router.push("/")
         setLoading(false)
       }, 3000)
     } catch (err) {
@@ -56,23 +57,24 @@ export default function UserDetails({ user }) {
             </div>
           </div>
           {currentPage == "profile" &&
-            <div className='container mx-auto px-[5%] lg:px-0'>
-              <div className='flex gap-3'>
-                <p>Email:</p>
-                <p>{user?.email}</p>
-              </div>
-              <div className='flex gap-3'>
-                <p>User Id:</p>
-                <p>{user?.uid}</p>
-              </div>
-              <div className='flex gap-3'>
-                <p>User Role:</p>
-                <p>{user?.userRole}</p>
-              </div>
-              <Button className="bg-custom-red my-[20px]" role="menuitem" onClick={handleSignOut}>
-                Logout
-              </Button>
-            </div>
+            <Profile user={user} handleSignOut={handleSignOut} />
+            // <div className='container mx-auto px-[5%] lg:px-0'>
+            //   <div className='flex gap-3'>
+            //     <p>Email:</p>
+            //     <p>{user?.email}</p>
+            //   </div>
+            //   <div className='flex gap-3'>
+            //     <p>User Id:</p>
+            //     <p>{user?.uid}</p>
+            //   </div>
+            //   <div className='flex gap-3'>
+            //     <p>User Role:</p>
+            //     <p>{user?.userRole}</p>
+            //   </div>
+            //   <Button className="bg-custom-red my-[20px]" role="menuitem" onClick={handleSignOut}>
+            //     Logout
+            //   </Button>
+            // </div>
           }
           {currentPage == "bookings" &&
             <div className='container mx-auto px-[5%] lg:px-0'>
