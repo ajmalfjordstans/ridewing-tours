@@ -126,16 +126,44 @@ export default function Navbar() {
                       <option key={id} value={country.name} className='p-[4px]'>{country.name}</option>
                     )
                   })}
-                  {/* <option value="Japan" className='p-[4px]'>Japan</option>
-                  <option value="UK" className='p-[4px]'>UK</option> */}
                 </select>
                 {!user ?
-                  <Link href={{ pathname: '/login', query: { country: selectedCountry } }}>
-                    <Button
-                      className='bg-white text-custom-red py-[7px] px-[12px]'
-                    // onClick={handleSignIn}
-                    >Login</Button>
-                  </Link>
+                  <>
+                    <Link href={{ pathname: '/login', query: { country: selectedCountry } }}>
+                      <Button
+                        className='bg-white text-custom-red py-[7px] px-[12px]'
+                        onMouseEnter={() => setIsOpen(true)}
+                        onMouseLeave={() => {
+                          setTimeout(() => {
+                            setIsOpen(false)
+                          }, 3000)
+                        }}
+                      >Login</Button>
+                    </Link>
+                    {isOpen && (
+                      <div className="origin-top-right mt-2 absolute top-[30px] w-46 right-0 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu"
+                          onMouseEnter={() => setIsOpen(true)}
+                          onMouseLeave={() => {
+                            setTimeout(() => {
+                              setIsOpen(false)
+                            }, 2000)
+                          }}
+                        >
+                          <Link href={{ pathname: '/login/user', query: { country: selectedCountry } }}>
+                            <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem">
+                              Login as User
+                            </p>
+                          </Link>
+                          <Link href={{ pathname: '/login/agent', query: { country: selectedCountry } }}>
+                            <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" role="menuitem">
+                              Login as Travel Agent
+                            </p>
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </>
                   : (<>
                     {user?.uid == 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid == 'TvX2p5F8mvYc0quBAxVbaicM83t1' ?
                       <Link href={{ pathname: '/admin', query: { country: selectedCountry } }} className='relative'>
@@ -223,7 +251,7 @@ export default function Navbar() {
               </div>
             </div>
           </div >
-        </div>
+        </div >
       }
     </>
   )
