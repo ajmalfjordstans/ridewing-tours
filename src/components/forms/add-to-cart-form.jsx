@@ -64,7 +64,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                       <p>{ticket.price} / person</p>
                     </div>
                     <p className="text-[12px] text-ellipsis line-clamp-3 h-[55px]">
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy
                     </p>
 
                   </div>
