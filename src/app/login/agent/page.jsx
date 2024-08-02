@@ -99,7 +99,7 @@ export default function Page() {
                 <p className='text-[36px] font-[600]'>Hello, Friend!</p>
                 <p className='text-[16px] font-[400] text-center'>Enter your personal details and<br /> start journey with us</p>
                 <Button className='border-[1px] border-white rounded-[50px] bg-inherit text-[20px] font-[400] capitalize px-[40px] py-[12px] mt-[20px]' onClick={handleSignUp}>
-                  Sign up
+                  Sign up instead
                 </Button>
               </motion.div>
             ) : (
@@ -113,7 +113,7 @@ export default function Page() {
                 <p className='text-[36px] font-[600]'>Welcome Back!</p>
                 <p className='text-[16px] font-[400] text-center'>To keep connected with us please<br /> login with your personal info</p>
                 <Button className='border-[1px] border-white rounded-[50px] bg-inherit text-[20px] font-[400] capitalize px-[40px] py-[12px] mt-[20px]' onClick={() => setShowSignIn(true)}>
-                  Sign in
+                  Sign in instead
                 </Button>
               </motion.div>
             )}

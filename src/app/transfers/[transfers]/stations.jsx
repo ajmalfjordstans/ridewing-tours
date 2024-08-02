@@ -85,11 +85,17 @@ export default function Stations() {
       }
       {showForm &&
         <div className='fixed top-0 left-0 h-[100vh] w-[100vw] flex justify-center items-center backdrop-blur-sm z-10'>
-          <div className='bg-white p-[20px] rounded-[5px] shadow-2xl'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowForm(false)}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-            <TransferForm data={selectedStation} />
+          <div className='bg-white p-[20px] rounded-[15px] shadow-2xl max-h-[90vh] overflow-y-scroll'>
+            <div className='flex w-full justify-end'>
+              <div
+                className='bg-custom-red p-[5px] cursor-pointer h-[25px] w-[25px] text-white font-[400] flex justify-center items-center rounded-[10px] text-[20px]'
+                onClick={() => setShowForm(false)}
+                whileTap={{ scale: .9 }}
+              >
+                X
+              </div>
+            </div>
+                       <TransferForm data={selectedStation} />
           </div>
         </div>
       }

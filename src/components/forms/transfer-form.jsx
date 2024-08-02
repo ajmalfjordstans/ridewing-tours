@@ -34,6 +34,7 @@ export default function TransferForm({ data }) {
     try {
       setSubmitting(true);
       addToCartHandler(values)
+      // alert(JSON.stringify(values))
       console.log('Form submitted successfully.');
       resetForm();
       setSubmitting(false);
@@ -47,6 +48,9 @@ export default function TransferForm({ data }) {
     <>
       <Formik
         initialValues={{
+          name: "",
+          contact: "",
+          email: "",
           passengers: '',
           luggage: '',
           pickupTime: '',
@@ -58,6 +62,15 @@ export default function TransferForm({ data }) {
         }}
         validate={(values) => {
           const errors = {};
+          if (!values.name) {
+            errors.name = 'Name is required';
+          }
+          if (!values.contact) {
+            errors.contact = 'Contact is required';
+          }
+          if (!values.email) {
+            errors.email = 'Email is required';
+          }
           if (!values.passengers) {
             errors.passengers = 'Number of passengers is required';
           }
@@ -88,8 +101,24 @@ export default function TransferForm({ data }) {
       >
         {({ isSubmitting }) => (
           <Form>
-            <p className='text-center text-[24px] font-[600]'>{data.name}</p>
+            <p className='text-center text-[24px] font-[400]'>{data.name}</p>
+            <div className='w-full h-[1px] my-[20px] bg-black'></div>
             <div className='grid grid-cols-2 gap-2 pb-[40px]'>
+              <div className='flex flex-col gap-1 col-span-2'>
+                <label htmlFor="name">Full Name*</label>
+                <Field type="text" name="name" className='border-[2px] rounded-md p-[10px]' />
+                <ErrorMessage name="name" component="div" className="text-[red] text-[12px]" />
+              </div>
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="contact">Contact Number*</label>
+                <Field type="number" name="contact" className='border-[2px] rounded-md p-[10px]' />
+                <ErrorMessage name="contact" component="div" className="text-[red] text-[12px]" />
+              </div>
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="email">Email*</label>
+                <Field type="text" name="email" className='border-[2px] rounded-md p-[10px]' />
+                <ErrorMessage name="email" component="div" className="text-[red] text-[12px]" />
+              </div>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="passengers">Number of Passengers*</label>
                 <Field type="number" name="passengers" className='border-[2px] rounded-md p-[10px]' />

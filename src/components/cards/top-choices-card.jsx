@@ -25,7 +25,7 @@ export default function TopChoicesCard({ data }) {
           {data?.price &&
             <div className='flex items-center gap-2'>
               <p className='text-secondary text-[14px]'>From</p>
-              <p className='text-white text-[26px]'>{data.price}</p>
+              <p className='text-white text-[26px]'>{data?.currency}{data.price}</p>
             </div>}
         </div>
       </div>

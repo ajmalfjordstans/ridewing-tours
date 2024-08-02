@@ -199,9 +199,6 @@ export default function Attractions() {
                     <p className="text-gray-700 mb-4">{showDetails.description}</p>
                   </div>
                 </div>
-                {/* <button className="px-4 py-2 bg-[#FFCC00] text-white font-semibold rounded-lg hover:bg-[#E4322C] focus:outline-none"
-                  onClick={() => setShowDetails(null)}
-                >Close</button>*/}
               </motion.div>
             </div>
           </div>

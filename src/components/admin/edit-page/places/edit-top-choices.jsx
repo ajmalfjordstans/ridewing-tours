@@ -304,7 +304,15 @@ export default function EditPlace({ data, setShowEdit }) {
 
 
         {/* Price */}
-        <div>
+        <div className='flex flex-col gap-2'>
+          <div className='flex items-end gap-2'>
+            <p className=''>Currency </p>
+            <input type="text"
+              value={values?.currency}
+              onChange={(e) => setValues({ ...values, currency: e.target.value })}
+              placeholder='$'
+              className='p-[5px] border-[2px] border-black rounded-[5px]' />
+          </div>
           <div className='flex items-end gap-2'>
             <p className='font-bold text-[20px] text-custom-red'>From</p>
             <input type="text"

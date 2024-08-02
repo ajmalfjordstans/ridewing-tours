@@ -90,7 +90,7 @@ export default function TourHero({ data }) {
         <div>
           <div className='flex items-end gap-2'>
             <p className='font-bold text-[20px] text-custom-red'>From</p>
-            <p className='font-bold text-[30px]'>{bookingPackage?.price}</p>
+            <p className='font-bold text-[30px]'>{bookingPackage?.currency}{bookingPackage?.price}</p>
           </div>
           <Button
             className='bg-custom-red mt-[5px] capitalize'
@@ -333,9 +333,11 @@ export default function TourHero({ data }) {
       {showForm &&
         <div className='fixed top-0 left-0 bg-black bg-opacity-50 h-[100dvh] w-[100vw] z-[300] backdrop-blur-sm flex justify-center items-center px-[5%] '>
           <div className='bg-[beige] p-[20px] rounded-md w-full max-w-[500px]'>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowForm(false)}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
+            <div className='flex w-full justify-end'>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowForm(false)}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </div>
             {/* <Enquiry tourPackage={bookingPackage.name} /> */}
             <AddToCart data={bookingPackage} setData={setBookingPackage} addToCartHandler={addToCartHandler} setShowForm={setShowForm} />
           </div>

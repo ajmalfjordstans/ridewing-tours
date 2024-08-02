@@ -1,4 +1,5 @@
 import { Button } from '@material-tailwind/react';
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 export default function AddToCart({ data, setData, addToCartHandler, setShowForm }) {
@@ -6,6 +7,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [addedTickets, setAddedTickets] = useState([]);
   const [includeGuide, setIncludeGuide] = useState(data?.details.guidedTour);
   const [guideLanguage, setGuideLanguage] = useState('');
+  const [hoursGuideNeeded, setHoursGuideNeeded] = useState(1);
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
 
   const buttonHandler = () => {
@@ -15,6 +17,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
       includeGuide,
       additionalTickets: addedTickets,
       guideLanguage: includeGuide ? guideLanguage : null,
+      hoursGuideNeeded: hoursGuideNeeded
     };
     console.log(cartData)
     addToCartHandler(cartData);
@@ -35,16 +38,6 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   };
   return (
     <div>
-      <p className='text-center font-[600] text-[22px] pb-[20px]'>{data.name}</p>
-      <p>Starts in {data.startLocation}</p>
-      <p>Available {data.availability}</p>
-      <p>Duration {data.details.hours} Hours</p>
-      <div className='flex gap-2'>
-        <p>Languages: </p>
-        {data.details.language.map((lang, id) => (
-          <p key={id}>{lang}</p>
-        ))}
-      </div>
       <div className='flex flex-col gap-2 mt-4'>
         <label className='flex items-center'>
           <input
@@ -58,15 +51,22 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
           (Array.isArray(data?.tickets) && data?.tickets?.map((ticket, id) => {
             return (
               <div key={id} className='flex gap-2 pl-[10px]'>
-                <label className='flex items-center'>
+                <label className='flex items-center gap-2'>
                   <input
                     type='checkbox'
                     checked={!!includeTicket[ticket.name]}
                     onChange={() => handleAdditionalTicketsChange(ticket)}
                   />
-                  <div className='flex gap-2 w-[200px] justify-between ml-2'>
-                    <p>{ticket.name}</p>
-                    <p>{ticket.price}</p>
+                  <Image src={'/images/background/image-template.jpg'} height={500} width={500} alt='ticket image' className='h-[80px] w-[120px] object-cover' />
+                  <div>
+                    <div className='flex gap-2 w-[300px] justify-between'>
+                      <p>{ticket.name}</p>
+                      <p>{ticket.price} / person</p>
+                    </div>
+                    <p className="text-[12px] text-ellipsis line-clamp-3 h-[55px]">
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+                    </p>
+
                   </div>
                 </label>
               </div>
@@ -82,7 +82,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
           <span className='ml-2'>Guide</span>
         </label>
         {includeGuide && (
-          <div>
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
             <label className='block'>
               <span>Guide Language:</span>
               <select
@@ -96,11 +96,29 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                 ))}
               </select>
             </label>
+            <label className='block'>
+              <span>Hours guide needed</span>
+              <input type="number"
+                className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
+                min={"1"}
+                value={hoursGuideNeeded}
+                onChange={(e) => setHoursGuideNeeded(e.target.value)}
+              />
+              {/* <select
+                value={guideLanguage}
+                className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
+              >
+                <option value='' disabled>Select a language</option>
+                {guideLanguages.map((lang, index) => (
+                  <option key={index} value={lang}>{lang}</option>
+                ))}
+              </select> */}
+            </label>
           </div>
         )}
       </div>
       <Button
-        className='bg-custom-red mt-[15px] capitalize'
+        className='bg-custom-red mt-[15px] capitalize font-[400]'
         fullWidth
         onClick={buttonHandler}
       >

@@ -18,7 +18,6 @@ const Cart = () => {
             {items.map((item, id) => (
               <li key={id}>
                 <PackageCard data={item} />
-                {item.name} - {item.price}
                 <button onClick={() => dispatch(removeItem(item.id))}>Remove</button>
               </li>
             ))}
