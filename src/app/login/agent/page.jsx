@@ -42,16 +42,16 @@ export default function Page() {
   }, [loginType])
   return (
     <div className='container mx-auto px-[5%] lg:px-0 pt-[130px] flex flex-col items-center w-full pb-[250px] '>
-      <AnimatePresence mode='wait'>
-        <div className='w-full max-w-[1121px] grid grid-cols-2 rounded-[15px] overflow-hidden mt-[80px]'
-          style={{ boxShadow: "0px 4px 20.1px -2px #00000040" }}
+      <div className='w-full max-w-[1121px] grid grid-cols-2 rounded-[15px] overflow-hidden mt-[80px]'
+        style={{ boxShadow: "0px 4px 20.1px -2px #00000040" }}
+      >
+        <motion.div
+          className="py-[70px] flex flex-col justify-center items-center"
+          initial={{ x: "100%" }}
+          animate={{ x: showSignIn ? "0%" : "100%" }}
+          transition={{ type: "spring", stiffness: 50 }}
         >
-          <motion.div
-            className="py-[70px] flex flex-col justify-center items-center"
-            initial={{ x: "100%" }}
-            animate={{ x: showSignIn ? "0%" : "100%" }}
-            transition={{ type: "spring", stiffness: 50 }}
-          >
+          <AnimatePresence mode='wait'>
             {showSignIn ? (
               <motion.div
                 className='py-[70px] flex flex-col justify-center items-center'
@@ -79,13 +79,15 @@ export default function Page() {
                 </Button>
               </motion.div>
             )}
-          </motion.div>
-          <motion.div
-            className="bg-custom-red py-[70px] flex flex-col justify-center items-center text-white gap-2"
-            initial={{ x: "100%" }}
-            animate={{ x: showSignIn ? "0%" : "-100%" }}
-            transition={{ type: "spring", stiffness: 50 }}
-          >
+          </AnimatePresence>
+        </motion.div>
+        <motion.div
+          className="bg-custom-red py-[70px] flex flex-col justify-center items-center text-white gap-2"
+          initial={{ x: "100%" }}
+          animate={{ x: showSignIn ? "0%" : "-100%" }}
+          transition={{ type: "spring", stiffness: 50 }}
+        >
+          <AnimatePresence mode='wait'>
             {showSignIn ? (
               <motion.div
                 className='bg-custom-red py-[70px] flex flex-col justify-center items-center text-white gap-2'
@@ -115,9 +117,9 @@ export default function Page() {
                 </Button>
               </motion.div>
             )}
-          </motion.div>
-        </div>
-      </AnimatePresence>
+          </AnimatePresence>
+        </motion.div>
+      </div>
     </div >
   )
 }

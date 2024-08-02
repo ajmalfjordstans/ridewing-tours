@@ -216,7 +216,7 @@ export default function Hero() {
                       <p className='mt-3'>How it feels now 41.01, clear sky</p>
                     </div>
                     <div>
-                      <p className='text-[24px]'>Don't Miss These Activities</p>
+                      <p className='text-[24px]'>Don&apos;t Miss These Activities</p>
                       <ul className='list-disc pl-4 text-[16px] mt-[10px]'>
                         <li>June to August - Summer Festival</li>
                         <li>September to November - Autumn Fair</li>
