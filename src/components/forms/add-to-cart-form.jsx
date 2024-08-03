@@ -47,7 +47,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
           />
           <span className='ml-2'>Admission Ticket</span>
         </label>
-        {includeTicket &&
+        {
           (Array.isArray(data?.tickets) && data?.tickets?.map((ticket, id) => {
             return (
               <div key={id} className='flex gap-2 pl-[10px]'>

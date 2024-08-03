@@ -22,11 +22,11 @@ export default function TourHero({ data }) {
   // console.log(data);
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart.items);
-  const addToCartHandler = () => {
+  const addToCartHandler = (newData) => {
     const itemExists = cart.find(item => item.id === bookingPackage.id);
     if (!itemExists) {
       console.log("Added to cart");
-      dispatch(addItem(bookingPackage));
+      dispatch(addItem(newData));
     } else {
       alert("Item already exists");
     }
