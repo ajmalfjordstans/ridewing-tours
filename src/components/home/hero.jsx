@@ -142,6 +142,7 @@ export default function Hero() {
                             <div
                               style={{ boxShadow: '0px 4px 11.2px 0px #00000040' }}
                               className='rounded-[10px] p-[15px] h-[96px] w-[184px] flex items-center'
+                              key={id}
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
