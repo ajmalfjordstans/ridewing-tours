@@ -5,7 +5,7 @@ import Subscribe from './forms/subscribe'
 export default function Footer() {
   return (
     <div className='bg-transparent relative'>
-      <div className=' bg-[#212529] text-white'>
+      <div className=' bg-[#212529] text-white mt-[125px]'>
         <div className='lg:mx-0 translate-y-[-50%] w-full'>
           <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] h-[246px] rounded-[12px]'>
             <p className='font-semibold text-[28px] lg:text-[48px] text-center leading-[34px] lg:leading-[60px] max-w-[60%]'>We are Open 24x7 For assistance</p>

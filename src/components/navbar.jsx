@@ -129,7 +129,7 @@ export default function Navbar() {
                 </select>
                 {!user ?
                   <>
-                    <Link href={{ pathname: '/login', query: { country: selectedCountry } }}>
+                    <Link href={{ pathname: '/login/user', query: { country: selectedCountry } }}>
                       <Button
                         className='bg-white text-custom-red py-[7px] px-[12px]'
                         onMouseEnter={() => setIsOpen(true)}

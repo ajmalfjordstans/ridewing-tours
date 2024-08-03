@@ -34,7 +34,7 @@ export default function UserDetails({ user }) {
       {loading ? <Loading />
         :
         <div className=''>
-          <Image src={"/images/background/profile-banner1.jpg"} alt='profile' height={800} width={1400} className='h-[300px] w-screen object-cover ' />
+          <Image src={"/images/background/profile-banner.jpg"} alt='profile' height={800} width={1400} className='h-[300px] w-screen object-cover ' />
           <div className='container mx-auto px-[5%] lg:px-0 translate-y-[-70px] flex gap-10'>
             <div className='flex gap-3 '>
               <Image src={user?.photoURL} alt='profile' height={800} width={800} className='h-[250px] w-[250px] rounded-full border-[10px] border-white' />

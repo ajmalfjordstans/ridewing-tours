@@ -9,7 +9,7 @@ export default function Page() {
   const user = useSelector(state => state.user.userInfo)
 
   useEffect(() => {
-    if (!user) router.push('/login')
+    if (!user) router.push('/login/user')
   }, [user, router])
 
   return (
