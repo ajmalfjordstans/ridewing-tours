@@ -90,9 +90,10 @@ export const AuthContextProvider = ({ children }) => {
             console.log(currentUser);
             handleFirebaseUserUpdate(currentUser)
           }
+          dispatch(setLogin(true))
         }
       }
-      dispatch(setLogin(true))
+
     })
     return () => unsubscribe()
   }, [user, dispatch, handleFirebaseUserUpdate, handleFirebaseRead])

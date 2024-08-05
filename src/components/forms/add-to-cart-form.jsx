@@ -16,7 +16,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const buttonHandler = () => {
     if (date == null) {
       alert("Pick a date to continue")
-    }else if(includeGuide && guideLanguage == ""){
+    } else if (includeGuide && guideLanguage == "") {
       alert("Select Guide Language")
     } else {
       const cartData = {
@@ -134,7 +134,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
             checked={includeGuide}
             onChange={() => setIncludeGuide(!includeGuide)}
           />
-          <span className='ml-2'>Guide</span>
+          <span className='ml-2'>Need Guide?</span>
         </label>
         {includeGuide && (
           <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>

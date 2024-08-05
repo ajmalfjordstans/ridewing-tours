@@ -47,7 +47,7 @@ export default function Page() {
       >
         <motion.div
           className="py-[70px] flex flex-col justify-center items-center"
-          initial={{ x: "100%" }}
+          initial={{ x: "-100%" }}
           animate={{ x: showSignIn ? "0%" : "100%" }}
           transition={{ type: "spring", stiffness: 50 }}
         >
