@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Timeline,
@@ -31,6 +31,14 @@ export default function TourHero({ data }) {
       alert("Item already exists");
     }
   }
+
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showForm])
   return (
     <>
       <div className=' w-full flex flex-col '>
@@ -332,7 +340,7 @@ export default function TourHero({ data }) {
       </div>
       {showForm &&
         <div className='fixed top-0 left-0 bg-black bg-opacity-50 h-[100dvh] w-[100vw] z-[300] backdrop-blur-sm flex justify-center items-center px-[5%] '>
-          <div className='bg-[beige] p-[20px] rounded-md w-full max-w-[500px]'>
+          <div className='bg-[beige] p-[20px] rounded-md w-full max-w-[700px]'>
             <div className='flex w-full justify-end'>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowForm(false)}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />

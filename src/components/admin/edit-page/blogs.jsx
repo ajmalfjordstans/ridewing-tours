@@ -51,13 +51,6 @@ export default function Blogs() {
     setQueryPath(`countries/${selectedCountry}/blogs`);
   }, [selectedCountry]);
 
-  // useEffect(() => {
-  //   if (!firebaseLoading) {
-  //     setData(docs);
-  //     // console.log(docs[0].date.seconds)
-  //   }
-  // }, [firebaseLoading, docs]);
-
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);

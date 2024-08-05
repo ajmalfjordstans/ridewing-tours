@@ -17,10 +17,10 @@ export default function TopChoicesCard({ data }) {
       >
         <div className='flex w-full justify-between'>
           <div className='text-[16px] flex items-center gap-3'>
-            <div className='h-[33px] w-[33px] rounded-full bg-[#FFFFFF4D] flex justify-center items-center text-white'>
+            {/* <div className='h-[33px] w-[33px] rounded-full bg-[#FFFFFF4D] flex justify-center items-center text-white'>
               <p className=''>4.8</p>
             </div>
-            <p className='text-secondary'>Rating</p>
+            <p className='text-secondary'>Rating</p> */}
           </div>
           {data?.price &&
             <div className='flex items-center gap-2'>

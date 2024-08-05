@@ -46,7 +46,7 @@ export default function EditPlace({ data, setShowEdit }) {
       const image = imageGallery[i];
 
       if (image) {
-        const storageRef = ref(storage, `images/countries/${selectedCountry}/top-choices/${image.name}`);
+        const storageRef = ref(storage, `images/countries/${selectedCountry}/top-choices/${values.id}/${image.name}`);
         const uploadTask = uploadBytesResumable(storageRef, image);
 
         // Push the upload task promise to the array
@@ -108,8 +108,7 @@ export default function EditPlace({ data, setShowEdit }) {
   };
 
   const handleSave = async () => {
-    // alert(JSON.stringify(values))
-    // path - countries/$country/top-choices/
+    console.log(values);
     const result = await createFirebaseDocument(values, `countries/${selectedCountry}/top-choices/`, values?.url)
     if (result) setShowEdit(false)
     window.scrollTo(0, 0)

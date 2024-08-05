@@ -36,37 +36,71 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
       setAddedTickets(addedTickets.filter((t) => t.name !== ticket.name));
     }
   };
+
+  const convertTimestampToDate = (timestamp) => {
+    if (timestamp && timestamp.seconds) {
+      return new Date(timestamp.seconds * 1000);
+    }
+    return null;
+  };
+
+  function formatTo12HourTime(dateString) {
+    const date = new Date(dateString);
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+
+    const strTime = `${hours}:${minutesStr} ${ampm}`;
+    return strTime;
+  }
   return (
-    <div>
+    <div className='max-h-[80vh] overflow-y-scroll'>
       <div className='flex flex-col gap-2 mt-4'>
         <label className='flex items-center'>
-          <input
+          {/* <input
             type='checkbox'
             checked={includeTicket}
             onChange={() => setIncludeTicket(!includeTicket)}
-          />
-          <span className='ml-2'>Admission Ticket</span>
+          /> */}
+          <span className='ml-2'>Additional Tickets</span>
         </label>
         {
           (Array.isArray(data?.tickets) && data?.tickets?.map((ticket, id) => {
             return (
-              <div key={id} className='flex gap-2 pl-[10px]'>
+              <div key={id} className='flex gap-2 pl-[10px] bg-[#F8F8F8] items-center pt-2'>
                 <label className='flex items-center gap-2'>
                   <input
                     type='checkbox'
                     checked={!!includeTicket[ticket.name]}
                     onChange={() => handleAdditionalTicketsChange(ticket)}
                   />
-                  <Image src={'/images/background/image-template.jpg'} height={500} width={500} alt='ticket image' className='h-[80px] w-[120px] object-cover' />
+                  <div className='h-[80px] min-w-[120px]'>
+                    <Image src={ticket.image ? ticket.image : '/images/background/image-template.jpg'} height={500} width={500} alt='ticket image' className='h-full w-full object-cover' />
+                  </div>
                   <div>
                     <div className='flex gap-2 w-[300px] justify-between'>
-                      <p>{ticket.name}</p>
-                      <p>{ticket.price} / person</p>
+                      <p>{ticket?.name}</p>
+                      <p>{ticket?.price} / person</p>
+                    </div>
+                    <div>
+                      <p className='text-[#ADADAD] mt-2'>Opening Hours</p>
+                      <div className='grid grid-cols-2 mt-1'>
+                        {ticket?.opening &&
+                          <p>Opening: {formatTo12HourTime(convertTimestampToDate(ticket?.opening))}</p>
+                        }
+                        {ticket?.closing &&
+                          <p>Closing: {formatTo12HourTime(convertTimestampToDate(ticket?.closing))}</p>
+                        }
+                      </div>
                     </div>
                     <p className="text-[12px] text-ellipsis line-clamp-3 h-[55px]">
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy
+                      {ticket?.description}
                     </p>
-
                   </div>
                 </label>
               </div>
