@@ -1,6 +1,8 @@
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import DatepickerComponent from '../services/datepicker';
+import dayjs from 'dayjs';
 
 export default function AddToCart({ data, setData, addToCartHandler, setShowForm }) {
   const [includeTicket, setIncludeTicket] = useState(data?.details.entranceFeeIncluded);
@@ -8,29 +10,42 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [includeGuide, setIncludeGuide] = useState(data?.details.guidedTour);
   const [guideLanguage, setGuideLanguage] = useState('');
   const [hoursGuideNeeded, setHoursGuideNeeded] = useState(1);
+  const [date, setDate] = useState(null)
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
 
   const buttonHandler = () => {
-    const cartData = {
-      ...data,
-      includeTicket,
-      includeGuide,
-      additionalTickets: addedTickets,
-      guideLanguage: includeGuide ? guideLanguage : null,
-      hoursGuideNeeded: hoursGuideNeeded
-    };
-    console.log(cartData)
-    addToCartHandler(cartData);
-    setShowForm(false);
-  };
+    if (date == null) {
+      alert("Pick a date to continue")
+    }else if(includeGuide && guideLanguage == ""){
+      alert("Select Guide Language")
+    } else {
+      const cartData = {
+        ...data,
+        date: dayjs(date).toDate(),
+        includeTicket,
+        includeGuide,
+        additionalTickets: addedTickets,
+        guideLanguage: includeGuide ? guideLanguage : null,
+        hoursGuideNeeded: hoursGuideNeeded
+      };
+      console.log(cartData)
+      addToCartHandler(cartData);
+      setShowForm(false);
+    }
+  }
 
   const handleAdditionalTicketsChange = (ticket) => {
-    setIncludeTicket((prev) => ({
-      ...prev,
-      [ticket.name]: !prev[ticket.name]
-    }));
+    // If additional tickets choosen, turn includeTicket to true else false
+    if (addedTickets.length === 0) {
+      setIncludeTicket(true)
+    } else {
+      setIncludeTicket(false)
+    }
+    // Check if the ticket is already added
+    const isTicketAdded = addedTickets.some((t) => t.name === ticket.name);
 
-    if (!includeTicket[ticket.name]) {
+    // Check or uncheck additional tickets
+    if (!isTicketAdded) {
       setAddedTickets([...addedTickets, ticket]);
     } else {
       setAddedTickets(addedTickets.filter((t) => t.name !== ticket.name));
@@ -61,13 +76,19 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   return (
     <div className='max-h-[80vh] overflow-y-scroll'>
       <div className='flex flex-col gap-2 mt-4'>
+        <label className='flex flex-col '>
+          <span className='ml-2 font-[500]'>Pick Travel Date</span>
+          <div className='mx-auto'>
+            <DatepickerComponent date={date} setDate={setDate} min={dayjs()} />
+          </div>
+        </label>
         <label className='flex items-center'>
           {/* <input
             type='checkbox'
             checked={includeTicket}
             onChange={() => setIncludeTicket(!includeTicket)}
           /> */}
-          <span className='ml-2'>Additional Tickets</span>
+          <span className='ml-2 font-[500]'>Additional Tickets</span>
         </label>
         {
           (Array.isArray(data?.tickets) && data?.tickets?.map((ticket, id) => {
@@ -76,7 +97,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                 <label className='flex items-center gap-2'>
                   <input
                     type='checkbox'
-                    checked={!!includeTicket[ticket.name]}
+                    checked={addedTickets.some((t) => t.name === ticket.name)}
                     onChange={() => handleAdditionalTicketsChange(ticket)}
                   />
                   <div className='h-[80px] min-w-[120px]'>

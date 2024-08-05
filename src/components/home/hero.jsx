@@ -37,7 +37,14 @@ export default function Hero() {
       img.onload = () => setImageLoaded(true);
     }
   }, [data?.background]);
-
+  
+  useEffect(() => {
+    if (showAbout) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [showAbout])
   return (
     <>
       {loading ? <Loading />
