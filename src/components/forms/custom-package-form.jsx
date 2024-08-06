@@ -17,7 +17,8 @@ export default function CustomPackageForm({ }) {
     try {
       const newData = {
         name: `${user.displayName}'s Custom ${values.city} Package`,
-        travelDetails: values
+        travelDetails: values,
+        type: 'custom'
       }
       dispatch(addItem(newData));
       router.push(`/cart`)

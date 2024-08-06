@@ -128,11 +128,11 @@ export default function Attractions() {
   const swiperRef = useRef(null);
 
   const breakpoints = {
-    320: { slidesPerView: 1.1, spaceBetween: 15, },
-    530: { slidesPerView: 2.1, spaceBetween: 15, },
-    780: { slidesPerView: 2.1, spaceBetween: 15, },
-    960: { slidesPerView: 3.1, spaceBetween: 15, },
-    1440: { slidesPerView: 4.1, spaceBetween: 15, },
+    320: { slidesPerView: 1, spaceBetween: 15, },
+    530: { slidesPerView: 2, spaceBetween: 15, },
+    780: { slidesPerView: 2, spaceBetween: 15, },
+    960: { slidesPerView: 3, spaceBetween: 15, },
+    1440: { slidesPerView: 4, spaceBetween: 15, },
   }
 
   const handleNextClick = () => {

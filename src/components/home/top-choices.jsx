@@ -73,25 +73,27 @@ export default function TopChoices() {
               className='h-[48px] w-[180px] border-[red] border-[2px] rounded-[10px] bg-transparent text-[red] mt-[40px]'
             >SEE MORE</Button>   */}
           </div>
-          <div className='container mx-auto '>
+          <div className='mx-auto container'>
             <div className='mt-[37px] flex relative '>
               <Swiper
-                spaceBetween={50}
+                // spaceBetween={1}
                 slidesPerView={4}
                 breakpoints={breakpoints}
                 // onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
-                className='!w-full'
+                className='w-full'
               >
-                {data?.map((data, id) => {
-                  return (
-                    <SwiperSlide key={id}>
-                      <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} >
-                        <TopChoicesCard data={data} />
-                      </Link>
-                    </SwiperSlide>
-                  )
-                })}
+                <div className='px-[20px]'>
+                  {data?.map((data, id) => {
+                    return (
+                      <SwiperSlide key={id} className='py-[30px] px-[10px]'>
+                        <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} >
+                          <TopChoicesCard data={data} />
+                        </Link>
+                      </SwiperSlide>
+                    )
+                  })}
+                </div>
               </Swiper>
               <div className='absolute w-full h-full flex justify-between items-center'>
                 <button onClick={handlePrevClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-11px] md:translate-x-[-24px] border-[#EAEAEA] border-[2px] z-[2]">

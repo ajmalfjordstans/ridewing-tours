@@ -12,13 +12,14 @@ export default function TransferGuideForm({ data }) {
   const router = useRouter();
   const cart = useSelector(state => state.cart.items);
   const selectedCountry = useSelector(state => state.user.selectedCountry);
-  // console.log(data);
+  console.log(data);
   const addToCartHandler = (values) => {
     const itemExists = cart.find(item => item.id === data.id);
     if (!itemExists) {
       const newData = {
         ...data,
-        travelDetails: values
+        travelDetails: values,
+        type: 'guide'
       }
       dispatch(addItem(newData));
       router.push(`/cart`)

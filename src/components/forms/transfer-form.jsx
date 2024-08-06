@@ -121,12 +121,12 @@ export default function TransferForm({ data }) {
               </div>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="passengers">Number of Passengers*</label>
-                <Field type="number" name="passengers" className='border-[2px] rounded-md p-[10px]' />
+                <Field type="number" name="passengers" className='border-[2px] rounded-md p-[10px]' min="1"/>
                 <ErrorMessage name="passengers" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="luggage">Number of Luggage*</label>
-                <Field type="number" name="luggage" className='border-[2px] rounded-md p-[10px]' />
+                <Field type="number" name="luggage" className='border-[2px] rounded-md p-[10px]' min="0" />
                 <ErrorMessage name="luggage" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1'>

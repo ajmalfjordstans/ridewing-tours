@@ -5,7 +5,30 @@ import PackageCard from '@/components/cards/cart/package-card';
 import { Button } from '@material-tailwind/react';
 import { useState } from 'react';
 
-const CheckoutMenu = ({ subtotal }) => {
+const CheckoutMenu = ({ items }) => {
+
+  const subtotal = items.reduce((acc, item) => {
+    if (item?.type === 'package') {
+      const price = item.noOfPassengers < 4 ? item.price * 4 : item.price * item.noOfPassengers;
+      return acc + price;
+    }
+    // log
+    // Add other item types processing if needed
+    // return acc + item.price;
+  }, 0)
+
+  const calculateAdditionalTicketsTotal = (items) => {
+    return items.reduce((total, item) => {
+      if (item.additionalTickets && item.additionalTickets.length > 0) {
+        const ticketsTotal = item.additionalTickets.reduce((ticketTotal, ticket) => {
+          return ticketTotal + (ticket.price * item.noOfPassengers);
+        }, 0);
+        return total + ticketsTotal;
+      }
+      return total;
+    }, 0);
+  }
+  const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
   return (
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
       <div className='w-full p-[30px]'>
@@ -13,16 +36,16 @@ const CheckoutMenu = ({ subtotal }) => {
         <div className='w-full mt-[20px] flex flex-col gap-4'>
           <div className='w-full flex justify-between text-[#ABABAB]'>
             <p>Subtotal</p>
-            <p>{subtotal}</p>
+            <p>{subtotal?.toLocaleString()}</p>
           </div>
           <div className='w-full flex justify-between text-[#ABABAB]'>
-            <p>Discount</p>
-            <p>-50</p>
+            <p>Additional Tickets</p>
+            <p>{additionalTicketsTotal.toLocaleString()}</p>
           </div>
           <div className='h-[1px] w-full bg-black'></div>
           <div className='w-full flex justify-between'>
             <p>Total</p>
-            <p>{subtotal - 50}</p>
+            <p>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
           </div>
         </div>
       </div>
@@ -69,7 +92,7 @@ const Cart = () => {
           )}
         </div>
         <div className='h-screen w-[30%]'>
-          <CheckoutMenu subtotal={subtotal} />
+          <CheckoutMenu items={items} />
         </div>
       </div>
     </div>

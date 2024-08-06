@@ -51,13 +51,6 @@ export default function Guides() {
     setQueryPath(`countries/${selectedCountry}/guides`);
   }, [selectedCountry]);
 
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setData(docs);
-  //     // console.log("Stations", docs);
-  //   }
-  // }, [loading, docs]);
-
   const showFormHandler = (data) => {
     setSelectedStation(data)
     setShowForm(true)
