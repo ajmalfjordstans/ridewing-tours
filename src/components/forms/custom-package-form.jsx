@@ -21,7 +21,7 @@ export default function CustomPackageForm({ }) {
         type: 'custom'
       }
       dispatch(addItem(newData));
-      router.push(`/cart`)
+      // router.push(`/cart`)
     } catch (error) {
       console.log(error)
     }

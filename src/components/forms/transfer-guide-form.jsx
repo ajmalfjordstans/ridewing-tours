@@ -22,7 +22,7 @@ export default function TransferGuideForm({ data }) {
         type: 'guide'
       }
       dispatch(addItem(newData));
-      router.push(`/cart`)
+      // router.push(`/cart`)
     } else {
       alert("Item already exists");
     }
