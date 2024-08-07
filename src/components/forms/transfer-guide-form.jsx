@@ -6,7 +6,7 @@ import { setTransferBooking } from '../store/userSlice';
 import { useRouter } from 'next/navigation';
 import { addItem } from '../store/cartSlice';
 
-export default function TransferGuideForm({ data }) {
+export default function TransferGuideForm({ data, setShowForm }) {
   const [submitting, setSubmitting] = useState(false)
   const dispatch = useDispatch();
   const router = useRouter();
@@ -22,6 +22,7 @@ export default function TransferGuideForm({ data }) {
         type: 'guide'
       }
       dispatch(addItem(newData));
+      setShowForm(false)
       // router.push(`/cart`)
     } else {
       alert("Item already exists");
@@ -94,7 +95,7 @@ export default function TransferGuideForm({ data }) {
             <div className='grid grid-cols-2 gap-2 pb-[40px] mt-[10px]'>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="guests">Number of Guests*</label>
-                <Field type="number" name="guests" className='border-[2px] rounded-md p-[10px]' min="1"/>
+                <Field type="number" name="guests" className='border-[2px] rounded-md p-[10px]' min="1" />
                 <ErrorMessage name="guests" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1'>

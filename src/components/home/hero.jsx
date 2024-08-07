@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { doc } from 'firebase/firestore';
 import { db } from '@/app/firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
@@ -7,8 +7,10 @@ import Loading from '@/app/loading';
 import { AnimatePresence, motion } from 'framer-motion';
 import NextImage from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { setCurrency } from '../store/userSlice';
 
 export default function Hero() {
+  const dispatch = useDispatch()
   const selectedCountry = useSelector((state) => state.user.selectedCountry);
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/landing/hero`);
   const [query, setQuery] = useState(doc(db, queryPath));
@@ -25,6 +27,11 @@ export default function Hero() {
 
   useEffect(() => {
     if (!loading) {
+      dispatch(setCurrency({
+        sign: docs.currencySymbol,
+        code: docs.currency
+      }))
+      // alert(docs.currencySymbol)
       setData(docs);
     }
   }, [loading, docs]);
@@ -37,7 +44,7 @@ export default function Hero() {
       img.onload = () => setImageLoaded(true);
     }
   }, [data?.background]);
-  
+
   useEffect(() => {
     if (showAbout) {
       document.body.style.overflow = "hidden";

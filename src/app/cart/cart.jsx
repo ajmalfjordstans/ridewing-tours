@@ -8,13 +8,19 @@ import { useState } from 'react';
 const CheckoutMenu = ({ items }) => {
 
   const subtotal = items.reduce((acc, item) => {
+    const noOfPassengers = Number(item.noOfPassengers); // Ensure noOfPassengers is a number
+    const price = Number(item.price); // Ensure price is a number
     if (item?.type === 'package') {
-      const price = item.noOfPassengers < 4 ? item.price * 4 : item.price * item.noOfPassengers;
+      const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
+      return acc + itemPrice;
+    } else if (item?.type === 'guide') {
       return acc + price;
+    } else if (item.transfer === 'airport' || item.transfer === 'station') {
+      const itemPrice = price * noOfPassengers;
+      return acc + itemPrice;
+    } else {
+      return acc
     }
-    // log
-    // Add other item types processing if needed
-    // return acc + item.price;
   }, 0)
 
   const calculateAdditionalTicketsTotal = (items) => {
@@ -50,7 +56,9 @@ const CheckoutMenu = ({ items }) => {
         </div>
       </div>
       <div className='w-full flex justify-center'>
-        <Button className='bg-secondary text-white mx-auto'>
+        <Button className='bg-secondary text-white mx-auto'
+          onClick={() => { console.log(items) }}
+        >
           Checkout
         </Button>
       </div>

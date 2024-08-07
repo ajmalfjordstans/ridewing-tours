@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function PackageCard({ data, setSubtotal, subTotal }) {
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart.items);
+  const currency = useSelector(state => state.user.currency)
   const [count, setCount] = useState(data?.travelDetails?.passengers ? data?.travelDetails?.passengers : 1);
   const [currentPackage, setCurrentPackage] = useState(data);
   const [includeTicket, setIncludeTicket] = useState(data?.details?.entranceFeeIncluded);
@@ -77,6 +78,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
           </div>
           <div className='w-[70%] flex flex-col justify-center'>
             <div className='p-[15px]'>
+              <p className='text-[14px] capitalize text-[#ADADAD]'>{data?.type || data?.transfer}</p>
               <p className='font-[600] text-[24px] leading-[42px]'>{data.name}</p>
               <div className='grid grid-cols-3 w-full'>
                 <div>
@@ -92,7 +94,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                     <p>Flight Number: {data?.travelDetails?.trainNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                   </>}
-                  {(data?.type === "guide" || data?.type == 'custom' )&& <>
+                  {(data?.type === "guide" || data?.type == 'custom') && <>
                     <p>Meeting Time: {convertTo12HourFormat(data?.travelDetails?.meetingTime)}</p>
                     <p>Meeting Point: {data?.travelDetails?.meetingPoint}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
@@ -102,7 +104,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                 <div className="flex items-center justify-center h-full gap-2 mx-auto">
                   <button
                     className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
-                    onClick={increment}
+                    onClick={(data?.type == 'guide' && count == 20) ? "" : increment}
                   >
                     +
                   </button>
@@ -121,6 +123,17 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                         {data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.price * data?.noOfPassengers).toLocaleString()}
                       </p>
                       <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p>
+                    </>
+                  }
+                  {(data?.transfer == 'airport' || data?.transfer == 'station') &&
+                    <>
+                      <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + data?.price * data?.noOfPassengers}</p>
+                    </>
+                  }
+                  {(data?.type == 'guide') &&
+                    <>
+                      <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + data?.price}</p>
+                      <p className=' text-[10px] whitespace-nowrap'>Maximum 20 people</p>
                     </>
                   }
                 </div>

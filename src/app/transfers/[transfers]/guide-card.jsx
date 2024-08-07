@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 export default function TransferGuideCard({ data }) {
 
   return (
-    <div className='w-full h-[200px] md:h-[368px] rounded-[10px] font-bold overflow-hidden flex items-end relative'>
+    <div className='w-full h-[200px] md:h-[368px] rounded-[10px]  overflow-hidden flex items-end relative'>
 
       <Image
         src={data.image ? data.image : "/images/background/image-template.jpg"}
@@ -18,7 +18,9 @@ export default function TransferGuideCard({ data }) {
       <div className='absolute bottom-0 h-[100px] w-full p-[15px] bg-[#00000080] text-white'>
         <p className='uppercase'>{data.name}</p>
         <p className='uppercase'>{data?.title}</p>
-
+        {data?.price &&
+          <p className='text-[14px]'>Per hour: {data?.price}</p>
+        }
       </div>
 
     </div>

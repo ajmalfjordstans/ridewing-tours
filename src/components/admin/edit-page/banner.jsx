@@ -224,6 +224,15 @@ export default function Banner() {
               placeholder='USD'
             />
           </div>
+          <div>
+            <p className='text-[22px] mt-[20px]'>Currency Symbol</p>
+            <input type="text"
+              className='p-[10px] border-[2px] border-black rounded-[5px] w-full'
+              value={values.currencySymbol}
+              onChange={(e) => setValues({ ...values, currencySymbol: e.target.value })}
+              placeholder='$'
+            />
+          </div>
         </div>
         <div className="w-full mx-auto p-4 bg-gray-100 rounded-lg shadow-lg mt-[30px]">
           <h2 className="text-2xl font-semibold text-center mb-6">Weather Details</h2>

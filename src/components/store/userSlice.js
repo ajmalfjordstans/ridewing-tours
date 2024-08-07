@@ -5,6 +5,10 @@ const initialState = {
   selectedCountry: 'Japan',
   isLoggedIn: false,
   currentUid: null,
+  currency: {
+    sign: "",
+    code: ""
+  },
   userInfo: null,
   browserSetting: {
     url: ''
@@ -34,8 +38,11 @@ const userSlice = createSlice({
     setUserUid: (state, action) => {
       state.currentUid = action.payload
     },
+    setCurrency: (state, action) => {
+      state.currency = action.payload
+    },
   },
 });
 
-export const { setCountry, setUrl, setTransferBooking, setLogin, setUser, setUserUid } = userSlice.actions;
+export const { setCountry, setUrl, setTransferBooking, setLogin, setUser, setUserUid, setCurrency } = userSlice.actions;
 export default userSlice.reducer;

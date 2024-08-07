@@ -95,7 +95,7 @@ export default function Guides() {
                 X
               </div>
             </div>
-            <TransferGuideForm data={selectedStation} />
+            <TransferGuideForm data={selectedStation} setShowForm={setShowForm}/>
           </div>
         </div>
       }

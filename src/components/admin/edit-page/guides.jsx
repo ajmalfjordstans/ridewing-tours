@@ -33,6 +33,7 @@ export default function Guides() {
   const [values, setValues] = useState({
     title: '',
     name: '',
+    price: '',
     date: null,
     languages: [] // Initialize languages as an empty array
   })
@@ -56,7 +57,7 @@ export default function Guides() {
 
   useEffect(() => {
     getData()
-  },[])
+  }, [])
 
   useEffect(() => {
     setQueryPath(`countries/${selectedCountry}/guides`);
@@ -192,7 +193,10 @@ export default function Guides() {
                 </div>
                 <div className='flex flex-col'>
                   <div>
-                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name of guide' />
+                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name of guide' required />
+                  </div>
+                  <div>
+                    <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price/hour' required/>
                   </div>
                   <div className='border-[2px] border-black rounded-[5px] p-[10px]'>
                     <input
@@ -202,6 +206,7 @@ export default function Guides() {
                       onChange={(e) => setLanguage(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder='Languages (Press enter to add language)'
+                      required
                     />
                     <div>
                       <div className='flex gap-2'>

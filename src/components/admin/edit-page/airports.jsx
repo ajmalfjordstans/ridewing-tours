@@ -166,10 +166,15 @@ export default function Airports() {
                 </div>
                 <div className='flex flex-col'>
                   <div>
-                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='id' />
+                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name' required/>
                   </div>
-                  <div>
-                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='name' />
+                  <div className='grid grid-cols-2 gap-3'>
+                    <div>
+                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='Code' required/>
+                    </div>
+                    <div>
+                      <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price' required/>
+                    </div>
                   </div>
                 </div>
                 <Button onClick={() => handleSave(values?.id)} disabled={wait} className='mt-[20px]'>
