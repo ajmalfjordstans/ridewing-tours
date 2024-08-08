@@ -57,6 +57,28 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
     return `${hours}:${minutes} ${ampm}`;
   }
 
+  const convertTimestampToDate = (timestamp) => {
+    if (timestamp && timestamp.seconds) {
+      return new Date(timestamp.seconds * 1000);
+    }
+    return null;
+  };
+
+  function formatTo12HourTime(dateString) {
+    const date = new Date(dateString);
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+
+    const strTime = `${hours}:${minutesStr} ${ampm}`;
+    return strTime;
+  }
+
   useEffect(() => {
     // setSubtotal(currentPackage?.price * count)
     updateCartHandler({ ...data, noOfPassengers: count })
@@ -227,7 +249,15 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                     return (
                       <tr className='w-full justify-between' key={id}>
                         <td className='pl-[10px]'>{ticket.name}</td>
-                        <td >04:30 -12:30</td>
+                        <td className='flex gap-2'>
+                          {ticket?.opening &&
+                            <p>{formatTo12HourTime(convertTimestampToDate(ticket?.opening))}</p>
+                          }
+                          <p>-</p>
+                          {ticket?.closing &&
+                            <p>{formatTo12HourTime(convertTimestampToDate(ticket?.closing))}</p>
+                          }
+                        </td>
                         {/* <td>{data.noOfPassengers}</td> */}
                         <td>{data.currency + " " + ticket.price}</td>
                         <td className='flex justify-center py-1'>
