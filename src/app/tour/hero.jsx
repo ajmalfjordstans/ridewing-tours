@@ -15,18 +15,22 @@ import {
 import Enquiry from '@/components/forms/enquiry-form';
 import { addItem } from '@/components/store/cartSlice';
 import AddToCart from '@/components/forms/add-to-cart-form';
+import { useRouter } from 'next/navigation';
 
 export default function TourHero({ data }) {
   const [showForm, setShowForm] = useState(false);
   const [bookingPackage, setBookingPackage] = useState(data)
+  const router = useRouter()
   // console.log(data);
   const dispatch = useDispatch();
   const cart = useSelector(state => state.cart.items);
+
   const addToCartHandler = (newData) => {
     const itemExists = cart.find(item => item.id === bookingPackage.id);
     if (!itemExists) {
+      router.push(`/cart`)
+      dispatch(addItem({ ...newData, status: "pending" }));
       console.log("Added to cart");
-      dispatch(addItem(newData));
     } else {
       alert("Item already exists");
     }

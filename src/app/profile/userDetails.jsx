@@ -1,13 +1,13 @@
 'use client'
 import { UserAuth } from '@/context/AuthContext'
-import { Button } from '@material-tailwind/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Loading from '../loading'
 import { setUser } from '@/components/store/userSlice'
 import { useDispatch } from 'react-redux'
 import Profile from '@/components/profile/profile'
+import Bookings from '@/components/profile/bookings'
 
 export default function UserDetails({ user }) {
   const { logOut } = UserAuth()
@@ -29,6 +29,7 @@ export default function UserDetails({ user }) {
       console.log(err);
     }
   }
+
   return (
     <>
       {loading ? <Loading />
@@ -51,34 +52,14 @@ export default function UserDetails({ user }) {
               <p className={`hover:cursor-pointer ${currentPage == 'bookings' ? "text-secondary" : ""}`}
                 onClick={() => setCurrentPage('bookings')}
               >Bookings</p>
-              {/* <p className={`hover:cursor-pointer ${currentPage == 'saved' ? "text-secondary" : ""}`}
-            onClick={() => setCurrentPage('saved')}
-          >Saved</p> */}
             </div>
           </div>
           {currentPage == "profile" &&
             <Profile user={user} handleSignOut={handleSignOut} />
-            // <div className='container mx-auto px-[5%] lg:px-0'>
-            //   <div className='flex gap-3'>
-            //     <p>Email:</p>
-            //     <p>{user?.email}</p>
-            //   </div>
-            //   <div className='flex gap-3'>
-            //     <p>User Id:</p>
-            //     <p>{user?.uid}</p>
-            //   </div>
-            //   <div className='flex gap-3'>
-            //     <p>User Role:</p>
-            //     <p>{user?.userRole}</p>
-            //   </div>
-            //   <Button className="bg-custom-red my-[20px]" role="menuitem" onClick={handleSignOut}>
-            //     Logout
-            //   </Button>
-            // </div>
           }
           {currentPage == "bookings" &&
             <div className='container mx-auto px-[5%] lg:px-0'>
-              <p>No Bookings</p>
+              <Bookings booking={user.booking} />
             </div>
           }
         </div>

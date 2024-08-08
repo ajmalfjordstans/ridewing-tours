@@ -36,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
         querySnapshot.forEach((doc) => {
           itemsArr.push({ ...doc.data(), id: doc.id });
         });
-        console.log("Document successfully read!");
+        console.log("Document successfully read!", itemsArr[0]);
         dispatch(setUser(itemsArr[0]))
         dispatch(setLogin(true));
       });

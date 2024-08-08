@@ -19,7 +19,8 @@ export default function TransferGuideForm({ data, setShowForm }) {
       const newData = {
         ...data,
         travelDetails: values,
-        type: 'guide'
+        type: 'guide',
+        status: "pending"
       }
       dispatch(addItem(newData));
       setShowForm(false)

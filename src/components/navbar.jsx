@@ -2,14 +2,14 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setCountry, setUrl, setUser } from './store/userSlice';
+import { setCountry, setCurrency, setUrl, setUser } from './store/userSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { UserAuth } from '@/context/AuthContext';
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
 import { db, readFirebaseCollection } from '@/app/firebase';
-import { collection } from 'firebase/firestore';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { collection, doc } from 'firebase/firestore';
+import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
 import Loading from '@/app/loading';
 
 export default function Navbar() {
@@ -24,6 +24,11 @@ export default function Navbar() {
   const searchParams = useSearchParams();
   const selectedCountry = useSelector(state => state.user.selectedCountry);
   const cartCount = useSelector(state => state.cart.items.length);
+  // Read Firebase
+  const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/landing/hero`);
+  const [query, setQuery] = useState(doc(db, queryPath));
+  const [docs, dataLoading, error] = useDocumentData(query);
+
   const { user, logOut } = UserAuth()
   const [loading, setLoading] = useState(true)
 
@@ -89,6 +94,22 @@ export default function Navbar() {
     setUrlParams(params);
     // console.log(params);
   }, [searchParams]);
+  useEffect(() => {
+    const newPath = `countries/${selectedCountry}/landing/hero`;
+    setQueryPath(newPath);
+    setQuery(doc(db, newPath)); // Update the document reference when the path changes
+  }, [selectedCountry]);
+
+  // set currency
+  useEffect(() => {
+    if (!dataLoading) {
+      dispatch(setCurrency({
+        sign: docs.currencySymbol,
+        code: docs.currency
+      }))
+      // alert(docs.currencySymbol)
+    }
+  }, [dataLoading, docs]);
 
   const handleMenuToggle = () => {
     setShowMenu(!showMenu);

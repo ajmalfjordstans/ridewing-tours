@@ -12,16 +12,25 @@ export default function CustomPackageForm({ }) {
   const router = useRouter();
   const cart = useSelector(state => state.cart.items);
   const user = useSelector(state => state.user.userInfo);
-  console.log(user);
+
+
+  function generateBookingId() {
+    const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
+    const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
+    return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
+  }
+
   const addToCartHandler = (values) => {
     try {
       const newData = {
+        id: generateBookingId(),
         name: `${user.displayName}'s Custom ${values.city} Package`,
         travelDetails: values,
         type: 'custom'
       }
-      dispatch(addItem(newData));
-      // router.push(`/cart`)
+      // console.log(newData);
+      dispatch(addItem({ ...newData, status: "pending" }));
+      router.push(`/cart`)
     } catch (error) {
       console.log(error)
     }
@@ -39,6 +48,7 @@ export default function CustomPackageForm({ }) {
       setSubmitting(false);
     }
   }
+
 
   return (
     <div className='w-full'>

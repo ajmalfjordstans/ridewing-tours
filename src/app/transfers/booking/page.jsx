@@ -18,7 +18,7 @@ export default function Page() {
     // const itemExists = cart.find(item => item.id === data.id);
     // if (!itemExists) {
     console.log("Added to cart");
-    dispatch(addItem(booking));
+    dispatch(addItem({ ...booking, status: "pending" }));
     router.push(`/cart`)
     // } else {
     //   alert("Item already exists");

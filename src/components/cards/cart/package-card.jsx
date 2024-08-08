@@ -36,13 +36,13 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
 
   const updateCartHandler = (newData) => {
     const itemExists = cart.find(item => item.id === newData.id);
-    console.log(newData);
+    // console.log(newData);
     if (itemExists) {
       // console.log("Item already exists. Updating cart...");
       dispatch(updateItem({ id: newData.id, ...newData }));
     } else {
       console.log("Added to cart");
-      dispatch(addItem(newData));
+      dispatch(addItem({ ...newData, status: "pending" }));
     }
   }
 
@@ -63,7 +63,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   }, [count])
 
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
   }, [])
   return (
     <>

@@ -18,7 +18,8 @@ export default function TransferForm({ data }) {
     if (!itemExists) {
       const newData = {
         ...data,
-        travelDetails: values
+        travelDetails: values,
+        status: "pending"
       }
       // console.log("Added to cart", newData);
       // dispatch(setTransferBooking(newData)); // TransferBooking state in user

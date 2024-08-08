@@ -27,11 +27,6 @@ export default function Hero() {
 
   useEffect(() => {
     if (!loading) {
-      dispatch(setCurrency({
-        sign: docs.currencySymbol,
-        code: docs.currency
-      }))
-      // alert(docs.currencySymbol)
       setData(docs);
     }
   }, [loading, docs]);

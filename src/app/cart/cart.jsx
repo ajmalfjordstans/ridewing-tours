@@ -1,12 +1,18 @@
 'use client'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeItem } from '@/components/store/cartSlice';
+import { removeItem, setCart } from '@/components/store/cartSlice';
 import PackageCard from '@/components/cards/cart/package-card';
 import { Button } from '@material-tailwind/react';
 import { useState } from 'react';
+import Link from 'next/link';
+import { db, updateFirebaseDocument } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { setUser } from '@/components/store/userSlice';
 
 const CheckoutMenu = ({ items }) => {
-
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
+  // console.log("Cart items", items);
   const subtotal = items.reduce((acc, item) => {
     const noOfPassengers = Number(item.noOfPassengers); // Ensure noOfPassengers is a number
     const price = Number(item.price); // Ensure price is a number
@@ -34,6 +40,23 @@ const CheckoutMenu = ({ items }) => {
       return total;
     }, 0);
   }
+
+  const handleFirebaseUserUpdate = async () => {
+    const data = {
+      ...user.userInfo,
+      booking: [
+        ...(user.userInfo?.booking || []),
+        ...items
+      ]
+    }
+    try {
+      console.log(data);
+      updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
+    } catch (err) {
+      console.error("Error setting document: ", err);
+    }
+  }
+
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
   return (
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
@@ -56,13 +79,23 @@ const CheckoutMenu = ({ items }) => {
         </div>
       </div>
       <div className='w-full flex justify-center'>
-        <Button className='bg-secondary text-white mx-auto'
-          onClick={() => { console.log(items) }}
+        {/* <Button className='bg-secondary text-white mx-auto'
+          onClick={handleFirebaseUserUpdate}
         >
+          Log
+        </Button> */}
+        <Button className='bg-secondary text-white mx-auto'
+          onClick={() => {
+            handleFirebaseUserUpdate()
+            dispatch(setCart([]))
+          }}
+        >
+          {/* <Link href={{ pathname: '/cart/checkout', query: { country: user.selectedCountry } }}> */}
           Checkout
+          {/* </Link> */}
         </Button>
       </div>
-    </div>
+    </div >
   )
 }
 

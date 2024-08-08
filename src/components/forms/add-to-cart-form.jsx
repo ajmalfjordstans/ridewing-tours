@@ -29,7 +29,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
         hoursGuideNeeded: hoursGuideNeeded,
         type: "package"
       };
-      console.log(cartData)
+      // console.log(cartData)
       addToCartHandler(cartData);
       setShowForm(false);
     }
