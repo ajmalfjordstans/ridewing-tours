@@ -105,7 +105,9 @@ export default function BookingCard({ booking, status }) {
           <div className='flex justify-between'>
             <div className='w-full'>
               <div className='flex justify-between'>
-                <p className='font-bold text-[26px]'> {currency.sign + " " + calculateSubtotal().toLocaleString()}</p>
+                {calculateSubtotal() != 0 &&
+                  <p className='font-bold text-[26px]'> {currency.sign + " " + calculateSubtotal().toLocaleString()}</p>
+                }
                 {booking.includeGuide && (
                   <>
                     <div className='flex gap-3 text-[14px] pr-[10px]'>
@@ -185,40 +187,64 @@ export default function BookingCard({ booking, status }) {
                 }
               </div>
               {(booking.transfer == 'airport' || booking.transfer == 'station') &&
-                <div className='grid grid-cols-2'>
+                <div className='grid grid-cols-3 gap-4'>
                   <div className='flex'>
                     {booking.travelDetails.flightNumber &&
-                      <p>Flight no: {booking.travelDetails.flightNumber}</p>
+                      <p className='text-[#ADADAD]'><span className='font-[600] text-black'>Flight no:</span> {booking.travelDetails.flightNumber}</p>
                     }
                     {booking.travelDetails.trainNumber &&
-                      <p>Station no: {booking.travelDetails.trainNumber}</p>
+                      <p className='text-[#ADADAD]'><span className='font-[600] text-black'>Station no:</span> {booking.travelDetails.trainNumber}</p>
                     }
                   </div>
                   <div className='flex'>
-                    <p>{booking.travelDetails.tripType}</p>
+                    <p className='capitalize font-[600]'>{booking.travelDetails.tripType}</p>
                   </div>
                   <div className='flex gap-2'>
-                    <p>No. of passengers: </p>
-                    <p>{booking.travelDetails.passengers}</p>
+                    <p className='font-[600]'>No. of guests: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.passengers}</p>
                   </div>
                   <div className='flex gap-2'>
-                    <p>Pickup Time: </p>
-                    <p>{booking.travelDetails.pickupTime}</p>
+                    <p className='font-[600]'>Pickup Time: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.pickupTime}</p>
                   </div>
                   <div className='flex gap-2'>
-                    <p>Pickup: </p>
-                    <p>{booking.travelDetails.pickupAddress}</p>
+                    <p className='font-[600]'>Pickup Address: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.pickupAddress}</p>
                   </div>
                   <div className='flex gap-2'>
-                    <p>Dropoff: </p>
-                    <p>{booking.travelDetails.dropoffAddress}</p>
+                    <p className='font-[600]'>Dropoff Address: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.dropoffAddress}</p>
                   </div>
-                  {/* dropoffAddress pickupAddress pickupTime tripType passengers flightNumber */}
                 </div>
               }
               {(booking.type == 'guide' || booking.type == 'custom') &&
                 <div className='grid grid-cols-2'>
-
+                  <div className='flex gap-2'>
+                    <p className='font-[600]'>City: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.city}</p>
+                  </div>
+                  <div className='flex gap-2'>
+                    <p className='font-[600]'>Date: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.date}</p>
+                  </div>
+                  <div className='flex gap-2'>
+                    <p className='font-[600]'>Meeting Point: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.meetingPoint}</p>
+                  </div>
+                  <div className='flex gap-2'>
+                    <p className='font-[600]'>Meeting Time: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.meetingTime}</p>
+                  </div>
+                  {booking.type == 'guide' &&
+                    <div className='flex gap-2'>
+                      <p className='font-[600]'>Hours: </p>
+                      <p className='text-[#ADADAD]'>{booking.travelDetails.hours}</p>
+                    </div>
+                  }
+                  <div className='flex gap-2'>
+                    <p className='font-[600]'>Guests: </p>
+                    <p className='text-[#ADADAD]'>{booking.travelDetails.guests}</p>
+                  </div>
                 </div>
               }
             </div>

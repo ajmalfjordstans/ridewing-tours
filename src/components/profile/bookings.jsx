@@ -7,7 +7,7 @@ import BookingCard from '../cards/booking-card';
 const statuses = ['pending', 'confirmed', 'ongoing', 'completed'];
 
 export default function Bookings({ booking }) {
-  const [showStatus, setShowStatus] = useState('confirmed')
+  const [showStatus, setShowStatus] = useState('pending')
   const bookingData = booking
 
   useEffect(() => {
