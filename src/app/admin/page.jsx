@@ -23,7 +23,7 @@ export default function Page() {
   }
   // If !admin route to profile
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
     if (user?.userRole !== 'admin') { router.push('/profile') }
   }, [user, router])
 

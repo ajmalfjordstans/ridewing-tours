@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import EditPage from './edit-pages'
 import EditAgents from './edit-agents'
 import EditUsers from './edit-users'
+import ManageBookings from './manage-bookings'
 
 export default function AdminHome() {
   const [showSection, setShowSection] = useState('home')
@@ -9,6 +10,14 @@ export default function AdminHome() {
     return (
       <div className='container mx-auto px-[5%] lg:px-0 mt-[120px] pb-[200px] pt-[20px]'>
         <div className="grid grid-cols-6 gap-5">
+          <div className='h-[200px] border-[2px] border-custom-red w-full rounded-[10px] flex flex-col justify-center items-center gap-3 hover:cursor-pointer'
+            onClick={() => setShowSection("bookings")}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#E4322C" className="size-28">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+            </svg>
+            <p className='font-[600]'>View Bookings</p>
+          </div>
           <div className='h-[200px] border-[2px] border-custom-red w-full rounded-[10px] flex flex-col justify-center items-center gap-3 hover:cursor-pointer'
             onClick={() => setShowSection("edit")}
           >
@@ -53,6 +62,13 @@ export default function AdminHome() {
     return (
       <div>
         <EditUsers setShowSection={setShowSection} />
+      </div>
+    )
+  }
+  else if (showSection == 'bookings') {
+    return (
+      <div>
+        <ManageBookings setShowSection={setShowSection} />
       </div>
     )
   }

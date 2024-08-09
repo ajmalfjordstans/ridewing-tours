@@ -31,9 +31,11 @@ export default function Profile({ user, handleSignOut }) {
     // Validate email and phone fields
     if (name === 'email' && !validateEmail(value)) {
       setErrors({ ...errors, email: 'Invalid email format' })
-    } else if (name === 'contact' && !validatePhone(value)) {
+    }
+    else if (name === 'contact' && !validatePhone(value)) {
       setErrors({ ...errors, contact: 'Invalid phone number' })
-    } else {
+    }
+    else {
       setErrors({ ...errors, [name]: '' })
     }
   }
@@ -89,7 +91,7 @@ export default function Profile({ user, handleSignOut }) {
               value={data?.contact}
               className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
               onChange={handleInputChange}
-              placeholder='+1234567890'
+              placeholder='+1234567890 (Include country code)'
             />
             {errors.contact && <p className='text-red-600'>{errors.contact}</p>}
           </div>

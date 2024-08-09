@@ -59,12 +59,13 @@ export default function BookingCard({ booking, status }) {
 
     return formattedDate;
   }
+  
   const convertTimestampToDate = (timestamp) => {
     if (timestamp && timestamp.seconds) {
       return new Date(timestamp.seconds * 1000);
     }
     return null;
-  };
+  }
 
   function formatTo12HourTime(dateString) {
     const date = new Date(dateString);
