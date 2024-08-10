@@ -31,7 +31,7 @@ export default function ManageBookings({ setShowSection }) {
             })
           }
         })
-        console.log(bookingsArray)
+        // console.log(bookingsArray)
         setAllBookings(bookingsArray);
       } catch (error) {
         console.error('Error fetching bookings:', error);

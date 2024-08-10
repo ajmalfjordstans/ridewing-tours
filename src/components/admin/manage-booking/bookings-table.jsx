@@ -63,7 +63,7 @@ export function BookingTable({ bookings, setAllBookings }) {
 
   useEffect(() => {
     setCurrentPage(1)
-    console.log(paginatedBookings);
+    // console.log(paginatedBookings);
   }, [selectedTab])
 
   // Function to filter bookings based on the selected tab
@@ -321,7 +321,7 @@ export function BookingTable({ bookings, setAllBookings }) {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        Date: {booking.date && formatDateFromTimestamp(booking.date)}
+                        Date: {booking.date ? formatDateFromTimestamp(booking.date) : booking.travelDetails.date}
                       </Typography>
                       <Typography
                         variant="small"
