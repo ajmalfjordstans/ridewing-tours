@@ -13,11 +13,19 @@ export default function TransferForm({ data }) {
   const cart = useSelector(state => state.cart.items);
   const selectedCountry = useSelector(state => state.user.selectedCountry);
 
+  function generateBookingId() {
+    const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
+    const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
+    return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
+  }
+
+
   const addToCartHandler = (values) => {
     const itemExists = cart.find(item => item.id === data.id);
     if (!itemExists) {
       const newData = {
         ...data,
+        bookingId:generateBookingId(),
         travelDetails: values,
         status: "pending"
       }

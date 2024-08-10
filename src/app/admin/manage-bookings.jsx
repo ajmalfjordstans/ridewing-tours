@@ -16,7 +16,7 @@ export default function ManageBookings({ setShowSection }) {
 
         usersSnapshot.forEach(doc => {
           const userData = doc.data();
-          console.log(userData)
+          // console.log(userData)
           if (userData.booking && Array.isArray(userData.booking)) {
             userData.booking.forEach((booking, index) => {
               bookingsArray.push({
@@ -96,7 +96,7 @@ export default function ManageBookings({ setShowSection }) {
             ))}
           </ul>
         </div> */}
-        <BookingTable bookings={allBookings}/>
+        <BookingTable bookings={allBookings} setAllBookings={setAllBookings}/>
       </div>
     </div>
   )

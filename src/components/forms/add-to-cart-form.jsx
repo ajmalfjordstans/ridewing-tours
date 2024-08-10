@@ -13,6 +13,12 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [date, setDate] = useState(null)
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
 
+  function generateBookingId() {
+    const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
+    const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
+    return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
+  }
+
   const buttonHandler = () => {
     if (date == null) {
       alert("Pick a date to continue")
@@ -21,6 +27,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
     } else {
       const cartData = {
         ...data,
+        bookingId: generateBookingId(),
         date: dayjs(date).toDate(),
         includeTicket,
         includeGuide,

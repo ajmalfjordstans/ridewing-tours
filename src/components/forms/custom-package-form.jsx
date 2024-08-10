@@ -24,6 +24,7 @@ export default function CustomPackageForm({ }) {
     try {
       const newData = {
         id: generateBookingId(),
+        bookingId: generateBookingId(),
         name: `${user.displayName}'s Custom ${values.city} Package`,
         travelDetails: values,
         type: 'custom'

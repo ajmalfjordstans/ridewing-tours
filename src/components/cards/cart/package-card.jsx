@@ -79,9 +79,51 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
     return strTime;
   }
 
+
+  // Calculate price of package with no of passengers
+  const calculateTotal = (booking) => {
+    let total = 0;
+
+    const noOfPassengers = Number(booking.noOfPassengers); // Ensure noOfPassengers is a number
+    const price = Number(booking.price); // Ensure price is a number
+
+    if (booking?.type === 'package') {
+      const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
+      total += itemPrice;
+    } else if (booking?.type === 'guide') {
+      total += price;
+    } else if (booking.transfer === 'airport' || booking.transfer === 'station') {
+      const itemPrice = price * noOfPassengers;
+      total += itemPrice;
+    }
+    return total;
+  }
+  // Calculate prices of additional tickets
+  const calculateAdditionalTicketsTotal = (booking) => {
+    let total = 0;
+
+    const item = booking;
+
+    if (item.additionalTickets && item.additionalTickets.length > 0) {
+      const ticketsTotal = item.additionalTickets.reduce((ticketTotal, ticket) => {
+        return ticketTotal + (ticket.price * item.noOfPassengers);
+      }, 0);
+
+      total += ticketsTotal;
+    }
+
+
+    return total;
+  }
+  // calculate subtotal
+  const calculateSubtotal = () => {
+    return calculateTotal(data) + calculateAdditionalTicketsTotal(data)
+  }
+
   useEffect(() => {
     // setSubtotal(currentPackage?.price * count)
-    updateCartHandler({ ...data, noOfPassengers: count })
+    const totalCalculated = calculateSubtotal()
+    updateCartHandler({ ...data, noOfPassengers: count, total: totalCalculated })
   }, [count])
 
   useEffect(() => {
@@ -113,7 +155,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                   </>}
                   {data?.transfer === "station" && <>
-                    <p>Flight Number: {data?.travelDetails?.trainNumber}</p>
+                    <p>Station Number: {data?.travelDetails?.trainNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                   </>}
                   {(data?.type === "guide" || data?.type == 'custom') && <>
@@ -287,9 +329,16 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   </tr>
                 </tfoot>
               </table>
+              {calculateSubtotal() != 0 &&
+                <div className='flex items-center justify-end gap-2'>
+                  <p>With Additional Ticket</p>
+                  <p className='font-bold text-[22px] text-right'> {currency.sign + " " + calculateSubtotal().toLocaleString()}</p>
+                </div>
+              }
             </div>
           </>
         }
+
       </div >
     </>
   )

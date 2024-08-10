@@ -46,7 +46,7 @@ const CheckoutMenu = ({ items }) => {
       ...user.userInfo,
       booking: [
         ...(user.userInfo?.booking || []),
-        ...items
+        ...items,
       ]
     }
     try {
@@ -112,11 +112,10 @@ const Cart = () => {
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
-      <p className='text-center mt-[30px]'>Cart Development is not completed</p>
       <div className='flex pl-[5%] gap-[30px]'>
         <div className='lg:w-[70%] w-full mt-[20px]'>
           {items.length === 0 ? (
-            <p>Your cart is empty</p>
+            <p className='text-center mt-10'>Your cart is empty</p>
           ) : (
             <ul>
               {items.map((item, id) => (

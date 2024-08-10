@@ -1,3 +1,5 @@
+'use client'
+import { db } from "@/app/firebase";
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
@@ -18,8 +20,12 @@ import {
   Avatar,
   IconButton,
   Tooltip,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { blue } from "@mui/material/colors";
+import { doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 const TABS = [
   {
@@ -46,59 +52,45 @@ const TABS = [
     label: "Rejected",
     value: "rejected",
   },
-];
+]
 
-const TABLE_HEAD = ["User", "Service", "Status", "Price", "Action"];
+const TABLE_HEAD = ["No", "User", "Service", "Status", "Action"]
 
-const TABLE_ROWS = [
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Michael",
-    email: "john@creative-tim.com",
-    job: "Manager",
-    org: "Organization",
-    online: true,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-    name: "Alexa Liras",
-    email: "alexa@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: false,
-    date: "23/04/18",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-    name: "Laurent Perrier",
-    email: "laurent@creative-tim.com",
-    job: "Executive",
-    org: "Projects",
-    online: false,
-    date: "19/09/17",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-    name: "Michael Levi",
-    email: "michael@creative-tim.com",
-    job: "Programator",
-    org: "Developer",
-    online: true,
-    date: "24/12/08",
-  },
-  {
-    img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    name: "Richard Gran",
-    email: "richard@creative-tim.com",
-    job: "Manager",
-    org: "Executive",
-    online: false,
-    date: "04/10/21",
-  },
-];
+export function BookingTable({ bookings, setAllBookings }) {
+  const [selectedTab, setSelectedTab] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
-export function BookingTable({ bookings }) {
+  useEffect(() => {
+    setCurrentPage(1)
+    console.log(paginatedBookings);
+  }, [selectedTab])
+
+  // Function to filter bookings based on the selected tab
+  const filteredBookings = bookings.filter((booking) => {
+    if (selectedTab === 'all') return true;
+    return booking.status === selectedTab;
+  })
+
+  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage)
+
+  // Function to paginate the filtered bookings
+  const paginatedBookings = filteredBookings.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   function formatDateFromTimestamp({ seconds, nanoseconds }) {
     // Convert the seconds to milliseconds
     const date = new Date(seconds * 1000);
@@ -112,6 +104,89 @@ export function BookingTable({ bookings }) {
 
     return formattedDate;
   }
+
+  // Function to handle editing of a booking
+  const handleEdit = (bookingId, updatedBooking, action = 'update') => {
+    return new Promise((resolve, reject) => {
+      try {
+        const updatedBookings = [...bookings];
+        const bookingIndex = updatedBookings.findIndex(booking => booking.bookingId === bookingId);
+
+        if (bookingIndex === -1) {
+          throw new Error('Booking not found');
+        }
+
+        if (action === 'delete') {
+          updatedBookings.splice(bookingIndex, 1);
+        } else {
+          updatedBookings[bookingIndex] = updatedBooking;
+        }
+
+        setAllBookings(updatedBookings); // Update the state with the new bookings array
+
+        resolve(); // Resolve the promise after the state update
+      } catch (error) {
+        reject(error); // If something goes wrong, reject the promise with the error
+      }
+    });
+  }
+
+  // Function to save changes to Firestore
+  const saveChanges = async (booking, action = 'update') => {
+    try {
+      const userDoc = doc(db, 'users', booking.userId);
+      const userSnapshot = await getDoc(userDoc);
+
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+
+        const updatedBookings = Array.isArray(userData?.booking) ? [...userData.booking] : [];
+        const bookingIndex = updatedBookings.findIndex(b => b.bookingId === booking.bookingId);
+
+        if (bookingIndex === -1) {
+          throw new Error('Booking not found in Firestore');
+        }
+
+        if (action === 'delete') {
+          updatedBookings.splice(bookingIndex, 1);
+        } else {
+          updatedBookings[bookingIndex] = booking;
+        }
+
+        await updateDoc(userDoc, { booking: updatedBookings });
+
+        // alert('Booking updated successfully!');
+      } else {
+        console.error('User document does not exist');
+        alert('Error updating booking. User not found.');
+      }
+    } catch (error) {
+      console.error('Error updating booking:', error);
+      alert('Error updating booking. Please try again.');
+    }
+  }
+
+  // Function to handle changes in booking status
+  const handleChange = (val, booking) => {
+    const updatedBooking = { ...booking, status: val };
+    handleEdit(booking.bookingId, updatedBooking)
+      .then(() => saveChanges(updatedBooking))
+      .catch(error => {
+        console.error("Error editing booking:", error);
+      });
+  }
+
+  // Function to handle deletion of a booking
+  const handleDelete = (booking) => {
+    if (window.confirm("Are you sure you want to delete this booking?")) {
+      handleEdit(booking.bookingId, booking, "delete")
+        .then(() => saveChanges(booking, "delete"))
+        .catch(error => {
+          console.error("Error deleting booking:", error);
+        });
+    }
+  }
+
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -133,23 +208,20 @@ export function BookingTable({ bookings }) {
             </Button>
           </div> */}
         </div>
-        {/* <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+          <Tabs value={selectedTab} className="w-full md:w-max">
             <TabsHeader>
               {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
+                <Tab key={value} value={value} onClick={() => setSelectedTab(value)}>
                   &nbsp;&nbsp;{label}&nbsp;&nbsp;
                 </Tab>
               ))}
             </TabsHeader>
           </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
-          </div>
-        </div> */}
+          {/* <div className="w-full md:w-72">
+         
+          </div> */}
+        </div>
       </CardHeader>
       <CardBody className="overflow-scroll px-0">
         <table className="mt-4 w-full min-w-max table-auto text-left">
@@ -166,179 +238,223 @@ export function BookingTable({ bookings }) {
                     className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                   >
                     {head}{" "}
-                    {index !== TABLE_HEAD.length - 1 && (
+                    {/* {index !== TABLE_HEAD.length - 1 && (
                       <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )}
+                    )} */}
                   </Typography>
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {bookings.map(
-              ({ id, photo, displayName, email, type, transfer, name, date, contact, noOfPassengers, status, includeGuide, guideLanguage, additionalTickets, travelDetails }, index) => {
-                const isLast = index === bookings.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
+            {/* // ({ id, photo, displayName, email, type, transfer, name, date, contact, noOfPassengers, status, includeGuide, guideLanguage, additionalTickets, travelDetails }, index) => { */}
+            {paginatedBookings.map((booking, index) => {
+              const isLast = index === paginatedBookings.length - 1;
+              const classes = isLast
+                ? "p-4"
+                : "p-4 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={index}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <Avatar src={photo} alt={displayName} size="sm" />
-                        <div className="flex flex-col">
-                          {/* <Typography
+              return (
+                <tr key={index}>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {index + 1}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <Avatar src={booking.photo} alt={booking.displayName} size="sm" />
+                      <div className="flex flex-col">
+                        {/* <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
                             {id}
                           </Typography> */}
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {displayName}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {email}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {contact}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex flex-col max-w-[200px]">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {booking.displayName}
+                        </Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
                           className="font-normal opacity-70"
                         >
-                          {type || transfer}
+                          {booking.email}
                         </Typography>
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-normal"
+                          className="font-normal opacity-70"
                         >
-                          {name}
+                          {booking.contact}
                         </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          Date: {date && formatDateFromTimestamp(date)}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          Guests: {noOfPassengers}
-                        </Typography>
-                        {includeGuide &&
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            Guide: {guideLanguage}
-                          </Typography>
-                        }
-                        {Array.isArray(additionalTickets) && additionalTickets.length > 0 &&
-                          <div className="flex flex-col p-[3px] bg-blue-gray-100 rounded-[10px]">
-                            <p>Additional Tickets:</p>
-                            <div className="pl-2">
-                              {additionalTickets.map((ticket, id) => (
-                                <Typography
-                                  key={id}
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="font-normal"
-                                >
-                                  {ticket.name}
-                                </Typography>
-                              ))}
-                            </div>
-                          </div>
-                        }
                       </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          variant="ghost"
-                          size="sm"
-                          value={status}
-                        // value={online ? "online" : "offline"}
-                        // color={online ? "green" : "blue-gray"}
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex flex-col max-w-[200px]">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal opacity-70"
+                      >
+                        {booking.type || booking.transfer}
+                      </Typography>
                       <Typography
                         variant="small"
                         color="blue-gray"
                         className="font-normal"
                       >
-                        Price
+                        {booking.name}
                       </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={"View"}
-                        className="mt-1 bg-green-500"
-                        // value={online ? "online" : "offline"}
-                        // color={green}
-                      />
-                      <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={"Edit"}
-                        className="mt-1 bg-blue-400"
-                        // value={online ? "online" : "offline"}
-                        // color={blue}
-                      />
-                      <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={"Delete"}
-                        className="mt-1 bg-red-500"
-                        // value={online ? "online" : "offline"}
-                        // color={red}
-                      />
-                    </td>
-                  </tr>
-                );
-              },
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        Date: {booking.date && formatDateFromTimestamp(booking.date)}
+                      </Typography>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        Guests: {booking.noOfPassengers}
+                      </Typography>
+                      {booking.includeGuide &&
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          Guide: {booking.guideLanguage}
+                        </Typography>
+                      }
+                      {Array.isArray(booking.additionalTickets) && booking.additionalTickets.length > 0 &&
+                        <div className="flex flex-col p-[3px] bg-blue-gray-100 rounded-[10px]">
+                          <p>Additional Tickets:</p>
+                          <div className="pl-2">
+                            {booking.additionalTickets.map((ticket, id) => (
+                              <Typography
+                                key={id}
+                                variant="small"
+                                color="blue-gray"
+                                className="font-normal"
+                              >
+                                {ticket.name}
+                              </Typography>
+                            ))}
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="w-max">
+                      <Select
+                        label="Select Status"
+                        value={booking.status}
+                        className="capitalize"
+                        // onChange={(val) => alert(val)}
+                        onChange={(val) => handleChange(val, booking, index)}
+                      >
+                        <Option value="pending">Pending</Option>
+                        <Option value="confirmed">Confirm</Option>
+                        <Option value="ongoing">Ongoing</Option>
+                        <Option value="completed">Completed</Option>
+                        <Option value="rejected">Rejected</Option>
+                      </Select>
+                    </div>
+                  </td>
+                  {/* <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {booking?.currency + (booking?.total ? booking.total.toLocaleString() : 'N/A')}
+                      </Typography>
+                    </td> */}
+                  <td className={classes}>
+                    {/* <Chip
+                      variant="ghost"
+                      size="sm"
+                      value={"View"}
+                      className="mt-1 bg-green-500"
+                    // value={online ? "online" : "offline"}
+                    // color={green}
+                    />
+                    <Chip
+                      variant="ghost"
+                      size="sm"
+                      value={"Edit"}
+                      className="mt-1 bg-blue-400"
+                    // value={online ? "online" : "offline"}
+                    // color={blue}
+                    /> */}
+                    <Chip
+                      variant="ghost"
+                      size="sm"
+                      value={"Delete"}
+                      className="mt-1 bg-red-500 hover:cursor-pointer"
+                      onClick={() => handleDelete(booking)}
+                    // value={online ? "online" : "offline"}
+                    // color={red}
+                    />
+                  </td>
+                </tr>
+              );
+            },
             )}
           </tbody>
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
+        <div className="flex flex-col gap-2">
+          <Typography variant="small" color="blue-gray" className="font-normal">
+            Page {currentPage} of {Math.ceil(filteredBookings.length / itemsPerPage)}
+          </Typography>
+          <div className="w-full md:w-72">
+            <Select
+              size="md"
+              label="Items Per Page"
+              value={itemsPerPage}
+              className="capitalize relative"
+              onChange={(val) => setItemsPerPage(val)}
+            >
+              <Option value="5">5</Option>
+              <Option value="10">10</Option>
+              <Option value="15">15</Option>
+              <Option value="20">20</Option>
+              <Option value="50">50</Option>
+              <Option value="100">100</Option>
+            </Select>
+          </div>
+        </div>
         <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
+          <Button
+            variant="outlined"
+            size="sm"
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+          >
             Previous
           </Button>
-          <Button variant="outlined" size="sm">
+          <Button
+            variant="outlined"
+            size="sm"
+            onClick={handleNext}
+            disabled={currentPage === Math.ceil(filteredBookings.length / itemsPerPage)}
+          >
             Next
           </Button>
         </div>
