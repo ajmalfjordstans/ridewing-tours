@@ -118,7 +118,7 @@ export default function Hero() {
               }}
             >
               <div className='h-[77px] bg-secondary w-full flex items-center justify-between px-[20px] text-[40px] '>
-                <p className='pl-[50px]'>About Japan</p>
+                <p className='pl-[50px]'>About {selectedCountry}</p>
                 <motion.div
                   className='bg-custom-red p-[5px] cursor-pointer h-[40px] w-[40px] text-white font-[400] flex justify-center items-center rounded-[10px] text-[25px]'
                   onClick={() => setShowAbout(false)}
@@ -129,7 +129,7 @@ export default function Hero() {
               </div>
               <div className='px-[70px] py-[25px]'>
                 <div className='h-[167px] overflow-y-scroll px-[20px]'>
-                  <p>{data.description}</p>
+                  <p>{data?.description}</p>
                 </div>
                 <div className='flex'>
                   <div className='w-[70%]'>
@@ -145,7 +145,7 @@ export default function Hero() {
                           pagination={{ clickable: true }}
                           scrollbar={{ draggable: true }}
                         > */}
-                        {data.weather.map((weather, id) => {
+                        {data?.weather?.map((weather, id) => {
                           return (
                             // <SwiperSlide key={id}>
                             <div
@@ -166,8 +166,8 @@ export default function Hero() {
                                 ></path>
                               </svg>
                               <div className='pl-3'>
-                                <p>{weather.from} to {weather.to}</p>
-                                <p>{weather.lowTemp} - {weather.highTemp}°{weather.degree === "Celsius" ? "C" : "F"}</p>
+                                <p>{weather?.from} to {weather?.to}</p>
+                                <p>{weather?.lowTemp} - {weather?.highTemp}°{weather?.degree === "Celsius" ? "C" : "F"}</p>
                               </div>
                             </div>
                             // {/* </SwiperSlide> */}
@@ -175,12 +175,12 @@ export default function Hero() {
                         })}
                         {/* </Swiper> */}
                       </div>
-                      <p className='mt-3'>How it feels now {data.howItFeels}</p>
+                      <p className='mt-3'>How it feels now {data?.howItFeels}</p>
                     </div>
                     <div>
                       <p className='text-[24px]'>Don&apos;t Miss These Activities</p>
                       <ul className='list-disc pl-4 text-[16px] mt-[10px]'>
-                        {data.neverMiss.map((things, id) => {
+                        {data?.neverMiss?.map((things, id) => {
                           return (
                             <li key={id}>{things}</li>
                           )
@@ -191,11 +191,11 @@ export default function Hero() {
                   <div className='flex flex-col justify-evenly items-center w-[30%] gap-3'>
                     <div className='flex flex-col justify-center items-center rounded-[10px] bg-secondary h-[116px] w-[181px]'>
                       <p>Timezone</p>
-                      <p>{data.timezone}</p>
+                      <p>{data?.timezone}</p>
                     </div>
                     <div className='flex flex-col justify-center items-center rounded-[10px] bg-secondary h-[116px] w-[181px]'>
                       <p>Currency</p>
-                      <p>{data.currency}</p>
+                      <p>{data?.currency}</p>
                     </div>
                   </div>
                 </div>

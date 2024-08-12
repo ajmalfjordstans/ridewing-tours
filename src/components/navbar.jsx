@@ -104,8 +104,8 @@ export default function Navbar() {
   useEffect(() => {
     if (!dataLoading) {
       dispatch(setCurrency({
-        sign: docs.currencySymbol,
-        code: docs.currency
+        sign: docs?.currencySymbol,
+        code: docs?.currency
       }))
       // alert(docs.currencySymbol)
     }
