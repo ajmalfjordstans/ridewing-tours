@@ -1,4 +1,5 @@
-import { createDocumentWithAutoId, db, deleteFirebaseDocument, deleteImage, readFirebaseCollection, storage, updateFirebaseDocument } from '@/app/firebase';
+import { createDocumentWithAutoId, deleteFirebaseDocument, deleteImage, readFirebaseCollection, storage, updateFirebaseDocument } from '@/app/firebase';
+import Loading from '@/app/loading';
 import AttractionsCard from '@/components/cards/attractions-card';
 import { Button } from '@material-tailwind/react';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
@@ -6,7 +7,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
-export default function Attractions() {
+export default function Categories() {
   const currentCountry = useSelector(state => state.user.selectedCountry)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
@@ -20,7 +21,7 @@ export default function Attractions() {
 
   const getData = async () => {
     try {
-      const response = await (readFirebaseCollection(`countries/${currentCountry}/attractions`))
+      const response = await (readFirebaseCollection(`countries/${currentCountry}/categories`))
       setData(response);
       setLoadingData(false)
     } catch (error) {
@@ -37,6 +38,7 @@ export default function Attractions() {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0])
       setCurrentImage(values.background)
+      // setValues({ ...values, background: "" })
     }
   }
   const handleUpload = () => {
@@ -50,7 +52,7 @@ export default function Attractions() {
     }
     setLoading(true);
     setWait(true)
-    const storageRef = ref(storage, `images/countries/${currentCountry}/attractions/${image.name}`);
+    const storageRef = ref(storage, `images/countries/${currentCountry}/categories/${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
@@ -78,10 +80,10 @@ export default function Attractions() {
   const handleSave = async (id) => {
     // console.log(values);
     if (id) {
-      await updateFirebaseDocument(values, `countries/${currentCountry}/attractions/${id}`)
+      await updateFirebaseDocument(values, `countries/${currentCountry}/categories/${id}`)
       getData()
     } else {
-      await createDocumentWithAutoId(values, `countries/${currentCountry}/attractions`)
+      await createDocumentWithAutoId(values, `countries/${currentCountry}/categories`)
       getData()
     }
     alert("Saved")
@@ -89,10 +91,11 @@ export default function Attractions() {
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/attractions/${id}`)
+    await deleteFirebaseDocument(`countries/${currentCountry}/categories/${id}`)
     getData()
     // alert('Delete Succesfull')
   }
+
   return (
     <>
       {loadingData ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
@@ -153,9 +156,6 @@ export default function Attractions() {
                 <div className='flex flex-col'>
                   <div>
                     <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.title} onChange={(e) => setValues({ ...values, title: e.target.value })} placeholder='title' />
-                  </div>
-                  <div>
-                    <textarea type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.description} onChange={(e) => setValues({ ...values, description: e.target.value })} placeholder='description' />
                   </div>
                 </div>
                 <Button onClick={() => handleSave(values?.id)} disabled={wait} className='mt-[10px]'>

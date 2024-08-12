@@ -36,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
         querySnapshot.forEach((doc) => {
           itemsArr.push({ ...doc.data(), id: doc.id });
         });
-        console.log("Document successfully read!", itemsArr[0]);
+        // console.log("Document successfully read!", itemsArr[0]);
         dispatch(setUser(itemsArr[0]))
         dispatch(setLogin(true));
       });
@@ -84,7 +84,7 @@ export const AuthContextProvider = ({ children }) => {
         if (firebaseUsers) {
           const registeredUser = firebaseUsers?.some(obj => obj.uid === currentUser?.uid);
           if (registeredUser) {
-            console.log(currentUser);
+            // console.log(currentUser);
             handleFirebaseRead(currentUser.uid)
           } else {
             console.log(currentUser);

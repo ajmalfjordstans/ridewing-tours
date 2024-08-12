@@ -64,7 +64,7 @@ export default function Navbar() {
   useEffect(() => {
     const country = searchParams.get("country") || selectedCountry
     dispatch(setCountry(country))
-    console.log(selectedCountry);
+    // console.log(selectedCountry);
     const destination = searchParams.get("destination")
     const newUrl = `?${destination != null ? "destination=" + destination + "&" : ""}country=${country}`
     router.push(newUrl, undefined, { shallow: true });

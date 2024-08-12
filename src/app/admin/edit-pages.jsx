@@ -16,6 +16,7 @@ import Airports from '@/components/admin/edit-page/airports';
 import Stations from '@/components/admin/edit-page/stations';
 import Guides from '@/components/admin/edit-page/guides';
 import CountriesHandle from './countries-handle'
+import Categories from '@/components/admin/edit-page/categories'
 
 // Choose component to show
 function Home({ currentPage }) {
@@ -23,6 +24,7 @@ function Home({ currentPage }) {
     attractions: <Attractions />,
     banner: <Banner />,
     blogs: <Blogs />,
+    categories: <Categories />,
     destinations: <Destinations />,
     place: <Place />,
     airports: <Airports />,
@@ -79,6 +81,10 @@ function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu, setShow
               <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'banner' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('banner')}>
                 <Image src={'/icons/banner.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Banner</p>
+              </div>
+              <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'categories' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('categories')}>
+                <Image src={'/icons/category.svg'} height={100} width={100} alt='pages' className='size-4' />
+                <p>Categories</p>
               </div>
               <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'place' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('place')}>
                 <Image src={'/icons/place.svg'} height={100} width={100} alt='pages' className='size-4' />

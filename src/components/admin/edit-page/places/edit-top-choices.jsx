@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { Button, Timeline, TimelineBody, TimelineConnector, TimelineHeader, TimelineIcon, TimelineItem } from '@material-tailwind/react';
 import Image from 'next/image';
-import { createFirebaseDocument, db, storage } from '@/app/firebase';
+import { createFirebaseDocument, db, readFirebaseCollection, storage } from '@/app/firebase';
 import Highlight from './highlight';
 import Itineraries from './itineraries';
 import Description from './description';
@@ -21,6 +21,7 @@ export default function EditPlace({ data, setShowEdit }) {
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false);
   const [values, setValues] = useState(data)
+  const [categories, setCategories] = useState()
 
   const handleChange = (e, pos) => {
     console.log(imageGallery);
@@ -126,6 +127,21 @@ export default function EditPlace({ data, setShowEdit }) {
   useEffect(() => {
     handleConvertAndSave(values.name)
   }, [values.name])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await readFirebaseCollection(`countries/${selectedCountry}/categories`);
+        setCategories(result);
+        console.log(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [selectedCountry]); // Add dependencies if necessary
+
   return (
     <div className='mt-[30px]'>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer" onClick={() => setShowEdit(false)}>
@@ -189,14 +205,11 @@ export default function EditPlace({ data, setShowEdit }) {
           </div>
           <div className='flex items-center gap-2 mt-[10px]'>
             <p>Category</p>
-            <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values?.category}
+            <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values?.category ? values?.category : " "}
               onChange={(e) => setValues({ ...values, category: e.target.value })}>
-              <option value="Explore City" className='p-[4px]'>Explore City</option>
-              <option value="Guided Tours" className='p-[4px]'>Guided Tours</option>
-              <option value="Experience City Walks" className='p-[4px]'>Experience City Walks</option>
-              <option value="Food Tours" className='p-[4px]'>Food Tours</option>
-              <option value="Cooking Classes" className='p-[4px]'>Cooking Classes</option>
-              <option value="Day Trips" className='p-[4px]'>Day Trips</option>
+              {Array.isArray(categories) && categories?.map((category, id) => (
+                <option value={category.title} className='p-[4px]' key={id}>{category.title}</option>
+              ))}
             </select>
           </div>
           <div className='flex flex-col gap-4 flex-wrap mt-[12px] font-bold text-[15px] leading-[18px]'>
