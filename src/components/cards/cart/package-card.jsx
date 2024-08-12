@@ -86,9 +86,10 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
 
     const noOfPassengers = Number(booking.noOfPassengers); // Ensure noOfPassengers is a number
     const price = Number(booking.price); // Ensure price is a number
+    const bulkPrice = Number(booking.bulkPrice); // Ensure price is a number
 
     if (booking?.type === 'package') {
-      const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
+      const itemPrice = noOfPassengers < 4 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
       total += itemPrice;
     } else if (booking?.type === 'guide') {
       total += price;
@@ -184,7 +185,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   {data.type === "package" &&
                     <>
                       <p className='text-[22px] leading-[42px] whitespace-nowrap'>
-                        {data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.price * data?.noOfPassengers).toLocaleString()}
+                        {data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.bulkPrice ? data?.bulkPrice * data?.noOfPassengers : data?.price * data?.noOfPassengers).toLocaleString()}
                       </p>
                       <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p>
                     </>

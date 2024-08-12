@@ -102,7 +102,7 @@ export default function TourHero({ data }) {
         <div>
           <div className='flex items-end gap-2'>
             <p className='font-bold text-[20px] text-custom-red'>From</p>
-            <p className='font-bold text-[30px]'>{bookingPackage?.currency}{bookingPackage?.price.toLocaleString()}</p>
+            <p className='font-bold text-[30px]'>{bookingPackage?.currency}{bookingPackage?.bulkPrice ? bookingPackage?.bulkPrice.toLocaleString() : bookingPackage?.price.toLocaleString()}</p>
           </div>
           <Button
             className='bg-custom-red mt-[5px] capitalize'

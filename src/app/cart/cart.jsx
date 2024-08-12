@@ -16,8 +16,9 @@ const CheckoutMenu = ({ items }) => {
   const subtotal = items.reduce((acc, item) => {
     const noOfPassengers = Number(item.noOfPassengers); // Ensure noOfPassengers is a number
     const price = Number(item.price); // Ensure price is a number
+    const bulkPrice = Number(item.bulkPrice); // Ensure price is a number
     if (item?.type === 'package') {
-      const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
+      const itemPrice = noOfPassengers < 4 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
       return acc + itemPrice;
     } else if (item?.type === 'guide') {
       return acc + price;

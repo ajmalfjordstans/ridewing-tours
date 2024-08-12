@@ -25,7 +25,7 @@ export default function TopChoicesCard({ data }) {
           {data?.price &&
             <div className='flex items-center gap-2'>
               <p className='text-secondary text-[14px]'>From</p>
-              <p className='text-white text-[26px]'>{data?.currency} {data?.price?.toLocaleString()}</p>
+              <p className='text-white text-[26px]'>{data?.currency} {data?.bulkPrice ? data?.bulkPrice.toLocaleString() : data?.price.toLocaleString()}</p>
             </div>}
         </div>
       </div>

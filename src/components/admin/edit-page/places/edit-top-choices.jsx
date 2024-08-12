@@ -191,8 +191,12 @@ export default function EditPlace({ data, setShowEdit }) {
             <p>Category</p>
             <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values?.category}
               onChange={(e) => setValues({ ...values, category: e.target.value })}>
-              <option value="Day Tour" className='p-[4px]'>Day Tour</option>
-              <option value="Walking" className='p-[4px]'>Walking</option>
+              <option value="Explore City" className='p-[4px]'>Explore City</option>
+              <option value="Guided Tours" className='p-[4px]'>Guided Tours</option>
+              <option value="Experience City Walks" className='p-[4px]'>Experience City Walks</option>
+              <option value="Food Tours" className='p-[4px]'>Food Tours</option>
+              <option value="Cooking Classes" className='p-[4px]'>Cooking Classes</option>
+              <option value="Day Trips" className='p-[4px]'>Day Trips</option>
             </select>
           </div>
           <div className='flex flex-col gap-4 flex-wrap mt-[12px] font-bold text-[15px] leading-[18px]'>
@@ -312,11 +316,18 @@ export default function EditPlace({ data, setShowEdit }) {
               placeholder='$'
               className='p-[5px] border-[2px] border-black rounded-[5px]' />
           </div>
-          <div className='flex items-end gap-2'>
-            <p className='font-bold text-[20px] text-custom-red'>From</p>
+          <div className='flex flex-col gap-2'>
+            <p className='font-bold text-[16px] text-custom-red'>Upto 4 Persons</p>
             <input type="text"
               value={values?.price}
               onChange={(e) => setValues({ ...values, price: e.target.value })}
+              className='p-[5px] border-[2px] border-black rounded-[5px]' />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <p className='font-bold text-[16px] text-custom-red'>From 4 Persons</p>
+            <input type="text"
+              value={values?.bulkPrice}
+              onChange={(e) => setValues({ ...values, bulkPrice: e.target.value })}
               className='p-[5px] border-[2px] border-black rounded-[5px]' />
           </div>
         </div>
