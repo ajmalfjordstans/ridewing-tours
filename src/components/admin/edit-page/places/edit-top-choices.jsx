@@ -111,7 +111,7 @@ export default function EditPlace({ data, setShowEdit }) {
   const handleSave = async () => {
     console.log(values);
     const result = await createFirebaseDocument(values, `countries/${selectedCountry}/top-choices/`, values?.url)
-    if (result) setShowEdit(false)
+    if (result) alert("Saved")
     window.scrollTo(0, 0)
   };
 
@@ -207,6 +207,7 @@ export default function EditPlace({ data, setShowEdit }) {
             <p>Category</p>
             <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values?.category ? values?.category : " "}
               onChange={(e) => setValues({ ...values, category: e.target.value })}>
+              <option value="" className='p-[4px]' >Choose one</option>
               {Array.isArray(categories) && categories?.map((category, id) => (
                 <option value={category.title} className='p-[4px]' key={id}>{category.title}</option>
               ))}

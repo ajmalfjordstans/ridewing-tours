@@ -120,9 +120,10 @@ export default function Guides() {
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/guides/${id}`)
-    getData()
-    alert('Delete Succesfull')
+    if (window.confirm("Are you sure to delete this guide?")) {
+      await deleteFirebaseDocument(`countries/${currentCountry}/guides/${id}`)
+      getData()
+    }
   }
 
   const handleKeyPress = (e) => {
@@ -196,7 +197,7 @@ export default function Guides() {
                     <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name of guide' required />
                   </div>
                   <div>
-                    <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price/hour' required/>
+                    <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price/hour' required />
                   </div>
                   <div className='border-[2px] border-black rounded-[5px] p-[10px]'>
                     <input

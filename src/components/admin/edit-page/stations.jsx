@@ -86,13 +86,11 @@ export default function Stations() {
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/stations/${id}`)
-    getData()
-    alert('Delete Succesfull')
+    if (window.confirm("Are you sure to delete this station?")) {
+      await deleteFirebaseDocument(`countries/${currentCountry}/stations/${id}`)
+      getData()
+    }
   }
-  // useEffect(() => {
-  //   setData(docs);
-  // }, [firebaseLoading, docs]);
   return (
     <>
       {loadingData ? <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div> :
@@ -152,11 +150,11 @@ export default function Stations() {
                 </div>
                 <div className='flex flex-col'>
                   <div>
-                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name' required/>
+                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name' required />
                   </div>
                   <div className='grid grid-cols-2 gap-3'>
                     <div>
-                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='Code' required/>
+                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='Code' required />
                     </div>
                     <div>
                       <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price' required />

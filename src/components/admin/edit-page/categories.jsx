@@ -91,8 +91,10 @@ export default function Categories() {
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/categories/${id}`)
-    getData()
+    if (window.confirm("Are you sure to delete this category?")) {
+      await deleteFirebaseDocument(`countries/${currentCountry}/categories/${id}`)
+      getData()
+    }
     // alert('Delete Succesfull')
   }
 

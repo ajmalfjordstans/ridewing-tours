@@ -107,9 +107,10 @@ export default function Blogs() {
   };
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/blogs/${id}`);
-    getData()
-    alert("Delete Succesfull")
+    if (window.confirm("Are you sure to delete this blog?")) {
+      await deleteFirebaseDocument(`countries/${currentCountry}/blogs/${id}`);
+      getData()
+    }
   };
 
   const convertTimestampToDate = (timestamp) => {

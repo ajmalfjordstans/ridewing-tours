@@ -29,9 +29,11 @@ export default function Place() {
   }
 
   const deletePlaceHandle = async (data) => {
-    await deleteFirebaseDocument(`countries/${selectedCountry}/top-choices/${data.id}`)
-    // console.log(id);
-    getData()
+    if (window.confirm("Are you sure to delete this place")) {
+      await deleteFirebaseDocument(`countries/${selectedCountry}/top-choices/${data.id}`)
+      // console.log(id);
+      getData()
+    }
   }
 
   useEffect(() => {

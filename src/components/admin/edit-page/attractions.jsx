@@ -89,8 +89,10 @@ export default function Attractions() {
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/attractions/${id}`)
-    getData()
+    if (window.confirm("Are you sure to delete this top attraction")) {
+      await deleteFirebaseDocument(`countries/${currentCountry}/attractions/${id}`)
+      getData()
+    }
     // alert('Delete Succesfull')
   }
   return (

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import CategoriesCard from '../cards/categories-card'
 import { readFirebaseCollection } from '@/app/firebase';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 const CategoriesData = [
   {
@@ -76,7 +77,9 @@ export default function Categories() {
       {Array.isArray(categories) ?
         categories.map((categories, id) => {
           return (
-            <CategoriesCard key={id} data={categories} />
+            <Link href={{ pathname: `/packages/${categories.title}`, query: { "country": selectedCountry } }} key={id}>
+              <CategoriesCard data={categories} />
+            </Link>
           )
         })
         :

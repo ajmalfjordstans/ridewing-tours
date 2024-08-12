@@ -84,7 +84,7 @@ export default function TopChoices() {
                 className='w-full'
               >
                 <div className='px-[20px]'>
-                  {data?.map((data, id) => {
+                  {data?.slice(0, 4).map((data, id) => {
                     return (
                       <SwiperSlide key={id} className='py-[30px] px-[10px]'>
                         <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} >
@@ -93,6 +93,18 @@ export default function TopChoices() {
                       </SwiperSlide>
                     )
                   })}
+                  <SwiperSlide key={"viewmore"} className='py-[30px] px-[10px]'>
+                    <Link href={{ pathname: '/packages', query: { "country": selectedCountry } }} >
+                      <div className='h-full w-full flex justify-center items-center'>
+                        <div className='px-[15px] py-[8px] rounded-full bg-secondary flex gap-2 text-white font-semibold'>
+                          <p>View More</p>
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                          </svg>
+                        </div>
+                      </div>
+                    </Link>
+                  </SwiperSlide>
                 </div>
               </Swiper>
               <div className='absolute w-full h-full flex justify-between items-center'>

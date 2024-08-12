@@ -29,9 +29,7 @@ export default function Airports() {
   const [wait, setWait] = useState(false)
   const [progress, setProgress] = useState('')
   const [values, setValues] = useState(null)
-  const [data, setData] = useState(null);
-  // const query = collection(db, `countries/${currentCountry}/airports`)
-  // const [docs, firebaseLoading, error] = useCollectionData(query)
+  const [data, setData] = useState(null)
   const [loadingData, setLoadingData] = useState(true)
 
   const getData = async () => {
@@ -100,9 +98,11 @@ export default function Airports() {
   }
 
   const handleDelete = async (id) => {
-    await deleteFirebaseDocument(`countries/${currentCountry}/airports/${id}`)
-    getData()
-    alert('Delete Succesfull')
+    if (window.confirm("Are you sure to delete this airport?")) {
+      await deleteFirebaseDocument(`countries/${currentCountry}/airports/${id}`)
+      getData()
+      alert('Delete Succesfull')
+    }
   }
   // useEffect(() => {
   //   setData(docs);
@@ -166,14 +166,14 @@ export default function Airports() {
                 </div>
                 <div className='flex flex-col'>
                   <div>
-                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name' required/>
+                    <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name' required />
                   </div>
                   <div className='grid grid-cols-2 gap-3'>
                     <div>
-                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='Code' required/>
+                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='Code' required />
                     </div>
                     <div>
-                      <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price' required/>
+                      <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price' required />
                     </div>
                   </div>
                 </div>
