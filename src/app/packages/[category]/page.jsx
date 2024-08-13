@@ -6,7 +6,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
-export default function page({ params }) {
+export default function Page({ params }) {
   const category = decodeURIComponent(params.category)
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [data, setData] = useState(null);
