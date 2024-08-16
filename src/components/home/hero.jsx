@@ -6,8 +6,6 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import Loading from '@/app/loading';
 import { AnimatePresence, motion } from 'framer-motion';
 import NextImage from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { setCurrency } from '../store/userSlice';
 
 export default function Hero() {
   const dispatch = useDispatch()

@@ -12,7 +12,13 @@ export default function Page() {
   const user = useSelector(state => state.user.userInfo)
   const router = useRouter()
   const { googleSignIn, setLoginType } = UserAuth()
+  const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    const userAgent = navigator.userAgent;
+    const mobile = /mobile/i.test(userAgent);
+    setIsMobile(mobile);
+  }, []);
   const handleSignIn = async () => {
     try {
       await googleSignIn()
@@ -32,12 +38,20 @@ export default function Page() {
     window.scrollTo(0, 0)
   }, [])
 
-  if (user?.userRole === 'admin') {
+  if (isMobile) {
+    return (
+      <div className='fixed top-0 left-0 h-[100vh] w-[100vw] bg-[red] flex justify-center items-center z-10'>
+        <p className='text-[28px] md:text-[38px] text-white font-bold'>RIDEWING</p>
+        <p>Continue with desktop</p>
+      </div>
+    )
+  }
+  else if (user?.userRole === 'admin') {
     return (
       <AdminHome />
     )
   }
-   else if (user?.userRole === 'user' || user?.userRole === 'agent') {
+  else if (user?.userRole === 'user' || user?.userRole === 'agent') {
     router.push('/')
   }
   else {

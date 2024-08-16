@@ -36,8 +36,11 @@ export default function EditUsers({ setShowSection }) {
         <div className='grid grid-cols-5 mt-[30px] gap-5'>
           {users && users.map((user, index) => (
             <div key={index}
-              className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex justify-center items-center'
-            >{user.displayName}</div>
+              className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center'
+            > <p>{user.displayName}</p>
+              <p className='text-[12px]'>{user?.email}</p>
+              <p className='text-[12px]'>{user?.contact}</p>
+            </div>
           ))}
         </div>
       </div>
