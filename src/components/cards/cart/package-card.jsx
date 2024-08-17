@@ -118,12 +118,14 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   }
   // calculate subtotal
   const calculateSubtotal = () => {
-    return calculateTotal(data) + calculateAdditionalTicketsTotal(data)
+    const total = calculateTotal(data) + calculateAdditionalTicketsTotal(data)
+    return total
   }
 
   useEffect(() => {
     // setSubtotal(currentPackage?.price * count)
     const totalCalculated = calculateSubtotal()
+    console.log(totalCalculated);
     updateCartHandler({ ...data, noOfPassengers: count, total: totalCalculated })
   }, [count])
 

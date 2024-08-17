@@ -17,7 +17,7 @@ export default function Page() {
     // if (!user.isLoggedIn) {
     //   router.back();
     // }
-    console.log(user);
+    // console.log(user);
   }, [user, router]);
 
   const loginButtonHandler = () => {

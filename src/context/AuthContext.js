@@ -54,7 +54,7 @@ export const AuthContextProvider = ({ children }) => {
         email: currentUser?.email,
         displayName: currentUser?.displayName,
         photoURL: currentUser?.photoURL,
-        userRole: loginType // Use loginType for the role
+        userRole: "admin" // Use loginType for the role
       }
       await setDoc(doc(db, "users", currentUser?.uid), user);
       dispatch(setUser(user))

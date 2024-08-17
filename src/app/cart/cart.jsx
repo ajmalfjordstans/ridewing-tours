@@ -4,13 +4,12 @@ import { removeItem, setCart } from '@/components/store/cartSlice';
 import PackageCard from '@/components/cards/cart/package-card';
 import { Button } from '@material-tailwind/react';
 import { useState } from 'react';
-import Link from 'next/link';
-import { db, updateFirebaseDocument } from '../firebase';
-import { doc, setDoc } from 'firebase/firestore';
-import { setUser } from '@/components/store/userSlice';
+import { updateFirebaseDocument } from '../firebase';
 
 const CheckoutMenu = ({ items }) => {
   const user = useSelector(state => state.user)
+  const [couponCode, setCouponCode] = useState("")
+  const [discount, setDiscount] = useState(null)
   const dispatch = useDispatch()
   // console.log("Cart items", items);
   const subtotal = items.reduce((acc, item) => {
@@ -58,6 +57,15 @@ const CheckoutMenu = ({ items }) => {
     }
   }
 
+  const checkCouponCode = () => {
+    const result = user?.userInfo?.coupons.filter(coupon => coupon.code == couponCode)
+
+    if (result) {
+      setDiscount(result)
+      console.log(result);
+    }
+  }
+
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
   return (
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
@@ -73,9 +81,30 @@ const CheckoutMenu = ({ items }) => {
             <p>{additionalTicketsTotal.toLocaleString()}</p>
           </div>
           <div className='h-[1px] w-full bg-black'></div>
+          <div className='flex gap-2'>
+            <input type="text" value={couponCode} className='p-[10px] rounded-[5px]' placeholder='Enter Coupon Code' onChange={(e) => setCouponCode(e.target.value)} />
+            <Button className='bg-secondary text-white mx-auto'
+              onClick={() => {
+                checkCouponCode()
+              }}
+            >
+              Apply Code
+            </Button>
+          </div>
           <div className='w-full flex justify-between'>
             <p>Total</p>
-            <p>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
+            {Array.isArray(discount) && discount.length !== 0 ?
+              <div>
+                <div >{
+                  discount.isPercentage ?
+                    <p className='line-through'>{((subtotal + additionalTicketsTotal) - ((subtotal + additionalTicketsTotal) * (discount.value / 100))).toLocaleString()}</p>
+                    :
+                    <p>{((subtotal + additionalTicketsTotal) - discount.value).toLocaleString()}</p>
+                }</div>
+              </div>
+              :
+              <p>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
+            }
           </div>
         </div>
       </div>
