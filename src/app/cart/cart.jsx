@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeItem, setCart } from '@/components/store/cartSlice';
 import PackageCard from '@/components/cards/cart/package-card';
 import { Button } from '@material-tailwind/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { updateFirebaseDocument } from '../firebase';
+import { sub } from 'date-fns';
 
 const CheckoutMenu = ({ items }) => {
   const user = useSelector(state => state.user)
   const [couponCode, setCouponCode] = useState("")
   const [discount, setDiscount] = useState(null)
+  const [discountPrice, setDiscountPrice] = useState(null)
+  const [total, setTotal] = useState(0)
   const dispatch = useDispatch()
   // console.log("Cart items", items);
   const subtotal = items.reduce((acc, item) => {
@@ -58,15 +61,36 @@ const CheckoutMenu = ({ items }) => {
   }
 
   const checkCouponCode = () => {
-    const result = user?.userInfo?.coupons.filter(coupon => coupon.code == couponCode)
+    const result = user?.userInfo?.coupons?.find(coupon => coupon.code === couponCode);
 
     if (result) {
-      setDiscount(result)
-      console.log(result);
+      setDiscount(result);
+      const total = subtotal + additionalTicketsTotal;
+
+      if (total) {
+        let discountAmount = 0;
+
+        if (result.isPercentage) {
+          discountAmount = total * (result.discountValue / 100);
+        } else {
+          discountAmount = result.discountValue;
+        }
+
+        setDiscountPrice(total - discountAmount);
+        console.log(total - discountAmount);
+      }
+    } else {
+      console.log('Coupon not found');
     }
-  }
+  };
 
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
+
+  useEffect(() => {
+    checkCouponCode()
+  }, [subtotal, additionalTicketsTotal])
+
+
   return (
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
       <div className='w-full p-[30px]'>
@@ -93,18 +117,10 @@ const CheckoutMenu = ({ items }) => {
           </div>
           <div className='w-full flex justify-between'>
             <p>Total</p>
-            {Array.isArray(discount) && discount.length !== 0 ?
-              <div>
-                <div >{
-                  discount.isPercentage ?
-                    <p className='line-through'>{((subtotal + additionalTicketsTotal) - ((subtotal + additionalTicketsTotal) * (discount.value / 100))).toLocaleString()}</p>
-                    :
-                    <p>{((subtotal + additionalTicketsTotal) - discount.value).toLocaleString()}</p>
-                }</div>
-              </div>
-              :
-              <p>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
-            }
+            <div>
+              <p>{discountPrice}</p>
+              <p className={`${discountPrice && 'line-through text-gray-600'}`}>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
+            </div>
           </div>
         </div>
       </div>
