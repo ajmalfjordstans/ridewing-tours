@@ -1,16 +1,24 @@
 'use client'
-import Attractions from "@/components/home/attractions";
-import Blog from "@/components/home/blog";
-import Destinations from "@/components/home/destinations";
 import Hero from "@/components/home/hero";
-import TopChoices from "@/components/home/top-choices";
+
+// import Attractions from "@/components/home/attractions";
+// import Blog from "@/components/home/blog";
+// import Destinations from "@/components/home/destinations";
+// import TopChoices from "@/components/home/top-choices";
+// import Transfer from "@/components/home/transfer";
+
+// Lazy load the components
+const TopChoices = React.lazy(() => import('@/components/home/top-choices'));
+const Attractions = React.lazy(() => import('@/components/home/attractions'));
+const Transfer = React.lazy(() => import('@/components/home/transfer'));
+const Destinations = React.lazy(() => import('@/components/home/destinations'));
+const Blog = React.lazy(() => import('@/components/home/blog'));
 
 import Image from "next/image";
 import Loading from "./loading";
-import Transfer from "@/components/home/transfer";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "./firebase";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function Home() {
@@ -21,6 +29,27 @@ export default function Home() {
   })
   const currentCountry = useSelector(state => state.user.selectedCountry)
   const [loadingPage, setLoadingPage] = useState(false)
+  const [loadComponents, setLoadComponents] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setLoadComponents(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: '0px 0px 50px 0px' }
+    );
+
+    const target = document.querySelector('#loadTrigger');
+    if (target) observer.observe(target);
+
+    return () => observer.disconnect();
+  }, [])
+
   const handleFirebaseRead = async () => {
     try {
       setLoadingPage(true)
@@ -37,20 +66,30 @@ export default function Home() {
     } catch (error) {
       console.error("Error reading document: ", error);
     }
-  };
+  }
+
   useEffect(() => {
     handleFirebaseRead()
   }, [currentCountry])
+
   if (loadingPage) return <Loading />
   else
     return (
       <div className="pb-[150px]">
         <Hero data={landing} />
-        <TopChoices />
-        <Attractions />
-        <Transfer />
-        <Destinations />
-        <Blog />
+
+        {/* Placeholder for scroll trigger */}
+        <div id="loadTrigger" style={{ height: '1px' }}></div>
+
+        {loadComponents && (
+          <Suspense fallback={<div className="text-center">Loading...</div>}>
+            <TopChoices />
+            <Attractions />
+            <Transfer />
+            <Destinations />
+            <Blog />
+          </Suspense>
+        )}
       </div>
     );
 }

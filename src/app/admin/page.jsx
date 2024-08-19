@@ -30,7 +30,7 @@ export default function Page() {
   // If !admin route to profile
   useEffect(() => {
     // console.log(user);
-    // if (user?.userRole !== 'admin') { router.push('/profile') }
+    if (user?.userRole !== 'admin') { router.push('/profile') }
   }, [user, router])
 
   // Scroll to 0,0 on loading
