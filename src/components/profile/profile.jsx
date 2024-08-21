@@ -51,11 +51,12 @@ export default function Profile({ user, handleSignOut }) {
       console.error("Error setting document: ", err);
     }
   }
+
   return (
     <>
       <div className='container mx-auto px-[5%] lg:px-0'>
         <div className='max-w-[738px] w-full flex flex-col '>
-          <p className='font-bold text-[32px] leading-[42px]'>Personal Details</p>
+          <p className='font-bold text-[32px] leading-[42px]'>{data?.userRole == 'agent' ? "Company " : "Personal "} Details</p>
           <div className='h-[1px] w-full bg-[#00000080] flex justify-left mt-[20px]'>
             <div className='h-[3px] w-[180px] bg-[#E4322C] translate-y-[-1.5px]'></div>
           </div>
@@ -68,13 +69,27 @@ export default function Profile({ user, handleSignOut }) {
           <div className='flex flex-col gap-2'>
             {(data?.userRole == 'admin' || data?.userRole == 'agent') && (
               <>
-                <p className='font-[600]'>User Role:</p>
-                <p className='capitalize'>{data?.userRole}</p>
+                {/* <p className='font-[600]'>User Role:</p> */}
+                <p className='capitalize font-[600] md:text-[24px]'>{data?.userRole}</p>
               </>
             )}
           </div>
+          {data?.userRole == 'agent' &&
+            <div className='flex flex-col gap-2'>
+              <p className='font-[600]'>Company Name:</p>
+              <input
+                type='text'
+                name='company'
+                value={data?.company}
+                className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+                onChange={handleInputChange}
+                placeholder='Company Name'
+                required
+              />
+            </div>
+          }
           <div className='flex flex-col gap-2'>
-            <p className='font-[600]'>Name:</p>
+            <p className='font-[600]'>{data?.userRole == 'agent' ? "Authorised Person Name" : "Name"}:</p>
             <input
               type='text'
               name='displayName'
@@ -103,8 +118,81 @@ export default function Profile({ user, handleSignOut }) {
               value={data?.email}
               className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
               onChange={handleInputChange}
+              required
             />
             {errors.email && <p className='text-red-600'>{errors.email}</p>}
+          </div>
+          {data?.userRole == 'agent' &&
+            <>
+              <p className='md:col-span-2 mt-5 font-[700] text-[26px] border-b-[2px] border-secondary'>Account</p>
+              <div className='flex flex-col gap-2'>
+                <p className='font-[600]'>Account Holder's Name:</p>
+                <input
+                  type='text'
+                  name='accountHolder'
+                  value={data?.accountHolder}
+                  className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+                  onChange={handleInputChange}
+                  placeholder='Account Holder'
+                  required
+                />
+              </div>
+              <div className='flex flex-col gap-2'>
+                <p className='font-[600]'>Bank Name:</p>
+                <input
+                  type='text'
+                  name='bankName'
+                  value={data?.bankName}
+                  className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+                  onChange={handleInputChange}
+                  placeholder='Bank Name'
+                  required
+                />
+              </div>
+              <div className='flex flex-col gap-2'>
+                <p className='font-[600]'>Account Number:</p>
+                <input
+                  type='text'
+                  name='bankAccountNumber'
+                  value={data?.bankAccountNumber}
+                  className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+                  onChange={handleInputChange}
+                  placeholder='Account Number'
+                  required
+                />
+              </div>
+            </>
+          }
+          <p className='md:col-span-2 mt-5 font-[700] text-[26px] border-b-[2px] border-secondary'>Address</p>
+          <div className='flex flex-col gap-2'>
+            <p className='font-[600]'>Address Line 1:</p>
+            <input
+              type='text'
+              name='address1'
+              value={data?.address1}
+              className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <p className='font-[600]'>Address Line 2:</p>
+            <input
+              type='text'
+              name='address2'
+              value={data?.address2}
+              className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <p className='font-[600]'>City:</p>
+            <input
+              type='text'
+              name='city'
+              value={data?.city}
+              className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+              onChange={handleInputChange}
+            />
           </div>
           <div className='flex flex-col gap-2'>
             <p className='font-[600]'>State:</p>
@@ -127,7 +215,7 @@ export default function Profile({ user, handleSignOut }) {
             />
           </div>
           <div className='flex flex-col gap-2'>
-            <p className='font-[600]'>Pin:</p>
+            <p className='font-[600]'>Zip / Post Code / Pin Code:</p>
             <input
               type='number'
               name='pin'

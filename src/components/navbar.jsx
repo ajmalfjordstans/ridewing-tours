@@ -34,12 +34,12 @@ export default function Navbar() {
 
   const handleSignOut = async () => {
     try {
-      await logOut()
-      // setLoading(true)
+      setLoading(true)
       dispatch(setUser(null))
+      await logOut()
+      router.push("/")
       setTimeout(() => {
-        router.push("/")
-        // setLoading(false)
+        setLoading(false)
       }, 3000)
     } catch (err) {
       console.log(err);

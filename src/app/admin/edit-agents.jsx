@@ -1,10 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { readFirebaseCollection } from '../firebase'
+import { db, readFirebaseCollection } from '../firebase'
 import { AnimatePresence, motion } from 'framer-motion';
 import CouponGenerator from '@/components/services/coupon-generator';
 import CouponAssignment from '@/components/admin/agent/coupon-codes';
 import Image from 'next/image';
+import { doc, setDoc } from 'firebase/firestore';
+import { Button } from '@material-tailwind/react';
 
 export default function EditAgents({ setShowSection }) {
   const [agents, setAgents] = useState(null)
@@ -25,6 +27,11 @@ export default function EditAgents({ setShowSection }) {
   const handleShowAgent = (agent) => {
     setSelectedAgent(agent)
     setShowAgent(true)
+  }
+
+  const updateAgent = async () => {
+    console.log({ ...selectedAgent, creditUsed: selectedAgent.creditUsed ? selectedAgent.creditUsed : 0 });
+    await setDoc(doc(db, "users", selectedAgent?.uid), selectedAgent);
   }
 
   useEffect(() => {
@@ -97,11 +104,70 @@ export default function EditAgents({ setShowSection }) {
               <div className='px-[70px] py-[25px]'>
                 <div className='flex justify-between mb-[40px]'>
                   <div className='flex flex-col gap-2'>
-                    <Image src={selectedAgent?.photoURL} alt='profile' height={800} width={800} className='h-[250px] w-[250px] rounded-full border-[10px] border-white' />
-                    <p className=''>Email: {selectedAgent?.email}</p>
-                    <p className=''>Contact: {selectedAgent?.contact}</p>
+                    <div className='flex gap-5 items-center'>
+                      <Image src={selectedAgent?.photoURL} alt='profile' height={800} width={800} className='h-[150px] w-[150px] rounded-full border-[10px] border-white' />
+                      <div>
+                        <p className=''>Agent Id: <t />{selectedAgent?.uid}</p>
+                        <p className=''>Agent Name: <t />{selectedAgent?.displayName}</p>
+                        <p className=''>Company Name: <t />{selectedAgent?.company}</p>
+                        <p className=''>Email: <t />{selectedAgent?.email}</p>
+                      </div>
+                    </div>
+                    <div className='flex gap-10 flex-wrap'>
+                      <div>
+                        <p className='font-[600]'>Account Details</p>
+                        <p className=''>Name: <t />{selectedAgent?.accountHolder}</p>
+                        <p className=''>Bank Name: <t />{selectedAgent?.bankName}</p>
+                        <p className=''>Account Number: <t />{selectedAgent?.bankAccountNumber}</p>
+                        <p className=''>Contact: <t />{selectedAgent?.contact}</p>
+                      </div>
+
+                      <div>
+                        <p className='font-[600]'>Address</p>
+                        <p className='pl-5'>
+                          {selectedAgent?.address1} <br />
+                          {selectedAgent?.address2} <br />
+                          {selectedAgent?.city} <br />
+                          {selectedAgent?.state} <br />
+                          {selectedAgent?.country} <br />
+                          {selectedAgent?.pin} <br />
+                        </p>
+                      </div>
+                      <div>
+                        <div className='flex gap-2'>
+                          <p className='font-[600] me-3'>Credit {selectedAgent?.creditAvailability ? "Available" : "Not available"}</p>
+                          <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value={selectedAgent?.creditAvailability} class="sr-only peer" onChange={e => setSelectedAgent({
+                              ...selectedAgent,
+                              creditAvailability: e.target.checked
+                            })} />
+                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                          </label>
+                        </div>
+                        <div className='gap-2 flex mt-2'>
+                          <input
+                            type="number"
+                            value={selectedAgent?.creditAmount}
+                            onChange={e => setSelectedAgent({
+                              ...selectedAgent,
+                              creditAmount: e.target.value
+                            })}
+                            disabled={!selectedAgent?.creditAvailability} placeholder='Credit Amount'
+                            className='border-[1px] rounded-[10px] p-[10px]' />
+                          <Button
+                            disabled={!selectedAgent?.creditAvailability}
+                            onClick={updateAgent}
+                          >Save</Button>
+                        </div>
+                        {selectedAgent?.creditAmount &&
+                          <div className={`${selectedAgent?.creditAvailability ? "" : "text-opacity-40"} text-black`}>
+                            <p>Credit Used: {selectedAgent?.creditUsed}</p>
+                            <p>Credit Balance: {selectedAgent?.creditAmount - selectedAgent?.creditUsed}</p>
+                          </div>
+                        }
+                      </div>
+                    </div>
                   </div>
-                  <CouponGenerator />
                 </div>
                 <CouponAssignment agent={selectedAgent} />
               </div>
@@ -109,6 +175,6 @@ export default function EditAgents({ setShowSection }) {
           </motion.div>
         )}
       </AnimatePresence >
-    </div>
+    </div >
   )
 }

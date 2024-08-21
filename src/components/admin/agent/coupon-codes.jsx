@@ -1,5 +1,6 @@
 'use client'
 import { db } from '@/app/firebase';
+import CouponGenerator from '@/components/services/coupon-generator';
 import { doc, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
@@ -56,28 +57,31 @@ export default function CouponAssignment({ agent }) {
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-100 p-4">
-      <div className="flex flex-col items-center">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
-          placeholder="Coupon Code"
-        />
-        <p className='mt-2 text-red-500 text-[10px]'>Coupon code should end with a number following alphabet V or P </p>
-        <div className='flex gap-2'>
-          <button
-            onClick={handlePasteFromClipboard}
-            className="mt-4 p-2 bg-blue-500 text-white rounded"
-          >
-            Paste
-          </button>
-          <button
-            onClick={() => addCoupon(inputValue)}
-            className="mt-4 p-2 bg-green-500 text-white rounded"
-          >Add Coupon</button>
-        </div>
+      <div className='flex gap-10 items-center'>
+        <CouponGenerator />
+        <div className="flex flex-col items-center">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="p-2 border border-gray-300 rounded"
+            placeholder="Coupon Code"
+          />
+          <p className='mt-2 text-red-500 text-[10px] text-center'>Coupon code should end with<br /> a number following alphabet V or P </p>
+          <div className='flex gap-2'>
+            <button
+              onClick={handlePasteFromClipboard}
+              className="mt-4 p-2 bg-blue-500 text-white rounded"
+            >
+              Paste
+            </button>
+            <button
+              onClick={() => addCoupon(inputValue)}
+              className="mt-4 p-2 bg-green-500 text-white rounded"
+            >Add Coupon</button>
+          </div>
 
+        </div>
       </div>
       <table className="table-auto w-full text-left mt-5">
         <thead>
