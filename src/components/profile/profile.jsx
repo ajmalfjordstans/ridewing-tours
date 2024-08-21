@@ -126,7 +126,7 @@ export default function Profile({ user, handleSignOut }) {
             <>
               <p className='md:col-span-2 mt-5 font-[700] text-[26px] border-b-[2px] border-secondary'>Account</p>
               <div className='flex flex-col gap-2'>
-                <p className='font-[600]'>Account Holder's Name:</p>
+                <p className='font-[600]'>Account Holder&apos;s Name:</p>
                 <input
                   type='text'
                   name='accountHolder'
