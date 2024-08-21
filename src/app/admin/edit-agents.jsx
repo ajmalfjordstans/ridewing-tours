@@ -107,19 +107,19 @@ export default function EditAgents({ setShowSection }) {
                     <div className='flex gap-5 items-center'>
                       <Image src={selectedAgent?.photoURL} alt='profile' height={800} width={800} className='h-[150px] w-[150px] rounded-full border-[10px] border-white' />
                       <div>
-                        <p className=''>Agent Id: <t />{selectedAgent?.uid}</p>
-                        <p className=''>Agent Name: <t />{selectedAgent?.displayName}</p>
-                        <p className=''>Company Name: <t />{selectedAgent?.company}</p>
-                        <p className=''>Email: <t />{selectedAgent?.email}</p>
+                        <p className=''>Agent Id: {selectedAgent?.uid}</p>
+                        <p className=''>Agent Name: {selectedAgent?.displayName}</p>
+                        <p className=''>Company Name: {selectedAgent?.company}</p>
+                        <p className=''>Email: {selectedAgent?.email}</p>
                       </div>
                     </div>
                     <div className='flex gap-10 flex-wrap'>
                       <div>
                         <p className='font-[600]'>Account Details</p>
-                        <p className=''>Name: <t />{selectedAgent?.accountHolder}</p>
-                        <p className=''>Bank Name: <t />{selectedAgent?.bankName}</p>
-                        <p className=''>Account Number: <t />{selectedAgent?.bankAccountNumber}</p>
-                        <p className=''>Contact: <t />{selectedAgent?.contact}</p>
+                        <p className=''>Name: {selectedAgent?.accountHolder}</p>
+                        <p className=''>Bank Name: {selectedAgent?.bankName}</p>
+                        <p className=''>Account Number: {selectedAgent?.bankAccountNumber}</p>
+                        <p className=''>Contact: {selectedAgent?.contact}</p>
                       </div>
 
                       <div>
@@ -141,7 +141,7 @@ export default function EditAgents({ setShowSection }) {
                               ...selectedAgent,
                               creditAvailability: e.target.checked
                             })} />
-                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                           </label>
                         </div>
                         <div className='gap-2 flex mt-2'>

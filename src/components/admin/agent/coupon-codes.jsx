@@ -80,7 +80,6 @@ export default function CouponAssignment({ agent }) {
               className="mt-4 p-2 bg-green-500 text-white rounded"
             >Add Coupon</button>
           </div>
-
         </div>
       </div>
       <table className="table-auto w-full text-left mt-5">
