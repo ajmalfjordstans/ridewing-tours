@@ -4,15 +4,17 @@ import { removeItem, setCart } from '@/components/store/cartSlice';
 import PackageCard from '@/components/cards/cart/package-card';
 import { Button } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
-import { updateFirebaseDocument } from '../firebase';
+import { readFirebaseDocument, updateFirebaseDocument } from '../firebase';
 import { sub } from 'date-fns';
 
 const CheckoutMenu = ({ items }) => {
   const user = useSelector(state => state.user)
   const [couponCode, setCouponCode] = useState("")
+  const [availableCoupons, setAvailableCoupons] = useState(null)
   const [discount, setDiscount] = useState(null)
   const [discountPrice, setDiscountPrice] = useState(null)
   const [total, setTotal] = useState(0)
+  const [couponNotFound, setCouponNotFound] = useState(false)
   const dispatch = useDispatch()
   // console.log("Cart items", items);
   const subtotal = items.reduce((acc, item) => {
@@ -50,7 +52,11 @@ const CheckoutMenu = ({ items }) => {
       booking: [
         ...(user.userInfo?.booking || []),
         ...items,
-      ]
+      ],
+      coupons: {
+        appliedCoupon: couponCode,
+      }
+
     }
     try {
       console.log(data);
@@ -60,10 +66,11 @@ const CheckoutMenu = ({ items }) => {
     }
   }
 
-  const checkCouponCode = () => {
+  const checkAgentCoupon = () => {
     const result = user?.userInfo?.coupons?.find(coupon => coupon.code === couponCode);
 
     if (result) {
+      setCouponNotFound(false)
       setDiscount(result);
       const total = subtotal + additionalTicketsTotal;
 
@@ -81,16 +88,63 @@ const CheckoutMenu = ({ items }) => {
       }
     } else {
       console.log('Coupon not found');
+      setDiscount(null)
+      setDiscountPrice(null)
+      setCouponNotFound(true)
     }
+  }
+
+  const checkCouponCode = () => {
+    if (user?.userInfo?.userRole === 'agent') {
+      checkAgentCoupon()
+    } else {
+      const result = availableCoupons?.find(coupon => coupon.code === couponCode)
+
+      if (result) {
+        setCouponNotFound(false)
+        setDiscount(result);
+        const total = subtotal + additionalTicketsTotal;
+
+        if (total) {
+          let discountAmount = 0;
+
+          if (result.isPercentage) {
+            discountAmount = total * (result.discountValue / 100);
+          } else {
+            discountAmount = result.discountValue;
+          }
+
+          setDiscountPrice(total - discountAmount);
+          console.log(total - discountAmount);
+        }
+      } else {
+        console.log('Coupon not found');
+        setCouponNotFound(true)
+        setDiscount(null)
+        setDiscountPrice(null)
+      }
+    }
+
   };
 
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
 
   useEffect(() => {
-    checkCouponCode()
+    // checkCouponCode()
   }, [subtotal, additionalTicketsTotal])
 
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        const result = await readFirebaseDocument('coupons/coupon');
+        setAvailableCoupons(result.coupons);
+      } catch (error) {
+        console.error('Error fetching coupons:', error);
+      }
+    };
 
+    fetchCoupons();
+  }, []);
   return (
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
       <div className='w-full p-[30px]'>
@@ -115,6 +169,7 @@ const CheckoutMenu = ({ items }) => {
               Apply Code
             </Button>
           </div>
+          {couponNotFound && <p className='text-red-500 text-[12px]'>Coupon Not Found</p>}
           <div className='w-full flex justify-between'>
             <p>Total</p>
             <div>

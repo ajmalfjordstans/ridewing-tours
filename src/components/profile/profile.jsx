@@ -107,6 +107,7 @@ export default function Profile({ user, handleSignOut }) {
               className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
               onChange={handleInputChange}
               placeholder='+1234567890 (Include country code)'
+              required
             />
             {errors.contact && <p className='text-red-600'>{errors.contact}</p>}
           </div>
