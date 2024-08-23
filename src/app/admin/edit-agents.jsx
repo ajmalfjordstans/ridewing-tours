@@ -136,8 +136,8 @@ export default function EditAgents({ setShowSection }) {
                       <div>
                         <div className='flex gap-2'>
                           <p className='font-[600] me-3'>Credit {selectedAgent?.creditAvailability ? "Available" : "Not available"}</p>
-                          <label class="inline-flex items-center cursor-pointer">
-                            <input type="checkbox" value={selectedAgent?.creditAvailability} class="sr-only peer" onChange={e => setSelectedAgent({
+                          <label className="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value={selectedAgent?.creditAvailability} className="sr-only peer" onChange={e => setSelectedAgent({
                               ...selectedAgent,
                               creditAvailability: e.target.checked
                             })} />

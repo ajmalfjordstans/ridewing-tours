@@ -35,6 +35,9 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.userInfo = action.payload
     },
+    removeUser: (state, action) => {
+      state.userInfo = null
+    },
     setUserUid: (state, action) => {
       state.currentUid = action.payload
     },
@@ -44,5 +47,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCountry, setUrl, setTransferBooking, setLogin, setUser, setUserUid, setCurrency } = userSlice.actions;
+export const { setCountry, setUrl, setTransferBooking, setLogin, setUser, setUserUid, setCurrency, removeUser } = userSlice.actions;
 export default userSlice.reducer;

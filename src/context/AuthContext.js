@@ -1,10 +1,10 @@
 'use client'
 import { auth, db, readFirebaseCollection } from "@/app/firebase";
-import { setLogin, setUser, setUserUid } from "@/components/store/userSlice";
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { setLogin, setUser } from "@/components/store/userSlice";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { useContext, createContext, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { doc, addDoc, setDoc, collection, query, where, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, collection, query, where, onSnapshot } from "firebase/firestore";
 
 const AuthContext = createContext()
 
@@ -14,6 +14,14 @@ export const AuthContextProvider = ({ children }) => {
   const [firebaseUsers, setFirebaseUsers] = useState(null)
   const user = useSelector(state => state.user.userInfo)
   const [loginType, setLoginType] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
+  const [signUpFormData, setSignUpFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+
   const googleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -23,10 +31,40 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
+  // New User
+  const emailSignUp = async (formData) => {
+    setSignUpFormData(formData)
+    try {
+      const result = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+      return result
+    } catch (error) {
+      console.error('Error signing in with Google: ', error);
+      if (error.code === 'auth/email-already-in-use') {
+        setErrorMessage('This email is already in use. Please use a different email. Or try Signing In ');
+      } else if (error.code == 'auth/weak-password') {
+        setErrorMessage('week password')
+      } else {
+        setErrorMessage('An error occurred. Please try again later.');
+      }
+    }
+  }
+
+  // Signin 
+  const emailSignIn = async (email, password) => {
+    try {
+      const result = await signInWithEmailAndPassword(auth, email, password)
+      return result
+    } catch (error) {
+      console.error('Error signing in with Google: ', error);
+      return error
+    }
+  }
+
   const logOut = () => {
     signOut(auth)
     dispatch(setLogin(false))
   }
+
   // If Registered user ? Read from firebase
   const handleFirebaseRead = async (uid) => {
     try {
@@ -46,15 +84,17 @@ export const AuthContextProvider = ({ children }) => {
       console.error("Error reading document: ", error);
     }
   };
+
   // If not a Registered user ? update firebase
   const handleFirebaseUserUpdate = async (currentUser) => {
+    console.log(loginType);
     try {
       const user = {
         uid: currentUser?.uid,
         email: currentUser?.email,
-        displayName: currentUser?.displayName,
+        displayName: currentUser?.displayName ? currentUser?.displayName : signUpFormData.username,
         photoURL: currentUser?.photoURL,
-        userRole: loginType == "" ? "admin" : loginType // Use loginType for the role
+        userRole: loginType == "" ? "user" : loginType // Use loginType for the role
       }
       await setDoc(doc(db, "users", currentUser?.uid), user);
       dispatch(setUser(user))
@@ -64,6 +104,10 @@ export const AuthContextProvider = ({ children }) => {
       console.error("Error setting document: ", err);
     }
   }
+
+  useEffect(() => {
+    console.log("login Type:", loginType);
+  }, [loginType])
 
   useEffect(() => {
     // Get all users registered in google firestore
@@ -99,7 +143,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [user, dispatch, handleFirebaseUserUpdate, handleFirebaseRead])
 
   return (
-    <AuthContext.Provider value={{ user, googleSignIn, logOut, firebaseUsers, loginType, setLoginType }}>
+    <AuthContext.Provider value={{ user, googleSignIn, logOut, firebaseUsers, loginType, setLoginType, emailSignUp, emailSignIn, setSignUpFormData, signUpFormData, errorMessage }}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,4 +1,6 @@
 'use client'
+import LoginForm from '@/components/forms/login-form'
+import SignupForm from '@/components/forms/signup-form'
 import { UserAuth } from '@/context/AuthContext'
 import { Button } from '@material-tailwind/react'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -35,11 +37,11 @@ export default function Page() {
 
   useEffect(() => {
     setLoginType('user')
-    console.log(loginType);
-    return (
-      setLoginType('')
-    )
+    // return (
+    //   setLoginType('')
+    // )
   }, [loginType])
+
   return (
     <div className='container mx-auto px-[5%] lg:px-0 pt-[130px] flex flex-col items-center w-full pb-[250px] '>
       <div className='w-full max-w-[1121px] grid grid-cols-2 rounded-[15px] overflow-hidden mt-[80px]'
@@ -54,26 +56,28 @@ export default function Page() {
           <AnimatePresence mode='wait'>
             {showSignIn ? (
               <motion.div
-                className='py-[70px] flex flex-col justify-center items-center'
+                className='py-[70px] flex flex-col justify-center items-center gap-5'
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 100, opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
                 <p className='text-[36px] font-[600] leading-[24px]'>Sign in</p>
+                <LoginForm />
                 <Button className="bg-custom-red w-[300px] mt-[40px] capitalize rounded-[50px] font-[400]" role="menuitem" onClick={handleSignIn}>
                   Continue with Google
                 </Button>
               </motion.div>
             ) : (
               <motion.div
-                className='py-[70px] flex flex-col justify-center items-center'
+                className='py-[70px] flex flex-col justify-center items-center gap-5'
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -100, opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
                 <p className='text-[36px] font-[600] leading-[24px]'>Sign up</p>
+                <SignupForm />
                 <Button className="bg-custom-red w-[300px] mt-[40px] capitalize rounded-[50px] font-[400]" role="menuitem" onClick={handleSignIn}>
                   Continue with Google
                 </Button>

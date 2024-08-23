@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setCountry, setCurrency, setUrl, setUser } from './store/userSlice';
+import { removeUser, setCountry, setCurrency, setUrl, setUser } from './store/userSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { UserAuth } from '@/context/AuthContext';
 import { Button } from '@material-tailwind/react';
@@ -22,6 +22,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const selectedUser = useSelector(state => state.user);
   const selectedCountry = useSelector(state => state.user.selectedCountry);
   const cartCount = useSelector(state => state.cart.items.length);
   // Read Firebase
@@ -35,11 +36,12 @@ export default function Navbar() {
   const handleSignOut = async () => {
     try {
       setLoading(true)
-      dispatch(setUser(null))
+      dispatch(removeUser())
       await logOut()
-      router.push("/")
+      location.reload(true);
       setTimeout(() => {
         setLoading(false)
+        router.push("/")
       }, 3000)
     } catch (err) {
       console.log(err);
@@ -84,7 +86,12 @@ export default function Navbar() {
 
   useEffect(() => {
     getData()
+    if (!user) dispatch(setUser(null))
   }, [])
+
+  useEffect(() => {
+    if (!user) dispatch(setUser(null))
+  }, [user])
 
   useEffect(() => {
     const params = {};
@@ -94,6 +101,7 @@ export default function Navbar() {
     setUrlParams(params);
     // console.log(params);
   }, [searchParams]);
+
   useEffect(() => {
     const newPath = `countries/${selectedCountry}/landing/hero`;
     setQueryPath(newPath);
