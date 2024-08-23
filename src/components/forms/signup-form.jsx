@@ -10,6 +10,7 @@ export default function SignupForm({ user }) {
     confirmPassword: '',
   });
   const [emailError, setEmailError] = useState('');
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +36,7 @@ export default function SignupForm({ user }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true)
     if (!validateEmail(formData.email)) {
       setEmailError('Invalid email format');
       return;
@@ -44,6 +45,7 @@ export default function SignupForm({ user }) {
     setEmailError(''); // Clear any previous email error
 
     const result = await emailSignUp(formData);
+    setLoading(false)
     console.log('Form submitted:', result);
   };
 
@@ -104,8 +106,8 @@ export default function SignupForm({ user }) {
         {errorMessage && <p className='text-red-500 text-[12px] pb-5 max-w-[320px] '>{errorMessage}</p>}
         <button
           type="submit"
-          disabled={formData.password !== formData.confirmPassword}
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+          disabled={formData.password !== formData.confirmPassword || loading}
+          className={`w-full  text-white py-2 px-4 rounded-md ${loading ? "bg-gray-500 hover:bg-gray-600" : "bg-blue-500 hover:bg-blue-600"} `}
         >
           Sign Up
         </button>

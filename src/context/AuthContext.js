@@ -55,8 +55,11 @@ export const AuthContextProvider = ({ children }) => {
       const result = await signInWithEmailAndPassword(auth, email, password)
       return result
     } catch (error) {
-      console.error('Error signing in with Google: ', error);
-      return error
+      if (error.code === 'auth/invalid-credential') {
+        setErrorMessage('Wrong email or password');
+      }
+      // console.error('Error signing in with Google: ', error);
+      // return error
     }
   }
 

@@ -4,6 +4,7 @@ import SignupForm from '@/components/forms/signup-form'
 import { UserAuth } from '@/context/AuthContext'
 import { Button } from '@material-tailwind/react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -12,6 +13,7 @@ export default function Page() {
   const { googleSignIn, loginType, setLoginType } = UserAuth()
   const router = useRouter()
   const user = useSelector(state => state.user.userInfo)
+  const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [showSignIn, setShowSignIn] = useState(true);
 
   const handleSignIn = async () => {
@@ -64,7 +66,10 @@ export default function Page() {
               >
                 <p className='text-[36px] font-[600] leading-[24px]'>Sign in</p>
                 <LoginForm />
-                <Button className="bg-custom-red w-[300px] mt-[40px] capitalize rounded-[50px] font-[400]" role="menuitem" onClick={handleSignIn}>
+                <Link href={{ pathname: '/login/reset', query: { "country": selectedCountry } }}>
+                  <p className='text-blue-700'>Forgot password? </p>
+                </Link>
+                <Button className="bg-custom-red w-[300px] mt-[20px] capitalize rounded-[50px] font-[400]" role="menuitem" onClick={handleSignIn}>
                   Continue with Google
                 </Button>
               </motion.div>
