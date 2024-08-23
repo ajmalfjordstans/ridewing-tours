@@ -202,14 +202,14 @@ export default function Navbar() {
                     )}
                   </>
                   : (<>
-                    {user?.uid == 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid == 'TvX2p5F8mvYc0quBAxVbaicM83t1' ?
+                    {selectedUser.userInfo.userRole == 'admin' ?
                       <Link href={{ pathname: '/admin', query: { country: selectedCountry } }} className='relative'>
                         <p className='uppercase'>Admin</p>
                       </Link>
                       :
                       ""
                     }
-
+                    {/* || user?.uid == 'mM4TGPln9aO8D3b2uk7j745yV8n2' || user?.uid == 'TvX2p5F8mvYc0quBAxVbaicM83t1' */}
                     <Link href={{ pathname: '/profile', query: { country: selectedCountry } }} className='relative'
                       onMouseEnter={() => setIsOpen(true)}
                       onMouseLeave={() => {
