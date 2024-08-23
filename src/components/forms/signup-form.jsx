@@ -102,7 +102,7 @@ export default function SignupForm({ user }) {
             required
           />
         </div>
-        {formData.password !== formData.confirmPassword && <p className='text-red-500 text-[12px] pb-5'>Passwords don't match</p>}
+        {formData.password !== formData.confirmPassword && <p className='text-red-500 text-[12px] pb-5'>Passwords don&apos;t match</p>}
         {errorMessage && <p className='text-red-500 text-[12px] pb-5 max-w-[320px] '>{errorMessage}</p>}
         <button
           type="submit"
