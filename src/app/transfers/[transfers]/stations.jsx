@@ -90,12 +90,12 @@ export default function Stations() {
               <div
                 className='bg-custom-red p-[5px] cursor-pointer h-[25px] w-[25px] text-white font-[400] flex justify-center items-center rounded-[10px] text-[20px]'
                 onClick={() => setShowForm(false)}
-                whileTap={{ scale: .9 }}
+                whiletap={{ scale: .9 }}
               >
                 X
               </div>
             </div>
-                       <TransferForm data={selectedStation} />
+              <TransferForm data={selectedStation} />
           </div>
         </div>
       }

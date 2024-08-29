@@ -94,7 +94,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
     <div className='max-h-[80vh] overflow-y-scroll'>
       <div className='flex flex-col gap-2 mt-4'>
         <label className='flex flex-col '>
-          <span className='ml-2 font-[600] text-center'>Pick Travel Date</span>
+          <span className='ml-2 font-[600] text-center'>Enter Travel Date</span>
           <div className='mx-auto mt-3'>
             <DatepickerComponent date={date} setDate={setDate} min={dayjs()} />
           </div>

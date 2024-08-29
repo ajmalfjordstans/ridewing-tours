@@ -120,7 +120,7 @@ export default function Hero() {
                 <motion.div
                   className='bg-custom-red p-[5px] cursor-pointer h-[40px] w-[40px] text-white font-[400] flex justify-center items-center rounded-[10px] text-[25px]'
                   onClick={() => setShowAbout(false)}
-                  whileTap={{ scale: .9 }}
+                  whiletap={{ scale: .9 }}
                 >
                   X
                 </motion.div>

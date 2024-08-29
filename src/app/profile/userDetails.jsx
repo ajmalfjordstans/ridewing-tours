@@ -21,6 +21,7 @@ export default function UserDetails({ user }) {
       await logOut()
       setLoading(true)
       router.push("/")
+      location.reload(true);
       dispatch(setUser(null))
       setTimeout(() => {
         setLoading(false)

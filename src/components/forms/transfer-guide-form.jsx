@@ -41,7 +41,7 @@ export default function TransferGuideForm({ data, setShowForm }) {
     try {
       setSubmitting(true);
       addToCartHandler(values)
-      console.log('Form submitted successfully.');
+      // console.log('Form submitted successfully.', values);
       resetForm();
       setSubmitting(false);
     } catch (error) {
@@ -72,12 +72,15 @@ export default function TransferGuideForm({ data, setShowForm }) {
           if (!values.meetingPoint) {
             errors.meetingPoint = 'Meeting point is required';
           }
+          if (!values.meetingAddress) {
+            errors.meetingAddress = 'Meeting address is required';
+          }
           if (!values.meetingTime) {
             errors.meetingTime = 'Meeting time is required';
           }
-          if (!values.city) {
-            errors.city = 'City is required';
-          }
+          // if (!values.city) {
+          //   errors.city = 'City is required';
+          // }
           if (!values.date) {
             errors.date = 'Date is required';
           }
@@ -108,19 +111,31 @@ export default function TransferGuideForm({ data, setShowForm }) {
               </div>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="meetingPoint">Meeting Point*</label>
-                <Field type="text" name="meetingPoint" className='border-[2px] rounded-md p-[10px]' />
+                <Field as="select" name="meetingPoint" className='border-[2px] rounded-md p-[10px]'>
+                  <option value="" disabled>Select a meeting point</option> {/* Placeholder */}
+                  <option value="airport">Airport</option>
+                  <option value="station">Station</option>
+                  <option value="hotel">Hotel</option>
+                  <option value="landmark">Landmark</option>
+                  {/* Add more options as needed */}
+                </Field>
                 <ErrorMessage name="meetingPoint" component="div" className="text-[red] text-[12px]" />
+              </div>
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="meetingAddress">Meeting Address*</label>
+                <Field as="textarea" name="meetingAddress" className='border-[2px] rounded-md p-[10px]' />
+                <ErrorMessage name="meetingAddress" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="meetingTime">Meeting Time*</label>
                 <Field type="time" name="meetingTime" className='border-[2px] rounded-md p-[10px]' />
                 <ErrorMessage name="meetingTime" component="div" className="text-[red] text-[12px]" />
               </div>
-              <div className='flex flex-col gap-1'>
+              {/* <div className='flex flex-col gap-1'>
                 <label htmlFor="city">City*</label>
                 <Field type="text" name="city" className='border-[2px] rounded-md p-[10px]' />
                 <ErrorMessage name="city" component="div" className="text-[red] text-[12px]" />
-              </div>
+              </div> */}
               <div className='flex flex-col gap-1'>
                 <label htmlFor="date">Date*</label>
                 <Field type="date" name="date" className='border-[2px] rounded-md p-[10px]' min={new Date().toISOString().split("T")[0]} />

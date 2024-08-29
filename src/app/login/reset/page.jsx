@@ -3,15 +3,20 @@ import { useState } from 'react';
 import { auth } from '@/app/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { Button } from '@material-tailwind/react';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
+  const router = useRouter()
 
   const handleResetPassword = async () => {
     try {
       await sendPasswordResetEmail(auth, email);
-      alert('Password reset email sent! Check your inbox.');
+      // alert('Password reset email sent! Check your inbox.');
+      if (window.confirm("Password reset email sent! Check your inbox.")) {
+        router.push("/")
+      }
     } catch (error) {
       if (error.code == 'auth/invalid-email')
         setError("Email not found");
