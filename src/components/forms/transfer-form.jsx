@@ -1,8 +1,7 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTransferBooking } from '../store/userSlice';
 import { useRouter } from 'next/navigation';
 import { addItem } from '../store/cartSlice';
 
@@ -12,7 +11,6 @@ export default function TransferForm({ data }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const cart = useSelector(state => state.cart.items);
-  const selectedCountry = useSelector(state => state.user.selectedCountry);
 
   function generateBookingId() {
     const timestamp = Date.now().toString(36);
@@ -45,6 +43,17 @@ export default function TransferForm({ data }) {
     } catch (error) {
       console.error('Error submitting form.', error);
       setSubmitting(false);
+    }
+  };
+
+  const handleTripTypeChange = (setFieldValue, value) => {
+    setTripType(value);
+    if (value === 'arrival') {
+      setFieldValue('pickupAddress', data.name);
+      setFieldValue('dropoffAddress', '');
+    } else if (value === 'departure') {
+      setFieldValue('pickupAddress', '');
+      setFieldValue('dropoffAddress', data.name);
     }
   };
 
@@ -81,90 +90,79 @@ export default function TransferForm({ data }) {
           setSubmitting(false);
         }}
       >
-        {({ isSubmitting, setFieldValue, values }) => {
-          // Update the address fields based on tripType
-          useEffect(() => {
-            if (tripType === 'arrival') {
-              setFieldValue('pickupAddress', data.name);
-              setFieldValue('dropoffAddress', '');
-            } else if (tripType === 'departure') {
-              setFieldValue('pickupAddress', '');
-              setFieldValue('dropoffAddress', data.name);
-            }
-          }, [tripType, setFieldValue]);
+        {({ isSubmitting, setFieldValue, values }) => (
+          <Form>
+            <p className='text-center text-[24px] font-[400]'>{data.name}</p>
+            <div className='w-full h-[1px] my-[20px] bg-black'></div>
+            <div className='grid grid-cols-2 gap-2 pb-[40px]'>
+              {/* Full Name Field */}
+              <div className='flex flex-col gap-1 col-span-2'>
+                <label htmlFor="name">Full Name*</label>
+                <Field type="text" name="name" className='border-[1px] border-black rounded-md p-[10px]' />
+                <ErrorMessage name="name" component="div" className="text-[red] text-[12px]" />
+              </div>
 
-          return (
-            <Form>
-              <p className='text-center text-[24px] font-[400]'>{data.name}</p>
-              <div className='w-full h-[1px] my-[20px] bg-black'></div>
-              <div className='grid grid-cols-2 gap-2 pb-[40px]'>
-                {/* Full Name Field */}
-                <div className='flex flex-col gap-1 col-span-2'>
-                  <label htmlFor="name">Full Name*</label>
-                  <Field type="text" name="name" className='border-[1px] border-black rounded-md p-[10px]' />
-                  <ErrorMessage name="name" component="div" className="text-[red] text-[12px]" />
+              {/* Contact Number Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="contact">Contact Number*</label>
+                <Field type="number" name="contact" className='border-[1px] border-black rounded-md p-[10px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' />
+                <ErrorMessage name="contact" component="div" className="text-[red] text-[12px]" />
+              </div>
+
+              {/* Email Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="email">Email*</label>
+                <Field type="text" name="email" className='border-[1px] border-black rounded-md p-[10px]' />
+                <ErrorMessage name="email" component="div" className="text-[red] text-[12px]" />
+              </div>
+
+              {/* Number of Passengers Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="passengers">Number of Passengers*</label>
+                <Field type="number" name="passengers" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
+                <ErrorMessage name="passengers" component="div" className="text-[red] text-[12px]" />
+              </div>
+
+              {/* Number of Luggage Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="luggage">Number of Luggage*</label>
+                <Field type="number" name="luggage" className='border-[1px] border-black rounded-md p-[10px]' min="0" />
+                <ErrorMessage name="luggage" component="div" className="text-[red] text-[12px]" />
+              </div>
+
+              {/* Date Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="date">Date*</label>
+                <Field type="date" name="date" className='border-[1px] border-black rounded-md p-[10px]' min={new Date().toISOString().split("T")[0]} />
+                <ErrorMessage name="date" component="div" className="text-[red] text-[12px]" />
+              </div>
+
+              {/* Pickup Time Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="pickupTime">Pickup Time*</label>
+                <Field type="time" name="pickupTime" className='border-[1px] border-black rounded-md p-[10px]' />
+                <ErrorMessage name="pickupTime" component="div" className="text-[red] text-[12px]" />
+              </div>
+
+              {/* Trip Type Radio Buttons */}
+              <div className={`'flex flex-col gap-1 ${data.transfer === 'airport' ? "md:col-span-2" : ""}`}>
+                <label>Arrival or Departure*</label>
+                <div className='flex gap-2'>
+                  <label>
+                    <Field type="radio" name="tripType" value="arrival" onClick={() => handleTripTypeChange(setFieldValue, 'arrival')} />
+                    Arrival
+                  </label>
+                  <label>
+                    <Field type="radio" name="tripType" value="departure" onClick={() => handleTripTypeChange(setFieldValue, 'departure')} />
+                    Departure
+                  </label>
                 </div>
+                <ErrorMessage name="tripType" component="div" className="text-[red] text-[12px]" />
+              </div>
 
-                {/* Contact Number Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="contact">Contact Number*</label>
-                  <Field type="number" name="contact" className='border-[1px] border-black rounded-md p-[10px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' />
-                  <ErrorMessage name="contact" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Email Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="email">Email*</label>
-                  <Field type="text" name="email" className='border-[1px] border-black rounded-md p-[10px]' />
-                  <ErrorMessage name="email" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Number of Passengers Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="passengers">Number of Passengers*</label>
-                  <Field type="number" name="passengers" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
-                  <ErrorMessage name="passengers" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Number of Luggage Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="luggage">Number of Luggage*</label>
-                  <Field type="number" name="luggage" className='border-[1px] border-black rounded-md p-[10px]' min="0" />
-                  <ErrorMessage name="luggage" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Date Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="date">Date*</label>
-                  <Field type="date" name="date" className='border-[1px] border-black rounded-md p-[10px]' min={new Date().toISOString().split("T")[0]} />
-                  <ErrorMessage name="date" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Pickup Time Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="pickupTime">Pickup Time*</label>
-                  <Field type="time" name="pickupTime" className='border-[1px] border-black rounded-md p-[10px]' />
-                  <ErrorMessage name="pickupTime" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Trip Type Radio Buttons */}
-                <div className={`'flex flex-col gap-1 ${data.transfer === 'airport' ? "md:col-span-2" : ""}`}>
-                  <label>Arrival or Departure*</label>
-                  <div className='flex gap-2'>
-                    <label>
-                      <Field type="radio" name="tripType" value="arrival" onClick={() => setTripType('arrival')} />
-                      Arrival
-                    </label>
-                    <label>
-                      <Field type="radio" name="tripType" value="departure" onClick={() => setTripType('departure')} />
-                      Departure
-                    </label>
-                  </div>
-                  <ErrorMessage name="tripType" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Flight or Train Number Fields */}
-                {data.transfer === 'airport' && (<>
+              {/* Flight or Train Number Fields */}
+              {data.transfer === 'airport' && (
+                <>
                   <div className='flex flex-col gap-1'>
                     <label htmlFor="flightNumber">Flight Number*</label>
                     <Field type="text" name="flightNumber" className='border-[1px] border-black rounded-md p-[10px]' />
@@ -175,39 +173,36 @@ export default function TransferForm({ data }) {
                     <Field type="text" name="terminalNumber" className='border-[1px] border-black rounded-md p-[10px]' />
                     <ErrorMessage name="terminalNumber" component="div" className="text-[red] text-[12px]" />
                   </div>
-                </>)}
-                {data.transfer === 'station' && (
-                  <div className='flex flex-col gap-1'>
-                    <label htmlFor="trainNumber">Train Number*</label>
-                    <Field type="text" name="trainNumber" className='border-[1px] border-black rounded-md p-[10px]' />
-                    <ErrorMessage name="trainNumber" component="div" className="text-[red] text-[12px]" />
-                  </div>
-                )}
-
-                {/* Pickup Address Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="pickupAddress">Pickup Address*</label>
-                  <Field as="textarea" name="pickupAddress" className='border-[1px] border-black rounded-md p-[10px]' />
-                  <ErrorMessage name="pickupAddress" component="div" className="text-[red] text-[12px]" />
-                </div>
-
-                {/* Dropoff Address Field */}
-                <div className='flex flex-col gap-1'>
-                  <label htmlFor="dropoffAddress">Dropoff Address*</label>
-                  <Field as="textarea" name="dropoffAddress" className='border-[1px] border-black rounded-md p-[10px]' />
-                  <ErrorMessage name="dropoffAddress" component="div" className="text-[red] text-[12px]" />
-                </div>
-              </div>
-              {submitting ? (
-                <div className='bg-gray-500 p-[10px] text-center text-white'>
-                  Submitting form...
-                </div>
-              ) : (
-                <button type="submit" disabled={isSubmitting} className='w-full bg-custom-red text-white font-[700] p-[10px]'>Book</button>
+                </>
               )}
-            </Form>
-          );
-        }}
+              {data.transfer === 'station' && (
+                <div className='flex flex-col gap-1'>
+                  <label htmlFor="trainNumber">Train Number*</label>
+                  <Field type="text" name="trainNumber" className='border-[1px] border-black rounded-md p-[10px]' />
+                  <ErrorMessage name="trainNumber" component="div" className="text-[red] text-[12px]" />
+                </div>
+              )}
+
+              {/* Pickup Address Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="pickupAddress">Pickup Address*</label>
+                <Field type="text" name="pickupAddress" className='border-[1px] border-black rounded-md p-[10px]' />
+                <ErrorMessage name="pickupAddress" component="div" className="text-[red] text-[12px]" />
+              </div>
+
+              {/* Dropoff Address Field */}
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="dropoffAddress">Dropoff Address*</label>
+                <Field type="text" name="dropoffAddress" className='border-[1px] border-black rounded-md p-[10px]' />
+                <ErrorMessage name="dropoffAddress" component="div" className="text-[red] text-[12px]" />
+              </div>
+            </div>
+
+            <button type="submit" className='w-full p-[10px] text-white bg-black rounded-md' disabled={isSubmitting}>
+              {submitting ? "Submitting..." : "Add to Cart"}
+            </button>
+          </Form>
+        )}
       </Formik>
     </>
   );
