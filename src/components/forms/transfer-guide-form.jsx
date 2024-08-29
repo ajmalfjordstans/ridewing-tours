@@ -73,7 +73,7 @@ export default function TransferGuideForm({ data, setShowForm }) {
             errors.meetingPoint = 'Meeting point is required';
           }
           if (!values.meetingAddress) {
-            errors.meetingAddress = 'Meeting address is required';
+            errors.meetingAddress = 'Meeting point address is required';
           }
           if (!values.meetingTime) {
             errors.meetingTime = 'Meeting time is required';
