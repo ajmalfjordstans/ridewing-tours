@@ -30,7 +30,7 @@ export default function AdmissionTickets({ values, setValues }) {
       console.log("Starting upload...");
       const imageUrl = await handleUpload();
       console.log("Upload completed. Image URL:", imageUrl);
-
+  
       if (ticketName && ticketPrice) {
         const newTicket = {
           name: ticketName,
@@ -40,13 +40,13 @@ export default function AdmissionTickets({ values, setValues }) {
           closing: dayjs(closingHours).toDate(),
           description: description
         };
-
-        const newTickets = [...values?.tickets, newTicket];
-        // console.log("New tickets array:", newTickets);
-
+  
+        // Ensure values?.tickets is an array before spreading it
+        const newTickets = [...(values?.tickets || []), newTicket];
+  
         // Update state with new ticket
         setValues({ ...values, tickets: newTickets });
-
+  
         // Reset form fields
         setTicketName('');
         setTicketPrice('');
@@ -54,7 +54,7 @@ export default function AdmissionTickets({ values, setValues }) {
         setClosingHours(new Date());
         setImage(null);
         setCurrentImage(null);
-        setDescription("")
+        setDescription("");
       } else {
         console.warn("Ticket name or price is missing!");
       }
@@ -62,6 +62,7 @@ export default function AdmissionTickets({ values, setValues }) {
       console.error("Error uploading image:", error);
     }
   };
+  
 
 
   const deleteTicket = (index) => {
