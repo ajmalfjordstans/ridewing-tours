@@ -4,13 +4,16 @@ import React, { useState } from 'react'
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
 import { db, updateFirebaseDocument } from '@/app/firebase'
 import { doc, setDoc } from 'firebase/firestore'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '../store/userSlice'
+import { useRouter } from 'next/navigation'
 
 export default function Profile({ user, handleSignOut }) {
   const [data, setData] = useState(user)
   const [errors, setErrors] = useState({})
+  const selectedCountry = useSelector(state=>state.user.selectedCountry)
   const dispatch = useDispatch()
+  const router = useRouter()
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return re.test(String(email).toLowerCase())
@@ -47,6 +50,7 @@ export default function Profile({ user, handleSignOut }) {
       dispatch(setUser(user))
       console.log("User document successfully created!");
       alert("Succesfully Updated")
+      router.push(`/?country=${selectedCountry}`)
     } catch (err) {
       console.error("Error setting document: ", err);
     }

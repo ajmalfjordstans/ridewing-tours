@@ -17,21 +17,27 @@ import AdmissionTickets from './admission-tickets';
 
 export default function EditPlace({ data, setShowEdit }) {
   const selectedCountry = useSelector(state => state.user.selectedCountry)
-  const [imageGallery, setImageGallery] = useState(null)
+  const [imageGallery, setImageGallery] = useState(data.gallery ? data.gallery : null)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false);
   const [values, setValues] = useState(data)
   const [categories, setCategories] = useState()
 
   const handleChange = (e, pos) => {
-    console.log(imageGallery);
+    console.log("imageGallery: ", imageGallery);
     if (e.target.files && e.target.files[0]) {
       // Ensure imageGallery is initialized as an array of length 4 with empty values if necessary
       let updatedImageGallery = [...imageGallery];
 
+      //Remove image from values
+      setValues({
+        ...values,
+        gallery: values.gallery.filter((_, index) => index !== pos)
+      });
+
       // Update the copy of the array at customPosition with the new file
       updatedImageGallery[pos] = e.target.files[0];
-
+      console.log("updatedImageGallery:", updatedImageGallery);
       // Set the state with the updated array
       setImageGallery(updatedImageGallery);
       // setImageGallery(e.target.files[0])
@@ -165,15 +171,15 @@ export default function EditPlace({ data, setShowEdit }) {
         </div>
         <div className=' w-full object-cover h-[25vh] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
           <Image src={values?.gallery[1] ? values.gallery[1] : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' />
-          <input type="file" onChange={(e) => handleChange(e, 1)} className='relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
+          <input type="file" onChange={(e) => handleChange(e, 1)} className='max-w-[90%] relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
         </div>
         <div className=' w-full object-cover h-[25vh] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
           <Image src={values?.gallery[2] ? values.gallery[2] : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' />
-          <input type="file" onChange={(e) => handleChange(e, 2)} className='relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
+          <input type="file" onChange={(e) => handleChange(e, 2)} className='max-w-[90%] relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
         </div>
         <div className=' w-full object-cover h-[25vh] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
           <Image src={values?.gallery[3] ? values.gallery[3] : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' />
-          <input type="file" onChange={(e) => handleChange(e, 3)} className='relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
+          <input type="file" onChange={(e) => handleChange(e, 3)} className='max-w-[90%] relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
         </div>
       </div>
 
@@ -181,7 +187,7 @@ export default function EditPlace({ data, setShowEdit }) {
         <Button onClick={handleUpload} disabled={loading}>
           {loading ? 'Uploading...' : 'Upload'}
         </Button>
-        {loading && <p className='font-[600] text-[22px]'>{Math.round(progress)}%</p>}
+        {/* {loading && <p className='font-[600] text-[22px]'>{Math.round(progress)}%</p>} */}
       </div>
       {/* Short Description */}
       <div className='w-full flex flex-col md:flex-row justify-between mt-[20px] border-[1px] border-[#212529] p-[15px] bg-[#EFEFEF] gap-[20px]'>

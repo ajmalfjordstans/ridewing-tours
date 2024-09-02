@@ -18,10 +18,10 @@ export default function Itineraries({ values, setValues }) {
     setValues({ ...values, itinerary: { ...values.itinerary, itinerary: updatedItinerary } });
   };
   return (
-    <div className=" text-[16px] leading-[36px] max-w-[700px] mx-auto mt-[70px]">
+    <div className=" text-[16px] leading-[36px] max-w-[700px] mx-auto my-[70px]">
       {values?.itinerary &&
         <Timeline>
-          {values?.itinerary?.start &&
+          {/* {values?.itinerary?.start && */}
             <TimelineItem>
               <TimelineConnector />
               <TimelineHeader>
@@ -43,7 +43,7 @@ export default function Itineraries({ values, setValues }) {
                 </div>
               </TimelineBody>
             </TimelineItem>
-          }
+          {/* } */}
           <div className='flex flex-col gap-2 w-full'>
             {values?.itinerary?.itinerary.map((stop, id) => (
               <TimelineItem key={id} >
@@ -76,7 +76,7 @@ export default function Itineraries({ values, setValues }) {
               onClick={handleAddStop}
               className="border border-green-500 px-2 rounded-md bg-green-500 mt-2">Add Stop</Button>
           </div>
-          {values?.itinerary?.end &&
+          {/* {values?.itinerary?.end && */}
             <TimelineItem>
               <TimelineHeader>
                 <TimelineIcon className="p-2 bg-custom-red mt-[20px]">
@@ -97,7 +97,7 @@ export default function Itineraries({ values, setValues }) {
                 </div>
               </TimelineBody>
             </TimelineItem>
-          }
+          {/* } */}
         </Timeline>
       }
     </div>

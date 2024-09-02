@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 export default function TopChoicesCard({ data }) {
 
-  // console.log(country);
+  console.log(data);
   return (
     <div className='w-full h-[482px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >
@@ -60,10 +60,12 @@ export default function TopChoicesCard({ data }) {
                 alt="stopwatch"
                 className="h-[20px] w-[30px]"
               />
-              {Array.isArray(data?.details?.language) &&
+              {Array.isArray(data?.details?.language) ?
                 data.details.language.map((lang, id) => (
                   <p key={id}>{lang}</p>
                 ))
+                :
+                <p>{data?.details?.language}</p>
               }
             </div>
           )}

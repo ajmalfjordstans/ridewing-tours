@@ -83,7 +83,7 @@ export default function AdmissionTickets({ values, setValues }) {
 
     setLoading(true);
 
-    const storageRef = ref(storage, `images/countries/${selectedCountry}/top-choices/${values.id}/${ticketName}/${image.name}`);
+    const storageRef = ref(storage, `images/countries/${selectedCountry}/top-choices/${values.id}/tickets/${ticketName}/${image.name}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     return new Promise((resolve, reject) => {
