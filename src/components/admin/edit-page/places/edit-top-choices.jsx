@@ -14,6 +14,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { useSelector } from 'react-redux';
 import AdmissionTickets from './admission-tickets';
+import Gallery from './gallery';
 
 export default function EditPlace({ data, setShowEdit }) {
   const selectedCountry = useSelector(state => state.user.selectedCountry)
@@ -23,90 +24,7 @@ export default function EditPlace({ data, setShowEdit }) {
   const [values, setValues] = useState(data)
   const [categories, setCategories] = useState()
 
-  const handleChange = (e, pos) => {
-    console.log("imageGallery: ", imageGallery);
-    if (e.target.files && e.target.files[0]) {
-      // Ensure imageGallery is initialized as an array of length 4 with empty values if necessary
-      let updatedImageGallery = [...imageGallery];
 
-      //Remove image from values
-      setValues({
-        ...values,
-        gallery: values.gallery.filter((_, index) => index !== pos)
-      });
-
-      // Update the copy of the array at customPosition with the new file
-      updatedImageGallery[pos] = e.target.files[0];
-      console.log("updatedImageGallery:", updatedImageGallery);
-      // Set the state with the updated array
-      setImageGallery(updatedImageGallery);
-      // setImageGallery(e.target.files[0])
-    }
-  }
-
-  const handleUpload = async () => {
-    setLoading(true);
-    let uploadPromises = [];
-
-    // Loop through each image in imageGallery to upload them
-    for (let i = 0; i < imageGallery.length; i++) {
-      const image = imageGallery[i];
-
-      if (image) {
-        const storageRef = ref(storage, `images/countries/${selectedCountry}/top-choices/${values.id}/${image.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-
-        // Push the upload task promise to the array
-        uploadPromises.push(
-          new Promise((resolve, reject) => {
-            // Monitor upload progress
-            uploadTask.on(
-              'state_changed',
-              (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`File ${i + 1} upload is ${progress}% done`);
-                setProgress(progress);
-              },
-              (error) => {
-                console.error(`Error uploading file ${i + 1}:`, error);
-                reject(error);
-              },
-              () => {
-                // Upload completed successfully, get the download URL
-                getDownloadURL(uploadTask.snapshot.ref)
-                  .then((downloadURL) => {
-                    console.log(`File ${i + 1} available at:`, downloadURL);
-                    // Update values state with download URL for each image
-                    // Adjust this part according to your application logic
-                    // For example, if you want to store all URLs in an array in 'values':
-                    const updatedValues = { ...values, gallery: [...values.gallery, downloadURL] };
-                    setValues(updatedValues);
-                    console.log(updatedValues.gallery);
-                    resolve();
-                  })
-                  .catch((error) => {
-                    console.error(`Error getting download URL for file ${i + 1}:`, error);
-                    reject(error);
-                  });
-              }
-            );
-          })
-        );
-      }
-    }
-
-    // Wait for all upload tasks to complete
-    Promise.all(uploadPromises)
-      .then(() => {
-        setLoading(false);
-        alert('Update completed');
-      })
-      .catch((error) => {
-        console.error('Error uploading files:', error);
-        setLoading(false);
-        // Handle error or retry logic as needed
-      });
-  };
 
   const handleConvertAndSave = (inputString) => {
     const lowercasedString = inputString.toLowerCase();
@@ -115,16 +33,19 @@ export default function EditPlace({ data, setShowEdit }) {
   };
 
   const handleSave = async () => {
+    setLoading(true)
     console.log(values);
     const result = await createFirebaseDocument(values, `countries/${selectedCountry}/top-choices/`, values?.url)
-    if (result) alert("Saved")
+    if (result) {
+      setLoading(false)
+      alert("Saved")
+    }
     window.scrollTo(0, 0)
   };
 
   useEffect(() => {
     if (data) {
       setValues(data)
-      setImageGallery(data.gallery)
       // console.log(data, values);
       window.scrollTo(0, 0)
     }
@@ -139,7 +60,7 @@ export default function EditPlace({ data, setShowEdit }) {
       try {
         const result = await readFirebaseCollection(`countries/${selectedCountry}/categories`);
         setCategories(result);
-        console.log(result);
+        // console.log(result);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -162,33 +83,11 @@ export default function EditPlace({ data, setShowEdit }) {
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
-      {/* Gallery */}
-      <div className='grid grid-cols-4 gap-5 mt-[60px]'>
-        {/* <Image src={data?.gallery[0]} height={700} width={800} alt='image' className='col-span-3 row-span-3 h-full w-full max-h-[81vh] object-cover' /> */}
-        <div className='col-span-3 row-span-3 h-full w-full max-h-[81vh] object-cover relative flex justify-center items-center rounded-[10px] overflow-hidden'>
-          <Image src={values?.gallery[0] ? values.gallery[0] : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-full w-full object-cover' alt='banner' />
-          <input type="file" onChange={(e) => handleChange(e, 0)} className='relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
-        </div>
-        <div className=' w-full object-cover h-[25vh] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
-          <Image src={values?.gallery[1] ? values.gallery[1] : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' />
-          <input type="file" onChange={(e) => handleChange(e, 1)} className='max-w-[90%] relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
-        </div>
-        <div className=' w-full object-cover h-[25vh] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
-          <Image src={values?.gallery[2] ? values.gallery[2] : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' />
-          <input type="file" onChange={(e) => handleChange(e, 2)} className='max-w-[90%] relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
-        </div>
-        <div className=' w-full object-cover h-[25vh] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
-          <Image src={values?.gallery[3] ? values.gallery[3] : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' />
-          <input type="file" onChange={(e) => handleChange(e, 3)} className='max-w-[90%] relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
-        </div>
-      </div>
 
-      <div className='flex mt-[15px] items-center gap-3'>
-        <Button onClick={handleUpload} disabled={loading}>
-          {loading ? 'Uploading...' : 'Upload'}
-        </Button>
-        {/* {loading && <p className='font-[600] text-[22px]'>{Math.round(progress)}%</p>} */}
-      </div>
+      {/* Gallery */}
+      <Gallery values={values} setValues={setValues} />
+
+
       {/* Short Description */}
       <div className='w-full flex flex-col md:flex-row justify-between mt-[20px] border-[1px] border-[#212529] p-[15px] bg-[#EFEFEF] gap-[20px]'>
         <div>
@@ -389,10 +288,12 @@ export default function EditPlace({ data, setShowEdit }) {
       </div >
       <Extras values={values} setValues={setValues} />
 
-      <div className='bg-white w-full flex justify-end py-[15px] sticky bottom-0'>
-        <Button className='bg-[green]' disabled={loading}
+      <div className='bg-white w-full flex gap-3 items-center justify-end py-[15px] sticky bottom-0'>
+        {loading && <Image src={'/icons/loading.svg'} alt='loading' height={100} width={100} className='h-[30px] w-[30px]' />}
+        <Button className='bg-[green] flex ' disabled={loading}
           onClick={() => handleSave()}
-        >Save</Button>
+        >Save
+        </Button>
       </div>
     </div>
   )

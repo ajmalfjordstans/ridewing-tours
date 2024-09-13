@@ -6,24 +6,24 @@ import { useSelector } from 'react-redux';
 
 export default function TopChoicesCard({ data }) {
 
-  console.log(data);
+  // console.log(data.gallery[1]);
   return (
     <div className='w-full h-[482px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >
-      <div className='h-[305px] p-[12px] flex items-end'
+      <div className='h-[305px]  flex items-end'
         style={{
           backgroundImage: `url(${data.gallery[0]})`, backgroundSize: 'cover', backgroundPosition: 'center'
         }}
       >
-        <div className='flex w-full justify-between'>
-          <div className='text-[16px] flex items-center gap-3'>
+        <div className='flex w-full justify-between '>
+          <div className='text-[16px] flex items-center gap-3 p-[12px]'>
             {/* <div className='h-[33px] w-[33px] rounded-full bg-[#FFFFFF4D] flex justify-center items-center text-white'>
               <p className=''>4.8</p>
             </div>
             <p className='text-secondary'>Rating</p> */}
           </div>
           {data?.price &&
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center justify-end gap-2 p-[12px] bg-black bg-opacity-45 w-full'>
               <p className='text-secondary text-[14px]'>From</p>
               <p className='text-white text-[26px]'>{data?.currency} {data?.bulkPrice ? data?.bulkPrice.toLocaleString() : data?.price.toLocaleString()}</p>
             </div>}
