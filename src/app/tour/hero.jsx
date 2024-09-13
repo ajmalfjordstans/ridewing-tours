@@ -16,6 +16,7 @@ import Enquiry from '@/components/forms/enquiry-form';
 import { addItem } from '@/components/store/cartSlice';
 import AddToCart from '@/components/forms/add-to-cart-form';
 import { useRouter } from 'next/navigation';
+import { TourImageGallery } from './tour-gallery';
 
 export default function TourHero({ data }) {
   const [showForm, setShowForm] = useState(false);
@@ -51,12 +52,8 @@ export default function TourHero({ data }) {
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
-      <div className='grid grid-cols-4 gap-5 mt-[60px]'>
-        <Image src={bookingPackage?.gallery[0]} height={700} width={800} alt='image' className='col-span-3 row-span-3 h-full w-full max-h-[81vh] object-cover' />
-        <Image src={bookingPackage?.gallery[1]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
-        <Image src={bookingPackage?.gallery[2]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
-        <Image src={bookingPackage?.gallery[3]} height={700} width={800} alt='image' className='h-full w-full object-cover max-h-[25vh]' />
-      </div>
+      <TourImageGallery data={bookingPackage?.gallery}/>
+     
       <div className='w-full flex flex-col md:flex-row justify-between mt-[20px] border-[1px] border-[#212529] p-[15px] bg-[#EFEFEF] gap-[20px]'>
         <div>
           <div className='flex flex-wrap gap-3 text-[16px]'>
