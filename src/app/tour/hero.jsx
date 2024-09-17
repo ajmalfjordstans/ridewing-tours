@@ -88,11 +88,13 @@ export default function TourHero({ data }) {
             </div>
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/language.svg'} height={100} width={100} alt='stopwatch' className='h-[20px] w-[30px]' />
-              {bookingPackage?.details?.language?.map((lang, id) => {
+              {/* {console.log(bookingPackage?.details)}
+              
+              {Array.isArray(bookingPackage?.details?.language) && bookingPackage?.details?.language?.map((lang, id) => {
                 return (
-                  <p key={id}>{lang}</p>
                 )
-              })}
+              })} */}
+              <p>{Array.isArray(bookingPackage?.details?.language) ? bookingPackage?.details?.language[0] : bookingPackage?.details?.language}</p>
             </div>
           </div>
         </div>
