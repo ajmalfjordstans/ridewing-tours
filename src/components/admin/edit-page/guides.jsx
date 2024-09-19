@@ -1,4 +1,4 @@
-import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, readFirebaseCollection, storage, updateFirebaseDocument } from '@/app/firebase'
+import { createDocumentWithAutoId, createFirebaseDocument, db, deleteFirebaseDocument, readFirebaseCollection, readFirebaseDocument, storage, updateFirebaseDocument } from '@/app/firebase'
 import TransferCard from '@/app/transfers/[transfers]/card'
 import TransferGuideCard from '@/app/transfers/[transfers]/guide-card'
 import { Button } from '@material-tailwind/react'
@@ -34,6 +34,7 @@ export default function Guides() {
     title: '',
     name: '',
     price: '',
+    currency: '',
     date: null,
     languages: [] // Initialize languages as an empty array
   })
@@ -47,6 +48,9 @@ export default function Guides() {
   const getData = async () => {
     try {
       const response = await (readFirebaseCollection(queryPath))
+      const responseAbout = await (readFirebaseDocument(`countries/${currentCountry}/landing/hero`))
+      setValues({ ...values, currency: responseAbout?.currency })
+      // console.log(responseAbout.currency);
       setData(response);
       setLoadingData(false)
     } catch (error) {
@@ -143,7 +147,7 @@ export default function Guides() {
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
               <div className='h-full w-full shadow-lg rounded-md border-[2px] border-black flex items-center justify-center hover:cursor-pointer min-h-[400px]'
                 onClick={() => {
-                  setValues("")
+                  setValues(values)
                   setShowEdit(true)
                 }}
               >
@@ -159,7 +163,7 @@ export default function Guides() {
                       <Button fullWidth className='bg-[blue]'
                         onClick={() => {
                           setShowEdit(true)
-                          setValues(data)
+                          setValues({...data, currency:values.currency })
                         }}>Edit</Button>
                       <Button fullWidth className='bg-[red]'
                         onClick={() => handleDelete(data?.id)}
@@ -196,9 +200,16 @@ export default function Guides() {
                   <div>
                     <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name of guide' required />
                   </div>
-                  <div>
+                  <div className='flex gap-2 w-full'>
                     <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price/hour' required />
+
+                    <input
+                      type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
+                      value={values.currency}
+                      onChange={(e) => setValues({ ...values, currency: e.target.value })} placeholder='Currency' required />
+
                   </div>
+
                   <div className='border-[2px] border-black rounded-[5px] p-[10px]'>
                     <input
                       type="text"

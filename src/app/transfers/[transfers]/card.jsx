@@ -16,12 +16,9 @@ export default function TransferCard({ data }) {
       />
 
       <div className='absolute bottom-0 h-[100px] w-full p-[15px] bg-[#00000080] text-white'>
-        {data.id &&
-          <p className='uppercase'>CODE: {data.id}</p>
-        }
         <p className='uppercase whitespace-nowrap text-ellipsis text-[14px] font-[600]'>{data.name}</p>
         {data?.price &&
-          <p className=''>Price: {data?.price.toLocaleString()}</p>
+          <p className='text-[12px]'>Price starting from: {data?.price.toLocaleString()} {data?.currency}</p>
         }
       </div>
 

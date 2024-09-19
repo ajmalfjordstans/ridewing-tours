@@ -9,9 +9,10 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [addedTickets, setAddedTickets] = useState([]);
   const [includeGuide, setIncludeGuide] = useState(data?.details.guidedTour);
   const [guideLanguage, setGuideLanguage] = useState('');
-  const [hoursGuideNeeded, setHoursGuideNeeded] = useState(1);
+  const [hoursGuideNeeded, setHoursGuideNeeded] = useState(data.details.hours);
   const [date, setDate] = useState(null)
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
+console.log(data);
 
   function generateBookingId() {
     const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
@@ -172,6 +173,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
               <span className='text-[14px]'>Hours guide needed</span>
               <input type="number"
                 className='p-[10px] border-[1px] border-black rounded-[5px] w-full my-[10px]'
+                disabled
                 min={"1"}
                 value={hoursGuideNeeded}
                 onChange={(e) => setHoursGuideNeeded(e.target.value)}

@@ -52,12 +52,14 @@ export default function Stations() {
     setQueryPath(`countries/${selectedCountry}/stations`);
   }, [selectedCountry]);
 
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setData(docs);
-  //     // console.log("Stations", docs);
-  //   }
-  // }, [loading, docs]);
+  useEffect(() => {
+    if (showForm) {
+      // Disable scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [showForm]);
 
   const showFormHandler = (data) => {
     setSelectedStation({ ...data, transfer: "station" })

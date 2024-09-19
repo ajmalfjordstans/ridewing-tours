@@ -168,21 +168,23 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   </>}
 
                 </div>
-                <div className="flex items-center justify-center h-full gap-2 mx-auto">
-                  <button
-                    className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
-                    onClick={(data?.type == 'guide' && count == 20) ? "" : increment}
-                  >
-                    +
-                  </button>
-                  <span className="text-[20px] px-2">{count}</span>
-                  <button
-                    className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
-                    onClick={decrement}
-                  >
-                    -
-                  </button>
-                </div>
+                {data?.type != 'custom' &&
+                  <div className="flex items-center justify-center h-full gap-2 mx-auto">
+                    <button
+                      className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
+                      onClick={(data?.type == 'guide' && count == 20) ? "" : increment}
+                    >
+                      +
+                    </button>
+                    <span className="text-[20px] px-2">{count}</span>
+                    <button
+                      className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
+                      onClick={decrement}
+                    >
+                      -
+                    </button>
+                  </div>
+                }
                 <div className='flex flex-col items-end'>
                   {data.type === "package" &&
                     <>
@@ -195,6 +197,10 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   {(data?.transfer == 'airport' || data?.transfer == 'station') &&
                     <>
                       <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + data?.price * data?.noOfPassengers}</p>
+                      {/* <p className='text-[22px] leading-[42px] whitespace-nowrap'>
+                        {data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.bulkPrice ? data?.bulkPrice * data?.noOfPassengers : data?.price * data?.noOfPassengers).toLocaleString()}
+                      </p>*/}
+                      <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p> 
                     </>
                   }
                   {(data?.type == 'guide') &&

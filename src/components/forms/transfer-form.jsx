@@ -186,14 +186,14 @@ export default function TransferForm({ data }) {
               {/* Pickup Address Field */}
               <div className='flex flex-col gap-1'>
                 <label htmlFor="pickupAddress">Pickup Address*</label>
-                <Field type="text" name="pickupAddress" className='border-[1px] border-black rounded-md p-[10px]' />
+                <Field as="textarea" name="pickupAddress" className='border-[1px] border-black rounded-md p-[10px]' />
                 <ErrorMessage name="pickupAddress" component="div" className="text-[red] text-[12px]" />
               </div>
 
               {/* Dropoff Address Field */}
               <div className='flex flex-col gap-1'>
                 <label htmlFor="dropoffAddress">Dropoff Address*</label>
-                <Field type="text" name="dropoffAddress" className='border-[1px] border-black rounded-md p-[10px]' />
+                <Field as="textarea" name="dropoffAddress" className='border-[1px] border-black rounded-md p-[10px]' />
                 <ErrorMessage name="dropoffAddress" component="div" className="text-[red] text-[12px]" />
               </div>
             </div>

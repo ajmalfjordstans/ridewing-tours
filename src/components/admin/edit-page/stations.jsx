@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux'
 
 export default function Stations() {
   const currentCountry = useSelector(state => state.user.selectedCountry)
+  const currency = useSelector(state => state.user.currency.code)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
@@ -16,7 +17,9 @@ export default function Stations() {
   const [wait, setWait] = useState(false)
   const [progress, setProgress] = useState('')
   const [data, setData] = useState(null);
-  const [values, setValues] = useState(null)
+  const [values, setValues] = useState({
+    currency: currency
+  })
   // const query = collection(db, `countries/${currentCountry}/stations`)
   // const [docs, firebaseLoading, error] = useCollectionData(query)
   const [loadingData, setLoadingData] = useState(true)
@@ -99,7 +102,7 @@ export default function Stations() {
             <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
               <div className='h-full w-full shadow-lg rounded-md border-[2px] border-black flex items-center justify-center hover:cursor-pointer min-h-[400px]'
                 onClick={() => {
-                  setValues("")
+                  setValues({ ...values })
                   setShowEdit(true)
                 }}
               >
@@ -152,12 +155,20 @@ export default function Stations() {
                   <div>
                     <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.name} onChange={(e) => setValues({ ...values, name: e.target.value })} placeholder='Name' required />
                   </div>
-                  <div className='grid grid-cols-2 gap-3'>
+                  <div className='grid grid-cols-3 gap-3'>
                     <div>
-                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.id} onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='Code' required />
+                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
+                        value={values.id}
+                        onChange={(e) => setValues({ ...values, id: e.target.value })} placeholder='Code' required />
                     </div>
                     <div>
-                      <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price' required />
+                      <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price}
+                        onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price' required />
+                    </div>
+                    <div>
+                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
+                        value={values.currency}
+                        onChange={(e) => setValues({ ...values, currency: e.target.value })} placeholder='Currency' required />
                     </div>
                   </div>
                 </div>

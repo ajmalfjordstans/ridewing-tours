@@ -8,6 +8,7 @@ import { addItem } from '../store/cartSlice';
 
 export default function CustomPackageForm({ }) {
   const [submitting, setSubmitting] = useState(false)
+  const [includeGuide, setIncludeGuide] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const cart = useSelector(state => state.cart.items);
@@ -40,7 +41,7 @@ export default function CustomPackageForm({ }) {
   const handleSubmit = (values, { resetForm }) => {
     try {
       setSubmitting(true);
-      // addToCartHandler(values)
+      addToCartHandler(values)
       console.log('Form submitted successfully.', values);
       resetForm();
       setSubmitting(false);
@@ -60,6 +61,8 @@ export default function CustomPackageForm({ }) {
           meetingTime: '',
           city: '',
           date: '',
+          hours: '',
+          guideLanguage: "",
           itinerary: '',
           notes: ''
         }}
@@ -93,7 +96,7 @@ export default function CustomPackageForm({ }) {
           setSubmitting(false);
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue, values }) => (
           <Form>
             <div className='grid grid-cols-2 gap-2 pb-[40px] mt-[10px]'>
               <div className='flex flex-col gap-1'>
@@ -133,6 +136,39 @@ export default function CustomPackageForm({ }) {
                 <Field type="date" name="date" className='border-[1px] border-black rounded-md p-[10px]' min={new Date().toISOString().split("T")[0]} />
                 <ErrorMessage name="date" component="div" className="text-[red] text-[12px]" />
               </div>
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="guests">Hours expected</label>
+                <Field type="number" name="hours" className='border-[1px] border-black rounded-md p-[10px]' min="6" placeholder="6" />
+                <ErrorMessage name="hours" component="div" className="text-[red] text-[12px]" />
+              </div>
+              <label className='flex items-center'>
+                <input
+                  type='checkbox'
+                  checked={includeGuide}
+                  onChange={() => setIncludeGuide(!includeGuide)}
+                />
+                <span className='ml-2 font-[600]'>Need Guide?</span>
+              </label>
+              {includeGuide && (
+                <>
+                  <div className='flex flex-col gap-1'>
+                    <label htmlFor="guideLanguage">Guide Language</label>
+                    <Field
+                      type="text"
+                      name="guideLanguage"
+                      className='border-[1px] border-black rounded-md p-[10px]'
+                      value={includeGuide ? values?.guideLanguage : ''}
+                      onChange={(e) => setFieldValue('guideLanguage', e.target.value)}
+                    />
+                    {/* <ErrorMessage name="guideLanguage" component="div" className="text-[red] text-[12px]" /> */}
+                  </div>
+                  {/* <div className='flex flex-col gap-1'>
+                    <label htmlFor="guideHours">Guide Hours</label>
+                    <Field type="number" name="guideHours" className='border-[1px] border-black rounded-md p-[10px]' />
+                    <ErrorMessage name="guideHours" component="div" className="text-[red] text-[12px]" />
+                  </div> */}
+                </>
+              )}
               <div className='flex flex-col gap-1 col-span-2'>
                 <label htmlFor="itinerary">Itinerary*</label>
                 <Field as="textarea" name="itinerary" className='border-[1px] border-black rounded-md p-[10px] h-[150px]' placeholder="Describe your custom itinerary in detail" />

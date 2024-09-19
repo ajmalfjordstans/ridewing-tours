@@ -45,6 +45,15 @@ export default function Airports() {
     setQueryPath(`countries/${selectedCountry}/airports`);
   }, [selectedCountry]);
 
+  useEffect(() => {
+    if (showForm) {
+      // Disable scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [showForm]);
+
   const showFormHandler = (data) => {
     setSelectedAirport({ ...data, transfer: "airport" })
     setShowForm(true)

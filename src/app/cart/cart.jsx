@@ -145,6 +145,7 @@ const CheckoutMenu = ({ items }) => {
 
     fetchCoupons();
   }, []);
+  
   return (
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
       <div className='w-full p-[30px]'>
