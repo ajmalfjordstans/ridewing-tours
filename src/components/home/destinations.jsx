@@ -38,14 +38,14 @@ const DestinationsData = [
     // description: "These Scandinavian countries offer breathtaking natural landscapes, rich cultural heritage, and vibrant cities, making them ideal destinations for travelers seeking adventure, culture, and relaxation."
   },
   {
-    title: 'United Kingdom',
-    image: 'https://images.unsplash.com/photo-1454537468202-b7ff71d51c2e?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Spain',
+    image: 'https://images.unsplash.com/photo-1509840841025-9088ba78a826?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     description: "Coming Soon"
     // description: "These destinations offer a multifaceted experience, from the academic allure of Oxford and Cambridge to the vibrant culture of Bristol and the historic charm of Cardiff. Glasgow adds a dynamic arts scene, while the Scottish Highlands, with the NC500, present nature's grandeur. Each destination is a testament to the UK's rich history, cultural diversity, and natural beauty, making them must-visit places for a comprehensive exploration of the United Kingdom."
   },
   {
-    title: 'Japan',
-    image: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Portugal',
+    image: 'https://images.unsplash.com/photo-1555881400-69a2384edcd4?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     description: "Coming Soon"
     // description: "Japan entices visitors with a harmonious blend of ancient traditions and cutting-edge modernity. From the neon-lit streets of Tokyo to the serene temples of Kyoto and the historic resilience of Hiroshima, Japan offers a diverse range of experiences. Its unique culture, picturesque landscapes, and technological innovations make it a top destination for those seeking a journey that seamlessly combines tradition and innovation."
   },

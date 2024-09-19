@@ -12,7 +12,6 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [hoursGuideNeeded, setHoursGuideNeeded] = useState(data.details.hours);
   const [date, setDate] = useState(null)
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
-console.log(data);
 
   function generateBookingId() {
     const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
