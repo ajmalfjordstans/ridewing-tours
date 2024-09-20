@@ -27,7 +27,7 @@ const CheckoutMenu = ({ items }) => {
     } else if (item?.type === 'guide') {
       return acc + price;
     } else if (item.transfer === 'airport' || item.transfer === 'station') {
-      const itemPrice = price * noOfPassengers;
+      const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
       return acc + itemPrice;
     } else {
       return acc
@@ -145,7 +145,7 @@ const CheckoutMenu = ({ items }) => {
 
     fetchCoupons();
   }, []);
-  
+
   return (
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
       <div className='w-full p-[30px]'>

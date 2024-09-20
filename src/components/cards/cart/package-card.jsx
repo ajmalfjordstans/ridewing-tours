@@ -82,11 +82,16 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
 
   // Calculate price of package with no of passengers
   const calculateTotal = (booking) => {
-    let total = 0;
-
-    const noOfPassengers = Number(booking.noOfPassengers); // Ensure noOfPassengers is a number
-    const price = Number(booking.price); // Ensure price is a number
-    const bulkPrice = Number(booking.bulkPrice); // Ensure price is a number
+    let total = 0
+    let noOfPassengers = 0
+    // console.log('booking', booking)
+    if (booking.transfer === 'airport' || booking.transfer === 'station') {
+      noOfPassengers = Number(booking?.travelDetails.passengers); // Ensure noOfPassengers is a number
+    } else {
+      noOfPassengers = Number(booking?.noOfPassengers); // Ensure noOfPassengers is a number
+    }
+    const price = Number(booking?.price); // Ensure price is a number
+    const bulkPrice = Number(booking?.bulkPrice); // Ensure price is a number
 
     if (booking?.type === 'package') {
       const itemPrice = noOfPassengers < 4 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
@@ -94,7 +99,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
     } else if (booking?.type === 'guide') {
       total += price;
     } else if (booking.transfer === 'airport' || booking.transfer === 'station') {
-      const itemPrice = price * noOfPassengers;
+      const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
       total += itemPrice;
     }
     return total;
@@ -125,7 +130,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   useEffect(() => {
     // setSubtotal(currentPackage?.price * count)
     const totalCalculated = calculateSubtotal()
-    console.log(totalCalculated);
+    // console.log(totalCalculated);
     updateCartHandler({ ...data, noOfPassengers: count, total: totalCalculated })
   }, [count])
 
@@ -189,18 +194,15 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   {data.type === "package" &&
                     <>
                       <p className='text-[22px] leading-[42px] whitespace-nowrap'>
-                        {data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.bulkPrice ? data?.bulkPrice * data?.noOfPassengers : data?.price * data?.noOfPassengers).toLocaleString()}
+                        {data?.currency == undefined ? currency.sign : data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.bulkPrice ? data?.bulkPrice * data?.noOfPassengers : data?.price * data?.noOfPassengers).toLocaleString()}
                       </p>
                       <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p>
                     </>
                   }
                   {(data?.transfer == 'airport' || data?.transfer == 'station') &&
                     <>
-                      <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + data?.price * data?.noOfPassengers}</p>
-                      {/* <p className='text-[22px] leading-[42px] whitespace-nowrap'>
-                        {data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.bulkPrice ? data?.bulkPrice * data?.noOfPassengers : data?.price * data?.noOfPassengers).toLocaleString()}
-                      </p>*/}
-                      <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p> 
+                      <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.price * data?.noOfPassengers)}</p>
+                      <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p>
                     </>
                   }
                   {(data?.type == 'guide') &&

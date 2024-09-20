@@ -11,6 +11,7 @@ export default function TransferForm({ data }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const cart = useSelector(state => state.cart.items);
+  const country = useSelector(state => state.user.selectedCountry);
 
   function generateBookingId() {
     const timestamp = Date.now().toString(36);
@@ -28,7 +29,7 @@ export default function TransferForm({ data }) {
         status: "pending"
       };
       dispatch(addItem(newData));
-      router.push(`/cart`);
+      router.push(`/?country=${country}`);
     } else {
       alert("Item already exists");
     }
