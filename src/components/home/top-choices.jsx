@@ -18,7 +18,7 @@ export default function TopChoices() {
     320: { slidesPerView: 1, spaceBetween: 15, },
     530: { slidesPerView: 2, spaceBetween: 15, },
     780: { slidesPerView: 2, spaceBetween: 15, },
-    960: { slidesPerView: 3, spaceBetween: 15, },
+    960: { slidesPerView: 4, spaceBetween: 15, },
     // 1440: { slidesPerView: 4.1, spaceBetween: 15, },
   }
 
@@ -59,8 +59,8 @@ export default function TopChoices() {
             </div>
           </div>
           <div className='hidden lg:block'>
-            {/* <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
-              {data?.map((data, id) => {
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
+              {data?.slice(0, 8).map((data, id) => {
                 // console.log(data)
                 return (
                   <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} key={id}>
@@ -68,12 +68,16 @@ export default function TopChoices() {
                   </Link>
                 )
               })}
-            </div> */}
-            {/* <Button
-              className='h-[48px] w-[180px] border-[red] border-[2px] rounded-[10px] bg-transparent text-[red] mt-[40px]'
-            >SEE MORE</Button>   */}
+            </div>
+            {data?.length > 4 &&
+              <Link href={{ pathname: '/packages', query: { "country": selectedCountry } }} >
+                <Button
+                  className='h-[48px] w-[180px] border-[red] border-[2px] rounded-[10px] bg-transparent text-[red] mt-[40px]'
+                >SEE MORE</Button>
+              </Link>
+            }
           </div>
-          <div className='mx-auto container'>
+          {/* <div className='mx-auto container'>
             <div className='mt-[37px] flex relative '>
               <Swiper
                 // spaceBetween={1}
@@ -120,7 +124,7 @@ export default function TopChoices() {
                 </button>
               </div>
             </div>
-          </div>
+          </div> */}
 
         </section>
       }</>

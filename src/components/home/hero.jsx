@@ -50,7 +50,7 @@ export default function Hero() {
       {loading ? <Loading />
         :
         <motion.section
-          className='pt-[100px] h-[80vh] w-full relative'
+          className='pt-[100px] h-[70vh] w-full relative'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}

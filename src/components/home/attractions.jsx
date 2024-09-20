@@ -201,14 +201,14 @@ export default function Attractions() {
             </button>
           </div>
         </div>
-        {data?.length > 4 &&
+        {/* {data?.length > 4 &&
           <div className='w-full flex justify-center'>
             <Button
               onClick={() => setShowMore(!showMore)}
               className='h-[48px] w-[180px] border-[red] border-[2px] rounded-[10px] bg-transparent text-[red] mt-[40px]'
             >SEE {showMore ? "LESS" : "MORE"}</Button>
           </div>
-        }
+        } */}
       </section>
       <AnimatePresence mode='wait'>
         {showDetails &&
