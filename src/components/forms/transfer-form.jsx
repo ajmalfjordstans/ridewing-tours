@@ -1,5 +1,7 @@
 'use client'
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
@@ -29,6 +31,7 @@ export default function TransferForm({ data }) {
         status: "pending"
       };
       dispatch(addItem(newData));
+      toast("Item Added to Cart succesfully")
       router.push(`/?country=${country}`);
     } else {
       alert("Item already exists");

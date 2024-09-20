@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import Layout from "@/components/layout";
 import Footer from "@/components/footer";
 import { AuthContextProvider } from "@/context/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 const poppins = Poppins({
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         <Layout>
           <AuthContextProvider>
             <Navbar />
+            <ToastContainer />
             {children}
             <Footer />
           </AuthContextProvider>

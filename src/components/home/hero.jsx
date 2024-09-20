@@ -50,12 +50,12 @@ export default function Hero() {
       {loading ? <Loading />
         :
         <motion.section
-          className='pt-[100px] h-[100vh] w-full relative'
+          className='pt-[100px] h-[80vh] w-full relative'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <div className='container mx-auto px-[5%] lg:px-0 h-full'>
+         <div className='h-full'>
             <motion.div
               className='h-full flex items-center text-white'
               initial={{ opacity: 0, x: -100 }}
@@ -63,7 +63,8 @@ export default function Hero() {
               transition={{ type: 'spring', stiffness: 100 }}
             >
               <motion.div
-                className='flex flex-col max-w-[800px] gap-[24px] bg-custom-red bg-opacity-70 p-[20px] lg:p-[50px] relative'
+                // className='flex flex-col h-full max-w-[800px] gap-[24px] bg-custom-red bg-opacity-70 p-[20px] lg:p-[50px] relative'
+                className='flex flex-col h-full max-w-[800px] gap-[24px] bg-gradient-to-r from-custom-red to-transparent  p-[20px] lg:p-[50px] relative'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.5 }}
@@ -86,7 +87,7 @@ export default function Hero() {
             </motion.div>
             {imageLoaded && (
               <motion.div
-                className='absolute top-0 right-0 h-full w-full md:w-[75%] z-[-1] bg-cover'
+                className='absolute top-0 right-0 h-full w-full z-[-1] bg-cover'
                 style={{ backgroundImage: `url(${data?.background})` }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
