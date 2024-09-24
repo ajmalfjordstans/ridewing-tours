@@ -41,7 +41,7 @@ export default function Blog() {
         :
         <>
           <div>
-            {data?.slice(0, 2).map((blog, id) => {
+            {data?.slice(0, 3).map((blog, id) => {
               return (
                 <BlogCard key={id} data={blog} />
               )

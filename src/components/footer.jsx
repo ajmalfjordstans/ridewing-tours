@@ -1,10 +1,14 @@
+'use client'
 import Image from 'next/image'
 import React from 'react'
 import Subscribe from './forms/subscribe'
+import Link from 'next/link'
+import { useSelector } from 'react-redux'
 
 export default function Footer() {
+  const country = useSelector(state => state.user.selectedCountry);
   return (
-    <div className='bg-transparent relative'>
+    <div className='bg-transparent relative mt-[200px]'>
       <div className=' bg-[#212529] text-white mt-[125px]'>
         <div className='lg:mx-0 translate-y-[-50%] w-full'>
           <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] h-[246px] rounded-[12px]'>
@@ -18,10 +22,18 @@ export default function Footer() {
             <div>
               <p className='font-bold text-[18px] leading-[28px]'>Quick Link</p>
               <div className='mt-[18px] font-[400] flex flex-col gap-2'>
-                <p className=''>Home</p>
-                <p className=''>Categories</p>
-                <p className=''>Help</p>
-                <p className=''>Contact</p>
+                <Link href={`/?country=${country}`}>
+                  <p className=''>Home</p>
+                </Link>
+                <Link href={`/categories?country=${country}`}>
+                  <p className=''>Categories</p>
+                </Link>
+                <Link href={`/contact?country=${country}`}>
+                  <p className=''>Help</p>
+                </Link>
+                <Link href={`/contact?country=${country}`}>
+                  <p className=''>Contact</p>
+                </Link>
               </div>
             </div>
             <div>

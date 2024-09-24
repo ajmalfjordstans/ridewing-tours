@@ -145,14 +145,15 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
         )
 
         }
-        <label className='flex items-center'>
+        {/* Need guide */}
+        {/* <label className='flex items-center'>
           <input
             type='checkbox'
             checked={includeGuide}
             onChange={() => setIncludeGuide(!includeGuide)}
           />
           <span className='ml-2 font-[600]'>Need Guide?</span>
-        </label>
+        </label> */}
         {includeGuide && (
           <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
             <label className='block'>

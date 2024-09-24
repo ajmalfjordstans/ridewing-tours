@@ -99,12 +99,12 @@ export default function CustomPackageForm({ }) {
         {({ isSubmitting, setFieldValue, values }) => (
           <Form>
             <div className='grid grid-cols-2 gap-2 pb-[40px] mt-[10px]'>
-              <div className='flex flex-col gap-1'>
+              <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>
                 <label htmlFor="guests">Number of Guests*</label>
                 <Field type="number" name="guests" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
                 <ErrorMessage name="guests" component="div" className="text-[red] text-[12px]" />
               </div>
-              <div className='flex flex-col gap-1'>
+              <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>
                 <label htmlFor="meetingPoint">Meeting Point*</label>
                 <Field as="select" name="meetingPoint" className='border-[1px] border-black rounded-md p-[10px]'>
                   <option value="" disabled>Select a meeting point</option> {/* Placeholder */}
@@ -116,7 +116,7 @@ export default function CustomPackageForm({ }) {
                 </Field>
                 <ErrorMessage name="meetingPoint" component="div" className="text-[red] text-[12px]" />
               </div>
-              <div className='flex flex-col gap-1 md:col-span-2'>
+              <div className='flex flex-col gap-1 col-span-2'>
                 <label htmlFor="meetingAddress">Meeting Address*</label>
                 <Field as="textarea" name="meetingAddress" className='border-[1px] border-black rounded-md p-[10px] h-[150px]' />
                 <ErrorMessage name="meetingAddress" component="div" className="text-[red] text-[12px]" />

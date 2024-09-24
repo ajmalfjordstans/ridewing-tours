@@ -13,7 +13,7 @@ export function TourImageGallery({ data }) {
                 onClick={() => setActive(imgelink)}
                 src={imgelink}
                 key={index}
-                height={700} width={800} alt='image'
+                height={400} width={400} alt='image'
                 className='md:h-full md:w-full object-cover h-[10vh] w-[15vh] md:max-h-[25vh] hover:cursor-pointer' />
           ))}
         </div>
