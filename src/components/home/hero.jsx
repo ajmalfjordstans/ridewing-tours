@@ -6,6 +6,7 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import Loading from '@/app/loading';
 import { AnimatePresence, motion } from 'framer-motion';
 import NextImage from 'next/image';
+import { setContact } from '../store/userSlice';
 
 export default function Hero() {
   const dispatch = useDispatch()
@@ -26,6 +27,10 @@ export default function Hero() {
   useEffect(() => {
     if (!loading) {
       setData(docs);
+      dispatch(setContact({
+        phone: docs?.contact,
+        whatsapp: docs?.whatsapp
+      }))
     }
   }, [loading, docs]);
 
@@ -55,7 +60,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-         <div className='h-full'>
+          <div className='h-full'>
             <motion.div
               className='h-full flex items-center text-white'
               initial={{ opacity: 0, x: -100 }}

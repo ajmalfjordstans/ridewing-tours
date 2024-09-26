@@ -11,8 +11,6 @@ export default function Transfer() {
   const getData = async () => {
     try {
       const response = await (readFirebaseCollection(`countries/${selectedCountry}/transfers`))
-      console.log(response);
-      
       setData(response);
       setLoadingData(false)
     } catch (error) {

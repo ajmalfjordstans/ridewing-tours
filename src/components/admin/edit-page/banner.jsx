@@ -27,6 +27,8 @@ export default function Banner() {
     background: "",
     heading: "",
     tagline: "",
+    contact: "",
+    whatsapp: '',
     description: "",
     timezone: "",
     currency: "",
@@ -197,6 +199,17 @@ export default function Banner() {
         <div>
           <p className='text-[22px] mt-[20px]'>Tagline</p>
           <textarea type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full' value={values.tagline} onChange={(e) => setValues({ ...values, tagline: e.target.value })} />
+        </div>
+      </div>
+      <p className='text-[26px] mt-[40px]'>Footer Contact Information</p>
+      <div className='flex flex-col'>
+        <div>
+          <p className='text-[22px] mt-[20px]'>Contact Number</p>
+          <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full' value={values.contact} onChange={(e) => setValues({ ...values, contact: e.target.value })} />
+        </div>
+        <div>
+          <p className='text-[22px] mt-[20px]'>Tagline</p>
+          <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full' value={values.whatsapp} onChange={(e) => setValues({ ...values, whatsapp: e.target.value })} />
         </div>
       </div>
       <p className='text-[26px] mt-[40px]'>About Country</p>

@@ -9,6 +9,10 @@ const initialState = {
     sign: "",
     code: ""
   },
+  contact: {
+    phone: "",
+    whatsapp: ''
+  },
   userInfo: null,
   browserSetting: {
     url: ''
@@ -44,8 +48,11 @@ const userSlice = createSlice({
     setCurrency: (state, action) => {
       state.currency = action.payload
     },
+    setContact: (state, action) => {
+      state.contact = action.payload
+    },
   },
 });
 
-export const { setCountry, setUrl, setTransferBooking, setLogin, setUser, setUserUid, setCurrency, removeUser } = userSlice.actions;
+export const { setCountry, setUrl, setTransferBooking, setLogin, setUser, setUserUid, setCurrency, removeUser, setContact } = userSlice.actions;
 export default userSlice.reducer;

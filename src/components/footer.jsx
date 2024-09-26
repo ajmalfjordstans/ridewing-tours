@@ -7,13 +7,19 @@ import { useSelector } from 'react-redux'
 
 export default function Footer() {
   const country = useSelector(state => state.user.selectedCountry);
+  const contact = useSelector(state => state.user.contact);
   return (
     <div className='bg-transparent relative mt-[200px]'>
       <div className=' bg-[#212529] text-white mt-[125px]'>
         <div className='lg:mx-0 translate-y-[-50%] w-full'>
           <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] h-[246px] rounded-[12px]'>
             <p className='font-semibold text-[28px] lg:text-[48px] text-center leading-[34px] lg:leading-[60px] max-w-[60%]'>We are Open 24x7 For assistance</p>
-            <p className='text-[24px] text-center lg:text-[36px] leading-[32px] lg:leading-[46px]'>Call Us now on <br /> +559876421</p>
+            <div className='flex flex-col gap-5 whitespace-nowrap'>
+              <p className='text-[24px] text-center lg:text-[26px] leading-[32px] lg:leading-[46px]'>Call Us now on <br /> {contact?.phone ? contact?.phone : "+559876421"}</p>
+              <p className='text-[24px] text-center lg:text-[26px] leading-[32px] lg:leading-[46px] hover:cursor-pointer'
+                onClick={() => window.open(`https://wa.me/${contact?.whatsapp ? contact?.whatsapp : "+559876421"}`)}
+              >Whatsapp Us now on <br /> {contact?.whatsapp ? contact?.whatsapp : "+559876421"}</p>
+            </div>
           </div>
         </div>
         <div className='container mx-auto px-[5%] lg:px-0  pb-[100px]'>

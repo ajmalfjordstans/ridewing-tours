@@ -251,7 +251,12 @@ export default function Destinations() {
                   <div>
                     <textarea type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px] min-h-[150px]'
                       value={values.description}
-                      onChange={(e) => setValues({ ...values, description: e.target.value })} placeholder='Code' required />
+                      onChange={(e) => setValues({ ...values, description: e.target.value })} placeholder='Description'
+                      maxLength={460}
+                      required />
+                    <div className="text-right">
+                      {values.description.length}/460 characters
+                    </div>
                   </div>
                 </div>
                 {/* <div className='flex mt-[15px] items-center gap-3'>
