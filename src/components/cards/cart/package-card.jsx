@@ -451,7 +451,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   </tr>
                 </tfoot>
               </table>
-              <p className=' text-[10px] whitespace-nowrap'>Children below 3 years old doesn't need a ticket</p>
+              <p className=' text-[10px] whitespace-nowrap'>Children below 3 years old doesn&apos;t need a ticket</p>
               {calculateSubtotal() != 0 &&
                 <div className='flex items-center justify-end gap-2'>
                   <p>With Additional Ticket</p>
