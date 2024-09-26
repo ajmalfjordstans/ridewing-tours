@@ -106,7 +106,7 @@ export default function TransferGuideForm({ data, setShowForm }) {
             <div className='grid grid-cols-2 gap-2 pb-[40px] mt-[10px]'>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="guests">Number of Guests*</label>
-                <Field type="number" name="guests" className='border-[2px] rounded-md p-[10px]' min="1" />
+                <Field type="number" name="guests" className='border-[2px] rounded-md p-[10px]' min="1" max="20"/>
                 <ErrorMessage name="guests" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1'>
@@ -121,7 +121,7 @@ export default function TransferGuideForm({ data, setShowForm }) {
                 </Field>
                 <ErrorMessage name="meetingPoint" component="div" className="text-[red] text-[12px]" />
               </div>
-              <div className='flex flex-col gap-1'>
+              <div className='flex flex-col gap-1 col-span-2'>
                 <label htmlFor="meetingAddress">Meeting Address*</label>
                 <Field as="textarea" name="meetingAddress" className='border-[2px] rounded-md p-[10px]' />
                 <ErrorMessage name="meetingAddress" component="div" className="text-[red] text-[12px]" />
@@ -153,7 +153,7 @@ export default function TransferGuideForm({ data, setShowForm }) {
               </div>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="hours">Hours (minimum 4)*</label>
-                <Field type="number" name="hours" className='border-[2px] rounded-md p-[10px]' min="4" />
+                <Field type="number" name="hours" className='border-[2px] rounded-md p-[10px]' min="4" max="12"/>
                 <ErrorMessage name="hours" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1 col-span-2'>

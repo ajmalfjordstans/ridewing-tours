@@ -4,161 +4,141 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   items: [
     // {
-    //   "id": 1,
-    //   "url": "best-of-tokyo-day-tour",
-    //   "name": "BEST OF TOKYO DAY TOUR",
-    //   "tag": "Recommended for First-Time Visitors",
-    //   "startLocation": "Tokyo",
-    //   "availability": "Every day",
-    //   "currency": "¥",
-    //   "price": "15939",
-    //   "details": {
-    //     "hours": "10 Hour Tour",
-    //     "language": [
-    //       "English"
-    //     ],
-    //     "guidedTour": true,
-    //     "entranceFeeIncluded": true,
-    //     "expertTourGuide": true
-    //   },
-    //   "gallery": [
-    //     "/images/tours/best-of-tokyo-day-tour/1.jpg",
-    //     "/images/tours/best-of-tokyo-day-tour/2.jpg",
-    //     "/images/tours/best-of-tokyo-day-tour/3.jpg",
-    //     "/images/tours/best-of-tokyo-day-tour/4.jpg"
-    //   ],
-    //   "description": [
-    //     "On our Best of Tokyo Day Tour, you’ll experience the modern and historical gems of the city, making it one of the best Tokyo tours. Join us for an exciting day in Tokyo, getting lost in the beauty of the Imperial Palace. Wander the gardens and admire the incredible architecture. Tour the incredible Senso-ji Temple – a must-do on everyone’s itinerary – before trying the authentic flavors of Uji Matcha (available 3 times a week). Visit the modern district of Odaiba and cruise along Tokyo Bay – on selective days – passing beneath the Rainbow Bridge. Finally, take your journey to the next level at Tokyo Tower, where unbelievable city views await.",
-    //     "Are you traveling to Tokyo for the first time? Our Best of Tokyo Day Tour is one of the best Tokyo tours. You will dive into the wonders of Japan’s capital city, from sacred history to magical views. See famous sites with your guide, eat traditional foods, and cruise along Tokyo Bay. Book your Tokyo experience today!"
-    //   ],
-    //   "highlight": [
-    //     "Explore the stunning Imperial Palace’s gardens, architecture, and surrounding nature",
-    //     "Discover the magic of the world-famous Senso-ji Temple",
-    //     "Ascend the Tokyo Tower and enjoy the best views of the city",
-    //     "On Sunday, Tuesday, Thursday, or Saturday - see the Meiji Shrine and Hamarikyu Gardens",
-    //     "On Monday, Wednesday, or Friday - indulge in Uji Matcha and cruise along Tokyo Bay"
-    //   ],
-    //   "itinerary": {
-    //     "start": "8:00 - Meet your guide in Tokyo and start your tour",
-    //     "itinerary": [
-    //       "Visit the Meiji Jingu Shrine - the most famous Shinto shrine (Sunday, Tuesday, Thursday & Saturday)",
-    //       "Tour the beautiful outer garden of the Imperial Palace",
-    //       "Visit the famous Senso-ji Temple and explore the Odaiba district",
-    //       "Enjoy an authentic Asakusa Uji Matcha experience and take a Symphony Cruise along Tokyo Bay (Monday, Wednesday & Friday)",
-    //       "Visit the Hamarikyu Gardens (Sunday, Tuesday, Thursday & Saturday)",
-    //       "Visit Tokyo Tower and enjoy city views from the observation deck"
-    //     ],
-    //     "end": "8:00 - Meet your guide in Tokyo and start your tour"
-    //   },
+    //   "id": "best-of-osaka-walking-tour",
     //   "pricing": [
     //     {
-    //       "name": "FROM SHINJUKU, TOKYO (SHINJUKU STATION EAST EXIT - HATO BUS STOP NO. 2)",
+    //       "name": "FROM OSAKA (JR OSAKAJOKOEN STATION, EXIT 2)",
     //       "passengers": {
-    //         "price": "FROM ¥15500 PER PERSON"
-    //       }
-    //     },
-    //     {
-    //       "name": "FROM TOKYO (TOKYO STATION MARUNOUCHI SOUTH EXIT HATO BUS BOARDING AREA)",
-    //       "passengers": {
-    //         "price": "FROM ¥18000 PER PERSON"
+    //         "price": "FROM ¥19058 PER PERSON"
     //       }
     //     }
     //   ],
+    //   "currency": "¥",
+    //   "category": "Package Tours",
+    //   "availability": "Every Monday, Tuesday, Wednesday, Thursday, Saturday",
+    //   "gallery": [
+    //     "/images/tours/best-of-osaka-walking-tour/1.jpg",
+    //     "/images/tours/best-of-osaka-walking-tour/2.jpg",
+    //     "/images/tours/best-of-osaka-walking-tour/3.jpg",
+    //     "/images/tours/best-of-osaka-walking-tour/4.jpg",
+    //     "https://firebasestorage.googleapis.com/v0/b/ridewing-1701351873793.appspot.com/o/images%2FBEST%20OF%20OSAKA%20WALKING%20TOUR%2F2.jpg?alt=media&token=4833dfae-81fe-4413-8bd1-32692ab6c48b"
+    //   ],
+    //   "startLocation": "Osaka",
+    //   "details": {
+    //     "guidedTour": true,
+    //     "expertTourGuide": true,
+    //     "language": [
+    //       "English"
+    //     ],
+    //     "hours": "6"
+    //   },
     //   "otherDetails": {
-    //     "includes": [
-    //       "Hand-picked expert tour guide",
-    //       "Transportation",
-    //       "Entrance fees: Tokyo Tower Main Deck & Tokyo Bay Cruise (on selected days)",
-    //       "Lunch"
-    //     ],
-    //     "excludes": [
-    //       "Personal travel insurance",
-    //       "Gratuities"
-    //     ],
     //     "bring": [
     //       "Water",
     //       "Walking shoes"
     //     ],
-    //     "information": [
-    //       "Some tour activities vary based on day: On Sunday, Tuesday, Thursday, or Saturday, you will visit the Meiji Shrine and see the Hamarikyu Gardens On Monday, Wednesday, or Friday - you will enjoy an authentic Uji Matcha experience and cruise along Tokyo Bay (subject to weather conditions)"
-    //     ],
-    //     "cancellationPolicy": "Cancellations made 3 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 3 days before the start of the tour will not be refunded."
-    //   }
-    // },
-    // {
-    //   "id": 2,
-    //   "url": "kyoto-&-nara-day-tour-from-kyoto",
-    //   "name": "KYOTO & NARA DAY TOUR FROM KYOTO",
-    //   "tag": "Tourist Japan's Top Pick",
-    //   "startLocation": "Kyoto",
-    //   "availability": "Every Monday, Wednesday, Friday, Saturday",
-    //   "price": "¥13,773",
-    //   "details": {
-    //     "hours": "9 Hour Tour",
-    //     "language": [
-    //       "English"
-    //     ],
-    //     "guidedTour": true,
-    //     "entranceFeeIncluded": true,
-    //     "expertTourGuide": true,
-    //     "airconditionedTransport": true
-    //   },
-    //   "gallery": [
-    //     "/images/tours/kyoto-&-nara-day-tour-kyoto/1.jpg",
-    //     "/images/tours/kyoto-&-nara-day-tour-kyoto/2.jpg",
-    //     "/images/tours/kyoto-&-nara-day-tour-kyoto/3.jpg",
-    //     "/images/tours/kyoto-&-nara-day-tour-kyoto/4.jpg"
-    //   ],
-    //   "description": [
-    //     "Explore 2 of Japan’s great cities on our Kyoto & Nara Day Tour from Kyoto. With your experienced guide, head to Arashiyama Bamboo Forest. Be amazed by the incredible bamboo grove before reaching Kinkakuji Temple. Admire its golden architecture and hidden details. Once you arrive in Nara, wander the beautiful Nara Park with free-roaming deer, and see the giant Buddha statue at Todaiji Temple.",
-    //     "Tourist Japan is keeping the perfect for you to explore 2 amazing cities will love our Kyoto & Nara Day Tour from Kyoto. Explore these 2 cities in a day with visits to Kinkakuji Temple, Arashiyama Bamboo Forest, Nara Park, and more. Be led by an experienced guide every step of the way, so book your adventure today!"
-    //   ],
-    //   "highlight": [
-    //     "Admire the world-renowned beauty of Arashiyama Bamboo Forest",
-    //     "Head to Kinkakuji Temple and discover the golden architecture",
-    //     "In Nara, get lost in the magical Nara Park and visit sacred sites within",
-    //     "See the magnificent Todaiji Temple with its giant Buddha statue"
-    //   ],
-    //   "itinerary": {
-    //     "start": "9:15 - Meet your guide in Kyoto and start your tour",
-    //     "itinerary": [
-    //       "Visit the world-famous Arashiyama Bamboo Forest",
-    //       "Enjoy free time + lunch break",
-    //       "See Kinkakuji Temple's golden architecture and outdoor pond",
-    //       "Arrive in Nara and explore Nara Park",
-    //       "Visit the sacred Todaiji Temple"
-    //     ],
-    //     "end": "18:00 - The tour ends in Kyoto"
-    //   },
-    //   "pricing": [
-    //     {
-    //       "name": "FROM KYOTO (KYOTO-HACHIJOGUCHI BUS LOADING AREA)",
-    //       "passengers": {
-    //         "price": "FROM ¥12,950 PER PERSON"
-    //       }
-    //     }
-    //   ],
-    //   "otherDetails": {
     //     "includes": [
     //       "Hand-picked expert tour guide",
-    //       "Transportation"
+    //       "One none alcoholic drink & some local street food"
     //     ],
     //     "excludes": [
     //       "Meals & drinks",
-    //       "Entrance fees",
     //       "Personal travel insurance",
     //       "Gratuities"
     //     ],
-    //     "bring": [
-    //       "Water",
-    //       "Walking shoes"
-    //     ],
     //     "information": [
-    //       "The entrance fees can be purchased the day of the tour in cash"
-    //     ],
-    //     "cancellationPolicy": "Cancellations made 5 or more days before the start of the tour will receive a 95% refund. Cancellations made less than 5 days before the start of the tour will not be refunded."
-    //   }
-    // },
+    //       ""
+    //     ]
+    //   },
+    //   "name": "BEST OF OSAKA WALKING TOUR",
+    //   "tag": "",
+    //   "itinerary": {
+    //     "end": "15:00 - The tour ends in Osaka",
+    //     "start": "10:00 - Meet your local guide in Osaka and start your tour",
+    //     "itinerary": [
+    //       "Begin your 5-hour walking tour in the retro area “Amerikamura” or “American Village”",
+    //       "Walk the charming cobblestone streets lined with lanterns",
+    //       "Experience Namba & Dotonbori, the neon heart of Osaka",
+    //       "Stop at Hozenji, a small Buddhist temple",
+    //       "Visit the vibrant and lively Kuromon Ichiba Market",
+    //       "Stroll through Shinsekai, the entertainment district",
+    //       "See Osaka Castle – a 16th-century marvel",
+    //       "Discover the shopping street of Shinsaibashi and buy souvenirs",
+    //       "Learn the story of Glico Man and see Tsutenkaku, Osaka’s “Tokyo Tower”"
+    //     ]
+    //   },
+    //   "price": "18900",
+    //   "description": [
+    //     "Discover the vibrant life of Osaka with our Best of Osaka Walking Tour. Go on a journey that blends tradition, history, and architecture. Embark on your 5-hour walking tour starting in the retro area of “Amerikamura” or “American Village”. Discover the Namba & Dotonbori neighborhood as well as Hozenji temple – an iconic Buddhist temple. The Kuromon Ichiba Market – famous for its fresh seafood is your next destination. Stroll through Shinsekai’s entertainment district, witness the stunning Osaka Castle, and learn about Osaka’s other hidden gems. See where the past meets the present and enjoy every moment of this stunning city.",
+    //     "For curious travelers who love to explore, our Best of Osaka Walking Tour is a great way to experience Osaka. Go on a journey that ties culture and history while listening to your local expert guide. Book your Osaka 5-hour walking tour today!"
+    //   ],
+    //   "url": "best-of-osaka-walking-tour",
+    //   "highlight": [
+    //     "Get the most immersive and unique 5-hour walking tour",
+    //     "Explore the retro charm of Amerikamura and walk through lantern-lined cobblestone streets",
+    //     "Marvel at Osaka Castle, dating back to the 16th century",
+    //     "Experience the bustling energy of Namba, Dotonbori, and the lively Kuromon Ichiba Market"
+    //   ],
+    //   "travelDetails": {
+    //     "passengers": 3
+    //   },
+    //   "tickets": [
+    //     {
+    //       "price": 500,
+    //       "description": "Testing",
+    //       "image": "https://firebasestorage.googleapis.com/v0/b/ridewing-1701351873793.appspot.com/o/images%2Fcountries%2FJapan%2Ftop-choices%2Fbest-of-osaka-walking-tour%2FTest%20Ticekt%2Fjapan.jpg?alt=media&token=5f6c57d2-e381-41fb-ac3c-8aa6dd1f7008",
+    //       "name": "Test Ticekt",
+    //       "opening": {
+    //         "seconds": 1725091979,
+    //         "nanoseconds": 969000000
+    //       },
+    //       "closing": {
+    //         "seconds": 1725091979,
+    //         "nanoseconds": 969000000
+    //       }
+    //     }
+    //   ],
+    //   "bookingId": "BK-m1hmy0ph-wju97n5b",
+    //   "date": "2024-09-29T18:30:00.000Z",
+    //   "includeTicket": true,
+    //   "includeGuide": true,
+    //   "additionalTickets": [
+    //     {
+    //       "price": 500,
+    //       "description": "Testing",
+    //       "image": "https://firebasestorage.googleapis.com/v0/b/ridewing-1701351873793.appspot.com/o/images%2Fcountries%2FJapan%2Ftop-choices%2Fbest-of-osaka-walking-tour%2FTest%20Ticekt%2Fjapan.jpg?alt=media&token=5f6c57d2-e381-41fb-ac3c-8aa6dd1f7008",
+    //       "name": "Test Ticekt",
+    //       "ticketCount": 3,
+    //       "opening": {
+    //         "seconds": 1725091979,
+    //         "nanoseconds": 969000000
+    //       },
+    //       "closing": {
+    //         "seconds": 1725091979,
+    //         "nanoseconds": 969000000
+    //       }
+    //     },
+    //     {
+    //       "price": 300,
+    //       "description": "Testing Another",
+    //       "image": "https://firebasestorage.googleapis.com/v0/b/ridewing-1701351873793.appspot.com/o/images%2Fcountries%2FJapan%2Ftop-choices%2Fbest-of-osaka-walking-tour%2FTest%20Ticekt%2Fjapan.jpg?alt=media&token=5f6c57d2-e381-41fb-ac3c-8aa6dd1f7008",
+    //       "name": "Test New Ticket",
+    //       "ticketCount": 3,
+    //       "opening": {
+    //         "seconds": 1725091979,
+    //         "nanoseconds": 969000000
+    //       },
+    //       "closing": {
+    //         "seconds": 1725091979,
+    //         "nanoseconds": 969000000
+    //       }
+    //     }
+    //   ],
+    //   "guideLanguage": "Chinese",
+    //   "hoursGuideNeeded": "6",
+    //   "type": "package",
+    //   "status": "pending"
+    // }
   ],
 };
 

@@ -25,7 +25,7 @@ const CheckoutMenu = ({ items }) => {
       const itemPrice = noOfPassengers < 4 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
       return acc + itemPrice;
     } else if (item?.type === 'guide') {
-      return acc + price;
+      return acc + (price * item?.travelDetails?.hours);
     } else if (item.transfer === 'airport' || item.transfer === 'station') {
       const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
       return acc + itemPrice;
@@ -38,7 +38,7 @@ const CheckoutMenu = ({ items }) => {
     return items.reduce((total, item) => {
       if (item.additionalTickets && item.additionalTickets.length > 0) {
         const ticketsTotal = item.additionalTickets.reduce((ticketTotal, ticket) => {
-          return ticketTotal + (ticket.price * item.noOfPassengers);
+          return ticketTotal + (ticket.price * ticket.ticketCount);
         }, 0);
         return total + ticketsTotal;
       }
@@ -221,7 +221,7 @@ const Cart = () => {
           ) : (
             <ul>
               {items.map((item, id) => (
-                <li key={id} className='flex items-center gap-5'>
+                <li key={id} className='flex items-start'>
                   <PackageCard data={item} setSubtotal={setSubtotal} subtotal={subtotal} />
                   <button onClick={() => dispatch(removeItem(item.id))}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">

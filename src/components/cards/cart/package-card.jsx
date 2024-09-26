@@ -8,6 +8,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart.items);
   const currency = useSelector(state => state.user.currency)
+  const [ticketCosts, setTicketCosts] = useState(null)
   const [count, setCount] = useState(data?.travelDetails?.passengers ? data?.travelDetails?.passengers : 1);
   const [currentPackage, setCurrentPackage] = useState(data);
   const [includeTicket, setIncludeTicket] = useState(data?.details?.entranceFeeIncluded);
@@ -17,12 +18,39 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   const [hoursGuideNeeded, setHoursGuideNeeded] = useState(1);
   const guideLanguages = ['English', 'Chinese', 'Japanese'];
 
-  const increment = () => setCount(count + 1);
+  const increment = () => {
+    setCount(count + 1)
+    // handleAddAllTicketCount()
+  }
   const decrement = () => {
     if (count > 1) {
       setCount(count - 1);
+      // handleSubtractAllTicketCount()
     }
   }
+
+  const handleAddAllTicketCount = () => {
+    const updatedData = {
+      ...data,
+      additionalTickets: data.additionalTickets.map(ticket => ({
+        ...ticket,
+        ticketCount: ticket.ticketCount + 1
+      }))
+    };
+
+    dispatch(updateItem(updatedData));
+  };
+  const handleSubtractAllTicketCount = () => {
+    const updatedData = {
+      ...data,
+      additionalTickets: data.additionalTickets.map(ticket => ({
+        ...ticket,
+        ticketCount: ticket.ticketCount - 1
+      }))
+    };
+
+    dispatch(updateItem(updatedData));
+  };
 
   // Remove ticket from card
   const handleRemoveTicket = (ticket) => {
@@ -32,6 +60,39 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
       additionalTickets: updatedTickets
     };
     dispatch(updateItem(updatedData));
+  }
+
+  // Add tickets count
+  const handleAddTicketCount = (ticket) => {
+    let updatedTicket = data.additionalTickets.find(t => t.name == ticket.name);
+    updatedTicket = { ...updatedTicket, ticketCount: updatedTicket.ticketCount + 1 }
+
+    const updatedData = {
+      ...data,
+      additionalTickets: data.additionalTickets.map(ticket =>
+        ticket.name === updatedTicket.name ? updatedTicket : ticket
+      )
+    }
+    dispatch(updateItem(updatedData));
+  }
+
+  // Subtract tickets
+  const handleSubtractTicketCount = (ticket) => {
+    let updatedTicket = data.additionalTickets.find(t => t.name == ticket.name);
+    if (updatedTicket.ticketCount > 0)
+      updatedTicket = { ...updatedTicket, ticketCount: updatedTicket.ticketCount - 1 }
+
+    const updatedData = {
+      ...data,
+      additionalTickets: data.additionalTickets.map(ticket =>
+        ticket.name === updatedTicket.name ? updatedTicket : ticket
+      )
+    }
+    dispatch(updateItem(updatedData));
+  }
+
+  const handleRemoveGuide = () => {
+    dispatch(updateItem({ ...data, includeGuide: false, guideLanguage: "", hoursGuideNeeded: null }));
   }
 
   const updateCartHandler = (newData) => {
@@ -112,13 +173,12 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
 
     if (item.additionalTickets && item.additionalTickets.length > 0) {
       const ticketsTotal = item.additionalTickets.reduce((ticketTotal, ticket) => {
-        return ticketTotal + (ticket.price * item.noOfPassengers);
+        return ticketTotal + (ticket.price * ticket.ticketCount);
       }, 0);
 
       total += ticketsTotal;
     }
-
-
+    // setTicketCosts()
     return total;
   }
   // calculate subtotal
@@ -139,7 +199,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   }, [])
   return (
     <>
-      <div className='w-full border border-solid border-[rgba(255, 218, 50, 0.5)] shadow-[0px_-1px_6.9px_0px_rgba(0,0,0,0.25)] rounded-[20px] mt-[60px] flex flex-col overflow-hidden '>
+      <div className='w-full border border-solid border-[rgba(255, 218, 50, 0.5)] shadow-[0px_-1px_6.9px_0px_rgba(0,0,0,0.25)] rounded-[20px] flex flex-col overflow-hidden mt-6'>
         <div className='h-[270px] flex'>
           <div className='h-[100%] w-[30%]'>
             {data.type === "package" ?
@@ -173,21 +233,51 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   </>}
 
                 </div>
-                {data?.type != 'custom' &&
-                  <div className="flex items-center justify-center h-full gap-2 mx-auto">
-                    <button
-                      className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
-                      onClick={(data?.type == 'guide' && count == 20) ? "" : increment}
-                    >
-                      +
-                    </button>
-                    <span className="text-[20px] px-2">{count}</span>
-                    <button
-                      className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
-                      onClick={decrement}
-                    >
-                      -
-                    </button>
+                {data?.type == 'package' &&
+                  <div className='flex flex-col items-center'>
+                    <div className="flex items-center justify-center h-full gap-2 mx-auto">
+                      <button
+                        className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
+                        onClick={() => {
+                          increment()
+                          handleAddAllTicketCount()
+                        }
+                        }
+                      >
+                        +
+                      </button>
+                      <span className="text-[20px] px-2">{count}</span>
+                      <button
+                        className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
+                        onClick={() => {
+                          decrement()
+                          handleSubtractAllTicketCount()
+                        }}
+                      >
+                        -
+                      </button>
+                    </div>
+                    <p className=' text-[10px] whitespace-nowrap'>Guest Count</p>
+                  </div>
+                }
+                {data?.type == 'guide' &&
+                  <div className='flex flex-col items-center'>
+                    <div className="flex items-center justify-center h-full gap-2 mx-auto">
+                      <button
+                        className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
+                        onClick={(data?.type == 'guide' && count == 20) ? "" : increment}
+                      >
+                        +
+                      </button>
+                      <span className="text-[20px] px-2">{count}</span>
+                      <button
+                        className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
+                        onClick={decrement}
+                      >
+                        -
+                      </button>
+                    </div>
+                    <p className=' text-[10px] whitespace-nowrap'>Guest Count</p>
                   </div>
                 }
                 <div className='flex flex-col items-end'>
@@ -207,7 +297,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   }
                   {(data?.type == 'guide') &&
                     <>
-                      <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + data?.price}</p>
+                      <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + data?.price * data?.travelDetails?.hours}</p>
                       <p className=' text-[10px] whitespace-nowrap'>Maximum 20 people</p>
                     </>
                   }
@@ -234,8 +324,16 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
             }
             {data.includeGuide && (
               <>
-                <div className='bg-secondary h-[1px] w-full'></div>
-                <div className='p-[15px]'>
+                {/* <div className='bg-secondary h-[1px] w-full'></div> */}
+                <div className='p-[15px] border-t-secondary border-t-[1px]'>
+                  <div className='w-full flex justify-end'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer"
+                      onClick={handleRemoveGuide}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+
+                  </div>
                   <div className='flex items-center gap-3'>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-3 text-[14px]'>
                       <label className='block'>
@@ -258,6 +356,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                           value={guideLanguage}
                           onChange={(e) => setGuideLanguage(e.target.value)}
                           className='p-[10px] border-[1px] border-black rounded-[5px] w-full my-[10px]'
+                          disabled
                         >
                           <option value='' disabled>Select a language</option>
                           {guideLanguages.map((lang, index) => (
@@ -270,12 +369,12 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                         <input type="number"
                           className='p-[10px] border-[1px] border-black rounded-[5px] w-full my-[10px]'
                           min={"1"}
-                          value={hoursGuideNeeded}
-                          onChange={(e) => setHoursGuideNeeded(e.target.value)}
+                          value={data.hoursGuideNeeded}
+                          // onChange={(e) => setHoursGuideNeeded(e.target.value)}
+                          disabled
                         />
                       </label>
                     </div>
-
                   </div>
                 </div>
               </>
@@ -291,10 +390,11 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                 <thead className='bg-[#D9D9D9] h-[40px]'>
                   <tr>
                     <th className='pl-[10px]'>Ticket Name</th>
-                    <th>Opening Hours</th>
+                    <th>No. of tickets</th>
                     {/* <th>No. of tickets</th> */}
                     <th>Ticket price</th>
-                    <th>Remove</th>
+                    <th>Total</th>
+                    {/* <th>Remove</th> */}
                   </tr>
                 </thead>
                 <tbody className=''>
@@ -303,16 +403,27 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                       <tr className='w-full justify-between' key={id}>
                         <td className='pl-[10px]'>{ticket.name}</td>
                         <td className='flex gap-2'>
-                          {ticket?.opening &&
-                            <p>{formatTo12HourTime(convertTimestampToDate(ticket?.opening))}</p>
-                          }
-                          <p>-</p>
-                          {ticket?.closing &&
-                            <p>{formatTo12HourTime(convertTimestampToDate(ticket?.closing))}</p>
-                          }
+                          <div className='flex flex-col items-center'>
+                            <div className="flex items-center justify-center h-full gap-2 mx-auto">
+                              <button
+                                className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
+                                onClick={() => handleAddTicketCount(ticket)}
+                              >
+                                +
+                              </button>
+                              <span className="text-[20px] px-2">{ticket.ticketCount}</span>
+                              <button
+                                className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
+                                onClick={() => handleSubtractTicketCount(ticket)}
+                              >
+                                -
+                              </button>
+                            </div>
+                          </div>
                         </td>
                         {/* <td>{data.noOfPassengers}</td> */}
                         <td>{data.currency + " " + ticket.price}</td>
+                        <td>{data.currency + " " + ticket.price * ticket.ticketCount}</td>
                         <td className='flex justify-center py-1'>
                           <button
                             className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
@@ -329,17 +440,18 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   <tr>
                     <td></td>
                     <td></td>
-                    <td className='bg-[#D9D9D9] py-1 text-center'>Total {data.noOfPassengers * data.additionalTickets.length} nos</td>
+                    <td className='bg-[#D9D9D9] py-1 text-center'>Total</td>
                     {/* <td>{data.noOfPassengers * data.additionalTickets.length}</td> */}
                     {/* Calculate sum of products of ticket and no of passengers */}
                     <td className='bg-[#D9D9D9] py-1 text-center font-[600]'>
                       {data.currency + " " + data.additionalTickets.reduce((total, ticket) => {
-                        return total + ticket.price * data.noOfPassengers;
+                        return total + ticket.price * ticket.ticketCount
                       }, 0)}
                     </td>
                   </tr>
                 </tfoot>
               </table>
+              <p className=' text-[10px] whitespace-nowrap'>Children below 3 years old doesn't need a ticket</p>
               {calculateSubtotal() != 0 &&
                 <div className='flex items-center justify-end gap-2'>
                   <p>With Additional Ticket</p>
@@ -349,7 +461,6 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
             </div>
           </>
         }
-
       </div >
     </>
   )

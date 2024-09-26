@@ -59,7 +59,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
         opening: convertTimestampToDate(ticket.opening),
         closing: convertTimestampToDate(ticket.closing),
       };
-      setAddedTickets([...addedTickets, ticket]);
+      setAddedTickets([...addedTickets, { ...ticket, ticketCount: 1 }]);
     } else {
       setAddedTickets(addedTickets.filter((t) => t.name !== ticket.name));
     }
@@ -96,7 +96,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
         <label className='flex flex-col '>
           <span className='ml-2 font-[600] text-center'>Enter Travel Date</span>
           <div className='mx-auto mt-3'>
-            <DatepickerComponent date={date} setDate={setDate} min={dayjs()} />
+            <DatepickerComponent date={date} setDate={setDate} min={dayjs().add(2, 'day')} />
           </div>
         </label>
 
