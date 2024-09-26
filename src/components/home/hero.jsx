@@ -81,7 +81,7 @@ export default function Hero() {
                   whileHover={{ scale: 1.1 }}
                 >
                   <NextImage src={'/logo/i.svg'} height={28} width={28} alt='i' />
-                  <p className='ml-2 text-[20px] text-custom-red'>About {selectedCountry}</p>
+                  <p className='ml-2 text-[16px] leading-[18px] text-custom-red'>About {selectedCountry}</p>
                 </motion.div>
               </motion.div>
             </motion.div>

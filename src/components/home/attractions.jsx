@@ -59,54 +59,55 @@ export default function Attractions() {
   }, [currentCountry])
   return (
     <>
-      <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
-        <div className=' w-full flex flex-col '>
-          <p className='font-bold text-[32px] leading-[42px]'>Discover Popular Attractions</p>
-          <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
-            <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
+      {!loading && data !== null && data.length > 0 &&
+        <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
+          <div className=' w-full flex flex-col '>
+            <p className='font-bold text-[32px] leading-[42px]'>Discover Popular Attractions</p>
+            <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
+              <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
+            </div>
           </div>
-        </div>
-        {/* <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'> */}
-        <div className='mt-[37px] flex relative'>
-          <Swiper
-            spaceBetween={50}
-            slidesPerView={4}
-            breakpoints={breakpoints}
-            // onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => (swiperRef.current = swiper)}
-            className='!w-full'
-            autoplay={{
-              delay: 2000,
-              pauseOnMouseEnter: true,
-              disableOnInteraction: false
-            }}
-            loop
-            modules={[Autoplay]}
-          >
-            {data?.map((data, id) => {
-              return (
-                <SwiperSlide key={id}>
-                  <div key={id} className='hover:cursor-pointer' onClick={() => setShowDetails(data)}>
-                    <AttractionsCard data={data} />
-                  </div>
-                </SwiperSlide>
-              )
-            })}
-          </Swiper>
-          <div className='absolute w-full h-full flex justify-between items-center'>
-            <button onClick={handlePrevClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-11px] md:translate-x-[-24px] border-[#EAEAEA] border-[2px] z-[2]">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-              </svg>
-            </button>
-            <button onClick={handleNextClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-5%] md:translate-x-[24px] border-[#EAEAEA] border-[2px] z-[2]">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-              </svg>
-            </button>
+          {/* <div className='grid grid-cols-2 lg:grid-cols-4 gap-[10px] md:gap-[30px] w-full mt-[48px]'> */}
+          <div className='mt-[37px] flex relative'>
+            <Swiper
+              spaceBetween={50}
+              slidesPerView={4}
+              breakpoints={breakpoints}
+              // onSlideChange={() => console.log('slide change')}
+              onSwiper={(swiper) => (swiperRef.current = swiper)}
+              className='!w-full'
+              autoplay={{
+                delay: 2000,
+                pauseOnMouseEnter: true,
+                disableOnInteraction: false
+              }}
+              loop
+              modules={[Autoplay]}
+            >
+              {data?.map((data, id) => {
+                return (
+                  <SwiperSlide key={id}>
+                    <div key={id} className='hover:cursor-pointer' onClick={() => setShowDetails(data)}>
+                      <AttractionsCard data={data} />
+                    </div>
+                  </SwiperSlide>
+                )
+              })}
+            </Swiper>
+            <div className='absolute w-full h-full flex justify-between items-center'>
+              <button onClick={handlePrevClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-11px] md:translate-x-[-24px] border-[#EAEAEA] border-[2px] z-[2]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+              <button onClick={handleNextClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-5%] md:translate-x-[24px] border-[#EAEAEA] border-[2px] z-[2]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            </div>
           </div>
-        </div>
-        {/* {data?.length > 4 &&
+          {/* {data?.length > 4 &&
           <div className='w-full flex justify-center'>
             <Button
               onClick={() => setShowMore(!showMore)}
@@ -114,7 +115,8 @@ export default function Attractions() {
             >SEE {showMore ? "LESS" : "MORE"}</Button>
           </div>
         } */}
-      </section>
+        </section>
+      }
       <AnimatePresence mode='wait'>
         {showDetails &&
           <div className='fixed h-full w-full top-0 left-0 backdrop-blur-md z-10 flex justify-center items-center shadow-lg '>

@@ -36,6 +36,11 @@ export default function Airports() {
   const [data, setData] = useState(null)
   const [loadingData, setLoadingData] = useState(true)
 
+  useEffect(() => {
+    console.log(currency, values.currency);
+    getData()
+  }, [])
+
   const getData = async () => {
     try {
       const response = await (readFirebaseCollection(`countries/${currentCountry}/airports`))
@@ -46,11 +51,6 @@ export default function Airports() {
       setLoadingData(false)
     }
   }
-
-  useEffect(() => {
-    console.log(currency, values.currency);
-    getData()
-  }, [])
 
   const handleChange = (e) => {
     if (e.target.files && e.target.files[0]) {

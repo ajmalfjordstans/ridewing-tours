@@ -50,7 +50,7 @@ export default function TopChoices() {
 
   return (
     <>
-      {!loading && data !== null &&
+      {!loading && data !== null && data.length > 0 &&
         <section className='py-[60px] container mx-auto flex flex-col items-center px-[5%] lg:px-0'>
           <div className='max-w-[738px] w-full flex flex-col items-center'>
             <p className='font-bold text-[32px] leading-[42px]'>Top Choices for You</p>

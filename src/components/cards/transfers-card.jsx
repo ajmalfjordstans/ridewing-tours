@@ -12,7 +12,7 @@ export default function TransfersCard({ data }) {
       >
         <div className='h-[305px] p-[12px] flex items-end'
           style={{
-            backgroundImage: `url(${data.gallery})`, backgroundSize: 'cover', backgroundPosition: 'center'
+            backgroundImage: `url(${data.image})`, backgroundSize: 'cover', backgroundPosition: 'center'
           }}
         >
         </div>
@@ -20,7 +20,7 @@ export default function TransfersCard({ data }) {
           {data.tag != '' &&
             <p className='text-secondary text-[14px] border-b-[2px] border-b-secondary w-auto pb-[5px]'>{data.tag}</p>
           }
-          <p className='text-[22px] text-center mt-[10px]'>{data.title}</p>
+          <p className='text-[22px] text-center mt-[10px]'>{data.name}</p>
         </div>
       </div>
     </Link >

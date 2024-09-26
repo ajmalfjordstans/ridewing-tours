@@ -1,19 +1,39 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TransfersCard from '../cards/transfers-card';
+import { readFirebaseCollection } from '@/app/firebase';
+import { useSelector } from 'react-redux';
 
 export default function Transfer() {
   const [data, setData] = useState(null);
+  const selectedCountry = useSelector(state => state.user.selectedCountry)
+  const [loadingData, setLoadingData] = useState(true)
+  const getData = async () => {
+    try {
+      const response = await (readFirebaseCollection(`countries/${selectedCountry}/transfers`))
+      console.log(response);
+      
+      setData(response);
+      setLoadingData(false)
+    } catch (error) {
+      console.log("Error reading collection");
+      setLoadingData(false)
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('/json/transfers.json');
-      const result = await response.json();
-      setData(result);
-    };
+    getData()
+  }, [])
 
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch('/json/transfers.json');
+  //     const result = await response.json();
+  //     setData(result);
+  //   };
+
+  //   fetchData();
+  // }, []);
   return (
     <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
       <div className=' w-full flex flex-col '>
