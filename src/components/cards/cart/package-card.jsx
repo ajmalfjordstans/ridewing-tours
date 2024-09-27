@@ -155,7 +155,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
     const bulkPrice = Number(booking?.bulkPrice); // Ensure price is a number
 
     if (booking?.type === 'package') {
-      const itemPrice = noOfPassengers < 4 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
+      const itemPrice = noOfPassengers < 5 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
       total += itemPrice;
     } else if (booking?.type === 'guide') {
       total += price;
@@ -283,8 +283,13 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                 <div className='flex flex-col items-end'>
                   {data.type === "package" &&
                     <>
+                      {data?.noOfPassengers > 4 &&
+                        <p className='text-[22px] leading-[42px] whitespace-nowrap line-through text-black text-opacity-50'>
+                          {data?.currency == undefined ? currency.sign : data.currency + " " + (data?.price * data?.noOfPassengers).toLocaleString()}
+                        </p>
+                      }
                       <p className='text-[22px] leading-[42px] whitespace-nowrap'>
-                        {data?.currency == undefined ? currency.sign : data.currency + " " + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.bulkPrice ? data?.bulkPrice * data?.noOfPassengers : data?.price * data?.noOfPassengers).toLocaleString()}
+                        {data?.currency == undefined ? currency.sign : data.currency + " " + (data?.noOfPassengers < 5 ? data?.price * 4 : data?.bulkPrice ? data?.bulkPrice * data?.noOfPassengers : data?.price * data?.noOfPassengers).toLocaleString()}
                       </p>
                       <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p>
                     </>

@@ -69,7 +69,7 @@ export default function Hero() {
             >
               <motion.div
                 // className='flex flex-col h-full max-w-[800px] gap-[24px] bg-custom-red bg-opacity-70 p-[20px] lg:p-[50px] relative'
-                className='flex flex-col h-full max-w-[800px] gap-[24px] bg-gradient-to-r from-custom-red to-transparent  p-[20px] lg:p-[50px] relative'
+                className='flex flex-col h-full max-w-[800px] gap-[16px] bg-gradient-to-r from-custom-red to-transparent  p-[20px] lg:p-[50px] relative'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.5 }}
@@ -77,6 +77,7 @@ export default function Hero() {
                 <p className='font-bold text-[36px] lg:text-[75px] leading-[42px] lg:leading-[86px]'>
                   {data?.heading}
                 </p>
+                <p className='capitalize text-[24px] font-[600]'>Discover, book, go!!!</p>
                 <p className='text-[16px] md:text-[18px] leading-[24px] md:leading-[34px] text-white'>
                   {data?.tagline}
                 </p>

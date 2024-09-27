@@ -22,7 +22,7 @@ const CheckoutMenu = ({ items }) => {
     const price = Number(item.price); // Ensure price is a number
     const bulkPrice = Number(item.bulkPrice); // Ensure price is a number
     if (item?.type === 'package') {
-      const itemPrice = noOfPassengers < 4 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
+      const itemPrice = noOfPassengers < 5 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
       return acc + itemPrice;
     } else if (item?.type === 'guide') {
       return acc + (price * item?.travelDetails?.hours);

@@ -24,8 +24,6 @@ export default function EditPlace({ data, setShowEdit }) {
   const [values, setValues] = useState(data)
   const [categories, setCategories] = useState()
 
-
-
   const handleConvertAndSave = (inputString) => {
     const lowercasedString = inputString.toLowerCase();
     const hyphenatedString = lowercasedString.replace(/ /g, '-');
@@ -107,6 +105,22 @@ export default function EditPlace({ data, setShowEdit }) {
                 onChange={(e) => setValues({ ...values, availability: e.target.value })}
                 className='p-[5px] border-[2px] border-black rounded-[5px]' />
             </div>
+          </div>
+          <div className='flex items-center gap-2 mt-2'>
+            <p className='whitespace-nowrap'>Special Note</p>
+            <input type="text"
+              value={values?.tag}
+              onChange={(e) => setValues({ ...values, tag: e.target.value })}
+              className='p-[5px] border-[2px] border-black rounded-[5px] w-full' />
+          </div>
+          <div className='flex items-center gap-2 mt-[10px]'>
+            <p>Tour Type</p>
+            <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values?.tourType ? values?.tourType : " "}
+              onChange={(e) => setValues({ ...values, tourType: e.target.value })}>
+              <option value="" className='p-[4px]' >Choose one</option>
+                <option value={'Private Tour'} className='p-[4px]' >Private Tour</option>
+                <option value={'SIC Tour'} className='p-[4px]' >SIC Tour</option>
+            </select>
           </div>
           <div className='flex items-center gap-2 mt-[10px]'>
             <p>Category</p>
@@ -204,7 +218,81 @@ export default function EditPlace({ data, setShowEdit }) {
                 <label htmlFor="false">No</label>
               </div>
             </div>
-
+            <div className='flex gap-5 justify-between max-w-[330px]'>
+              <p>High Rated</p>
+              <div className='flex items-center gap-2'>
+                <input
+                  type="radio"
+                  value="true"
+                  checked={values.details.highRated === true}
+                  onChange={(e) => setValues({ ...values, details: { ...values.details, highRated: e.target.value === "true" } })}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                />
+                <label htmlFor="true">Yes</label>
+                <input
+                  type="radio"
+                  value="false"
+                  checked={values.details.highRated === false}
+                  onChange={(e) => setValues({ ...values, details: { ...values.details, highRated: e.target.value === "true" } })}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                />
+                <label htmlFor="false">No</label>
+              </div>
+            </div>
+            <div className='flex items-center gap-2 mt-[10px] w-full'>
+              <p>Rating</p>
+              <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values.details.rating ? values.details.rating : " "}
+                onChange={(e) => setValues({ ...values, details: { ...values.details, rating: e.target.value } })}>
+                <option value="" className='p-[4px]' >Choose one</option>
+                <option value={1} className='p-[4px]'>{1}</option>
+                <option value={2} className='p-[4px]'>{2}</option>
+                <option value={3} className='p-[4px]'>{3}</option>
+                <option value={4} className='p-[4px]'>{4}</option>
+                <option value={5} className='p-[4px]'>{5}</option>
+              </select>
+            </div>
+            <div className='flex gap-5 justify-between max-w-[330px]'>
+              <p>Recommended</p>
+              <div className='flex items-center gap-2'>
+                <input
+                  type="radio"
+                  value="true"
+                  checked={values.details.recommended === true}
+                  onChange={(e) => setValues({ ...values, details: { ...values.details, recommended: e.target.value === "true" } })}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                />
+                <label htmlFor="true">Yes</label>
+                <input
+                  type="radio"
+                  value="false"
+                  checked={values.details.recommended === false}
+                  onChange={(e) => setValues({ ...values, details: { ...values.details, recommended: e.target.value === "true" } })}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                />
+                <label htmlFor="false">No</label>
+              </div>
+            </div>
+            <div className='flex gap-5 justify-between max-w-[330px]'>
+              <p>Availability</p>
+              <div className='flex items-center gap-2'>
+                <input
+                  type="radio"
+                  value="true"
+                  checked={values.details.availability === true}
+                  onChange={(e) => setValues({ ...values, details: { ...values.details, availability: e.target.value === "true" } })}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                />
+                <label htmlFor="true">Yes</label>
+                <input
+                  type="radio"
+                  value="false"
+                  checked={values.details.availability === false}
+                  onChange={(e) => setValues({ ...values, details: { ...values.details, availability: e.target.value === "true" } })}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                />
+                <label htmlFor="false">No</label>
+              </div>
+            </div>
             <div className='flex items-center gap-2 '>
               <Image src={'/logo/stopwatch.svg'} height={100} width={20} alt='stopwatch' className='h-[20px] w-[20px]' />
               <input type="text"

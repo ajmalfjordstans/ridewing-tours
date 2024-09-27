@@ -67,7 +67,8 @@ const initialState = {
     //       "Learn the story of Glico Man and see Tsutenkaku, Osaka’s “Tokyo Tower”"
     //     ]
     //   },
-    //   "price": "18900",
+    //   "price": "200",
+    //   "bulkPrice": "150",
     //   "description": [
     //     "Discover the vibrant life of Osaka with our Best of Osaka Walking Tour. Go on a journey that blends tradition, history, and architecture. Embark on your 5-hour walking tour starting in the retro area of “Amerikamura” or “American Village”. Discover the Namba & Dotonbori neighborhood as well as Hozenji temple – an iconic Buddhist temple. The Kuromon Ichiba Market – famous for its fresh seafood is your next destination. Stroll through Shinsekai’s entertainment district, witness the stunning Osaka Castle, and learn about Osaka’s other hidden gems. See where the past meets the present and enjoy every moment of this stunning city.",
     //     "For curious travelers who love to explore, our Best of Osaka Walking Tour is a great way to experience Osaka. Go on a journey that ties culture and history while listening to your local expert guide. Book your Osaka 5-hour walking tour today!"

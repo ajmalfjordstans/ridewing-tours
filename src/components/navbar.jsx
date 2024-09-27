@@ -134,8 +134,8 @@ export default function Navbar() {
           <div className='container mx-auto px-[5%] lg:px-0 flex justify-between py-[15px] items-center'>
             <Link href={{ pathname: '/', query: { "country": selectedCountry } }} >
               <div className='flex items-center md:gap-3'>
-                {/* <Image src={'/logo/logo.png'} height={300} width={500} alt='logo' className='h-[40px] lg:h-[70px] w-auto' /> */}
-                <p className='font-semibold text-[28px] uppercase'>Ridewing</p>
+                <Image src={'/logo/kh-logo.png'} height={300} width={500} alt='logo' className='h-[60px] lg:h-[100px] w-auto' />
+                {/* <p className='font-semibold text-[28px] uppercase'>Ridewing</p> */}
               </div>
             </Link>
             <div className="hidden lg:block font-semibold text-[16px] relative">

@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 
 export default function TopChoicesCard({ data }) {
 
-  // console.log(data.gallery[1]);
+  console.log(data);
   return (
-    <div className='w-full h-[482px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
+    <div className='w-full rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >
       <div className='h-[305px]  flex items-end'
         style={{
@@ -21,6 +21,11 @@ export default function TopChoicesCard({ data }) {
               <p className=''>4.8</p>
             </div>
             <p className='text-secondary'>Rating</p> */}
+            {data?.tourType &&
+              <div className='flex items-center gap-2 bg-[#aeaeae] rounded-[11px] px-[15px] py-[10px] text-center text-[11px]'>
+                <p className='whitespace-nowrap'>{data?.tourType}</p>
+              </div>
+            }
           </div>
           {data?.price &&
             <div className='flex items-center justify-end gap-2 p-[12px] bg-black bg-opacity-45 w-full'>
@@ -69,6 +74,47 @@ export default function TopChoicesCard({ data }) {
               }
             </div>
           )}
+          {data?.details?.availability ?
+            <div className='flex items-center gap-2 bg-[#00FF29] rounded-[11px] px-[15px] py-[10px] text-center'>
+              <p>Available</p>
+            </div>
+            :
+            <div className='flex items-center gap-2 bg-[#FF0000] rounded-[11px] px-[15px] py-[10px] text-white text-center'>
+              <p>Not Available</p>
+            </div>
+          }
+
+          {data?.details?.highRated &&
+            <div className='flex items-center gap-2 bg-[#00FF29] rounded-[11px] px-[15px] py-[10px] text-center'>
+              <p>High Rated</p>
+            </div>
+          }
+          {data?.details?.rating && (
+            <div className="flex items-center gap-2">
+              <div className="flex">
+                {Array.from({ length: data.details.rating }).map((_, index) => (
+                  <svg
+                    key={index}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="none"
+                    viewBox="0 0 12 12"
+                  >
+                    <path
+                      fill="#FFA800"
+                      d="M2.773 11.045l3.295-1.71 3.295 1.71-.63-3.65 2.653-2.585-3.677-.533L6.069.941 4.427 4.277.75 4.81l2.666 2.584-.643 3.65z"
+                    ></path>
+                  </svg>
+                ))}
+              </div>
+            </div>
+          )}
+          {data?.details?.recommended &&
+            <div className='flex items-center gap-2 bg-[#00FF29] rounded-[11px] px-[15px] py-[10px] text-center'>
+              <p>Recommended</p>
+            </div>
+          }
         </div>
       </div>
     </div>

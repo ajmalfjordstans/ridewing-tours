@@ -4,10 +4,17 @@ import AttractionsCard from '@/components/cards/attractions-card';
 import { AnimatePresence } from 'framer-motion';
 import { motion } from 'framer-motion'
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
 export default function Page() {
+  const pathname = usePathname();
+  const country = pathname.split('/');
+
+  // Decode the country name to replace %20 with spaces
+  const decodedCountryName = country ? decodeURIComponent(country[2]) : '';
+
   const [showDetails, setShowDetails] = useState(null);
   const [data, setData] = useState(null);
   const currentCountry = useSelector(state => state.user.selectedCountry)
@@ -15,7 +22,7 @@ export default function Page() {
 
   const getData = async () => {
     try {
-      const response = await (readFirebaseCollection(`countries/${currentCountry}/attractions`))
+      const response = await (readFirebaseCollection(`countries/${decodedCountryName}/cities`))
       setData(response);
       setLoading(false)
     } catch (error) {
@@ -31,7 +38,7 @@ export default function Page() {
     <>
       <div className='container mx-auto px-[5%] lg:px-0 mt-[80px] md:mt-[180px] pb-[150px]'>
         <div className=' w-full flex flex-col '>
-          <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>Popular Attractions in Japan</p>
+          <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>Popular Cities in {decodedCountryName}</p>
           <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
             <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
           </div>

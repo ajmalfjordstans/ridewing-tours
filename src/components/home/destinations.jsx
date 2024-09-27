@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import DestinationCard from '../cards/destination-card'
 import Link from 'next/link'
 import { readFirebaseCollection } from '@/app/firebase'
+import { useSelector } from 'react-redux'
 
 const DestinationsData = [
   {
@@ -55,6 +56,7 @@ const DestinationsData = [
 
 export default function Destinations() {
   const [data, setData] = useState(null);
+  const currentCountry = useSelector(state => state.user.selectedCountry)
   const [loadingData, setLoadingData] = useState(true)
   const getData = async () => {
     try {
@@ -81,7 +83,7 @@ export default function Destinations() {
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full mt-[60px]'>
         {data?.map((data, id) => {
           return (
-            <Link key={id} href={`/destinations/${data.name}`}>
+            <Link key={id} href={`/destinations/${data.name}?country=${currentCountry}`}>
               <DestinationCard data={data} />
             </Link>
           )
