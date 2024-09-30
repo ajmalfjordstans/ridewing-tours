@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { doc } from 'firebase/firestore';
-import { db } from '@/app/firebase';
+import { db, readFirebaseDocument } from '@/app/firebase';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import Loading from '@/app/loading';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -11,12 +11,28 @@ import { setContact } from '../store/userSlice';
 export default function Hero() {
   const dispatch = useDispatch()
   const selectedCountry = useSelector((state) => state.user.selectedCountry);
+  const [featuredOffer, setFeaturedOffer] = useState(null)
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/landing/hero`);
   const [query, setQuery] = useState(doc(db, queryPath));
   const [docs, loading, error] = useDocumentData(query);
   const [data, setData] = useState(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
+
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        let result = await readFirebaseDocument('coupons/coupon');
+        result = result.coupons.find((coupon) => coupon.type === 'offer')
+        // console.log(result);
+        setFeaturedOffer(result);
+      } catch (error) {
+        console.error('Error fetching coupons:', error);
+      }
+    };
+
+    fetchCoupons();
+  }, []);
 
   useEffect(() => {
     const newPath = `countries/${selectedCountry}/landing/hero`;
@@ -55,7 +71,7 @@ export default function Hero() {
       {loading ? <Loading />
         :
         <motion.section
-          className='pt-[100px] h-[70vh] w-full relative'
+          className='pt-[80px] md:pt-[100px] h-[70vh] w-full relative'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -90,6 +106,15 @@ export default function Hero() {
                   <p className='ml-2 text-[16px] leading-[18px] text-custom-red'>About {selectedCountry}</p>
                 </motion.div>
               </motion.div>
+              <div className='flex justify-end w-full pr-[5%]'>
+                {featuredOffer && featuredOffer?.active && featuredOffer.code != '' &&
+                  <div className='px-[25px] py-[15px] bg-secondary rounded-[15px] flex flex-col justify-center items-center text-black border-dashed border-[4px] border-black'>
+                    <p className='text-[24px] font-[600]'>{featuredOffer?.offerName}</p>
+                    <p className='text-[28px] font-[700]'>{featuredOffer?.discountValue}{featuredOffer.isPercentage ? '%' : ''} OFF</p>
+                    <p className=''>Use Code {featuredOffer?.code}</p>
+                  </div>
+                }
+              </div>
             </motion.div>
             {imageLoaded && (
               <motion.div

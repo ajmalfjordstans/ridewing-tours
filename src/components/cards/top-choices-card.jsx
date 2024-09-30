@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 export default function TopChoicesCard({ data }) {
 
-  console.log(data);
   return (
     <div className='w-full rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >

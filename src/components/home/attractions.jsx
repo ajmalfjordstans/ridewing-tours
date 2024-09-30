@@ -82,7 +82,10 @@ export default function Attractions() {
                 disableOnInteraction: false
               }}
               loop
-              modules={[Autoplay]}
+              modules={[Autoplay, Pagination]}
+              pagination={{
+                clickable: true,
+              }}
             >
               {data?.map((data, id) => {
                 return (
@@ -122,7 +125,7 @@ export default function Attractions() {
           <div className='fixed h-full w-full top-0 left-0 backdrop-blur-md z-10 flex justify-center items-center shadow-lg '>
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 p-4">
               <motion.div
-                className="bg-white rounded-lg shadow-lg max-w-[1267px] w-full max-h-[80vh] p-6"
+                className="bg-white rounded-lg shadow-lg max-w-[1267px] w-full max-h-[80vh] p-6 overflow-y-scroll no-scrollbar"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0 }}
@@ -142,11 +145,11 @@ export default function Attractions() {
                     X
                   </motion.div>
                 </div>
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:gap-10 mt-2'>
                   <Image src={showDetails.image ? showDetails.image : "/images/background/image-template.jpg"} alt="Popup Image" className="w-full h-auto rounded-lg mb-4" height={700} width={700} />
-                  <div >
+                  <div className='h-[100%]'>
                     <h2 className="text-2xl font-bold mb-2">{showDetails.title}</h2>
-                    <p className="text-gray-700 mb-4">{showDetails.description}</p>
+                    <p className="text-gray-700 mb-4 ">{showDetails.description}</p>
                   </div>
                 </div>
               </motion.div>

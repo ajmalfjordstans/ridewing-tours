@@ -51,7 +51,7 @@ export default function TopChoices() {
   return (
     <>
       {!loading && data !== null && data.length > 0 &&
-        <section className='py-[60px] container mx-auto flex flex-col items-center px-[5%] lg:px-0'>
+        <section className='pt-[60px] container mx-auto flex flex-col items-center px-[5%] lg:px-0'>
           <div className='max-w-[738px] w-full flex flex-col items-center'>
             <p className='font-bold text-[32px] leading-[42px]'>Top Choices for You</p>
             <div className='h-[1px] w-full bg-[#00000080] flex justify-center mt-[20px]'>
@@ -77,8 +77,20 @@ export default function TopChoices() {
               </Link>
             }
           </div>
-          {/* <div className='mx-auto container'>
-            <div className='mt-[37px] flex relative '>
+          <div className='mx-auto container lg:hidden'>
+            <div className='h-full flex justify-end items-center mt-[37px]'>
+              <button onClick={handlePrevClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-11px] md:translate-x-[-24px] border-[#EAEAEA] border-[2px] z-[2]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+              </button>
+              <button onClick={handleNextClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-5%] md:translate-x-[24px] border-[#EAEAEA] border-[2px] z-[2]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+              </button>
+            </div>
+            <div className='flex relative '>
               <Swiper
                 // spaceBetween={1}
                 slidesPerView={4}
@@ -88,10 +100,10 @@ export default function TopChoices() {
                 className='w-full'
               >
                 <div className='px-[20px]'>
-                  {data?.slice(0, 4).map((data, id) => {
+                  {data?.slice(0, 8).map((data, id) => {
                     return (
                       <SwiperSlide key={id} className='py-[30px] px-[10px]'>
-                        <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} >
+                        <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} key={id}>
                           <TopChoicesCard data={data} />
                         </Link>
                       </SwiperSlide>
@@ -111,7 +123,7 @@ export default function TopChoices() {
                   </SwiperSlide>
                 </div>
               </Swiper>
-              <div className='absolute w-full h-full flex justify-between items-center'>
+              {/* <div className='absolute w-full h-full flex justify-between items-center'>
                 <button onClick={handlePrevClick} className="h-[32px] w-[32px] md:h-[48px] md:w-[48px] bg-white rounded-full flex justify-center items-center transform translate-x-[-11px] md:translate-x-[-24px] border-[#EAEAEA] border-[2px] z-[2]">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
@@ -122,9 +134,9 @@ export default function TopChoices() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                   </svg>
                 </button>
-              </div>
+              </div> */}
             </div>
-          </div> */}
+          </div>
 
         </section>
       }</>

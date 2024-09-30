@@ -99,15 +99,15 @@ function AdminMenu({ currentPage, setCurrentPage, showMenu, setShowMenu, setShow
                 <p>Popular Attractions</p>
               </div>
               <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'transfers' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('transfers')}>
-                <Image src={'/icons/attractions.svg'} height={100} width={100} alt='pages' className='size-4' />
+                <Image src={'/icons/transfers.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Transfers Images</p>
               </div>
               <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'destinations' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('destinations')}>
-                <Image src={'/icons/attractions.svg'} height={100} width={100} alt='pages' className='size-4' />
+                <Image src={'/icons/countries.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Destinations</p>
               </div>
               <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'cities' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('cities')}>
-                <Image src={'/icons/attractions.svg'} height={100} width={100} alt='pages' className='size-4' />
+                <Image src={'/icons/cities.svg'} height={100} width={100} alt='pages' className='size-4' />
                 <p>Popular Cities</p>
               </div>
               <div className={`flex gap-2 hover:cursor-pointer items-center ${currentPage === 'airports' ? "text-secondary" : ""}`} onClick={() => setCurrentPage('airports')}>

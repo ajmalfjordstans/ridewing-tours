@@ -36,6 +36,7 @@ export default function Banner() {
     weather: [],
     neverMiss: []
   })
+
   const handleAddItem = () => {
     if (tempItem.trim()) {
       setValues(prevValues => {
@@ -60,6 +61,7 @@ export default function Banner() {
   const handleInputChange = (e) => {
     setTempItem(e.target.value);
   };
+  
   // Handle input changes for the temporary weather state
   const handleWeatherChange = (e) => {
     const { name, value } = e.target;
@@ -208,7 +210,7 @@ export default function Banner() {
           <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full' value={values.contact} onChange={(e) => setValues({ ...values, contact: e.target.value })} />
         </div>
         <div>
-          <p className='text-[22px] mt-[20px]'>Tagline</p>
+          <p className='text-[22px] mt-[20px]'>Whatsapp</p>
           <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full' value={values.whatsapp} onChange={(e) => setValues({ ...values, whatsapp: e.target.value })} />
         </div>
       </div>
