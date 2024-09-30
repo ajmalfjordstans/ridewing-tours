@@ -9,31 +9,39 @@ export default function TopChoicesCard({ data }) {
   return (
     <div className='w-full rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >
-      <div className='h-[305px]  flex items-end'
+      <div className='h-[305px] flex items-end relative'
         style={{
           backgroundImage: `url(${data.gallery[0]})`, backgroundSize: 'cover', backgroundPosition: 'center'
         }}
       >
+        {data?.offers?.offerTitle &&
+          <p className='absolute top-0 text-white text-right h-[40px] p-[10px] bg-[#FF0000]'>{data?.offers?.offerTitle} {data?.offers?.offerValue}{data?.offers?.isPercent ? "%" : ""} OFF</p>
+        }
         <div className='flex w-full justify-between '>
           <div className='text-[16px] flex items-center gap-3 p-[12px]'>
             {/* <div className='h-[33px] w-[33px] rounded-full bg-[#FFFFFF4D] flex justify-center items-center text-white'>
               <p className=''>4.8</p>
             </div>
             <p className='text-secondary'>Rating</p> */}
-            {data?.tourType &&
-              <div className='flex items-center gap-2 bg-[#aeaeae] rounded-[11px] px-[15px] py-[10px] text-center text-[11px]'>
-                <p className='whitespace-nowrap'>{data?.tourType}</p>
-              </div>
-            }
           </div>
           {data?.price &&
             <div className='flex items-center justify-end gap-2 p-[12px] bg-black bg-opacity-45 w-full'>
               <p className='text-secondary text-[14px]'>From</p>
-              <p className='text-white text-[26px]'>{data?.currency} {data?.bulkPrice ? data?.bulkPrice.toLocaleString() : data?.price.toLocaleString()}</p>
+              <div className='flex flex-col justify-end'>
+                {data?.offers?.offerTitle &&
+                  <p className='text-white line-through text-right'>{data?.offers?.bulkPrice}</p>
+                }
+                <p className='text-white text-[26px]'>{data?.currency} {data?.bulkPrice ? data?.bulkPrice.toLocaleString() : data?.price.toLocaleString()}</p>
+              </div>
             </div>}
         </div>
       </div>
       <div className='p-[15px]'>
+        {data?.tourType &&
+          <div className='flex items-center gap-2 text-[#aeaeae] text-center text-[11px]'>
+            <p className='whitespace-nowrap'>{data?.tourType}</p>
+          </div>
+        }
         {data.tag != '' &&
           <p className='text-secondary text-[14px] border-b-[2px] border-b-secondary w-auto pb-[5px]'>{data.tag}</p>
         }

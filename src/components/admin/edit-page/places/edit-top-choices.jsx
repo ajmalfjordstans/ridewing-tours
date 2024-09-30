@@ -21,8 +21,65 @@ export default function EditPlace({ data, setShowEdit }) {
   const [imageGallery, setImageGallery] = useState(data.gallery ? data.gallery : null)
   const [progress, setProgress] = useState(0)
   const [loading, setLoading] = useState(false);
+  const [showOffer, setShowOffer] = useState(false);
   const [values, setValues] = useState(data)
   const [categories, setCategories] = useState()
+
+  useEffect(() => {
+    if (!showOffer) {
+      setValues({
+        ...values, offers: {
+          offerTitle: '',
+          offerValue: 0
+        }
+      })
+    } else {
+      setValues({
+        ...values, offers: {
+          price: values.price,
+          bulkPrice: values.bulkPrice,
+          isPercent: false,
+        }
+      })
+    }
+  }, [showOffer])
+
+  const setOffer = (e, target) => {
+    setValues({
+      ...values,
+      offers: { ...values.offers, [target]: e }
+    });
+  };
+
+  const AddOffer = () => {
+    if (values.offers.offerTitle == undefined || values.offers.offerTitle == '') {
+      alert('Add an offer title')
+      return
+    }
+    let offerValue = parseFloat(values?.offers?.offerValue) || 0;
+    let price = parseFloat(values.offers.price) || 0;
+    let bulkPrice = parseFloat(values.offers.bulkPrice) || 0;
+    console.log(values.offers.offerTitle);
+
+    let newPrice = price;
+    let newBulkPrice = bulkPrice;
+
+    // Check if the offer is percentage-based
+    if (values.offers.isPercent) {
+      newPrice = price - (price * (offerValue / 100));
+      newBulkPrice = bulkPrice - (bulkPrice * (offerValue / 100));
+    } else {
+      // Subtract fixed value
+      newPrice = price - offerValue;
+      newBulkPrice = bulkPrice - offerValue;
+    }
+    setValues({
+      ...values,
+      price: newPrice,
+      bulkPrice: newBulkPrice,
+      isPercent: values.offers.isPercent
+    });
+  }
 
   const handleConvertAndSave = (inputString) => {
     const lowercasedString = inputString.toLowerCase();
@@ -32,7 +89,6 @@ export default function EditPlace({ data, setShowEdit }) {
 
   const handleSave = async () => {
     setLoading(true)
-    console.log(values);
     const result = await createFirebaseDocument(values, `countries/${selectedCountry}/top-choices/`, values?.url)
     if (result) {
       setLoading(false)
@@ -44,6 +100,11 @@ export default function EditPlace({ data, setShowEdit }) {
   useEffect(() => {
     if (data) {
       setValues(data)
+      // console.log(data);
+      
+      if (data?.offers?.offerTitle != undefined) {
+        setShowOffer(true)
+      }
       // console.log(data, values);
       window.scrollTo(0, 0)
     }
@@ -118,8 +179,8 @@ export default function EditPlace({ data, setShowEdit }) {
             <select className='p-[5px] border-[2px] border-black rounded-[5px]' value={values?.tourType ? values?.tourType : " "}
               onChange={(e) => setValues({ ...values, tourType: e.target.value })}>
               <option value="" className='p-[4px]' >Choose one</option>
-                <option value={'Private Tour'} className='p-[4px]' >Private Tour</option>
-                <option value={'SIC Tour'} className='p-[4px]' >SIC Tour</option>
+              <option value={'Private Tour'} className='p-[4px]' >Private Tour</option>
+              <option value={'SIC Tour'} className='p-[4px]' >SIC Tour</option>
             </select>
           </div>
           <div className='flex items-center gap-2 mt-[10px]'>
@@ -323,19 +384,86 @@ export default function EditPlace({ data, setShowEdit }) {
               placeholder='$'
               className='p-[5px] border-[2px] border-black rounded-[5px]' />
           </div>
+
+          {/* Offer Section */}
+          <div className='flex items-center gap-2'>
+            <p className='font-bold text-[16px]'>Offer available?</p>
+            <input type="checkbox"
+              checked={showOffer}
+              onChange={(e) => setShowOffer(e.target.checked)}
+              className='p-[5px] border-[2px] border-black rounded-[5px]' />
+          </div>
+          {showOffer &&
+            <>
+              <div className='flex flex-col gap-2'>
+                <p className='font-bold text-[16px]'>Offer Title</p>
+                <input type="text"
+                  value={values?.offers?.offerTitle}
+                  onChange={(e) => setValues({ ...values, offers: { ...values.offers, offerTitle: e.target.value } })}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]' />
+              </div>
+
+              <div className='flex flex-col gap-2'>
+                <p className='font-bold text-[16px]'>Price without offer</p>
+                <input type="text"
+                  value={values?.offers?.price}
+                  defaultValue={values?.price}
+                  onChange={(e) => setOffer(e.target.value, 'price')}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                  placeholder='Price Upto 4'
+                />
+              </div>
+              <div className='flex flex-col gap-2'>
+                {/* <p className='font-bold text-[16px]'>Offer Value</p> */}
+                <input type="text"
+                  value={values?.offers?.bulkPrice}
+                  defaultValue={values?.bulkPrice}
+                  onChange={(e) => setOffer(e.target.value, 'bulkPrice')}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                  placeholder='Price from 4'
+                />
+              </div>
+              <div className='flex flex-col gap-2'>
+                <p className='font-bold text-[16px]'>Offer Value</p>
+                <input type="text"
+                  value={values?.offers?.offerValue}
+                  onChange={(e) => setOffer(e.target.value, 'offerValue')}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]'
+                  defaultValue={0}
+                />
+              </div>
+
+              <div className='flex items-center gap-2'>
+                <p className='font-bold text-[16px]'>Is Percentage?</p>
+                <input type="checkbox"
+                  checked={values?.offers?.isPercent}
+                  onChange={(e) => setOffer(e.target.checked, 'isPercent')}
+                  className='p-[5px] border-[2px] border-black rounded-[5px]' />
+              </div>
+              <Button
+                onClick={AddOffer}
+                className='bg-secondary'
+              >
+                Add Offer
+              </Button>
+            </>}
           <div className='flex flex-col gap-2'>
             <p className='font-bold text-[16px] text-custom-red'>Upto 4 Persons</p>
             <input type="text"
               value={values?.price}
               onChange={(e) => setValues({ ...values, price: e.target.value })}
-              className='p-[5px] border-[2px] border-black rounded-[5px]' />
+              className='p-[5px] border-[2px] border-black rounded-[5px]'
+              disabled={showOffer}
+            />
           </div>
           <div className='flex flex-col gap-2'>
             <p className='font-bold text-[16px] text-custom-red'>From 4 Persons</p>
             <input type="text"
               value={values?.bulkPrice}
               onChange={(e) => setValues({ ...values, bulkPrice: e.target.value })}
-              className='p-[5px] border-[2px] border-black rounded-[5px]' />
+              className='p-[5px] border-[2px] border-black rounded-[5px]'
+              disabled={showOffer}
+            />
           </div>
         </div>
       </div>

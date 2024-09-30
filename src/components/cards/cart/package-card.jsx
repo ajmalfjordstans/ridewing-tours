@@ -14,7 +14,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   const [includeTicket, setIncludeTicket] = useState(data?.details?.entranceFeeIncluded);
   const [addedTickets, setAddedTickets] = useState([]);
   const [includeGuide, setIncludeGuide] = useState(data?.details?.guidedTour);
-  const [guideLanguage, setGuideLanguage] = useState(data?.details?.guideLanguage);
+  // const [guideLanguage, setGuideLanguage] = useState(data?.details?.guideLanguage[0]);
   const [hoursGuideNeeded, setHoursGuideNeeded] = useState(1);
   const guideLanguages = ['English', 'Chinese', 'Japanese'];
 
@@ -355,9 +355,9 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                               d="M4.5 11H6V8h4.5L9 6l1.5-2h-6v7zM0 18V2C0 1.45.196.98.588.587A1.926 1.926 0 012 0h10c.55 0 1.02.196 1.412.588C13.804.979 14 1.45 14 2v16l-7-3-7 3zm2-3.05l5-2.15 5 2.15V2H2v12.95z"
                             ></path>
                           </svg>
-                          <span>Guide Language:</span>
+                          <span>Guide Language: {data?.guideLanguage}</span>
                         </div>
-                        <select
+                        {/* <select
                           value={guideLanguage}
                           onChange={(e) => setGuideLanguage(e.target.value)}
                           className='p-[10px] border-[1px] border-black rounded-[5px] w-full my-[10px]'
@@ -367,9 +367,9 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                           {guideLanguages.map((lang, index) => (
                             <option key={index} value={lang}>{lang}</option>
                           ))}
-                        </select>
+                        </select> */}
                       </label>
-                      <label className='block'>
+                      {/* <label className='block'>
                         <span>Hours guide needed</span>
                         <input type="number"
                           className='p-[10px] border-[1px] border-black rounded-[5px] w-full my-[10px]'
@@ -378,7 +378,7 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                           // onChange={(e) => setHoursGuideNeeded(e.target.value)}
                           disabled
                         />
-                      </label>
+                      </label> */}
                     </div>
                   </div>
                 </div>

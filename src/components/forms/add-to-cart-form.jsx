@@ -8,7 +8,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [includeTicket, setIncludeTicket] = useState(data?.details.entranceFeeIncluded);
   const [addedTickets, setAddedTickets] = useState([]);
   const [includeGuide, setIncludeGuide] = useState(data?.details.guidedTour);
-  const [guideLanguage, setGuideLanguage] = useState('');
+  const [guideLanguage, setGuideLanguage] = useState(data?.details?.language[0]);
   const [hoursGuideNeeded, setHoursGuideNeeded] = useState(data.details.hours);
   const [date, setDate] = useState(null)
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
@@ -22,8 +22,9 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const buttonHandler = () => {
     if (date == null) {
       alert("Pick a date to continue")
-    } else if (includeGuide && guideLanguage == "") {
-      alert("Select Guide Language")
+      // } 
+      // else if (includeGuide && guideLanguage == "") {
+      //   alert("Select Guide Language")
     } else {
       const cartData = {
         ...data,
@@ -36,7 +37,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
         hoursGuideNeeded: hoursGuideNeeded,
         type: "package"
       };
-      // console.log(cartData)
+      console.log(cartData)
       addToCartHandler(cartData);
       setShowForm(false);
     }
@@ -156,7 +157,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
         </label> */}
         {includeGuide && (
           <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
-            <label className='block'>
+            {/* <label className='block'>
               <span className='text-[14px]'>Guide Language:</span>
               <select
                 value={guideLanguage}
@@ -168,8 +169,8 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                   <option key={index} value={lang}>{lang}</option>
                 ))}
               </select>
-            </label>
-            <label className='block'>
+            </label> */}
+            {/* <label className='block'>
               <span className='text-[14px]'>Hours guide needed</span>
               <input type="number"
                 className='p-[10px] border-[1px] border-black rounded-[5px] w-full my-[10px]'
@@ -178,7 +179,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                 value={hoursGuideNeeded}
                 onChange={(e) => setHoursGuideNeeded(e.target.value)}
               />
-              {/* <select
+              <select
                 value={guideLanguage}
                 className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
               >
@@ -186,8 +187,8 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                 {guideLanguages.map((lang, index) => (
                   <option key={index} value={lang}>{lang}</option>
                 ))}
-              </select> */}
-            </label>
+              </select>
+            </label> */}
           </div>
         )}
       </div>
