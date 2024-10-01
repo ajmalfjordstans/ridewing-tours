@@ -97,7 +97,8 @@ export const AuthContextProvider = ({ children }) => {
         email: currentUser?.email,
         displayName: currentUser?.displayName ? currentUser?.displayName : signUpFormData.username,
         photoURL: currentUser?.photoURL,
-        userRole: loginType == "" ? "user" : loginType // Use loginType for the role
+        userRole: loginType == "" ? "user" : loginType, // Use loginType for the role
+        ...(loginType === "agent" && { active: false })
       }
       await setDoc(doc(db, "users", currentUser?.uid), user);
       dispatch(setUser(user))
