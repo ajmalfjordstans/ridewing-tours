@@ -11,6 +11,8 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [guideLanguage, setGuideLanguage] = useState(data?.details?.language[0]);
   const [hoursGuideNeeded, setHoursGuideNeeded] = useState(data.details.hours);
   const [date, setDate] = useState(null)
+  const [contact, setContact] = useState(null)
+  const [meetingPoint, setMeetingPoint] = useState(null)
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
 
   function generateBookingId() {
@@ -25,11 +27,19 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
       // } 
       // else if (includeGuide && guideLanguage == "") {
       //   alert("Select Guide Language")
+    }
+    else if (contact == null) {
+      alert("Fill contact field")
+    }
+    else if (meetingPoint == null) {
+      alert("Fill meeting point field")
     } else {
       const cartData = {
         ...data,
         bookingId: generateBookingId(),
         date: dayjs(date).toDate(),
+        contact: contact,
+        meetingPoint: meetingPoint,
         includeTicket,
         includeGuide,
         additionalTickets: addedTickets,
@@ -92,12 +102,36 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
     return timestamp.toDate().toISOString();
   };
   return (
-    <div className='max-h-[80vh] overflow-y-scroll'>
-      <div className='flex flex-col gap-2 mt-4'>
+    <div className='max-h-[80vh] overflow-y-scroll no-scrollbar'>
+      <div className='flex flex-col gap-1 mt-4 w-full'>
+        <div className='flex flex-wrap lg:flex-nowrap gap-2'>
+          <label className='flex flex-col w-full'>
+            <span className='ml-2 font-[600] text-center'>Enter Travel Date</span>
+            <div className='mx-auto mt-1'>
+              <DatepickerComponent date={date} setDate={setDate} min={dayjs().add(2, 'day')} className='min-w-[300px]' />
+            </div>
+          </label>
+          <label className='flex flex-col w-full'>
+            <span className='ml-2 font-[600] text-center'>Contact Number</span>
+            <div className='mt-1'>
+              <input type="text"
+                className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[300px]'
+                onChange={(e) => setContact(e.target.value)}
+                placeholder=''
+                required
+              />
+            </div>
+          </label>
+        </div>
         <label className='flex flex-col '>
-          <span className='ml-2 font-[600] text-center'>Enter Travel Date</span>
-          <div className='mx-auto mt-3'>
-            <DatepickerComponent date={date} setDate={setDate} min={dayjs().add(2, 'day')} />
+          <span className='ml-2 font-[600] text-center'>Meeting Point</span>
+          <div className='mt-1'>
+            <textarea type="text"
+              className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[300px] min-h-[50px]'
+              onChange={(e) => setMeetingPoint(e.target.value)}
+              placeholder=''
+              required
+            />
           </div>
         </label>
 

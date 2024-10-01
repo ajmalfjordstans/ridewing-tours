@@ -216,7 +216,10 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                 <div>
                   <p className='text-[15px]'>{data.startLocation}</p>
                   {data.type === "package" &&
-                    <p className='text-[15px] mt-1'>{data.date.toLocaleDateString()}</p>
+                    <>
+                      <p className='text-[15px] mt-1'>{data.date.toLocaleDateString()}</p>
+                      <p>{data?.contact}</p>
+                    </>
                   }
                   {data?.transfer === "airport" && <>
                     <p>Flight Number: {data?.travelDetails?.flightNumber}</p>

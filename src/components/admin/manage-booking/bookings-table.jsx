@@ -26,6 +26,7 @@ import {
 import { blue } from "@mui/material/colors";
 import { doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import ViewBooking from "./view-booking";
 
 const TABS = [
   {
@@ -59,12 +60,23 @@ const TABLE_HEAD = ["No", "User", "Service", "Status", "Action"]
 export function BookingTable({ bookings, setAllBookings }) {
   const [selectedTab, setSelectedTab] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
+  const [showBookingDetails, setShowBookingDetails] = useState(false)
+  const [viewBooking, setViewBooking] = useState(false)
 
   useEffect(() => {
     setCurrentPage(1)
     // console.log(paginatedBookings);
   }, [selectedTab])
+
+  useEffect(() => {
+    if (showBookingDetails) {
+      // Disable scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [showBookingDetails]);
 
   // Function to filter bookings based on the selected tab
   const filteredBookings = bookings.filter((booking) => {
@@ -187,19 +199,25 @@ export function BookingTable({ bookings, setAllBookings }) {
     }
   }
 
+  const handleView = (booking) => {
+    setShowBookingDetails(true)
+    setViewBooking(booking)
+  }
+
   return (
-    <Card className="h-full w-full">
-      <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-8 flex items-center justify-between gap-8">
-          <div>
-            <Typography variant="h5" color="blue-gray">
-              Booking list
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              See information about all bookings
-            </Typography>
-          </div>
-          {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+    <>
+      <Card className="h-full w-full">
+        <CardHeader floated={false} shadow={false} className="rounded-none">
+          <div className="mb-8 flex items-center justify-between gap-8">
+            <div>
+              <Typography variant="h5" color="blue-gray">
+                Booking list
+              </Typography>
+              <Typography color="gray" className="mt-1 font-normal">
+                See information about all bookings
+              </Typography>
+            </div>
+            {/* <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <Button variant="outlined" size="sm">
               view all
             </Button>
@@ -207,175 +225,161 @@ export function BookingTable({ bookings, setAllBookings }) {
               <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
             </Button>
           </div> */}
-        </div>
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value={selectedTab} className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value} onClick={() => setSelectedTab(value)}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-          {/* <div className="w-full md:w-72">
+          </div>
+          {!showBookingDetails &&
+            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+              <Tabs value={selectedTab} className="w-full md:w-max">
+                <TabsHeader>
+                  {TABS.map(({ label, value }) => (
+                    <Tab key={value} value={value} onClick={() => setSelectedTab(value)} className="z-9">
+                      &nbsp;&nbsp;{label}&nbsp;&nbsp;
+                    </Tab>
+                  ))}
+                </TabsHeader>
+              </Tabs>
+              {/* <div className="w-full md:w-72">
          
           </div> */}
-        </div>
-      </CardHeader>
-      <CardBody className="overflow-scroll px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head, index) => (
-                <th
-                  key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
-                >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+            </div>
+          }
+        </CardHeader>
+        <CardBody className="overflow-scroll px-0">
+          <table className="mt-4 w-full min-w-max table-auto text-left">
+            <thead>
+              <tr>
+                {TABLE_HEAD.map((head, index) => (
+                  <th
+                    key={head}
+                    className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                   >
-                    {head}{" "}
-                    {/* {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                    )} */}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {/* // ({ id, photo, displayName, email, type, transfer, name, date, contact, noOfPassengers, status, includeGuide, guideLanguage, additionalTickets, travelDetails }, index) => { */}
-            {paginatedBookings.map((booking, index) => {
-              const isLast = index === paginatedBookings.length - 1;
-              const classes = isLast
-                ? "p-4"
-                : "p-4 border-b border-blue-gray-50";
-
-              return (
-                <tr key={index}>
-                  <td className={classes}>
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                     >
-                      {index + 1}
+                      {head}{" "}
+                      {/* {index !== TABLE_HEAD.length - 1 && (
+                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                    )} */}
                     </Typography>
-                  </td>
-                  <td className={classes}>
-                    <div className="flex items-center gap-3">
-                      <Avatar src={booking.photo} alt={booking.displayName} size="sm" />
-                      <div className="flex flex-col">
-                        {/* <Typography
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {/* // ({ id, photo, displayName, email, type, transfer, name, date, contact, noOfPassengers, status, includeGuide, guideLanguage, additionalTickets, travelDetails }, index) => { */}
+              {paginatedBookings.map((booking, index) => {
+                const isLast = index === paginatedBookings.length - 1;
+                const classes = isLast
+                  ? "p-4"
+                  : "p-4 border-b border-blue-gray-50";
+
+                return (
+                  <tr key={index}>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {index + 1}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex items-center gap-3">
+                        <Avatar src={booking.photo} alt={booking.displayName} size="sm" />
+                        <div className="flex flex-col">
+                          {/* <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
                             {id}
                           </Typography> */}
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          {booking.displayName}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {booking.email}
-                        </Typography>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal opacity-70"
-                        >
-                          {booking.contact}
-                        </Typography>
-                      </div>
-                    </div>
-                  </td>
-                  <td className={classes}>
-                    <div className="flex flex-col max-w-[200px]">
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal opacity-70"
-                      >
-                        {booking.type || booking.transfer}
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {booking.name}
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        Date: {booking.date ? formatDateFromTimestamp(booking.date) : booking.travelDetails.date}
-                      </Typography>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        Guests: {booking.noOfPassengers}
-                      </Typography>
-                      {booking.includeGuide &&
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-normal"
-                        >
-                          Guide: {booking.guideLanguage}
-                        </Typography>
-                      }
-                      {Array.isArray(booking.additionalTickets) && booking.additionalTickets.length > 0 &&
-                        <div className="flex flex-col p-[3px] bg-blue-gray-100 rounded-[10px]">
-                          <p>Additional Tickets:</p>
-                          <div className="pl-2">
-                            {booking.additionalTickets.map((ticket, id) => (
-                              <Typography
-                                key={id}
-                                variant="small"
-                                color="blue-gray"
-                                className="font-normal"
-                              >
-                                {ticket.name}
-                              </Typography>
-                            ))}
-                          </div>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {booking.displayName}
+                          </Typography>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {booking.email}
+                          </Typography>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal opacity-70"
+                          >
+                            {booking.contact}
+                          </Typography>
                         </div>
-                      }
-                    </div>
-                  </td>
-                  <td className={classes}>
-                    <div className="w-max">
-                      <Select
-                        label="Select Status"
-                        value={booking.status}
-                        className="capitalize"
-                        // onChange={(val) => alert(val)}
-                        onChange={(val) => handleChange(val, booking, index)}
-                      >
-                        <Option value="pending">Pending</Option>
-                        <Option value="confirmed">Confirm</Option>
-                        <Option value="ongoing">Ongoing</Option>
-                        <Option value="completed">Completed</Option>
-                        <Option value="rejected">Rejected</Option>
-                      </Select>
-                    </div>
-                  </td>
-                  {/* <td className={classes}>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="flex flex-col max-w-[200px]">
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal opacity-70"
+                        >
+                          {booking.type || booking.transfer}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {booking.name}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          Date: {booking.date ? formatDateFromTimestamp(booking.date) : booking.travelDetails.date}
+                        </Typography>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          Guests: {booking.noOfPassengers}
+                        </Typography>
+                        {booking.includeGuide &&
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            Guide: {booking.guideLanguage}
+                          </Typography>
+                        }
+
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="w-max">
+                        <Select
+                          label="Select Status"
+                          value={booking.status}
+                          className="capitalize"
+                          // onChange={(val) => alert(val)}
+                          onChange={(val) => handleChange(val, booking, index)}
+                        >
+                          <Option value="pending">Pending</Option>
+                          <Option value="confirmed">Confirm</Option>
+                          <Option value="ongoing">Ongoing</Option>
+                          <Option value="completed">Completed</Option>
+                          <Option value="rejected">Rejected</Option>
+                        </Select>
+                      </div>
+                    </td>
+                    {/* <td className={classes}>
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -384,16 +388,17 @@ export function BookingTable({ bookings, setAllBookings }) {
                         {booking?.currency + (booking?.total ? booking.total.toLocaleString() : 'N/A')}
                       </Typography>
                     </td> */}
-                  <td className={classes}>
-                    {/* <Chip
-                      variant="ghost"
-                      size="sm"
-                      value={"View"}
-                      className="mt-1 bg-green-500"
-                    // value={online ? "online" : "offline"}
-                    // color={green}
-                    />
-                    <Chip
+                    <td className={classes}>
+                      <Chip
+                        variant="ghost"
+                        size="sm"
+                        value={"View"}
+                        className="mt-1 bg-green-500 hover:cursor-pointer"
+                        onClick={() => handleView(booking)}
+                      // value={online ? "online" : "offline"}
+                      // color={green}
+                      />
+                      {/* <Chip
                       variant="ghost"
                       size="sm"
                       value={"Edit"}
@@ -401,64 +406,69 @@ export function BookingTable({ bookings, setAllBookings }) {
                     // value={online ? "online" : "offline"}
                     // color={blue}
                     /> */}
-                    <Chip
-                      variant="ghost"
-                      size="sm"
-                      value={"Delete"}
-                      className="mt-1 bg-red-500 hover:cursor-pointer"
-                      onClick={() => handleDelete(booking)}
-                    // value={online ? "online" : "offline"}
-                    // color={red}
-                    />
-                  </td>
-                </tr>
-              );
-            },
-            )}
-          </tbody>
-        </table>
-      </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <div className="flex flex-col gap-2">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page {currentPage} of {Math.ceil(filteredBookings.length / itemsPerPage)}
-          </Typography>
-          <div className="w-full md:w-72">
-            <Select
-              size="md"
-              label="Items Per Page"
-              value={itemsPerPage}
-              className="capitalize relative"
-              onChange={(val) => setItemsPerPage(val)}
-            >
-              <Option value="5">5</Option>
-              <Option value="10">10</Option>
-              <Option value="15">15</Option>
-              <Option value="20">20</Option>
-              <Option value="50">50</Option>
-              <Option value="100">100</Option>
-            </Select>
+                      <Chip
+                        variant="ghost"
+                        size="sm"
+                        value={"Delete"}
+                        className="mt-1 bg-red-500 hover:cursor-pointer"
+                        onClick={() => handleDelete(booking)}
+                      // value={online ? "online" : "offline"}
+                      // color={red}
+                      />
+                    </td>
+                  </tr>
+                );
+              },
+              )}
+            </tbody>
+          </table>
+        </CardBody>
+        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+          <div className="flex flex-col gap-2">
+            <Typography variant="small" color="blue-gray" className="font-normal">
+              Page {currentPage} of {Math.ceil(filteredBookings.length / itemsPerPage)}
+            </Typography>
+            <div className="w-full md:w-72">
+              <Select
+                size="md"
+                label="Items Per Page"
+                value={itemsPerPage}
+                defaultValue={itemsPerPage}
+                className="capitalize relative"
+                onChange={(val) => setItemsPerPage(val)}
+              >
+                <Option value="5">5</Option>
+                <Option value="10">10</Option>
+                <Option value="15">15</Option>
+                <Option value="20">20</Option>
+                <Option value="50">50</Option>
+                <Option value="100">100</Option>
+              </Select>
+            </div>
           </div>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outlined"
-            size="sm"
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outlined"
-            size="sm"
-            onClick={handleNext}
-            disabled={currentPage === Math.ceil(filteredBookings.length / itemsPerPage)}
-          >
-            Next
-          </Button>
-        </div>
-      </CardFooter>
-    </Card>
+          <div className="flex gap-2">
+            <Button
+              variant="outlined"
+              size="sm"
+              onClick={handlePrevious}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outlined"
+              size="sm"
+              onClick={handleNext}
+              disabled={currentPage === Math.ceil(filteredBookings.length / itemsPerPage)}
+            >
+              Next
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
+      {showBookingDetails &&
+        <ViewBooking viewBooking={viewBooking} setShowBookingDetails={setShowBookingDetails} formatDateFromTimestamp={formatDateFromTimestamp} />
+      }
+    </>
   );
 }

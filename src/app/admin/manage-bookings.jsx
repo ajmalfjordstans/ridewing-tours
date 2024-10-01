@@ -16,7 +16,7 @@ export default function ManageBookings({ setShowSection }) {
 
         usersSnapshot.forEach(doc => {
           const userData = doc.data();
-          // console.log(userData)
+          console.log(userData)
           if (userData.booking && Array.isArray(userData.booking)) {
             userData.booking.forEach((booking, index) => {
               bookingsArray.push({
@@ -26,12 +26,12 @@ export default function ManageBookings({ setShowSection }) {
                 displayName: userData.displayName,
                 email: userData.email,
                 photo: userData.photoURL,
-                contact: userData?.contact
+                contact: userData?.contact ? userData?.contact : booking.contact
               })
             })
           }
         })
-        // console.log(bookingsArray)
+        console.log(bookingsArray)
         setAllBookings(bookingsArray);
       } catch (error) {
         console.error('Error fetching bookings:', error);

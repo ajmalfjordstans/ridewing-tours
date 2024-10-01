@@ -180,6 +180,3 @@ export default function TransferGuideForm({ data, setShowForm }) {
   )
 }
 
-const predefinedGuideLanguages = [
-  'English', 'Chinese', 'Japanese'
-];
