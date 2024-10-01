@@ -59,18 +59,42 @@ export default function EditAgents({ setShowSection }) {
         </div>
         <p className='font-[700] text-[28px] mt-[25px]'>Travel Agents</p>
         {agents == null && <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div>}
-        <div className='grid grid-cols-5 mt-[30px] gap-5'>
-          {agents && agents.map((agent, index) => (
-            <div key={index}
-              className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center hover:cursor-pointer'
-              onClick={() => handleShowAgent(agent)}
-            >
-              <p>{agent.displayName}</p>
-              <p className='text-[12px]'>{agent?.email}</p>
-              <p className='text-[12px]'>{agent?.contact}</p>
-            </div>
-          ))}
+        <div>
+          <p>Waiting for Approval</p>
+          <div className='grid grid-cols-5 mt-[30px] gap-5'>
+            {agents && agents
+              .filter((agent) => agent.active == false) // Filter only inactive agents
+              .map((agent, index) => (
+                <div key={index}
+                  className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center hover:cursor-pointer'
+                  onClick={() => handleShowAgent(agent)}
+                >
+                  <p>{agent.displayName}</p>
+                  <p className='text-[12px]'>{agent?.email}</p>
+                  <p className='text-[12px]'>{agent?.contact}</p>
+                </div>
+              ))}
+          </div>
         </div>
+
+        <div>
+          <p>Active Agents</p>
+          <div className='grid grid-cols-5 mt-[30px] gap-5'>
+            {agents && agents
+              .filter((agent) => agent.active == true) // Filter only active agents
+              .map((agent, index) => (
+                <div key={index}
+                  className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center hover:cursor-pointer'
+                  onClick={() => handleShowAgent(agent)}
+                >
+                  <p>{agent.displayName}</p>
+                  <p className='text-[12px]'>{agent?.email}</p>
+                  <p className='text-[12px]'>{agent?.contact}</p>
+                </div>
+              ))}
+          </div>
+        </div>
+
       </div>
       <AnimatePresence>
         {showAgent && (

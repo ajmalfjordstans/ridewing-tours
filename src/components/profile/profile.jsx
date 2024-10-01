@@ -237,7 +237,7 @@ export default function Profile({ user, handleSignOut }) {
               >Account</p>
 
               <div className='flex flex-col gap-2'>
-                <p className='font-[600]'>Account Holder's Name:</p>
+                <p className='font-[600]'>Account Holder&apos;s Name:</p>
                 <input
                   // ref={accountHolderRef}
                   type='text'
