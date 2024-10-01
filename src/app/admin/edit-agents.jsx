@@ -12,6 +12,7 @@ export default function EditAgents({ setShowSection }) {
   const [agents, setAgents] = useState(null)
   const [selectedAgent, setSelectedAgent] = useState(null)
   const [showAgent, setShowAgent] = useState(false)
+  const [activeState, setActiveState] = useState(selectedAgent?.active)
 
   const getAllUsers = async () => {
     try {
@@ -29,8 +30,17 @@ export default function EditAgents({ setShowSection }) {
     setShowAgent(true)
   }
 
+  const toggleActive = async (active) => {
+    let agent = {
+      ...selectedAgent,
+      active: active
+    }
+    setSelectedAgent(agent)
+    await setDoc(doc(db, "users", selectedAgent?.uid), agent);
+  }
+
   const updateAgent = async () => {
-    console.log({ ...selectedAgent, creditUsed: selectedAgent.creditUsed ? selectedAgent.creditUsed : 0 });
+    // console.log({ ...selectedAgent, creditUsed: selectedAgent.creditUsed ? selectedAgent.creditUsed : 0 });
     await setDoc(doc(db, "users", selectedAgent?.uid), selectedAgent);
   }
 
@@ -59,42 +69,55 @@ export default function EditAgents({ setShowSection }) {
         </div>
         <p className='font-[700] text-[28px] mt-[25px]'>Travel Agents</p>
         {agents == null && <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div>}
-        <div>
-          <p>Waiting for Approval</p>
-          <div className='grid grid-cols-5 mt-[30px] gap-5'>
-            {agents && agents
-              .filter((agent) => agent.active == false) // Filter only inactive agents
-              .map((agent, index) => (
-                <div key={index}
-                  className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center hover:cursor-pointer'
-                  onClick={() => handleShowAgent(agent)}
-                >
-                  <p>{agent.displayName}</p>
-                  <p className='text-[12px]'>{agent?.email}</p>
-                  <p className='text-[12px]'>{agent?.contact}</p>
-                </div>
-              ))}
-          </div>
-        </div>
+        {agents != null &&
+          <>
+            <div>
+              <p>Waiting for Approval</p>
+              <div className='grid grid-cols-5 mt-[30px] gap-5'>
+                {agents && agents.length > 0 ? (
+                  agents
+                    .filter((agent) => agent.active === false) // Filter only inactive agents
+                    .length > 0 ? (
+                    agents
+                      .filter((agent) => agent.active === false)
+                      .map((agent, index) => (
+                        <div key={index}
+                          className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center hover:cursor-pointer'
+                          onClick={() => handleShowAgent(agent)}
+                        >
+                          <p>{agent.displayName}</p>
+                          <p className='text-[12px]'>{agent?.email}</p>
+                          <p className='text-[12px]'>{agent?.contact}</p>
+                        </div>
+                      ))
+                  ) : (
+                    <p>No inactive agents found.</p> // Show this message when no inactive agents exist
+                  )
+                ) : (
+                  <p>List is empty</p> // Show this message when no agents are available
+                )}
+              </div>
+            </div>
 
-        <div>
-          <p>Active Agents</p>
-          <div className='grid grid-cols-5 mt-[30px] gap-5'>
-            {agents && agents
-              .filter((agent) => agent.active == true) // Filter only active agents
-              .map((agent, index) => (
-                <div key={index}
-                  className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center hover:cursor-pointer'
-                  onClick={() => handleShowAgent(agent)}
-                >
-                  <p>{agent.displayName}</p>
-                  <p className='text-[12px]'>{agent?.email}</p>
-                  <p className='text-[12px]'>{agent?.contact}</p>
-                </div>
-              ))}
-          </div>
-        </div>
-
+            <div className='mt-2'>
+              <p>Active Agents</p>
+              <div className='grid grid-cols-5 mt-[30px] gap-5'>
+                {agents && agents
+                  .filter((agent) => agent.active == true) // Filter only active agents
+                  .map((agent, index) => (
+                    <div key={index}
+                      className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center hover:cursor-pointer'
+                      onClick={() => handleShowAgent(agent)}
+                    >
+                      <p>{agent.displayName}</p>
+                      <p className='text-[12px]'>{agent?.email}</p>
+                      <p className='text-[12px]'>{agent?.contact}</p>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </>
+        }
       </div>
       <AnimatePresence>
         {showAgent && (
@@ -129,12 +152,32 @@ export default function EditAgents({ setShowSection }) {
                 <div className='flex justify-between mb-[40px]'>
                   <div className='flex flex-col gap-2'>
                     <div className='flex gap-5 items-center'>
-                      <Image src={selectedAgent?.photoURL} alt='profile' height={800} width={800} className='h-[150px] w-[150px] rounded-full border-[10px] border-white' />
+                      {selectedAgent?.photoURL &&
+                        <Image src={selectedAgent?.photoURL} alt='profile' height={800} width={800} className='h-[150px] w-[150px] rounded-full border-[10px] border-white' />
+                      }
+
                       <div>
                         <p className=''>Agent Id: {selectedAgent?.uid}</p>
                         <p className=''>Agent Name: {selectedAgent?.displayName}</p>
                         <p className=''>Company Name: {selectedAgent?.company}</p>
                         <p className=''>Email: {selectedAgent?.email}</p>
+                      </div>
+                      <div className='flex flex-col items-end w-full gap-2'>
+                        <div className='flex flex-col gap-1'>
+                          <p className='font-[600] me-3'>Status </p>
+                          <div className='flex gap-2 items-center'>
+                            <Button
+                              className={`${selectedAgent?.active ? "bg-green-500" : "bg-red-500"}`}
+                              onChange={() => toggleActive(!selectedAgent?.active)}
+                            >
+                              {selectedAgent?.active ? "Active" : "Inactive"}
+                            </Button>
+                            <label className="inline-flex items-center cursor-pointer">
+                              <input type="checkbox" value={selectedAgent?.active} defaultValue={activeState} className="sr-only peer" onChange={e => toggleActive(e.target.checked)} />
+                              <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                            </label>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className='flex gap-10 flex-wrap'>
