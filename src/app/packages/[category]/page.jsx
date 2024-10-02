@@ -29,9 +29,9 @@ export default function Page({ params }) {
   return (
     <div>
       <CommonHero title={category} bg={'/images/background/categories.jpg'} />
-      <div className='mx-auto container pb-[100px]'>
+      <div className='mx-auto container'>
         <div className='my-[80px] flex relative '>
-          <div className='grid grid-cols-3 gap-10'>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-10 px-[5%] md:px-0'>
             {data?.filter((item) => item.category === category).map((data, id) => {
               return (
                 <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} key={id}>

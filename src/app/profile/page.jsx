@@ -40,7 +40,7 @@ export default function Page() {
   }, [])
 
   return (
-    <div className='pt-[100px] pb-[150px]'>
+    <div className='pt-[100px]'>
       <UserDetails user={user} />
     </div>
   )

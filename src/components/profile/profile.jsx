@@ -141,19 +141,19 @@ export default function Profile({ user, handleSignOut }) {
         <div className='mt-[40px] grid grid-cols-1 md:grid-cols-2 max-w-[800px] mx-auto gap-4'
           ref={aboutRef}
         >
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>User Id:</p>
             <p>{data?.uid}</p>
           </div>
 
           {(data?.userRole === 'admin' || data?.userRole === 'agent') && (
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 col-span-2'>
               <p className='capitalize font-[600] md:text-[24px]'>{data?.userRole}: <span className='font-[400]'>{data?.active ? "active": 'inactive'}</span></p>
             </div>
           )}
 
           {data?.userRole === 'agent' && (
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 col-span-2'>
               <p className='font-[600]'>Company Name:</p>
               <input
                 ref={companyRef}
@@ -168,7 +168,7 @@ export default function Profile({ user, handleSignOut }) {
             </div>
           )}
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>{data?.userRole === 'agent' ? 'Authorised Person Name' : 'Name'}:</p>
             <input
               ref={nameRef}
@@ -180,7 +180,7 @@ export default function Profile({ user, handleSignOut }) {
             />
           </div>
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>Phone:</p>
             <input
               ref={phoneRef}
@@ -195,7 +195,7 @@ export default function Profile({ user, handleSignOut }) {
             {errors.contact && <p className='text-red-600'>{errors.contact}</p>}
           </div>
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>Email:</p>
             <input
               ref={emailRef}
@@ -211,7 +211,7 @@ export default function Profile({ user, handleSignOut }) {
 
           {data?.userRole === 'agent' && (
             <>
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 col-span-2'>
                 <p className='font-[600]'>IATA Affiliation:</p>
                 <input
                   type='text'
@@ -221,7 +221,7 @@ export default function Profile({ user, handleSignOut }) {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 col-span-2'>
                 <p className='font-[600]'>Travel Agent No.</p>
                 <input
                   type='text'
@@ -232,11 +232,11 @@ export default function Profile({ user, handleSignOut }) {
                 />
               </div>
 
-              <p className='md:col-span-2 mt-5 font-[700] text-[26px] border-b-[2px] border-secondary'
+              <p className='col-span-2 mt-5 font-[700] text-[26px] border-b-[2px] border-secondary'
                 ref={accountHolderRef}
               >Account</p>
 
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 col-span-2'>
                 <p className='font-[600]'>Account Holder&apos;s Name:</p>
                 <input
                   // ref={accountHolderRef}
@@ -249,7 +249,7 @@ export default function Profile({ user, handleSignOut }) {
                   required
                 />
               </div>
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 col-span-2'>
                 <p className='font-[600]'>Bank Name:</p>
                 <input
                   // ref={bankNameRef}
@@ -262,7 +262,7 @@ export default function Profile({ user, handleSignOut }) {
                   required
                 />
               </div>
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 col-span-2'>
                 <p className='font-[600]'>Account Number:</p>
                 <input
                   // ref={bankAccountNumberRef}
@@ -278,11 +278,11 @@ export default function Profile({ user, handleSignOut }) {
             </>
           )}
 
-          <p className='md:col-span-2 mt-5 font-[700] text-[26px] border-b-[2px] border-secondary'
+          <p className='col-span-2 mt-5 font-[700] text-[26px] border-b-[2px] border-secondary'
             ref={address1Ref}
           >Address</p>
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>Address Line 1:</p>
             <input
 
@@ -294,7 +294,7 @@ export default function Profile({ user, handleSignOut }) {
             />
           </div>
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>City:</p>
             <input
               // ref={cityRef}
@@ -306,7 +306,7 @@ export default function Profile({ user, handleSignOut }) {
             />
           </div>
 
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>Zip / Post Code / Pin Code:</p>
             <input
               // ref={pinRef}

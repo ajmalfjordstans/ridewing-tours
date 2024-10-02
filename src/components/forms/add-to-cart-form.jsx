@@ -115,7 +115,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
             <span className='ml-2 font-[600] text-center'>Contact Number</span>
             <div className='mt-1'>
               <input type="text"
-                className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[300px]'
+                className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[280px]'
                 onChange={(e) => setContact(e.target.value)}
                 placeholder=''
                 required
@@ -127,7 +127,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
           <span className='ml-2 font-[600] text-center'>Meeting Point</span>
           <div className='mt-1'>
             <textarea type="text"
-              className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[300px] min-h-[50px]'
+              className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[280px] min-h-[50px]'
               onChange={(e) => setMeetingPoint(e.target.value)}
               placeholder=''
               required
@@ -142,35 +142,37 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
             </label>
             {(data?.tickets?.map((ticket, id) => {
               return (
-                <div key={id} className='flex gap-2 pl-[10px] bg-[#F8F8F8] items-center pt-2'>
+                <div key={id} className='flex gap-2 pl-[10px] bg-[#F8F8F8] items-center p-2 overflow-x-scroll'>
                   <label className='flex items-center gap-2'>
                     <input
                       type='checkbox'
                       checked={addedTickets.some((t) => t.name === ticket.name)}
                       onChange={() => handleAdditionalTicketsChange(ticket)}
                     />
-                    <div className='h-[80px] min-w-[120px]'>
-                      <Image src={ticket.image ? ticket.image : '/images/background/image-template.jpg'} height={500} width={500} alt='ticket image' className='h-full w-full object-cover' />
-                    </div>
-                    <div>
-                      <div className='flex gap-2 w-[300px] justify-between'>
-                        <p>{ticket?.name}</p>
-                        <p>{ticket?.price} / person</p>
+                    <div className='flex flex-col md:flex-row gap-1'>
+                      <div className='h-[80px] min-w-[120px]'>
+                        <Image src={ticket.image ? ticket.image : '/images/background/image-template.jpg'} height={500} width={500} alt='ticket image' className='h-full w-full max-w-[320px] object-cover' />
                       </div>
                       <div>
-                        <p className='text-[#ADADAD] mt-2'>Opening Hours</p>
-                        <div className='grid grid-cols-2 mt-1'>
-                          {ticket?.opening &&
-                            <p>Opening: {formatTo12HourTime(convertTimestampToDate(ticket?.opening))}</p>
-                          }
-                          {ticket?.closing &&
-                            <p>Closing: {formatTo12HourTime(convertTimestampToDate(ticket?.closing))}</p>
-                          }
+                        <div className='flex gap-2 w-[300px] justify-between'>
+                          <p>{ticket?.name}</p>
+                          <p>{ticket?.price} / person</p>
                         </div>
+                        <div>
+                          <p className='text-[#ADADAD] mt-2'>Opening Hours</p>
+                          <div className='grid grid-cols-2 mt-1'>
+                            {ticket?.opening &&
+                              <p>Opening: {formatTo12HourTime(convertTimestampToDate(ticket?.opening))}</p>
+                            }
+                            {ticket?.closing &&
+                              <p>Closing: {formatTo12HourTime(convertTimestampToDate(ticket?.closing))}</p>
+                            }
+                          </div>
+                        </div>
+                        <p className="text-[12px] text-ellipsis line-clamp-3 h-[55px]">
+                          {ticket?.description}
+                        </p>
                       </div>
-                      <p className="text-[12px] text-ellipsis line-clamp-3 h-[55px]">
-                        {ticket?.description}
-                      </p>
                     </div>
                   </label>
                 </div>

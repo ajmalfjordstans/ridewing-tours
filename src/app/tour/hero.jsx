@@ -47,7 +47,7 @@ export default function TourHero({ data }) {
   return (
     <>
       <div className=' w-full flex flex-col '>
-        <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>{bookingPackage?.name}</p>
+        <p className='font-bold text-[26px] md:text-[32px] leading-[28px] md:leading-[42px]'>{bookingPackage?.name}</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>

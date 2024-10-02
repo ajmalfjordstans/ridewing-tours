@@ -83,7 +83,7 @@ export default function Page() {
   }, [searchParams, data]);
   // console.log(currentData);
   return (
-    <div className='text-black mt-[80px] md:mt-[180px] container mx-auto px-[5%] lg:px-0 md:pb-[150px]'>
+    <div className='text-black mt-[100px] md:mt-[180px] container mx-auto px-[5%] lg:px-0 md:pb-[150px]'>
       {
         currentData !== null ?
           <div className=''>

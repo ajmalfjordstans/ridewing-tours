@@ -9,7 +9,7 @@ export default function Footer() {
   const country = useSelector(state => state.user.selectedCountry);
   const contact = useSelector(state => state.user.contact);
   return (
-    <div className='bg-transparent relative mt-[200px]'>
+    <div className='bg-transparent relative mt-[20px] md:mt-[200px]'>
       <div className=' bg-[#212529] text-white mt-[125px]'>
         <div className='lg:mx-0 translate-y-[-50%] w-full'>
           <div className='container mx-auto flex justify-evenly items-center flex-col md:flex-row bg-[#EEB54C] py-[15px] max-h-[246px] rounded-[12px]'>
@@ -30,7 +30,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className='container mx-auto px-[5%] lg:px-0  pb-[100px]'>
+        <div className='container mx-auto px-[5%] lg:px-0 '>
           {/* <div className='h-[1px] w-full bg-[#FFFFFF] my-[60px]'></div> */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 text-[16px] gap-[15px]">
             <div>
@@ -82,6 +82,9 @@ export default function Footer() {
               <Subscribe />
             </div>
           </div>
+        </div>
+        <div className='py-[30px]'>
+          <p className='text-center'>©️ 2024 Ridewing ticketz & tourz. All Rights Reserved Signature Concierge Ltd.</p>
         </div>
       </div>
       <div className="fixed bottom-10 right-10 hover:cursor-pointer z-10"

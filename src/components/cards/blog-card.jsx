@@ -50,7 +50,9 @@ export default function BlogCard({ data }) {
             )}
           </div>
         </div>
-        <Image src={blog?.image} height={400} width={600} alt='image' className='h-[200px] w-full md:w-[313px] object-cover' />
+        {blog?.image &&
+          <Image src={blog?.image} height={400} width={600} alt='image' className='h-[200px] w-full md:w-[313px] object-cover' />
+        }
       </div>
       {showBlog && <div className='fixed top-0 left-0 h-[100vh] w-[100vw] bg-black bg-opacity-50 z-10 flex justify-center items-center p-[5%]'>
         <div className='w-full h-[90vh] bg-white rounded-[15px] p-[20px]'>

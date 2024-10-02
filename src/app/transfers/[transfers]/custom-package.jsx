@@ -11,7 +11,7 @@ export default function CustomPackage() {
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
-      <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 mb-[200px] lg:mb-0 p-[30px] overflow-hidden gap-10'>
+      <div className='container mx-auto grid grid-cols-1 md:grid-cols-2 mb-[200px] lg:mb-0 md:p-[30px] overflow-hidden gap-10'>
         <Image src={'/images/background/tea-ceremony.jpeg'} alt='image' height={1200} width={1200} className='h-full w-full object-cover shadow-xl rounded-[15px]' />
         <div className='w-full max-w-[900px] lg:h-[700px] mx-auto px-[20px] pb-[20px] no-scrollbar lg:overflow-y-scroll shadow-xl rounded-[15px]'>
           <CustomPackageForm />

@@ -30,7 +30,7 @@ export default function Blog() {
 
 
   return (
-    <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
+    <section className='pt-[50px] container mx-auto px-[5%] lg:px-0'>
       <div className=' w-full flex flex-col '>
         <p className='font-bold text-[32px] leading-[42px]'>Latest Blogs & Articles</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>

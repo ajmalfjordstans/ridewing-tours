@@ -64,7 +64,7 @@ export default function Categories() {
       try {
         const result = await readFirebaseCollection(`countries/${selectedCountry}/categories`);
         setCategories(result);
-        console.log(result);
+        // console.log(result);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -73,7 +73,7 @@ export default function Categories() {
     fetchData();
   }, [selectedCountry]); // Add dependencies if necessary
   return (
-    <section className='container mx-auto px-[5%] lg:px-0 grid grid-cols-2 lg:grid-cols-4 gap-[20px] translate-y-[-100px] '>
+    <section className='container mx-auto px-[5%] lg:px-0 grid grid-cols-1 lg:grid-cols-4 gap-3 md:gap-[20px] translate-y-[-100px] '>
       {Array.isArray(categories) ?
         categories.map((categories, id) => {
           return (

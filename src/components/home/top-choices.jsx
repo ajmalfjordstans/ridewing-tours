@@ -102,7 +102,7 @@ export default function TopChoices() {
                 <div className='px-[20px]'>
                   {data?.slice(0, 8).map((data, id) => {
                     return (
-                      <SwiperSlide key={id} className='py-[30px] px-[10px]'>
+                      <SwiperSlide key={id} className='pt-[30px] px-[10px]'>
                         <Link href={{ pathname: '/tour', query: { "destination": data.url, "country": selectedCountry } }} key={id}>
                           <TopChoicesCard data={data} />
                         </Link>

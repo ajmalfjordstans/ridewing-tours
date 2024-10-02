@@ -2,12 +2,12 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeUser, setCountry, setCurrency, setUrl, setUser } from './store/userSlice';
+import { removeUser, setContact, setCountry, setCurrency, setUrl, setUser } from './store/userSlice';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { UserAuth } from '@/context/AuthContext';
 import { Button } from '@material-tailwind/react';
 import Image from 'next/image';
-import { db, readFirebaseCollection } from '@/app/firebase';
+import { db, readFirebaseCollection, readFirebaseDocument } from '@/app/firebase';
 import { collection, doc } from 'firebase/firestore';
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
 import Loading from '@/app/loading';
@@ -102,7 +102,17 @@ export default function Navbar() {
     // console.log(params);
   }, [searchParams]);
 
+  const handleContactInfo = async () => {
+    const countryInfo = await readFirebaseDocument(`countries/${selectedCountry}/landing/hero`)
+    // console.log(countryInfo);
+    dispatch(setContact({
+      phone: countryInfo?.contact,
+      whatsapp: countryInfo?.whatsapp
+    }))
+  }
+
   useEffect(() => {
+    handleContactInfo()
     const newPath = `countries/${selectedCountry}/landing/hero`;
     setQueryPath(newPath);
     setQuery(doc(db, newPath)); // Update the document reference when the path changes
@@ -256,6 +266,13 @@ export default function Navbar() {
               </div>
               <div className={`fixed top-0 right-0 h-full w-64 pt-12 px-6 bg-primary-light-1 shadow-lg transition-transform duration-300 ease-in-out transform bg-white ${showMenu ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className='flex flex-col gap-6 font-[500] text-[12px] lg:text-[16px]'>
+                  <select className='text-custom-red rounded-[5px] font-[400] px-[10px] outline-none' value={selectedCountry} onChange={handleCountryChange}>
+                    {Array.isArray(countries) && countries.map((country, id) => {
+                      return (
+                        <option key={id} value={country.name} className='p-[4px]'>{country.name}</option>
+                      )
+                    })}
+                  </select>
                   <Link href={{ pathname: '/', query: { "country": selectedCountry } }} onClick={handleMenuToggle}>
                     <p className=''>HOME</p>
                   </Link>

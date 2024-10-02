@@ -75,7 +75,7 @@ export default function Home() {
   if (loadingPage) return <Loading />
   else
     return (
-      <div className="pb-[150px]">
+      <div className="pb-[-15px]">
         <Hero data={landing} />
         {/* Placeholder for scroll trigger */}
         <div id="loadTrigger" style={{ height: '1px' }}></div>

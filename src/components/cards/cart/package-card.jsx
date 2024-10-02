@@ -195,29 +195,29 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   }, [count])
 
   useEffect(() => {
-    // console.log(data);
+    console.log(data);
   }, [])
   return (
     <>
       <div className='w-full border border-solid border-[rgba(255, 218, 50, 0.5)] shadow-[0px_-1px_6.9px_0px_rgba(0,0,0,0.25)] rounded-[20px] flex flex-col overflow-hidden mt-6'>
-        <div className='h-[270px] flex'>
-          <div className='h-[100%] w-[30%]'>
+        <div className='md:h-[270px] flex flex-col md:flex-row'>
+          <div className='h-[100%] w-[100%] md:w-[30%]'>
             {data.type === "package" ?
               <Image src={data?.gallery[0]} height={800} width={800} alt='package image' className='h-full w-full object-cover' />
               :
               <Image src={data?.image ? data?.image : "/images/background/image-template.jpg"} height={800} width={800} alt='package image' className='h-full w-full object-cover' />
             }
           </div>
-          <div className='w-[70%] flex flex-col justify-center'>
+          <div className='md:w-[70%] w-[100%] flex flex-col justify-center'>
             <div className='p-[15px]'>
               <p className='text-[14px] capitalize text-[#ADADAD]'>{data?.type || data?.transfer}</p>
               <p className='font-[600] text-[24px] leading-[42px]'>{data.name}</p>
-              <div className='grid grid-cols-3 w-full'>
-                <div>
+              <div className='grid grid-cols-2 md:grid-cols-3 w-full'>
+                <div className='col-span-2 md:col-span-1'>
                   <p className='text-[15px]'>{data.startLocation}</p>
                   {data.type === "package" &&
                     <>
-                      <p className='text-[15px] mt-1'>{data.date.toLocaleDateString()}</p>
+                      {/* <p className='text-[15px] mt-1'>{data.date.toLocaleDateString()}</p> */}
                       <p>{data?.contact}</p>
                     </>
                   }
@@ -392,9 +392,9 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
         {(Array.isArray(data.additionalTickets) && data.additionalTickets.length !== 0) &&
           <>
             <div className='bg-secondary h-[1px] w-full'></div>
-            <div className='p-[15px]'>
+            <div className='p-[15px] overflow-y-scroll no-scrollbar'>
               <p className='text-[18px] opacity-[43%] text-center'>Additional Tickets</p>
-              <table className='w-full mt-3'>
+              <table className='w-[600px] md:w-full mt-3 '>
                 <thead className='bg-[#D9D9D9] h-[40px]'>
                   <tr>
                     <th className='pl-[10px]'>Ticket Name</th>
@@ -459,14 +459,14 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
                   </tr>
                 </tfoot>
               </table>
-              <p className=' text-[10px] whitespace-nowrap'>Children below 3 years old doesn&apos;t need a ticket</p>
-              {calculateSubtotal() != 0 &&
-                <div className='flex items-center justify-end gap-2'>
-                  <p>With Additional Ticket</p>
-                  <p className='font-bold text-[22px] text-right'> {currency.sign + " " + calculateSubtotal().toLocaleString()}</p>
-                </div>
-              }
             </div>
+            <p className=' text-[10px] whitespace-nowrap px-[15px]'>Children below 3 years old doesn&apos;t need a ticket</p>
+            {calculateSubtotal() != 0 &&
+              <div className='flex items-center justify-end gap-2 px-[15px]'>
+                <p>With Additional Ticket</p>
+                <p className='font-bold text-[22px] text-right'> {currency.sign + " " + calculateSubtotal().toLocaleString()}</p>
+              </div>
+            }
           </>
         }
       </div >

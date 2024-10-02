@@ -43,10 +43,10 @@ export default function Hero() {
   useEffect(() => {
     if (!loading) {
       setData(docs);
-      dispatch(setContact({
-        phone: docs?.contact,
-        whatsapp: docs?.whatsapp
-      }))
+      // dispatch(setContact({
+      //   phone: docs?.contact,
+      //   whatsapp: docs?.whatsapp
+      // }))
     }
   }, [loading, docs]);
 
@@ -71,21 +71,21 @@ export default function Hero() {
       {loading ? <Loading />
         :
         <motion.section
-          className='pt-[80px] md:pt-[100px] h-[70vh] w-full relative'
+          className='pt-[80px] md:pt-[100px] h-[90vh] md:h-[70vh] w-full relative'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
           <div className='h-full'>
             <motion.div
-              className='h-full flex items-center text-white'
+              className='h-full flex flex-col md:flex-row items-center text-white'
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ type: 'spring', stiffness: 100 }}
             >
               <motion.div
                 // className='flex flex-col h-full max-w-[800px] gap-[24px] bg-custom-red bg-opacity-70 p-[20px] lg:p-[50px] relative'
-                className='flex flex-col h-full max-w-[800px] gap-[16px] bg-gradient-to-r from-custom-red to-transparent  p-[20px] lg:p-[50px] relative'
+                className='flex flex-col h-full max-w-[800px] gap-1 md:gap-[16px] bg-gradient-to-r from-custom-red to-transparent p-[20px] lg:p-[50px] relative'
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.5 }}
@@ -106,9 +106,9 @@ export default function Hero() {
                   <p className='ml-2 text-[16px] leading-[18px] text-custom-red'>About {selectedCountry}</p>
                 </motion.div>
               </motion.div>
-              <div className='flex justify-end w-full pr-[5%]'>
+              <div className='flex justify-center md:justify-end w-full py-[20px] md:pr-[5%] mt-3'>
                 {featuredOffer && featuredOffer?.active && featuredOffer.code != '' &&
-                  <div className='px-[25px] py-[15px] bg-secondary rounded-[15px] flex flex-col justify-center items-center text-black border-dashed border-[4px] border-black'>
+                  <div className='px-[25px] py-[10px] md:py-[15px] bg-secondary rounded-[15px] flex flex-col justify-center items-center text-black border-dashed border-[4px] border-black'>
                     <p className='text-[24px] font-[600]'>{featuredOffer?.offerName}</p>
                     <p className='text-[28px] font-[700]'>{featuredOffer?.discountValue}{featuredOffer.isPercentage ? '%' : ''} OFF</p>
                     <p className=''>Use Code {featuredOffer?.code}</p>
@@ -147,8 +147,8 @@ export default function Hero() {
                 ease: 'easeInOut'
               }}
             >
-              <div className='h-[77px] bg-secondary w-full flex items-center justify-between px-[20px] text-[40px] '>
-                <p className='pl-[50px]'>About {selectedCountry}</p>
+              <div className='h-[77px] bg-secondary w-full flex items-center justify-between px-[20px] text-[16px] lg:text-[40px] '>
+                <p className='md:pl-[50px]'>About {selectedCountry}</p>
                 <motion.div
                   className='bg-custom-red p-[5px] cursor-pointer h-[40px] w-[40px] text-white font-[400] flex justify-center items-center rounded-[10px] text-[25px]'
                   onClick={() => setShowAbout(false)}
@@ -157,17 +157,17 @@ export default function Hero() {
                   X
                 </motion.div>
               </div>
-              <div className='px-[70px] py-[25px]'>
+              <div className='px-[15px] lg:px-[70px] py-[25px]'>
                 <div className='h-[167px] overflow-y-scroll px-[20px]'>
                   <p>{data?.description}</p>
                 </div>
-                <div className='flex'>
-                  <div className='w-[70%]'>
+                <div className='flex mt-2'>
+                  <div className='w-full lg:w-[70%]'>
                     <div className='w-full bg-secondary h-[50px] items-center flex px-[20px] text-[20px] rounded-[3px]'>
                       Local Weather
                     </div>
                     <div className='flex flex-col items-center mt-3'>
-                      <div className='flex gap-2'>
+                      <div className='flex flex-col lg:flex-row gap-2'>
                         {/* <Swiper
                           spaceBetween={20}
                           slidesPerView={4}
@@ -218,14 +218,24 @@ export default function Hero() {
                       </ul>
                     </div>
                   </div>
-                  <div className='flex flex-col justify-evenly items-center w-[30%] gap-3'>
-                    <div className='flex flex-col justify-center items-center rounded-[10px] bg-secondary h-[116px] w-[181px]'>
-                      <p>Timezone</p>
-                      <p>{data?.timezone}</p>
+                  <div className='hidden lg:block'>
+                    <div className='flex flex-col justify-evenly items-center w-[30%] gap-3'>
+                      <div className='flex flex-col justify-center items-center rounded-[10px] bg-secondary h-[116px] w-[181px]'>
+                        <p>Timezone</p>
+                        <p>{data?.timezone}</p>
+                      </div>
+                      <div className='flex flex-col justify-center items-center rounded-[10px] bg-secondary h-[116px] w-[181px]'>
+                        <p>Currency</p>
+                        <p>{data?.currency}</p>
+                      </div>
                     </div>
-                    <div className='flex flex-col justify-center items-center rounded-[10px] bg-secondary h-[116px] w-[181px]'>
-                      <p>Currency</p>
-                      <p>{data?.currency}</p>
+                  </div>
+                </div>
+                <div className='lg:hidden'>
+                  <div className='flex flex-col justify-evenly items-center w-[100%] gap-3'>
+                    <div className='flex flex-col justify-center items-center rounded-[10px] bg-secondary h-[80px] w-full'>
+                      <p>Timezone: {data?.timezone}</p>
+                      <p>Currency: {data?.currency}</p>
                     </div>
                   </div>
                 </div>

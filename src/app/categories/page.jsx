@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function Page() {
   return (
-    <div className='pb-[150px]'>
+    <div className=''>
       <CommonHero title={"Categories"} bg={'/images/background/categories.jpg'}/>
       <Categories />
     </div>

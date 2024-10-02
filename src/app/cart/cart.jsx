@@ -147,7 +147,7 @@ const CheckoutMenu = ({ items }) => {
   }, []);
 
   return (
-    <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full '>
+    <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full pb-[10px]'>
       <div className='w-full p-[30px]'>
         <p className='text-[24px] font-semibold'>Summary</p>
         <div className='w-full mt-[20px] flex flex-col gap-4'>
@@ -207,14 +207,14 @@ const Cart = () => {
   const dispatch = useDispatch();
   // console.log(items);
   return (
-    <div className='pb-[100px]'>
+    <div className=''>
       <div className=' w-full flex flex-col container mx-auto px-[5%] lg:px-0 '>
         <p className='font-bold text-[26px] md:text-[32px] leading-[42px]'>My Cart</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
-      <div className='flex pl-[5%] gap-[30px]'>
+      <div className='flex flex-col md:flex-row px-[2%] md:pl-[5%] gap-[30px]'>
         <div className='lg:w-[70%] w-full mt-[20px]'>
           {items.length === 0 ? (
             <p className='text-center mt-10'>Your cart is empty</p>
@@ -233,7 +233,7 @@ const Cart = () => {
             </ul>
           )}
         </div>
-        <div className='h-screen w-[30%]'>
+        <div className='md:h-screen w-full md:w-[30%]'>
           <CheckoutMenu items={items} />
         </div>
       </div>

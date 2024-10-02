@@ -15,6 +15,21 @@ export default function Page() {
   const user = useSelector(state => state.user.userInfo)
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   const [showSignIn, setShowSignIn] = useState(true);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    console.log(screenWidth);
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const isMobile = screenWidth < 720;
 
   const handleSignIn = async () => {
     try {
@@ -45,20 +60,20 @@ export default function Page() {
   }, [loginType])
 
   return (
-    <div className='container mx-auto px-[5%] lg:px-0 pt-[130px] flex flex-col items-center w-full pb-[250px] '>
-      <div className='w-full max-w-[1121px] grid grid-cols-2 rounded-[15px] overflow-hidden mt-[80px]'
+    <div className='container mx-auto px-[5%] lg:px-0 pt-[130px] flex flex-col items-center w-full '>
+      <div className='w-full max-w-[1121px] grid grid-cols-1 md:grid-cols-2 rounded-[15px] overflow-hidden mt-[80px]'
         style={{ boxShadow: "0px 4px 20.1px -2px #00000040" }}
       >
         <motion.div
-          className="py-[70px] flex flex-col justify-center items-center"
+          className="py-[20px] md:py-[70px] flex flex-col justify-center items-center md:order-none order-2"
           initial={{ x: "-100%" }}
-          animate={{ x: showSignIn ? "0%" : "100%" }}
+          animate={{ x: isMobile ? "0" : showSignIn ? "0%" : "100%" }}
           transition={{ type: "spring", stiffness: 50 }}
         >
           <AnimatePresence mode='wait'>
             {showSignIn ? (
               <motion.div
-                className='py-[70px] flex flex-col justify-center items-center gap-5'
+                className='py-[20px] md:py-[70px] flex flex-col justify-center items-center gap-5'
                 initial={{ x: 100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: 100, opacity: 0 }}
@@ -75,7 +90,7 @@ export default function Page() {
               </motion.div>
             ) : (
               <motion.div
-                className='py-[70px] flex flex-col justify-center items-center gap-5'
+                className='py-[20px] md:py-[70px] flex flex-col justify-center items-center gap-5'
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -100, opacity: 0 }}
@@ -91,9 +106,9 @@ export default function Page() {
           </AnimatePresence>
         </motion.div>
         <motion.div
-          className="bg-custom-red py-[70px] flex flex-col justify-center items-center text-white gap-2"
+          className="bg-custom-red py-[20px] md:py-[70px] flex flex-col justify-center items-center text-white gap-2 md:order-none order-1"
           initial={{ x: "100%" }}
-          animate={{ x: showSignIn ? "0%" : "-100%" }}
+          animate={{ x: isMobile ? "0" : showSignIn ? "0%" : "-100%" }}
           transition={{ type: "spring", stiffness: 50 }}
         >
           <AnimatePresence mode='wait'>

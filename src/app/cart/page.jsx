@@ -25,7 +25,7 @@ export default function Page() {
   }
   return (
     <>
-      <div className='pt-[100px]'>
+      <div className='pt-[80px] md:pt-[100px]'>
         <Image src={"/images/background/profile-banner.jpg"} alt='profile' height={800} width={1400} className='h-[260px] w-screen object-cover bg-bottom' />
         {!user.isLoggedIn ?
           <div className='fixed h-[100vh] w-[100vw] top-[100px] left-0 z-10 flex justify-center  bg-black bg-opacity-50'>
@@ -42,11 +42,11 @@ export default function Page() {
             </div>
           </div>
           :
-          <div className='container mx-auto px-[5%] lg:px-0 translate-y-[-70px] flex gap-10'>
+          <div className='container mx-auto px-[5%] lg:px-0 translate-y-[-20px] md:translate-y-[-70px] flex flex-col md:flex-row gap-2 md:gap-10'>
             <div className='flex gap-3 '>
-              <Image src={user.userInfo?.photoURL} alt='profile' height={800} width={800} className='h-[250px] w-[250px] rounded-full border-[10px] border-white' />
+              <Image src={user.userInfo?.photoURL} alt='profile' height={800} width={800} className='h-[100px] w-[100px] md:h-[250px]  md:w-[250px] rounded-full border-[10px] border-white' />
             </div>
-            <div className='flex gap-3 mt-[100px] text-[38px] font-[700] '>
+            <div className='flex gap-3 md:mt-[100px] text-[20px] md:text-[38px] font-[700] '>
               <p>{user.userInfo?.displayName}</p>
             </div>
           </div>

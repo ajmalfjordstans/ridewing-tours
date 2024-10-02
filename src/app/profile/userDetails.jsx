@@ -37,15 +37,15 @@ export default function UserDetails({ user }) {
         :
         <div className=''>
           <Image src={"/images/background/profile-banner.jpg"} alt='profile' height={800} width={1400} className='h-[300px] w-screen object-cover ' />
-          <div className='container mx-auto px-[5%] lg:px-0 translate-y-[-70px] flex gap-10'>
+          <div className='container mx-auto px-[5%] pb-[30px] lg:px-0 translate-y-[-20px] md:translate-y-[-70px] flex flex-col md:flex-row gap-2 md:gap-10'>
             <div className='flex gap-3 '>
               {user?.photoURL ?
-                <Image src={user?.photoURL} alt='profile' height={800} width={800} className='h-[250px] w-[250px] rounded-full border-[10px] border-white' />
+                <Image src={user?.photoURL} alt='profile' height={800} width={800} className='h-[100px] md:h-[250px] w-[100px] md:w-[250px] rounded-full border-[10px] border-white' />
                 :
                 <div className='h-[250px] w-[250px] rounded-full border-[10px] border-white bg-[green] flex justify-center items-center text-[90px] font-[600] text-white'>{user?.displayName[0]}</div>
               }
             </div>
-            <div className='flex gap-3 mt-[100px] text-[38px] font-[700] '>
+            <div className='flex gap-3 md:mt-[100px] text-[20px] md:text-[38px] font-[600] md:font-[700] '>
               <p>{user?.displayName}</p>
             </div>
           </div>
