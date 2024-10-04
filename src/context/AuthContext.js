@@ -20,7 +20,7 @@ import {
   where,
   onSnapshot
 } from "firebase/firestore";
-import { generatePayload } from "@/components/services/send-mail";
+import { generatePayload, sendMail } from "@/components/services/send-mail";
 
 const AuthContext = createContext();
 
@@ -111,7 +111,8 @@ export const AuthContextProvider = ({ children }) => {
 
   // Memoize handleFirebaseUserUpdate to prevent re-creation on each render
   const handleFirebaseUserUpdate = useCallback(async (currentUser) => {
-    generatePayload(currentUser, loginType);
+    const payload = generatePayload(currentUser, loginType);
+    sendMail(payload)
     // console.log(loginType);
     try {
       const user = {

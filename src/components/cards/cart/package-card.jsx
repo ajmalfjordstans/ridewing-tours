@@ -194,9 +194,9 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
     updateCartHandler({ ...data, noOfPassengers: count, total: totalCalculated })
   }, [count])
 
-  useEffect(() => {
-    console.log(data);
-  }, [])
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [])
   return (
     <>
       <div className='w-full border border-solid border-[rgba(255, 218, 50, 0.5)] shadow-[0px_-1px_6.9px_0px_rgba(0,0,0,0.25)] rounded-[20px] flex flex-col overflow-hidden mt-6'>

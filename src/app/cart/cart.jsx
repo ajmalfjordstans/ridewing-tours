@@ -6,6 +6,8 @@ import { Button } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { readFirebaseDocument, updateFirebaseDocument } from '../firebase';
 import { sub } from 'date-fns';
+import { generateInvoice, generateInvoiceObj } from '@/components/services/invoice-generator';
+import { generatePayload, sendMail } from '@/components/services/send-mail';
 
 const CheckoutMenu = ({ items }) => {
   const user = useSelector(state => state.user)
@@ -56,11 +58,10 @@ const CheckoutMenu = ({ items }) => {
       coupons: {
         appliedCoupon: couponCode,
       }
-
     }
     try {
-      console.log(data);
-      updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
+      console.log(items);
+      // updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
     } catch (err) {
       console.error("Error setting document: ", err);
     }
@@ -129,6 +130,27 @@ const CheckoutMenu = ({ items }) => {
 
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
 
+  const handleCheckout = async () => {
+    const invoiceObj = generateInvoiceObj(items)
+    const invoiceUrl = await generateInvoice(invoiceObj)
+    const content = {
+      email: user.userInfo.email,
+      mail: {
+        name: invoiceObj.customer,
+        invoiceNo: invoiceObj.invoiceNo,
+        invoiceUrl: invoiceUrl,
+        date: invoiceObj.invoiceDate,
+        total: invoiceObj.subtotal,
+      },
+      attachments: [invoiceUrl, process.env.NEXT_PUBLIC_TERMS_AND_CONDITIONS]
+    }
+    const payload = generatePayload(content, 'invoice')
+    sendMail(payload)
+    console.log(content, payload);
+    handleFirebaseUserUpdate()
+    // dispatch(setCart([]))
+  }
+
   useEffect(() => {
     // checkCouponCode()
   }, [subtotal, additionalTicketsTotal])
@@ -188,8 +210,7 @@ const CheckoutMenu = ({ items }) => {
         </Button> */}
         <Button className='bg-secondary text-white mx-auto'
           onClick={() => {
-            handleFirebaseUserUpdate()
-            dispatch(setCart([]))
+            handleCheckout()
           }}
         >
           {/* <Link href={{ pathname: '/cart/checkout', query: { country: user.selectedCountry } }}> */}
