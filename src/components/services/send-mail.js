@@ -40,10 +40,6 @@ export const generatePayload = (content, template) => {
     text: "Hello, Welcome to Ridewing",
     html: templatePayload.html,
     attachments: attachments
-    //[
-    //   "https://storage.googleapis.com/ridewing-1701351873793.appspot.com/bookings/booking-confirmation-Mohammed Ajmal-package-1728033811481.pdf",
-    //   "https://firebasestorage.googleapis.com/v0/b/ridewing-1701351873793.appspot.com/o/RideWing%20Terms%20and%20Conditions.pdf?alt=media&token=9641b3fc-ff87-4337-82c9-85e05007c568",
-    // ],
   };
   sendMail(emailPayload)
 }
