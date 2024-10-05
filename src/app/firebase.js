@@ -69,6 +69,8 @@ export const deleteFirebaseCollection = async (path) => {
 
 // Document Handles
 export const createFirebaseDocument = async (data, path, id) => {
+  // console.log(data, path, id);
+  
   if (!db) {
     console.error("Firestore is not initialized");
     return;
