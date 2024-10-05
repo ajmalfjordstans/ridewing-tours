@@ -16,14 +16,14 @@ export default function Footer() {
             <p className='font-semibold text-[28px] lg:text-[48px] text-center leading-[34px] lg:leading-[60px] lg:max-w-[60%]'>We are Open 24x7 For assistance</p>
             <div className='hidden lg:block'>
               <div className='flex flex-col gap-1 md:gap-5 whitespace-nowrap text-[16px] md:text-[24px]'>
-                <p className=' text-center'>Call Us now on <br /> {contact?.phone ? contact?.phone : "+559876421"}</p>
+                <p className=' text-center'>Call Us now on <br /> {contact?.phone ? contact?.phone : "0044 7 500 200 570"}</p>
                 <p className=' text-center hover:cursor-pointer'
                 >Email us on <br /> info@ridewing.uk</p>
               </div>
             </div>
             <div className=' lg:hidden'>
               <div className='flex flex-col gap-1 md:gap-5 whitespace-nowrap text-[16px] md:text-[24px]'>
-                <p className=' text-center'>Call Us now on: {contact?.phone ? contact?.phone : "+559876421"}</p>
+                <p className=' text-center'>Call Us now on: {contact?.phone ? contact?.phone : "0044 7 500 200 570"}</p>
                 <p className=' text-center hover:cursor-pointer'
                 >Email us on: info@ridewing.uk</p>
               </div>

@@ -8,8 +8,10 @@ import { readFirebaseDocument, updateFirebaseDocument } from '../firebase';
 import { sub } from 'date-fns';
 import { generateInvoice, generateInvoiceObj } from '@/components/services/invoice-generator';
 import { generatePayload, sendMail } from '@/components/services/send-mail';
+import { transformDataForStripe } from '@/components/services/stripe-items-formatter';
 
 const CheckoutMenu = ({ items }) => {
+  const [loading, setLoading] = useState(false);
   const user = useSelector(state => state.user)
   const [couponCode, setCouponCode] = useState("")
   const [availableCoupons, setAvailableCoupons] = useState(null)
@@ -130,7 +132,7 @@ const CheckoutMenu = ({ items }) => {
 
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
 
-  const handleCheckout = async () => {
+  const handleInvoice = async () => {
     const invoiceObj = generateInvoiceObj(items)
     const invoiceUrl = await generateInvoice(invoiceObj)
     const content = {
@@ -147,8 +149,38 @@ const CheckoutMenu = ({ items }) => {
     const payload = generatePayload(content, 'invoice')
     sendMail(payload)
     console.log(content, payload);
-    handleFirebaseUserUpdate()
-    // dispatch(setCart([]))
+  }
+
+  const handleCheckout = async () => {
+    let item = transformDataForStripe(items)
+    // console.log(item);
+    
+    setLoading(true);
+    try {
+      const response = await fetch('https://ridewing-kh-express-app.onrender.com/create-checkout-session', {
+      // const response = await fetch('http://localhost:3005/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ item }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url; // Redirect to Stripe Checkout
+      } else {
+        console.error('Checkout session creation failed:', data.error);
+      }
+    } catch (error) {
+      console.error('Error during checkout:', error);
+    } finally {
+      setLoading(false);
+      handleInvoice()
+      handleFirebaseUserUpdate()
+      dispatch(setCart([]))
+    }
   }
 
   useEffect(() => {
