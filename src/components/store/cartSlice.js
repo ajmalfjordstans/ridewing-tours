@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     items: [
+        //Test cart data
+
     ],
 };
 

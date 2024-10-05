@@ -58,7 +58,7 @@ const TABS = [
 const TABLE_HEAD = ["No", "User", "Service", "Status", "Action"]
 
 export function BookingTable({ bookings, setAllBookings }) {
-  const [selectedTab, setSelectedTab] = useState('all');
+  const [selectedTab, setSelectedTab] = useState('pending');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [showBookingDetails, setShowBookingDetails] = useState(false)
@@ -143,8 +143,17 @@ export function BookingTable({ bookings, setAllBookings }) {
     });
   }
 
+  // Helper function to remove undefined values from an object
+  const removeUndefinedValues = (obj) => {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, v]) => v !== undefined)
+    );
+  };
+
   // Function to save changes to Firestore
   const saveChanges = async (booking, action = 'update') => {
+    console.log(booking);
+    
     try {
       const userDoc = doc(db, 'users', booking.userId);
       const userSnapshot = await getDoc(userDoc);
@@ -152,6 +161,7 @@ export function BookingTable({ bookings, setAllBookings }) {
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
 
+        // Ensure we have an array for updatedBookings
         const updatedBookings = Array.isArray(userData?.booking) ? [...userData.booking] : [];
         const bookingIndex = updatedBookings.findIndex(b => b.bookingId === booking.bookingId);
 
@@ -162,9 +172,12 @@ export function BookingTable({ bookings, setAllBookings }) {
         if (action === 'delete') {
           updatedBookings.splice(bookingIndex, 1);
         } else {
-          updatedBookings[bookingIndex] = booking;
+          // Sanitize booking object to remove undefined values
+          const sanitizedBooking = removeUndefinedValues(booking);
+          updatedBookings[bookingIndex] = sanitizedBooking;
         }
 
+        // Update Firestore with sanitized data
         await updateDoc(userDoc, { booking: updatedBookings });
 
         // alert('Booking updated successfully!');
@@ -176,7 +189,8 @@ export function BookingTable({ bookings, setAllBookings }) {
       console.error('Error updating booking:', error);
       alert('Error updating booking. Please try again.');
     }
-  }
+  };
+
 
   // Function to handle changes in booking status
   const handleChange = (val, booking) => {
@@ -228,7 +242,7 @@ export function BookingTable({ bookings, setAllBookings }) {
           </div>
           {!showBookingDetails &&
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-              <Tabs value={selectedTab} className="w-full md:w-max">
+              <Tabs value={selectedTab} className="w-full md:w-min">
                 <TabsHeader>
                   {TABS.map(({ label, value }) => (
                     <Tab key={value} value={value} onClick={() => setSelectedTab(value)} className="z-9">
@@ -243,8 +257,8 @@ export function BookingTable({ bookings, setAllBookings }) {
             </div>
           }
         </CardHeader>
-        <CardBody className="overflow-scroll px-0">
-          <table className="mt-4 w-full min-w-max table-auto text-left">
+        <CardBody className="overflow-scroll px-0 pt-[20px]">
+          <table className="mt-8 w-full min-w-max table-auto text-left">
             <thead>
               <tr>
                 {TABLE_HEAD.map((head, index) => (

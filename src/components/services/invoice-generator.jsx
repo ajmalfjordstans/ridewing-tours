@@ -61,7 +61,9 @@ const subtotal = (list) => {
   }, 0);
 };
 
-export function generateInvoiceObj(bookings, list) {
+export function generateInvoiceObj(bookings) {
+  console.log(bookings);
+  
   let total = subtotal(bookings)
   console.log(total)
   // Helper function to generate a random invoice number

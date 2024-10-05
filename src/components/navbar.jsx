@@ -24,7 +24,7 @@ export default function Navbar() {
   const searchParams = useSearchParams();
   const selectedUser = useSelector(state => state.user);
   const selectedCountry = useSelector(state => state.user.selectedCountry);
-  const cartCount = useSelector(state => state.cart.items.length);
+  const cartCount = useSelector(state => state.cart.items?.length);
   // Read Firebase
   const [queryPath, setQueryPath] = useState(`countries/${selectedCountry}/landing/hero`);
   const [query, setQuery] = useState(doc(db, queryPath));
@@ -67,8 +67,9 @@ export default function Navbar() {
     const country = searchParams.get("country") || selectedCountry
     dispatch(setCountry(country))
     // console.log(selectedCountry);
+    const sessionId = searchParams.get("session_id")
     const destination = searchParams.get("destination")
-    const newUrl = `?${destination != null ? "destination=" + destination + "&" : ""}country=${country}`
+    const newUrl = `?${destination != null ? "destination=" + destination + "&" : ""}${sessionId != null ? "session_id=" + sessionId + "&" : ""}country=${country}`
     router.push(newUrl, undefined, { shallow: true });
   }, [dispatch]);
 

@@ -14,6 +14,7 @@ export const sendMail = async (emailPayload) => {
     // Optionally, handle the error (e.g., show a notification to the user)
   } else {
     console.log("Email sent successfully:", response.data);
+    return response
     // Optionally, handle the success (e.g., show a success message to the user)
   }
 }

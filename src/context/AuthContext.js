@@ -21,6 +21,7 @@ import {
   onSnapshot
 } from "firebase/firestore";
 import { generatePayload, sendMail } from "@/components/services/send-mail";
+import { addItem, setCart } from "@/components/store/cartSlice";
 
 const AuthContext = createContext();
 
@@ -99,6 +100,10 @@ export const AuthContextProvider = ({ children }) => {
         querySnapshot.forEach((doc) => {
           itemsArr.push({ ...doc.data(), id: doc.id });
         });
+        console.log((itemsArr[0]));
+        // itemsArr[0].waitingPayment?.booking.forEach((item) => {
+        //   dispatch(addItem(item))
+        // })
         dispatch(setUser(itemsArr[0]));
         dispatch(setLogin(true));
       });

@@ -53,17 +53,19 @@ const CheckoutMenu = ({ items }) => {
   const handleFirebaseUserUpdate = async () => {
     const data = {
       ...user.userInfo,
-      booking: [
-        ...(user.userInfo?.booking || []),
-        ...items,
-      ],
-      coupons: {
-        appliedCoupon: couponCode,
+      waitingPayment: {
+        booking: [
+          // ...(user.userInfo?.booking || []),
+          ...items,
+        ],
+        coupons: {
+          appliedCoupon: couponCode,
+        }
       }
     }
     try {
-      console.log(items);
-      // updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
+      console.log(data);
+      updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
     } catch (err) {
       console.error("Error setting document: ", err);
     }
@@ -132,33 +134,14 @@ const CheckoutMenu = ({ items }) => {
 
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
 
-  const handleInvoice = async (list) => {
-    const invoiceObj = generateInvoiceObj(items, list.item)
-    const invoiceUrl = await generateInvoice(invoiceObj)
-    const content = {
-      email: user.userInfo.email,
-      mail: {
-        name: invoiceObj.customer,
-        invoiceNo: invoiceObj.invoiceNo,
-        invoiceUrl: invoiceUrl,
-        date: invoiceObj.invoiceDate,
-        total: invoiceObj.subtotal,
-      },
-      attachments: [invoiceUrl, process.env.NEXT_PUBLIC_TERMS_AND_CONDITIONS]
-    }
-    const payload = generatePayload(content, 'invoice')
-    sendMail(payload)
-    // console.log(content, payload);
-  }
-
   const handleCheckout = async () => {
     let item = transformDataForStripe(items)
+    // await handleFirebaseUserUpdate(item)
     // console.log(item);
-    
+
     setLoading(true);
     try {
-      const response = await fetch('https://ridewing-kh-express-app.onrender.com/create-checkout-session', {
-      // const response = await fetch('http://localhost:3005/create-checkout-session', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}stripe/create-checkout-session`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -177,16 +160,13 @@ const CheckoutMenu = ({ items }) => {
       console.error('Error during checkout:', error);
     } finally {
       setLoading(false);
-      handleInvoice(item)
-      handleFirebaseUserUpdate()
-      dispatch(setCart([]))
     }
-    // handleInvoice(item)
+
   }
 
   useEffect(() => {
-    // checkCouponCode()
-  }, [subtotal, additionalTicketsTotal])
+    handleFirebaseUserUpdate()
+  }, [items])
 
   useEffect(() => {
     const fetchCoupons = async () => {
