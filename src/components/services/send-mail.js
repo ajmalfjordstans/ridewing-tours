@@ -3,8 +3,7 @@ import { invoiceMailTemplate, welcomeAgentTemplate, welcomeUserTemplate } from "
 
 export const sendMail = async (emailPayload) => {
   // Send the email using axios
-  // const response = await axios.post("http://localhost:3005/api/emails/send", emailPayload, {
-  const response = await axios.post("https://ridewing-kh-express-app.onrender.com/api/emails/send", emailPayload, {
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/emails/send`, emailPayload, {
     headers: {
       "Content-Type": "application/json",
     },

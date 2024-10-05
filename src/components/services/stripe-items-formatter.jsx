@@ -20,20 +20,31 @@ export function transformDataForStripe(dataArray) {
       return 0;
     };
 
-    let quantity = 1
+    let quantity = 1;
+    let price = parsePrice(obj.price);
 
+    // Handling 'guide' type
     if (obj.type === 'guide' && obj.travelDetails && typeof obj.travelDetails.hours === 'number') {
       quantity = obj.travelDetails.hours;
     } else {
       quantity = obj.noOfPassengers < 4 ? 4 : obj.noOfPassengers || 1; // Default to noOfPassengers or 1
     }
 
+    // Handling 'package' type with bulkPrice logic
+    if (obj.type === 'package') {
+      if (obj.noOfPassengers > 4 && obj.bulkPrice) {
+        price = parsePrice(obj.bulkPrice); // Use bulkPrice if passengers are more than 4
+      } else {
+        price = parsePrice(obj.price); // Fallback to normal price
+      }
+    }
+
     // Extract Main Item
     if (obj.name) {
       const mainItem = {
         name: obj.name,
-        price: parsePrice(obj.price),
-        quantity: quantity, // Default quantity to 1 if not specified
+        price: price,
+        quantity: quantity,
       };
       items.push(mainItem);
     } else {
@@ -51,35 +62,6 @@ export function transformDataForStripe(dataArray) {
         items.push(additionalItem);
       });
     }
-
-    // // Extract Tickets if available
-    // if (Array.isArray(obj.tickets)) {
-    //   obj.tickets.forEach((ticket, ticketIndex) => {
-    //     const ticketItem = {
-    //       name: ticket.name || `Ticket ${ticketIndex + 1}`,
-    //       price: parsePrice(ticket.price),
-    //       quantity: 1, // Assuming quantity is 1 unless specified
-    //     };
-    //     items.push(ticketItem);
-    //   });
-    // }
-
-    // Handle Nested Pricing Arrays (e.g., pricing[])
-    // if (Array.isArray(obj.pricing)) {
-    //   obj.pricing.forEach((priceObj, priceIndex) => {
-    //     // Assuming 'adults' and 'children' have price information
-    //     ['adults', 'children'].forEach((category) => {
-    //       if (priceObj[category] && priceObj[category].price) {
-    //         const categoryItem = {
-    //           name: `${category.charAt(0).toUpperCase() + category.slice(1)} - ${priceObj.name || obj.name}`,
-    //           price: parsePrice(priceObj[category].price),
-    //           quantity: 1, // Default quantity
-    //         };
-    //         items.push(categoryItem);
-    //       }
-    //     });
-    //   });
-    // }
   });
 
   return { items };

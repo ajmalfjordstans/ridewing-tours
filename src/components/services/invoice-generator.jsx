@@ -1,5 +1,6 @@
 import axios from "axios";
 import { generatePayload } from "./send-mail";
+import { transformDataForStripe } from "./stripe-items-formatter";
 
 /**
  * Generates an invoice object from an array of booking details.
@@ -7,35 +8,62 @@ import { generatePayload } from "./send-mail";
  * @param {Array} bookings - An array of booking objects.
  * @returns {Object} - The generated invoice object.
  */
-const subtotal = (items) => {
-  return items.reduce((acc, item) => {
-    const noOfPassengers = Number(item.noOfPassengers); // Ensure noOfPassengers is a number
-    const price = Number(item.price); // Ensure price is a number
-    const bulkPrice = Number(item.bulkPrice); // Ensure bulkPrice is a number
+const subtotal = (list) => {
+  const items = transformDataForStripe(list)
 
-    if (item?.type === 'package') {
-      const itemPrice = noOfPassengers < 5
-        ? price * 4
-        : bulkPrice
-          ? bulkPrice * noOfPassengers
-          : price * noOfPassengers;
-      return acc + itemPrice;
-    } else if (item?.type === 'guide') {
-      return acc + (price * (item?.travelDetails?.hours || 0));
-    } else if (item.transfer === 'airport' || item.transfer === 'station') {
-      const itemPrice = noOfPassengers < 4
-        ? price * 4
-        : price * noOfPassengers;
-      return acc + itemPrice;
-    } else {
-      return acc;
+  if (!Array.isArray(items.items)) {
+    throw new TypeError('The "items" parameter should be an array.');
+  }
+
+  return items.items.reduce((total, item, index) => {
+    // Destructure price and quantity from the item
+    let { price, quantity } = item;
+
+    // Validation and Parsing
+    // Ensure price is a number
+    if (typeof price === 'string') {
+      // Attempt to parse price from string (e.g., "FROM ¥12900 PER PERSON")
+      const parsedPrice = parseFloat(price.replace(/[^0-9.]/g, ''));
+      if (isNaN(parsedPrice)) {
+        console.warn(`Invalid price format for item at index ${index} ("${item.name}"). Defaulting price to 0.`);
+        price = 0;
+      } else {
+        price = parsedPrice;
+      }
+    } else if (typeof price !== 'number' || isNaN(price)) {
+      console.warn(`Invalid price type for item at index ${index} ("${item.name}"). Defaulting price to 0.`);
+      price = 0;
     }
+
+    // Ensure quantity is a positive integer
+    if (typeof quantity === 'string') {
+      // Attempt to parse quantity from string
+      const parsedQuantity = parseInt(quantity, 10);
+      if (isNaN(parsedQuantity) || parsedQuantity < 1) {
+        console.warn(`Invalid quantity format for item at index ${index} ("${item.name}"). Defaulting quantity to 1.`);
+        quantity = 1;
+      } else {
+        quantity = parsedQuantity;
+      }
+    } else if (typeof quantity !== 'number' || isNaN(quantity) || quantity < 1) {
+      console.warn(`Invalid quantity type for item at index ${index} ("${item.name}"). Defaulting quantity to 1.`);
+      quantity = 1;
+    }
+
+    // Calculate subtotal for the current item
+    const subtotal = price * quantity;
+
+    // Optional: Log each item's calculation for debugging
+    // console.log(`Item: "${item.name}" | Price: ${price} | Quantity: ${quantity} | Subtotal: ${subtotal}`);
+
+    // Add subtotal to the total
+    return total + subtotal;
   }, 0);
 };
 
-export function generateInvoiceObj(bookings) {
+export function generateInvoiceObj(bookings, list) {
   let total = subtotal(bookings)
-  console.log(subtotal(bookings))
+  console.log(total)
   // Helper function to generate a random invoice number
   function generateInvoiceNo() {
     return Math.floor(Math.random() * 1e12).toString();
@@ -92,8 +120,7 @@ export function generateInvoiceObj(bookings) {
 
 export const generateInvoice = async (invoice) => {
   // Send the email using axios
-  // const response = await axios.post("http://localhost:3005/api/pdfs/createInvoicePDF", invoice, {
-  const response = await axios.post("https://ridewing-kh-express-app.onrender.com/api/pdfs/createInvoicePDF", invoice, {
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/pdfs/createInvoicePDF`, invoice, {
     headers: {
       "Content-Type": "application/json",
     },

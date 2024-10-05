@@ -132,8 +132,8 @@ const CheckoutMenu = ({ items }) => {
 
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
 
-  const handleInvoice = async () => {
-    const invoiceObj = generateInvoiceObj(items)
+  const handleInvoice = async (list) => {
+    const invoiceObj = generateInvoiceObj(items, list.item)
     const invoiceUrl = await generateInvoice(invoiceObj)
     const content = {
       email: user.userInfo.email,
@@ -148,7 +148,7 @@ const CheckoutMenu = ({ items }) => {
     }
     const payload = generatePayload(content, 'invoice')
     sendMail(payload)
-    console.log(content, payload);
+    // console.log(content, payload);
   }
 
   const handleCheckout = async () => {
@@ -177,10 +177,11 @@ const CheckoutMenu = ({ items }) => {
       console.error('Error during checkout:', error);
     } finally {
       setLoading(false);
-      handleInvoice()
+      handleInvoice(item)
       handleFirebaseUserUpdate()
       dispatch(setCart([]))
     }
+    // handleInvoice(item)
   }
 
   useEffect(() => {
