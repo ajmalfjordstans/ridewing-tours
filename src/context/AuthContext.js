@@ -100,7 +100,7 @@ export const AuthContextProvider = ({ children }) => {
         querySnapshot.forEach((doc) => {
           itemsArr.push({ ...doc.data(), id: doc.id });
         });
-        console.log((itemsArr[0]));
+        // console.log((itemsArr[0]));
         // itemsArr[0].waitingPayment?.booking.forEach((item) => {
         //   dispatch(addItem(item))
         // })

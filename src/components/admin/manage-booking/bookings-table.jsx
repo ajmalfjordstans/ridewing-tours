@@ -27,6 +27,10 @@ import { blue } from "@mui/material/colors";
 import { doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import ViewBooking from "./view-booking";
+import { createBookingObject, generateBookingPDF } from "@/components/services/booking-generator";
+import { generatePayload, sendMail } from "@/components/services/send-mail";
+import { Slide, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TABS = [
   {
@@ -63,6 +67,7 @@ export function BookingTable({ bookings, setAllBookings }) {
   const [itemsPerPage, setItemsPerPage] = useState(15);
   const [showBookingDetails, setShowBookingDetails] = useState(false)
   const [viewBooking, setViewBooking] = useState(false)
+  // const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     setCurrentPage(1)
@@ -119,6 +124,10 @@ export function BookingTable({ bookings, setAllBookings }) {
 
   // Function to handle editing of a booking
   const handleEdit = (bookingId, updatedBooking, action = 'update') => {
+    if (updatedBooking.status == 'confirmed') {
+      handleBookingPDFGeneration(updatedBooking)
+    }
+
     return new Promise((resolve, reject) => {
       try {
         const updatedBookings = [...bookings];
@@ -143,6 +152,55 @@ export function BookingTable({ bookings, setAllBookings }) {
     });
   }
 
+  const handleBookingPDFGeneration = async (items) => {
+    console.log(items);
+
+    const bookingObj = createBookingObject(items);
+    const bookingUrl = await generateBookingPDF(bookingObj);
+
+    const content = {
+      email: items.email, // items.travelDetails.email
+      mail: {
+        name: bookingObj.customer.name,
+        packageName: items.name,
+        bookingNo: bookingObj.customer.bookingNo,
+        bookingUrl: bookingUrl,
+        date: bookingObj.customer.bookingDate,
+        guests: items.noOfPassengers,
+      },
+      attachments: [bookingUrl, process.env.NEXT_PUBLIC_TERMS_OF_USE],
+    };
+
+    const payload = generatePayload(content, 'booking');
+    console.log(items, bookingObj, payload);
+
+    // Define a promise that sends the email after a 3-second delay
+    const sendMailPromise = new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          const mailSend = await sendMail(payload);
+          if (mailSend.status === 200) {
+            resolve(); // Resolve the promise if email sent successfully
+          } else {
+            reject(); // Reject the promise if there's an issue
+          }
+        } catch (error) {
+          reject(error); // Reject the promise if an error occurs
+        }
+      }, 3000);
+    });
+
+    console.log(sendMailPromise);
+
+    // Use toast.promise to display notifications based on the promise state
+    toast.promise(sendMailPromise, {
+      pending: "Generating Booking PDF",
+      success: "Email Sent Successfully",
+      error: "Failed to Send Email",
+    });
+  };
+
+
   // Helper function to remove undefined values from an object
   const removeUndefinedValues = (obj) => {
     return Object.fromEntries(
@@ -152,8 +210,8 @@ export function BookingTable({ bookings, setAllBookings }) {
 
   // Function to save changes to Firestore
   const saveChanges = async (booking, action = 'update') => {
-    console.log(booking);
-    
+    // console.log(booking);
+
     try {
       const userDoc = doc(db, 'users', booking.userId);
       const userSnapshot = await getDoc(userDoc);

@@ -51,23 +51,25 @@ const CheckoutMenu = ({ items }) => {
   }
 
   const handleFirebaseUserUpdate = async () => {
-    const data = {
-      ...user.userInfo,
-      waitingPayment: {
-        booking: [
-          // ...(user.userInfo?.booking || []),
-          ...items,
-        ],
-        coupons: {
-          appliedCoupon: couponCode,
+    if (user?.userInfo?.uid) {
+      const data = {
+        ...user.userInfo,
+        waitingPayment: {
+          booking: [
+            // ...(user.userInfo?.booking || []),
+            ...items,
+          ],
+          coupons: {
+            appliedCoupon: couponCode,
+          }
         }
       }
-    }
-    try {
-      console.log(data);
-      updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
-    } catch (err) {
-      console.error("Error setting document: ", err);
+      try {
+        console.log(data);
+        updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
+      } catch (err) {
+        console.error("Error setting document: ", err);
+      }
     }
   }
 
@@ -136,10 +138,11 @@ const CheckoutMenu = ({ items }) => {
 
   const handleCheckout = async () => {
     let item = transformDataForStripe(items)
-    // await handleFirebaseUserUpdate(item)
+    setLoading(true);
+    
+    await handleFirebaseUserUpdate()
     // console.log(item);
 
-    setLoading(true);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}stripe/create-checkout-session`, {
         method: 'POST',
@@ -166,7 +169,7 @@ const CheckoutMenu = ({ items }) => {
 
   useEffect(() => {
     handleFirebaseUserUpdate()
-  }, [items])
+  }, [])
 
   useEffect(() => {
     const fetchCoupons = async () => {

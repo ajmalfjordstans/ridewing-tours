@@ -56,6 +56,9 @@ export default function CustomPackageForm({ }) {
     <div className='w-full'>
       <Formik
         initialValues={{
+          name: '',
+          contact: '',
+          email: '',
           guests: '1',
           meetingPoint: '',
           meetingTime: '',
@@ -68,6 +71,15 @@ export default function CustomPackageForm({ }) {
         }}
         validate={(values) => {
           const errors = {};
+          if (!values.name) {
+            errors.name = 'Name is required';
+          }
+          if (!values.contact) {
+            errors.contact = 'Contact is required';
+          }
+          if (!values.email) {
+            errors.email = 'Email is required';
+          }
           if (!values.guests) {
             errors.guests = 'Number of guests is required';
           }
@@ -100,6 +112,21 @@ export default function CustomPackageForm({ }) {
           <Form>
             <div className='grid grid-cols-2 gap-2 pb-[40px] mt-[10px]'>
               <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>
+                <label htmlFor="name">Name*</label>
+                <Field type="text" name="name" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
+                <ErrorMessage name="name" component="div" className="text-[red] text-[12px]" />
+              </div>
+              <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>
+                <label htmlFor="contact">Phone*</label>
+                <Field type="number" name="contact" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
+                <ErrorMessage name="contact" component="div" className="text-[red] text-[12px]" />
+              </div>
+              <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>
+                <label htmlFor="email">Email*</label>
+                <Field type="text" name="email" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
+                <ErrorMessage name="email" component="div" className="text-[red] text-[12px]" />
+              </div>
+              <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>
                 <label htmlFor="guests">Number of Guests*</label>
                 <Field type="number" name="guests" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
                 <ErrorMessage name="guests" component="div" className="text-[red] text-[12px]" />
@@ -116,10 +143,10 @@ export default function CustomPackageForm({ }) {
                 </Field>
                 <ErrorMessage name="meetingPoint" component="div" className="text-[red] text-[12px]" />
               </div>
-              <div className='flex flex-col gap-1 col-span-2'>
-                <label htmlFor="meetingAddress">Meeting Address*</label>
-                <Field as="textarea" name="meetingAddress" className='border-[1px] border-black rounded-md p-[10px] h-[150px]' />
-                <ErrorMessage name="meetingAddress" component="div" className="text-[red] text-[12px]" />
+              <div className='flex flex-col gap-1'>
+                <label htmlFor="guests">Hours expected</label>
+                <Field type="number" name="hours" className='border-[1px] border-black rounded-md p-[10px]' min="6" placeholder="6" />
+                <ErrorMessage name="hours" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1'>
                 <label htmlFor="meetingTime">Meeting Time*</label>
@@ -135,11 +162,6 @@ export default function CustomPackageForm({ }) {
                 <label htmlFor="date">Date*</label>
                 <Field type="date" name="date" className='border-[1px] border-black rounded-md p-[10px]' min={new Date().toISOString().split("T")[0]} />
                 <ErrorMessage name="date" component="div" className="text-[red] text-[12px]" />
-              </div>
-              <div className='flex flex-col gap-1'>
-                <label htmlFor="guests">Hours expected</label>
-                <Field type="number" name="hours" className='border-[1px] border-black rounded-md p-[10px]' min="6" placeholder="6" />
-                <ErrorMessage name="hours" component="div" className="text-[red] text-[12px]" />
               </div>
               <label className='flex items-center'>
                 <input
@@ -169,6 +191,11 @@ export default function CustomPackageForm({ }) {
                   </div> */}
                 </>
               )}
+              <div className='flex flex-col gap-1 col-span-2'>
+                <label htmlFor="meetingAddress">Meeting Address*</label>
+                <Field as="textarea" name="meetingAddress" className='border-[1px] border-black rounded-md p-[10px] h-[150px]' />
+                <ErrorMessage name="meetingAddress" component="div" className="text-[red] text-[12px]" />
+              </div>
               <div className='flex flex-col gap-1 col-span-2'>
                 <label htmlFor="itinerary">Itinerary*</label>
                 <Field as="textarea" name="itinerary" className='border-[1px] border-black rounded-md p-[10px] h-[150px]' placeholder="Describe your custom itinerary in detail" />

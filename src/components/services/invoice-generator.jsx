@@ -61,14 +61,20 @@ const subtotal = (list) => {
   }, 0);
 };
 
-export function generateInvoiceObj(bookings) {
+export function generateInvoiceObj(bookings, user) {
   console.log(bookings);
-  
+
   let total = subtotal(bookings)
   console.log(total)
   // Helper function to generate a random invoice number
   function generateInvoiceNo() {
-    return Math.floor(Math.random() * 1e12).toString();
+    try {
+      const randomNumber = Math.floor(Math.random() * 1e12).toString()
+      const invoiceNo = `SC${randomNumber}`;
+      return { success: true, invoiceNo }; // Return the generated invoice number
+    } catch (error) {
+      return { success: false, message: "Error generating invoice number", error }; // Return error if any occurs
+    }
   }
 
   // Helper function to format the date as MM/DD/YY
@@ -84,7 +90,9 @@ export function generateInvoiceObj(bookings) {
   const invoice = {
     invoiceNo: generateInvoiceNo(),
     invoiceDate: formatDate(new Date()),
-    customer: "Ridewing",
+    customer: user.userInfo.displayName,
+    phone: user.userInfo.contact,
+    email: user.userInfo.email,
     subtotal: total,
     items: []
   };
@@ -119,8 +127,9 @@ export function generateInvoiceObj(bookings) {
   return invoice;
 }
 
-
 export const generateInvoice = async (invoice) => {
+  console.log(invoice);
+
   // Send the email using axios
   const response = await axios.post(`${process.env.NEXT_PUBLIC_API}api/pdfs/createInvoicePDF`, invoice, {
     headers: {

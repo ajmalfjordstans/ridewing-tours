@@ -115,7 +115,6 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
             </>
           }
         </div>
-        {console.log(viewBooking)}
       </div>
     </div>
   )

@@ -23,8 +23,10 @@ export default function Page() {
             <div className='flex gap-3 items-center'>
               <Image src={'/logo/call.svg'} height={200} width={200} alt='call' className='h-[28px] w-[28px]' />
               <div className='text-[13px]'>
-                <p className='font-semibold'>PHONE</p>
-                <p>{contact?.phone ? contact?.phone : "+559876421"}</p>
+                <p className='font-semibold'>PHONE/WHATSAPP</p>
+                <p>{contact?.phone ? contact?.phone : "+44 (0) 208 432 432 5"}</p>
+                <p className='font-semibold'>EMERGENCY PHONE/WHATSAPP</p>
+                <p>+44 (0) 7 500 200 570</p>
               </div>
             </div>
             <div className='flex gap-3 items-center'>

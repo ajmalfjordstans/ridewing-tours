@@ -33,7 +33,7 @@ export default function Page() {
           handleFirebaseUserUpdate(response)
         }
         console.log(response);
-        
+
         setVerified(false)
       }).catch((error) => {
         console.error(error);
@@ -63,8 +63,8 @@ export default function Page() {
 
   const handleInvoice = async (items) => {
     console.log(items);
-    
-    const invoiceObj = generateInvoiceObj(items)
+
+    const invoiceObj = generateInvoiceObj(items, user)
     const invoiceUrl = await generateInvoice(invoiceObj)
     const content = {
       email: user.userInfo.email,
@@ -75,24 +75,31 @@ export default function Page() {
         date: invoiceObj.invoiceDate,
         total: invoiceObj.subtotal,
       },
-      attachments: [process.env.NEXT_PUBLIC_TERMS_AND_CONDITIONS]
+      attachments: [invoiceUrl]
     }
     const payload = generatePayload(content, 'invoice')
+
+    // // Create a delay function
+    // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    // // Introduce a delay of, for example, 3 seconds (3000 ms) before sending the email
+    // await delay(3000)
+
     const mailSend = await sendMail(payload)
     console.log(mailSend);
-    
+
     if (mailSend.status == 200) {
       setMailDone(true)
     }
   }
 
   const handleFirebaseUserUpdate = async (item) => {
-    console.log(item);
-
+    // console.log(item);
+    let oldBookings = item?.booking ? item.booking : ''
     const data = {
       ...user.userInfo,
       booking: [
-        ...item?.booking,
+        ...oldBookings,
         ...item.waitingPayment.booking
       ],
       coupons: item.waitingPayment.coupons,
