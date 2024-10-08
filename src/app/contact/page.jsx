@@ -23,17 +23,17 @@ export default function Page() {
             <div className='flex gap-3 items-center'>
               <Image src={'/logo/call.svg'} height={200} width={200} alt='call' className='h-[28px] w-[28px]' />
               <div className='text-[13px]'>
-                <p className='font-semibold'>PHONE/WHATSAPP</p>
-                <p>{contact?.phone ? contact?.phone : "+44 (0) 208 432 432 5"}</p>
-                <p className='font-semibold'>EMERGENCY PHONE/WHATSAPP</p>
-                <p>+44 (0) 7 500 200 570</p>
+                <p className='font-semibold'>PHONE</p>
+                <p href={contact?.phone ? `tel:${contact.phone}` : "tel:+442084324325"}>{contact?.phone ? contact?.phone : "+44 (0) 208 432 432 5"}</p>
+                <p className='font-semibold'>EMERGENCY CONTACT</p>
+                <p href={"tel:+447500200570"}>+44 (0) 7 500 200 570</p>
               </div>
             </div>
             <div className='flex gap-3 items-center'>
               <Image src={'/logo/mail.svg'} height={200} width={200} alt='call' className='h-[28px] w-[28px]' />
               <div className='text-[13px]'>
                 <p className='font-semibold'>EMAIL</p>
-                <p>info@ridewing.uk</p>
+                <p href={'mailto:info@ridewing.uk'}>info@ridewing.uk</p>
               </div>
             </div>
           </div>

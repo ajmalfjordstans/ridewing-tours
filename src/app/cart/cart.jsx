@@ -17,6 +17,8 @@ const CheckoutMenu = ({ items }) => {
   const [availableCoupons, setAvailableCoupons] = useState(null)
   const [discount, setDiscount] = useState(null)
   const [discountPrice, setDiscountPrice] = useState(null)
+  const [discountOffer, setDiscountOffer] = useState(null)
+  const [cartItems, setCartItems] = useState(items)
   const [total, setTotal] = useState(0)
   const [couponNotFound, setCouponNotFound] = useState(false)
   const dispatch = useDispatch()
@@ -50,14 +52,17 @@ const CheckoutMenu = ({ items }) => {
     }, 0);
   }
 
-  const handleFirebaseUserUpdate = async () => {
+  const handleFirebaseUserUpdate = async (bookings = cartItems) => {
+    let booking = Array.isArray(bookings) ? bookings : bookings.items
+    console.log(booking);
+
     if (user?.userInfo?.uid) {
       const data = {
         ...user.userInfo,
         waitingPayment: {
           booking: [
             // ...(user.userInfo?.booking || []),
-            ...items,
+            ...booking,
           ],
           coupons: {
             appliedCoupon: couponCode,
@@ -75,6 +80,53 @@ const CheckoutMenu = ({ items }) => {
 
   const checkAgentCoupon = () => {
     const result = user?.userInfo?.coupons?.find(coupon => coupon.code === couponCode);
+
+    const discountedItems = items.map((item) => {
+      let discountedTotal = item.total;
+      let discountedPrice = item?.price;
+
+      // Check if the discount is a percentage
+      if (result.isPercentage) {
+        // Calculate the discounted total for the item
+        discountedTotal = item.total - (item.total * (result.discountValue / 100));
+        discountedPrice = item.price - (item.price * (result.discountValue / 100));
+        setDiscountOffer(result.discountValue + "% OFF");
+      } else {
+        // Apply a fixed discount to the item
+        discountedTotal = item.total - result.discountValue;
+        discountedPrice = item.price - result.discountValue;
+        setDiscountOffer(result.discountValue + " OFF");
+      }
+
+      // Apply discount to additionalTickets, if they exist
+      const discountedAdditionalTickets = item.additionalTickets?.map((ticket) => {
+        let discountedTicketPrice = ticket.price;
+
+        if (result.isPercentage) {
+          // Apply percentage discount to the ticket
+          discountedTicketPrice = ticket.price - (ticket.price * (result.discountValue / 100));
+        } else {
+          // Apply fixed discount to the ticket
+          discountedTicketPrice = ticket.price - result.discountValue;
+        }
+
+        return {
+          ...ticket,
+          price: discountedTicketPrice // Ensure the ticket price is updated
+        };
+      }) || item.additionalTickets; // Use original array if no tickets present
+
+      // Return a new object with updated item and additionalTickets
+      return {
+        ...item, // Keep other properties of the item unchanged
+        total: Math.max(0, discountedTotal),  // Ensure total doesn't go below 0
+        price: Math.max(0, discountedPrice),  // Ensure price doesn't go below 0
+        additionalTickets: discountedAdditionalTickets // Updated additionalTickets
+      };
+    });
+
+    // Set cart items with updated discounts
+    setCartItems(discountedItems)
 
     if (result) {
       setCouponNotFound(false)
@@ -107,6 +159,53 @@ const CheckoutMenu = ({ items }) => {
     } else {
       const result = availableCoupons?.find(coupon => coupon.code === couponCode)
 
+      const discountedItems = items.map((item) => {
+        let discountedTotal = item.total;
+        let discountedPrice = item?.price;
+
+        // Check if the discount is a percentage
+        if (result.isPercentage) {
+          // Calculate the discounted total for the item
+          discountedTotal = item.total - (item.total * (result.discountValue / 100));
+          discountedPrice = item.price - (item.price * (result.discountValue / 100));
+          setDiscountOffer(result.discountValue + "% OFF");
+        } else {
+          // Apply a fixed discount to the item
+          discountedTotal = item.total - result.discountValue;
+          discountedPrice = item.price - result.discountValue;
+          setDiscountOffer(result.discountValue + " OFF");
+        }
+
+        // Apply discount to additionalTickets, if they exist
+        const discountedAdditionalTickets = item.additionalTickets?.map((ticket) => {
+          let discountedTicketPrice = ticket.price;
+
+          if (result.isPercentage) {
+            // Apply percentage discount to the ticket
+            discountedTicketPrice = ticket.price - (ticket.price * (result.discountValue / 100));
+          } else {
+            // Apply fixed discount to the ticket
+            discountedTicketPrice = ticket.price - result.discountValue;
+          }
+
+          return {
+            ...ticket,
+            price: discountedTicketPrice // Ensure the ticket price is updated
+          };
+        }) || item.additionalTickets; // Use original array if no tickets present
+
+        // Return a new object with updated item and additionalTickets
+        return {
+          ...item, // Keep other properties of the item unchanged
+          total: Math.max(0, discountedTotal),  // Ensure total doesn't go below 0
+          price: Math.max(0, discountedPrice),  // Ensure price doesn't go below 0
+          additionalTickets: discountedAdditionalTickets // Updated additionalTickets
+        };
+      });
+
+      // Set cart items with updated discounts
+      setCartItems(discountedItems)
+
       if (result) {
         setCouponNotFound(false)
         setDiscount(result);
@@ -137,10 +236,12 @@ const CheckoutMenu = ({ items }) => {
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
 
   const handleCheckout = async () => {
-    let item = transformDataForStripe(items)
+    let item = transformDataForStripe(cartItems)
+    console.log(item);
+
     setLoading(true);
-    
-    await handleFirebaseUserUpdate()
+
+    await handleFirebaseUserUpdate(item)
     // console.log(item);
 
     try {
@@ -149,7 +250,7 @@ const CheckoutMenu = ({ items }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ item }),
+        body: JSON.stringify({ item, currency: user.currency.code }),
       });
 
       const data = await response.json();
