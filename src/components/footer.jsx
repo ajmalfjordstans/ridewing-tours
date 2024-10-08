@@ -57,12 +57,22 @@ export default function Footer() {
               </div>
             </div>
             <div>
-              <p className='font-bold text-[18px] leading-[28px]'>Terms of Use</p>
+              <Link href={`/docs/termsofuse?country=${country}`}>
+                <p className='font-bold text-[18px] leading-[28px]'>Terms of Use</p>
+              </Link>
               <div className='mt-[18px] font-[400] flex flex-col gap-2'>
-                <p className=''>Terms and Conditions</p>
-                <p className=''>Cookie Policy</p>
-                <p className=''>Refund Policy</p>
-                <p className=''>Cancellation Policy</p>
+                <Link href={`/docs/termsandconditions?country=${country}`}>
+                  <p className=''>Terms and Conditions</p>
+                </Link>
+                <Link href={`/docs/cookiepolicy?country=${country}`}>
+                  <p className=''>Cookie Policy</p>
+                </Link>
+                <Link href={`/docs/refundpolicy?country=${country}`}>
+                  <p className=''>Refund Policy</p>
+                </Link>
+                <Link href={`/docs/cancellationpolicy?country=${country}`}>
+                  <p className=''>Cancellation Policy</p>
+                </Link>
               </div>
             </div>
             <div>

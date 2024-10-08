@@ -54,7 +54,7 @@ const CheckoutMenu = ({ items }) => {
 
   const handleFirebaseUserUpdate = async (bookings = cartItems) => {
     let booking = Array.isArray(bookings) ? bookings : bookings.items
-    console.log(booking);
+    // console.log(booking);
 
     if (user?.userInfo?.uid) {
       const data = {
@@ -70,7 +70,7 @@ const CheckoutMenu = ({ items }) => {
         }
       }
       try {
-        console.log(data);
+        // console.log(data);
         updateFirebaseDocument(data, `users/${user.userInfo.uid}`)
       } catch (err) {
         console.error("Error setting document: ", err);
@@ -143,10 +143,10 @@ const CheckoutMenu = ({ items }) => {
         }
 
         setDiscountPrice(total - discountAmount);
-        console.log(total - discountAmount);
+        // console.log(total - discountAmount);
       }
     } else {
-      console.log('Coupon not found');
+      // console.log('Coupon not found');
       setDiscount(null)
       setDiscountPrice(null)
       setCouponNotFound(true)
@@ -221,10 +221,10 @@ const CheckoutMenu = ({ items }) => {
           }
 
           setDiscountPrice(total - discountAmount);
-          console.log(total - discountAmount);
+          // console.log(total - discountAmount);
         }
       } else {
-        console.log('Coupon not found');
+        // console.log('Coupon not found');
         setCouponNotFound(true)
         setDiscount(null)
         setDiscountPrice(null)
@@ -237,7 +237,7 @@ const CheckoutMenu = ({ items }) => {
 
   const handleCheckout = async () => {
     let item = transformDataForStripe(cartItems)
-    console.log(item);
+    // console.log(item);
 
     setLoading(true);
 
