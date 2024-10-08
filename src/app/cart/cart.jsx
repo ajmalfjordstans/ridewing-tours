@@ -312,9 +312,12 @@ const CheckoutMenu = ({ items }) => {
           {couponNotFound && <p className='text-red-500 text-[12px]'>Coupon Not Found</p>}
           <div className='w-full flex justify-between'>
             <p>Total</p>
-            <div>
+            <div className='flex flex-col items-end'>
               <p>{discountPrice}</p>
-              <p className={`${discountPrice && 'line-through text-gray-600'}`}>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
+              <div className='flex gap-2'>
+                <p>{discountOffer}</p>
+                <p className={`${discountPrice && 'line-through text-gray-600'}`}>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
+              </div>
             </div>
           </div>
         </div>
