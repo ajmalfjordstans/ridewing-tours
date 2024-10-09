@@ -271,7 +271,6 @@ const CheckoutMenu = ({ items }) => {
   useEffect(() => {
     handleFirebaseUserCartUpdate()
     console.log('update func called');
-    
   }, [])
 
   useEffect(() => {

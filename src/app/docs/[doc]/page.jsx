@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useEffect, useState } from 'react';
 import TermsAndConditions from './termsandconditions';
 import RefundPolicy from './refundpolicy';
@@ -6,38 +6,24 @@ import CookiePolicy from './cookiepolicy';
 import CancellationPolicy from './cancellationpolicy';
 import TermsOfUse from './termsofuse';
 
-
 const Page = ({ params }) => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    if (params.doc) {
-      setData(params.doc); 
+    if (params?.doc) {
+      setData(params.doc);
     }
-  }, [params.doc])
+  }, [params.doc]);
 
-  let ComponentToRender;
+  const componentMap = {
+    termsandconditions: TermsAndConditions,
+    refundpolicy: RefundPolicy,
+    cookiepolicy: CookiePolicy,
+    cancellationpolicy: CancellationPolicy,
+    termsofuse: TermsOfUse,
+  };
 
-  switch (data) {
-    case 'termsandconditions':
-      ComponentToRender = TermsAndConditions;
-      break;
-    case 'refundpolicy':
-      ComponentToRender = RefundPolicy;
-      break;
-    case 'cookiepolicy':
-      ComponentToRender = CookiePolicy;
-      break;
-    case 'cancellationpolicy':
-      ComponentToRender = CancellationPolicy;
-      break;
-    case 'termsofuse':
-      ComponentToRender = TermsOfUse;
-      break;
-    default:
-      ComponentToRender = () => <div>Page Not Found</div>;
-      break;
-  }
+  const ComponentToRender = componentMap[data] || (() => <div>Page Not Found</div>);
 
   if (!data) return <p>Loading...</p>;
 
