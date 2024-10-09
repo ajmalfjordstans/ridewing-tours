@@ -99,12 +99,12 @@ const TermsOfUse = () => {
       </p>
       <ul className="list-disc list-inside mb-4">
         <li>Full refund if canceled more than 21 days before the tour.</li>
-        <li>25% of the total amount if canceled between 14 to 21 days before the tour, depending on the provider’s policy.</li>
-        <li>40% if canceled between 10 to 14 days before the tour, depending on the provider’s policy.</li>
-        <li>60% if canceled between 7 to 10 days before the tour, depending on the provider’s policy.</li>
-        <li>75% if canceled between 4 to 7 days before the tour, depending on the provider’s policy.</li>
+        <li>25% of the total amount if canceled between 14 to 21 days before the tour, depending on the provider&apos;s policy.</li>
+        <li>40% if canceled between 10 to 14 days before the tour, depending on the provider&apos;s policy.</li>
+        <li>60% if canceled between 7 to 10 days before the tour, depending on the provider&apos;s policy.</li>
+        <li>75% if canceled between 4 to 7 days before the tour, depending on the provider&apos;s policy.</li>
         <li>No refund if canceled less than 4 days before the tour.</li>
-        <li>No refunds for last-minute or same-day cancellations, including "no-show" situations.</li>
+        <li>No refunds for last-minute or same-day cancellations, including &quot;no-show&quot; situations.</li>
       </ul>
       <p className="mb-4">
         Admission Tickets: Please note that the cancellation and refund policies for admission tickets are determined by the issuing authority. We recommend reviewing their specific terms at the time of purchase for further details.

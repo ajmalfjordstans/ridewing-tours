@@ -157,6 +157,7 @@ export function BookingTable({ bookings, setAllBookings }) {
 
     const bookingObj = createBookingObject(items);
     const bookingUrl = await generateBookingPDF(bookingObj);
+    console.log(bookingUrl);
 
     const content = {
       email: items.email, // items.travelDetails.email
@@ -410,10 +411,9 @@ export function BookingTable({ bookings, setAllBookings }) {
                         </Typography>
                         <Typography
                           variant="small"
-                          color="blue-gray"
                           className="font-normal"
                         >
-                          Date: {booking.date ? formatDateFromTimestamp(booking.date) : booking.travelDetails.date}
+                          Date: {booking && booking.date ? formatDateFromTimestamp(booking.date) : (booking && booking.travelDetails ? booking.travelDetails.date : 'N/A')}
                         </Typography>
                         <Typography
                           variant="small"

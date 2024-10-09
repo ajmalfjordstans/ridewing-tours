@@ -52,7 +52,7 @@ const CheckoutMenu = ({ items }) => {
     }, 0);
   }
 
-  const handleFirebaseUserUpdate = async (bookings = cartItems) => {
+  const handleFirebaseUserCartUpdate = async (bookings = cartItems) => {
     let booking = Array.isArray(bookings) ? bookings : bookings.items
     // console.log(booking);
 
@@ -237,11 +237,11 @@ const CheckoutMenu = ({ items }) => {
 
   const handleCheckout = async () => {
     let item = transformDataForStripe(cartItems)
-    // console.log(item);
+    console.log(item);
 
     setLoading(true);
 
-    await handleFirebaseUserUpdate(item)
+    await handleFirebaseUserCartUpdate(item)
     // console.log(item);
 
     try {
@@ -269,7 +269,9 @@ const CheckoutMenu = ({ items }) => {
   }
 
   useEffect(() => {
-    handleFirebaseUserUpdate()
+    handleFirebaseUserCartUpdate()
+    console.log('update func called');
+    
   }, [])
 
   useEffect(() => {
@@ -324,7 +326,7 @@ const CheckoutMenu = ({ items }) => {
       </div>
       <div className='w-full flex justify-center'>
         {/* <Button className='bg-secondary text-white mx-auto'
-          onClick={handleFirebaseUserUpdate}
+          onClick={handleFirebaseUserCartUpdate}
         >
           Log
         </Button> */}

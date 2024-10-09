@@ -66,6 +66,8 @@ export default function Page() {
 
     const invoiceObj = generateInvoiceObj(items, user)
     const invoiceUrl = await generateInvoice(invoiceObj)
+    console.log(invoiceUrl);
+
     const content = {
       email: user.userInfo.email,
       mail: {
