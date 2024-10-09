@@ -241,7 +241,7 @@ const CheckoutMenu = ({ items }) => {
 
     setLoading(true);
 
-    await handleFirebaseUserCartUpdate(item)
+    await handleFirebaseUserCartUpdate(cartItems)
     // console.log(item);
 
     try {

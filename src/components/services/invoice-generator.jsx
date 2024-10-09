@@ -63,15 +63,15 @@ const subtotal = (list) => {
 
 export function generateInvoiceObj(bookings, user) {
   console.log(bookings);
-
+  let item = transformDataForStripe(bookings)
   let total = subtotal(bookings)
-  console.log(total)
+  console.log(total, item)
   // Helper function to generate a random invoice number
   function generateInvoiceNo() {
     try {
       const randomNumber = Math.floor(Math.random() * 1e12).toString()
       const invoiceNo = `SC${randomNumber}`;
-      return { success: true, invoiceNo }; // Return the generated invoice number
+      return invoiceNo; // Return the generated invoice number
     } catch (error) {
       return { success: false, message: "Error generating invoice number", error }; // Return error if any occurs
     }
@@ -94,35 +94,40 @@ export function generateInvoiceObj(bookings, user) {
     phone: user.userInfo.contact,
     email: user.userInfo.email,
     subtotal: total,
-    items: []
+    items: item.items.map(item => ({
+      ...item,  // Copy existing properties
+      total: item.price * item.quantity  // Add new total property
+    }))
   };
 
-  bookings.forEach(booking => {
-    // Add main booking details as items
-    // Assuming 'name' and 'total' represent the main service
-    if (booking.name && booking.total) {
-      invoice.items.push({
-        name: booking.name,
-        price: booking.total / booking.noOfPassengers,
-        count: booking.noOfPassengers,
-        total: booking.total
-      });
-      // invoice.subtotal += booking.total;
-    }
+  // bookings.forEach(booking => {
+  //   // Add main booking details as items
+  //   // Assuming 'name' and 'total' represent the main service
+  //   if (booking.name && booking.total) {
+  //     console.log(booking);
 
-    // Include additionalTickets if available
-    if (booking.additionalTickets && Array.isArray(booking.additionalTickets)) {
-      booking.additionalTickets.forEach(ticket => {
-        invoice.items.push({
-          name: ticket.name,
-          price: ticket.price,
-          count: ticket.ticketCount,
-          total: ticket.price * ticket.ticketCount
-        });
-        // invoice.subtotal += ticket.price * ticket.ticketCount;
-      });
-    }
-  });
+  //     invoice.items.push({
+  //       name: booking.name,
+  //       price: booking.price, // booking.noOfPassengers,
+  //       count: booking.noOfPassengers,
+  //       total: booking.total
+  //     });
+  //     // invoice.subtotal += booking.total;
+  //   }
+
+  //   // Include additionalTickets if available
+  //   if (booking.additionalTickets && Array.isArray(booking.additionalTickets)) {
+  //     booking.additionalTickets.forEach(ticket => {
+  //       invoice.items.push({
+  //         name: ticket.name,
+  //         price: ticket.price,
+  //         count: ticket.ticketCount,
+  //         total: ticket.price * ticket.ticketCount
+  //       });
+  //       // invoice.subtotal += ticket.price * ticket.ticketCount;
+  //     });
+  //   }
+  // });
 
   return invoice;
 }
