@@ -44,7 +44,7 @@ export function transformDataForStripe(dataArray) {
       const mainItem = {
         name: obj.name,
         price: price,
-        quantity: quantity,
+        quantity: quantity < 4 ? 4 : quantity,
       };
       items.push(mainItem);
     } else {

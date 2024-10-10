@@ -62,7 +62,7 @@ export default function Page() {
   };
 
   const handleInvoice = async (items) => {
-    console.log(items);
+    // console.log(items);
 
     const invoiceObj = generateInvoiceObj(items, user)
     const invoiceUrl = await generateInvoice(invoiceObj)
@@ -80,6 +80,7 @@ export default function Page() {
       attachments: [invoiceUrl]
     }
     const payload = generatePayload(content, 'invoice')
+    // console.log(content);
 
     // Create a delay function
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

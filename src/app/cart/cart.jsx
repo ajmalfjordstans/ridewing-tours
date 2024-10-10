@@ -10,13 +10,13 @@ import { generateInvoice, generateInvoiceObj } from '@/components/services/invoi
 import { generatePayload, sendMail } from '@/components/services/send-mail';
 import { transformDataForStripe } from '@/components/services/stripe-items-formatter';
 
-const CheckoutMenu = ({ items }) => {
+const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
   const [loading, setLoading] = useState(false);
   const user = useSelector(state => state.user)
   const [couponCode, setCouponCode] = useState("")
   const [availableCoupons, setAvailableCoupons] = useState(null)
   const [discount, setDiscount] = useState(null)
-  const [discountPrice, setDiscountPrice] = useState(null)
+  // const [discountPrice, setDiscountPrice] = useState(null)
   const [discountOffer, setDiscountOffer] = useState(null)
   const [cartItems, setCartItems] = useState(items)
   const [total, setTotal] = useState(0)
@@ -160,6 +160,8 @@ const CheckoutMenu = ({ items }) => {
       const result = availableCoupons?.find(coupon => coupon.code === couponCode)
 
       const discountedItems = items.map((item) => {
+        console.log(item.total);
+
         let discountedTotal = item.total;
         let discountedPrice = item?.price;
 
@@ -193,6 +195,7 @@ const CheckoutMenu = ({ items }) => {
             price: discountedTicketPrice // Ensure the ticket price is updated
           };
         }) || item.additionalTickets; // Use original array if no tickets present
+        console.log(discountedTotal);
 
         // Return a new object with updated item and additionalTickets
         return {
@@ -205,6 +208,8 @@ const CheckoutMenu = ({ items }) => {
 
       // Set cart items with updated discounts
       setCartItems(discountedItems)
+      console.log(discountedItems);
+
 
       if (result) {
         setCouponNotFound(false)
@@ -242,7 +247,7 @@ const CheckoutMenu = ({ items }) => {
     setLoading(true);
 
     await handleFirebaseUserCartUpdate(cartItems)
-    // console.log(item);
+    console.log(cartItems);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}stripe/create-checkout-session`, {
@@ -274,6 +279,10 @@ const CheckoutMenu = ({ items }) => {
   }, [])
 
   useEffect(() => {
+    setCartItems(items)
+  }, [items])
+
+  useEffect(() => {
     const fetchCoupons = async () => {
       try {
         const result = await readFirebaseDocument('coupons/coupon');
@@ -290,6 +299,7 @@ const CheckoutMenu = ({ items }) => {
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full pb-[10px]'>
       <div className='w-full p-[30px]'>
         <p className='text-[24px] font-semibold'>Summary</p>
+        {/* <Button onClick={() => console.log(cartItems)}>Show Items</Button> */}
         <div className='w-full mt-[20px] flex flex-col gap-4'>
           <div className='w-full flex justify-between text-[#ABABAB]'>
             <p>Subtotal</p>
@@ -316,7 +326,7 @@ const CheckoutMenu = ({ items }) => {
             <div className='flex flex-col items-end'>
               <p>{discountPrice}</p>
               <div className='flex gap-2'>
-                <p>{discountOffer}</p>
+                <p>{discountPrice && discountOffer}</p>
                 <p className={`${discountPrice && 'line-through text-gray-600'}`}>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
               </div>
             </div>
@@ -345,6 +355,7 @@ const CheckoutMenu = ({ items }) => {
 
 const Cart = () => {
   const [subtotal, setSubtotal] = useState(0)
+  const [discountPrice, setDiscountPrice] = useState(null)
   const items = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
   // console.log(items);
@@ -364,7 +375,7 @@ const Cart = () => {
             <ul>
               {items.map((item, id) => (
                 <li key={id} className='flex items-start'>
-                  <PackageCard data={item} setSubtotal={setSubtotal} subtotal={subtotal} />
+                  <PackageCard data={item} setSubtotal={setSubtotal} subtotal={subtotal} setDiscountPrice={setDiscountPrice} />
                   <button onClick={() => dispatch(removeItem(item.id))}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -376,7 +387,7 @@ const Cart = () => {
           )}
         </div>
         <div className='md:h-screen w-full md:w-[30%]'>
-          <CheckoutMenu items={items} />
+          <CheckoutMenu items={items} discountPrice={discountPrice} setDiscountPrice={setDiscountPrice} />
         </div>
       </div>
     </div>

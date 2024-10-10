@@ -1,10 +1,11 @@
 'use client'
+import { transformDataForStripe } from '@/components/services/stripe-items-formatter';
 import { updateItem } from '@/components/store/cartSlice';
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function PackageCard({ data, setSubtotal, subTotal }) {
+export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPrice }) {
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart.items);
   const currency = useSelector(state => state.user.currency)
@@ -20,11 +21,13 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
 
   const increment = () => {
     setCount(count + 1)
+    setDiscountPrice(null)
     // handleAddAllTicketCount()
   }
   const decrement = () => {
     if (count > 1) {
       setCount(count - 1);
+      setDiscountPrice(null)
       // handleSubtractAllTicketCount()
     }
   }
@@ -94,6 +97,59 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   const handleRemoveGuide = () => {
     dispatch(updateItem({ ...data, includeGuide: false, guideLanguage: "", hoursGuideNeeded: null }));
   }
+
+  const subtotal = (list) => {
+    const items = transformDataForStripe([list])
+
+    if (!Array.isArray(items.items)) {
+      throw new TypeError('The "items" parameter should be an array.');
+    }
+
+    return items.items.reduce((total, item, index) => {
+      // Destructure price and quantity from the item
+      let { price, quantity } = item;
+
+      // Validation and Parsing
+      // Ensure price is a number
+      if (typeof price === 'string') {
+        // Attempt to parse price from string (e.g., "FROM ¥12900 PER PERSON")
+        const parsedPrice = parseFloat(price.replace(/[^0-9.]/g, ''));
+        if (isNaN(parsedPrice)) {
+          console.warn(`Invalid price format for item at index ${index} ("${item.name}"). Defaulting price to 0.`);
+          price = 0;
+        } else {
+          price = parsedPrice;
+        }
+      } else if (typeof price !== 'number' || isNaN(price)) {
+        console.warn(`Invalid price type for item at index ${index} ("${item.name}"). Defaulting price to 0.`);
+        price = 0;
+      }
+
+      // Ensure quantity is a positive integer
+      if (typeof quantity === 'string') {
+        // Attempt to parse quantity from string
+        const parsedQuantity = parseInt(quantity, 10);
+        if (isNaN(parsedQuantity) || parsedQuantity < 1) {
+          console.warn(`Invalid quantity format for item at index ${index} ("${item.name}"). Defaulting quantity to 1.`);
+          quantity = 1;
+        } else {
+          quantity = parsedQuantity;
+        }
+      } else if (typeof quantity !== 'number' || isNaN(quantity) || quantity < 1) {
+        console.warn(`Invalid quantity type for item at index ${index} ("${item.name}"). Defaulting quantity to 1.`);
+        quantity = 1;
+      }
+
+      // Calculate subtotal for the current item
+      const subtotal = price * quantity;
+
+      // Optional: Log each item's calculation for debugging
+      // console.log(`Item: "${item.name}" | Price: ${price} | Quantity: ${quantity} | Subtotal: ${subtotal}`);
+
+      // Add subtotal to the total
+      return total + subtotal;
+    }, 0);
+  };
 
   const updateCartHandler = (newData) => {
     const itemExists = cart.find(item => item.id === newData.id);
@@ -183,7 +239,9 @@ export default function PackageCard({ data, setSubtotal, subTotal }) {
   }
   // calculate subtotal
   const calculateSubtotal = () => {
-    const total = calculateTotal(data) + calculateAdditionalTicketsTotal(data)
+    // const total = calculateTotal(data) + calculateAdditionalTicketsTotal(data)
+    const total = subtotal(data)
+    console.log(total);
     return total
   }
 

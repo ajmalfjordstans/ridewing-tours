@@ -91,7 +91,7 @@ export function generateInvoiceObj(bookings, user) {
     invoiceNo: generateInvoiceNo(),
     invoiceDate: formatDate(new Date()),
     customer: user.userInfo.displayName,
-    phone: user.userInfo.contact,
+    phone: bookings[0].contact,
     email: user.userInfo.email,
     subtotal: total,
     items: item.items.map(item => ({
