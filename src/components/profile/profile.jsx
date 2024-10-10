@@ -28,8 +28,11 @@ export default function Profile({ user, handleSignOut }) {
   const pinRef = useRef(null);
 
   const validatePhone = (phone) => {
-    const phoneNumber = parsePhoneNumberFromString(phone);
-    return phoneNumber && phoneNumber.isValid();
+    // Remove all non-digit characters from the phone string
+    const cleanedPhone = phone.replace(/\D/g, '');
+
+    // Check if the length of the cleaned phone number is at least 10 digits
+    return cleanedPhone.length >= 10;
   };
 
   // Scroll to the first missing required field when page loads
@@ -67,6 +70,7 @@ export default function Profile({ user, handleSignOut }) {
 
   const handleSave = async () => {
     // Validate required fields
+
     if (data?.userRole === 'agent' && !data.company) {
       setErrors({ ...errors, company: 'Company name is required' });
       companyRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -87,17 +91,17 @@ export default function Profile({ user, handleSignOut }) {
       emailRef.current?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-    if (!data.accountHolder) {
+    if (data?.userRole === 'agent' && !data.accountHolder) {
       setErrors({ ...errors, accountHolder: 'Account holder name is required' });
       accountHolderRef.current?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-    if (!data.bankName) {
+    if (data?.userRole === 'agent' && !data.bankName) {
       setErrors({ ...errors, bankName: 'Bank name is required' });
       bankNameRef.current?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-    if (!data.bankAccountNumber) {
+    if (data?.userRole === 'agent' && !data.bankAccountNumber) {
       setErrors({ ...errors, bankAccountNumber: 'Bank account number is required' });
       bankAccountNumberRef.current?.scrollIntoView({ behavior: 'smooth' });
       return;
@@ -117,7 +121,6 @@ export default function Profile({ user, handleSignOut }) {
       pinRef.current?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-
     try {
       await setDoc(doc(db, 'users', data?.uid), data);
       dispatch(setUser(data));
@@ -148,7 +151,7 @@ export default function Profile({ user, handleSignOut }) {
 
           {(data?.userRole === 'admin' || data?.userRole === 'agent') && (
             <div className='flex flex-col gap-2 col-span-2'>
-              <p className='capitalize font-[600] md:text-[24px]'>{data?.userRole}: <span className='font-[400]'>{data?.active ? "active": 'inactive'}</span></p>
+              <p className='capitalize font-[600] md:text-[24px]'>{data?.userRole} <span className='font-[400]'>{data?.userRole === 'agent' ? data?.active ? "active" : 'inactive' : ""}</span></p>
             </div>
           )}
 
