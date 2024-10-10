@@ -196,7 +196,7 @@ export function BookingTable({ bookings, setAllBookings }) {
     // Use toast.promise to display notifications based on the promise state
     toast.promise(sendMailPromise, {
       pending: "Generating Booking PDF",
-      success: "Email Sent Successfully",
+      success: "Sending Email",
       error: "Failed to Send Email",
     });
   };

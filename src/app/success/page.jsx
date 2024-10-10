@@ -86,7 +86,7 @@ export default function Page() {
 
     // Introduce a delay of, for example, 3 seconds (3000 ms) before sending the email
     await delay(3000)
-    
+
     const mailSend = await sendMail(payload)
     console.log(mailSend);
 
@@ -105,7 +105,7 @@ export default function Page() {
         ...item.waitingPayment.booking
       ],
       coupons: item.waitingPayment.coupons,
-      // waitingPayment: null
+      waitingPayment: null
     }
     try {
       console.log(data);

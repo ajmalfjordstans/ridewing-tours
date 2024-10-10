@@ -54,7 +54,7 @@ const CheckoutMenu = ({ items }) => {
 
   const handleFirebaseUserCartUpdate = async (bookings = cartItems) => {
     let booking = Array.isArray(bookings) ? bookings : bookings.items
-    // console.log(booking);
+    console.log(booking);
 
     if (user?.userInfo?.uid) {
       const data = {
