@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTransferBooking } from '../store/userSlice';
 import { useRouter } from 'next/navigation';
 import { addItem } from '../store/cartSlice';
+import { formatDate, formatTime, generateBookingId } from '../services/utils';
 
 export default function CustomPackageForm({ }) {
   const [submitting, setSubmitting] = useState(false)
@@ -15,22 +16,28 @@ export default function CustomPackageForm({ }) {
   const user = useSelector(state => state.user.userInfo);
 
 
-  function generateBookingId() {
-    const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
-    const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
-    return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
-  }
+  // function generateBookingId() {
+  //   const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
+  //   const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
+  //   return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
+  // }
 
   const addToCartHandler = (values) => {
+    const formattedDate = formatDate(values.date)
+    const formattedTime = formatTime(values.meetingTime)
     try {
       const newData = {
         id: generateBookingId(),
         bookingId: generateBookingId(),
         name: `${user.displayName}'s Custom ${values.city} Package`,
-        travelDetails: values,
+        travelDetails: {
+          ...values,
+          meetingTime: formattedTime,
+          date: formattedDate
+        },
         type: 'custom'
       }
-      // console.log(newData);
+      console.log(newData);
       dispatch(addItem({ ...newData, status: "pending" }));
       router.push(`/cart`)
     } catch (error) {

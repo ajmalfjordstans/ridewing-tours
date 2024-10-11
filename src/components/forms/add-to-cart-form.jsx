@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import DatepickerComponent from '../services/datepicker';
 import dayjs from 'dayjs';
+import { formatDate, generateBookingId } from '../services/utils';
 
 export default function AddToCart({ data, setData, addToCartHandler, setShowForm }) {
   const [includeTicket, setIncludeTicket] = useState(data?.details.entranceFeeIncluded);
@@ -15,11 +16,11 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [meetingPoint, setMeetingPoint] = useState(null)
   const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
 
-  function generateBookingId() {
-    const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
-    const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
-    return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
-  }
+  // function generateBookingId() {
+  //   const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
+  //   const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
+  //   return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
+  // }
 
   const buttonHandler = () => {
     if (date == null) {
@@ -37,7 +38,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
       const cartData = {
         ...data,
         bookingId: generateBookingId(),
-        date: dayjs(date).toDate(),
+        date: formatDate(date),
         contact: contact,
         meetingPoint: meetingPoint,
         includeTicket,
@@ -47,7 +48,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
         hoursGuideNeeded: hoursGuideNeeded,
         type: "package"
       };
-      console.log(cartData)
+      // console.log(cartData)
       addToCartHandler(cartData);
       setShowForm(false);
     }

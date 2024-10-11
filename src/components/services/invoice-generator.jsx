@@ -1,6 +1,7 @@
 import axios from "axios";
 import { generatePayload } from "./send-mail";
 import { transformDataForStripe } from "./stripe-items-formatter";
+import { useSelector } from "react-redux";
 
 /**
  * Generates an invoice object from an array of booking details.
@@ -61,11 +62,12 @@ const subtotal = (list) => {
   }, 0);
 };
 
-export function generateInvoiceObj(bookings, user) {
-  console.log(bookings);
+export function generateInvoiceObj(bookings, user, currency) {
   let item = transformDataForStripe(bookings)
   let total = subtotal(bookings)
-  console.log(total, item)
+  let contact = bookings[0].type == 'package' ? bookings[0].contact : bookings[0].travelDetails.contact
+  // console.log(item);
+  // console.log(total, item)
   // Helper function to generate a random invoice number
   function generateInvoiceNo() {
     try {
@@ -88,10 +90,11 @@ export function generateInvoiceObj(bookings, user) {
 
   // Initialize the invoice object
   const invoice = {
+    currency: currency,
     invoiceNo: generateInvoiceNo(),
     invoiceDate: formatDate(new Date()),
     customer: user.userInfo.displayName,
-    phone: bookings[0].contact,
+    phone: contact,
     email: user.userInfo.email,
     subtotal: total,
     items: item.items.map(item => ({

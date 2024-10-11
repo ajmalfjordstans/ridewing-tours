@@ -17,6 +17,7 @@ export default function Page() {
   const dispatch = useDispatch()
   const [verified, setVerified] = useState(false)
   const [mailDone, setMailDone] = useState(false)
+  const currency = useSelector(state => state.user.currency.sign)
 
   useEffect(() => {
     if (session_id) {
@@ -62,11 +63,9 @@ export default function Page() {
   };
 
   const handleInvoice = async (items) => {
-    // console.log(items);
-
-    const invoiceObj = generateInvoiceObj(items, user)
+    const invoiceObj = generateInvoiceObj(items, user, currency)
     const invoiceUrl = await generateInvoice(invoiceObj)
-    console.log(invoiceUrl);
+    // console.log(invoiceUrl);
 
     const content = {
       email: user.userInfo.email,
@@ -75,7 +74,7 @@ export default function Page() {
         invoiceNo: invoiceObj.invoiceNo,
         invoiceUrl: invoiceUrl,
         date: invoiceObj.invoiceDate,
-        total: invoiceObj.subtotal,
+        total: currency + invoiceObj.subtotal,
       },
       attachments: [invoiceUrl]
     }

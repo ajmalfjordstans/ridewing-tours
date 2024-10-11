@@ -22,21 +22,30 @@ export function transformDataForStripe(dataArray) {
 
     let quantity = 1;
     let price = parsePrice(obj.price);
+    let type;
 
     // Handling 'guide' type
     if (obj.type === 'guide' && obj.travelDetails && typeof obj.travelDetails.hours === 'number') {
       quantity = obj.travelDetails.hours;
+      type = "GUIDE"
     } else {
       quantity = obj.noOfPassengers < 4 ? 4 : obj.noOfPassengers || 1; // Default to noOfPassengers or 1
+      type = "GUIDE"
     }
 
     // Handling 'package' type with bulkPrice logic
     if (obj.type === 'package') {
       if (obj.noOfPassengers > 4 && obj.bulkPrice) {
         price = parsePrice(obj.bulkPrice); // Use bulkPrice if passengers are more than 4
+        type = "PACKAGE"
       } else {
         price = parsePrice(obj.price); // Fallback to normal price
+        type = "PACKAGE"
       }
+    }
+
+    if (obj.transfer == 'airport' || obj.transfer == 'station') {
+      type = 'TRANSFER'
     }
 
     // Extract Main Item
@@ -45,6 +54,7 @@ export function transformDataForStripe(dataArray) {
         name: obj.name,
         price: price,
         quantity: quantity < 4 ? 4 : quantity,
+        type: type
       };
       items.push(mainItem);
     } else {
@@ -58,6 +68,7 @@ export function transformDataForStripe(dataArray) {
           name: ticket.name || `Additional Ticket ${ticketIndex + 1}`,
           price: parsePrice(ticket.price),
           quantity: ticket.ticketCount || 1, // Default quantity to 1 if not specified
+          type: 'TICKET'
         };
         items.push(additionalItem);
       });

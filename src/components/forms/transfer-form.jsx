@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { addItem } from '../store/cartSlice';
+import { formatDate, formatTime, generateBookingId } from '../services/utils';
 
 export default function TransferForm({ data }) {
   const [submitting, setSubmitting] = useState(false);
@@ -15,11 +16,11 @@ export default function TransferForm({ data }) {
   const cart = useSelector(state => state.cart.items);
   const country = useSelector(state => state.user.selectedCountry);
 
-  function generateBookingId() {
-    const timestamp = Date.now().toString(36);
-    const randomNum = Math.random().toString(36).substring(2, 10);
-    return `BK-${timestamp}-${randomNum}`;
-  }
+  // function generateBookingId() {
+  //   const timestamp = Date.now().toString(36).substring(0, 3); // Shorten timestamp
+  //   const randomNum = Math.random().toString(36).substring(2, 4); // Shorten random number
+  //   return `BK-${timestamp}${randomNum}`;
+  // }
 
   const addToCartHandler = (values) => {
     const itemExists = cart.find(item => item.id === data.id);
@@ -39,9 +40,17 @@ export default function TransferForm({ data }) {
   };
 
   const handleSubmit = (values, { resetForm }) => {
+    const formattedDate = formatDate(values.date);
+    const formattedTime = formatTime(values.pickupTime);
+    // console.log(formattedDate, formattedTime);
+
     try {
       setSubmitting(true);
-      addToCartHandler(values);
+      addToCartHandler({
+        ...values,
+        date: formattedDate,
+        pickupTime: formattedTime,
+      });
       resetForm();
       setSubmitting(false);
     } catch (error) {

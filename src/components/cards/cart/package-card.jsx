@@ -252,9 +252,9 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
     updateCartHandler({ ...data, noOfPassengers: count, total: totalCalculated })
   }, [count])
 
-  // useEffect(() => {
-  //   console.log(data);
-  // }, [])
+  useEffect(() => {
+    console.log(data);
+  }, [])
   return (
     <>
       <div className='w-full border border-solid border-[rgba(255, 218, 50, 0.5)] shadow-[0px_-1px_6.9px_0px_rgba(0,0,0,0.25)] rounded-[20px] flex flex-col overflow-hidden mt-6'>
@@ -275,33 +275,35 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                   <p className='text-[15px]'>{data.startLocation}</p>
                   {data.type === "package" &&
                     <>
-                      {/* <p className='text-[15px] mt-1'>{data.date.toLocaleDateString()}</p> */}
-                      <p>{data?.contact}</p>
+                      <p className='text-[15px] mt-1'>{data.date}</p>
+                      {/* <p>{data?.contact}</p> */}
                     </>
                   }
                   {data?.transfer === "airport" && <>
                     <p>Flight Number: {data?.travelDetails?.flightNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
+                    <p className='text-[15px] mt-1'>{data.travelDetails.time}</p>
                   </>}
                   {data?.transfer === "station" && <>
                     <p>Station Number: {data?.travelDetails?.trainNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
+                    <p className='text-[15px] mt-1'>{data.travelDetails.time}</p>
                   </>}
                   {(data?.type === "guide" || data?.type == 'custom') && <>
-                    <p>Meeting Time: {convertTo12HourFormat(data?.travelDetails?.meetingTime)}</p>
+                    <p>Meeting Time: {data?.travelDetails?.meetingTime}</p>
                     <p>Meeting Point: {data?.travelDetails?.meetingPoint}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                   </>}
 
                 </div>
-                {data?.type == 'package' &&
+                {data?.type != 'guide' &&
                   <div className='flex flex-col items-center'>
                     <div className="flex items-center justify-center h-full gap-2 mx-auto">
                       <button
                         className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px] "
                         onClick={() => {
                           increment()
-                          handleAddAllTicketCount()
+                          data?.type == 'package' ? handleAddAllTicketCount() : ""
                         }
                         }
                       >
@@ -312,7 +314,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                         className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
                         onClick={() => {
                           decrement()
-                          handleSubtractAllTicketCount()
+                          data?.type == 'package' ? handleSubtractAllTicketCount() : ""
                         }}
                       >
                         -
@@ -344,6 +346,10 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                 <div className='flex flex-col items-end'>
                   {data.type === "package" &&
                     <>
+                      <div className='flex gap-1'>
+                        <p className=' text-[10px] whitespace-nowrap'>Per Head</p>
+                        <p className='text-[12px] whitespace-nowrap'>{currency.sign + "" + (data?.noOfPassengers < 5 ? data?.price : data?.bulkPrice)}</p>
+                      </div>
                       {data?.noOfPassengers > 4 &&
                         <p className='text-[22px] leading-[42px] whitespace-nowrap line-through text-black text-opacity-50'>
                           {data?.currency == undefined ? currency.sign : data.currency + " " + (data?.price * data?.noOfPassengers).toLocaleString()}
@@ -357,6 +363,10 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                   }
                   {(data?.transfer == 'airport' || data?.transfer == 'station') &&
                     <>
+                      <div className='flex gap-1'>
+                        <p className=' text-[10px] whitespace-nowrap'>Per Head</p>
+                        <p className='text-[12px] whitespace-nowrap'>{currency.sign + "" + (data?.price)}</p>
+                      </div>
                       <p className='text-[22px] leading-[42px] whitespace-nowrap'>{currency.sign + "" + (data?.noOfPassengers < 4 ? data?.price * 4 : data?.price * data?.noOfPassengers)}</p>
                       <p className=' text-[10px] whitespace-nowrap'>Minimum 4 people required</p>
                     </>
@@ -375,7 +385,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                 <div className='bg-secondary h-[1px] w-full'></div>
                 <div className='p-[15px] grid grid-cols-2 '>
                   <p className='capitalize'>{data?.travelDetails?.tripType}</p>
-                  <p>Pickup Time: {convertTo12HourFormat(data?.travelDetails?.pickupTime)}</p>
+                  <p>Pickup Time: {data?.travelDetails?.pickupTime}</p>
                 </div>
               </>
             }
