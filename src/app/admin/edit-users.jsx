@@ -20,29 +20,47 @@ export default function EditUsers({ setShowSection }) {
     getAllUsers()
   }, [])
 
-
   return (
     <div className='pb-[150px] mt-[100px] flex h-full'>
       <div className='container mx-auto px-[5%] lg:px-0 pt-[20px]'>
         <div
           onClick={() => setShowSection('home')}
+          className="hover:cursor-pointer"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
           </svg>
         </div>
-        <p className='font-[700] text-[28px] mt-[25px]'>Users</p>
-        {users == null && <div className='h-[full] w-[full] text-[22px] font-[600] flex justify-center items-center pt-[30vh]'>Loading</div>}
-        <div className='grid grid-cols-5 mt-[30px] gap-5'>
-          {users && users.map((user, index) => (
-            <div key={index}
-              className='h-[150px] border-[1px] border-custom-red rounded-[5px] flex flex-col justify-center items-center'
-            > <p>{user.displayName}</p>
-              <p className='text-[12px]'>{user?.email}</p>
-              <p className='text-[12px]'>{user?.contact}</p>
-            </div>
-          ))}
-        </div>
+        <p className='font-bold text-2xl mt-6'>Users</p>
+        
+        {users == null ? (
+          <div className='text-center text-lg font-semibold flex justify-center items-center h-[50vh]'>
+            Loading...
+          </div>
+        ) : (
+          <div className='overflow-x-auto mt-6'>
+            <table className='min-w-full table-auto border-collapse'>
+              <thead>
+                <tr className='bg-gray-200'>
+                  <th className='px-4 py-2 text-left border'>#</th>
+                  <th className='px-4 py-2 text-left border'>Name</th>
+                  <th className='px-4 py-2 text-left border'>Email</th>
+                  <th className='px-4 py-2 text-left border'>Contact</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user, index) => (
+                  <tr key={index} className='even:bg-gray-100'>
+                    <td className='px-4 py-2 border'>{index + 1}</td>
+                    <td className='px-4 py-2 border'>{user.displayName}</td>
+                    <td className='px-4 py-2 border'>{user?.email || 'N/A'}</td>
+                    <td className='px-4 py-2 border'>{user?.contact || 'N/A'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   )

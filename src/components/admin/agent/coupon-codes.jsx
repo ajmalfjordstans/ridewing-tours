@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
 export default function CouponAssignment({ agent }) {
-  const [coupons, setCoupons] = useState(agent?.coupons);
+  const [coupons, setCoupons] = useState(agent?.coupons || []);
   const [inputValue, setInputValue] = useState('');
 
   // Function to parse the coupon code
@@ -23,9 +23,10 @@ export default function CouponAssignment({ agent }) {
 
   // Function to add a coupon to the state
   const addCoupon = (code) => {
+    if (!code || !parseCoupon(code)) return; // Ensure valid input
     const newCoupon = parseCoupon(code);
     setCoupons([...coupons, newCoupon]);
-    setInputValue("")
+    setInputValue("");
   };
 
   // Function to remove a coupon from the state
@@ -44,16 +45,30 @@ export default function CouponAssignment({ agent }) {
   };
 
   const updateAgent = async () => {
+    // Check if the agent object is valid before updating Firestore
+    if (!agent?.uid) {
+      console.error("Agent or agent ID is undefined, cannot update.");
+      return;
+    }
+
     const user = {
       ...agent,
       coupons: coupons
-    }
-    await setDoc(doc(db, "users", agent?.uid), user);
-  }
+    };
 
+    try {
+      await setDoc(doc(db, "users", agent.uid), user); // Use agent.uid (not agent?.uid)
+    } catch (error) {
+      console.error("Error updating agent:", error);
+    }
+  };
+
+  // Update Firestore whenever coupons are changed
   useEffect(() => {
-    updateAgent()
-  }, [coupons])
+    if (agent?.uid) {
+      updateAgent();
+    }
+  }, [coupons, agent?.uid]); // Only run if agent and uid are defined
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -67,7 +82,9 @@ export default function CouponAssignment({ agent }) {
             className="p-2 border border-gray-300 rounded"
             placeholder="Coupon Code"
           />
-          <p className='mt-2 text-red-500 text-[10px] text-center'>Coupon code should end with<br /> a number following alphabet V or P </p>
+          <p className='mt-2 text-red-500 text-[10px] text-center'>
+            Coupon code should end with<br /> a number following alphabet V or P 
+          </p>
           <div className='flex gap-2'>
             <button
               onClick={handlePasteFromClipboard}

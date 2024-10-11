@@ -241,8 +241,17 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
   const additionalTicketsTotal = calculateAdditionalTicketsTotal(items);
 
   const handleCheckout = async () => {
+    // console.log(user.userInfo);
+    
+    if (user.userInfo.userRole == 'agent' && user.userInfo.active == false) {
+      alert('Your account is inactive')
+      return
+    }
+    if(cartItems.length == 0){
+      alert('Cart is empty')
+      return
+    }
     let item = transformDataForStripe(cartItems)
-    console.log(item);
 
     setLoading(true);
 
@@ -299,7 +308,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
     <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full pb-[10px]'>
       <div className='w-full p-[30px]'>
         <p className='text-[24px] font-semibold'>Summary</p>
-        <Button onClick={() => console.log(cartItems)}>Show Items</Button>
+        {/* <Button onClick={() => console.log(cartItems)}>Show Items</Button> */}
         <div className='w-full mt-[20px] flex flex-col gap-4'>
           <div className='w-full flex justify-between text-[#ABABAB]'>
             <p>Subtotal</p>
