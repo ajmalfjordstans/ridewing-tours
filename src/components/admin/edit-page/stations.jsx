@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 
 export default function Stations() {
   const currentCountry = useSelector(state => state.user.selectedCountry)
-  const currency = useSelector(state => state.user.currency.code)
+  const currency = useSelector(state => state.user.currency.sign)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
@@ -168,7 +168,7 @@ export default function Stations() {
                     </div>
                     <div>
                       <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
-                        value={values.currency}
+                        value={values.currency} disabled
                         onChange={(e) => setValues({ ...values, currency: e.target.value })} placeholder='Currency' required />
                     </div>
                   </div>

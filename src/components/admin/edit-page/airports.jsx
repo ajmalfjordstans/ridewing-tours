@@ -23,7 +23,7 @@ const AirportsDetails = [
 
 export default function Airports() {
   const currentCountry = useSelector(state => state.user.selectedCountry)
-  const currency = useSelector(state => state.user.currency.code)
+  const currency = useSelector(state => state.user.currency.sign)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
@@ -35,6 +35,7 @@ export default function Airports() {
   })
   const [data, setData] = useState(null)
   const [loadingData, setLoadingData] = useState(true)
+  // const []
 
   useEffect(() => {
     console.log(currency, values.currency);
@@ -44,6 +45,7 @@ export default function Airports() {
   const getData = async () => {
     try {
       const response = await (readFirebaseCollection(`countries/${currentCountry}/airports`))
+      // const countryData = await (readFirebaseCollection(`countries/${currentCountry}/landing/hero`))
       setData(response);
       setLoadingData(false)
     } catch (error) {
@@ -186,9 +188,9 @@ export default function Airports() {
                         onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price' required />
                     </div>
                     <div>
-                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
+                      <input type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' disabled
                         value={values.currency}
-                        onChange={(e) => setValues({ ...values, currency: e.target.value })} placeholder='Currency' required />
+                        onChange={(e) => setValues({ ...values, currency: currency })} placeholder='Currency' required />
                     </div>
                   </div>
                 </div>

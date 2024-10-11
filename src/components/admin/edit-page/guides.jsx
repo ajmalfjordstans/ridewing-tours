@@ -24,6 +24,7 @@ const Guide = [
 
 export default function Guides() {
   const currentCountry = useSelector(state => state.user.selectedCountry)
+  const currency = useSelector(state => state.user.currency.sign)
   const [image, setImage] = useState(null)
   const [currentImage, setCurrentImage] = useState(null)
   const [showEdit, setShowEdit] = useState(false)
@@ -34,7 +35,7 @@ export default function Guides() {
     title: '',
     name: '',
     price: '',
-    currency: '',
+    currency: currency,
     date: null,
     languages: [] // Initialize languages as an empty array
   })
@@ -48,8 +49,6 @@ export default function Guides() {
   const getData = async () => {
     try {
       const response = await (readFirebaseCollection(queryPath))
-      const responseAbout = await (readFirebaseDocument(`countries/${currentCountry}/landing/hero`))
-      setValues({ ...values, currency: responseAbout?.currency })
       // console.log(responseAbout.currency);
       setData(response);
       setLoadingData(false)
@@ -204,7 +203,7 @@ export default function Guides() {
                     <input type="number" min={"1"} className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' value={values.price} onChange={(e) => setValues({ ...values, price: e.target.value })} placeholder='Price/hour' required />
 
                     <input
-                      type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]'
+                      type="text" className='p-[10px] border-[2px] border-black rounded-[5px] w-full my-[10px]' disabled
                       value={values.currency}
                       onChange={(e) => setValues({ ...values, currency: e.target.value })} placeholder='Currency' required />
 

@@ -23,6 +23,7 @@ export default function Banner() {
       lowTemp: '',
       degree: 'Celsius'
     });
+    
   const [values, setValues] = useState({
     background: "",
     heading: "",
