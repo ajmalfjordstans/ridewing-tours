@@ -21,7 +21,7 @@ export default function Transfer() {
 
   useEffect(() => {
     getData()
-  }, [])
+  }, [selectedCountry])
 
   // useEffect(() => {
   //   const fetchData = async () => {

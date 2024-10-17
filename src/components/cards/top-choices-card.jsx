@@ -10,10 +10,11 @@ export default function TopChoicesCard({ data }) {
     <div className='w-full rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >
       <div className='h-[305px] flex items-end relative'
-        style={{
-          backgroundImage: `url(${data.gallery[0]})`, backgroundSize: 'cover', backgroundPosition: 'center'
-        }}
+        // style={{
+        //   backgroundImage: `url(${data.gallery[0]})`, backgroundSize: 'cover', backgroundPosition: 'center'
+        // }}
       >
+        <Image src={data?.gallery[0]} height={700} width={500} alt='top' className='absolute top-0 h-full w-full object-cover'/>
         {data?.offers?.offerTitle &&
           <p className='absolute top-0 text-white text-right h-[40px] p-[10px] bg-[#FF0000]'>{data?.offers?.offerTitle} {data?.offers?.offerValue}{data?.offers?.isPercent ? "%" : ""} OFF</p>
         }

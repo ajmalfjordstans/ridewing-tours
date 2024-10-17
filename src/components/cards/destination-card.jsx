@@ -2,10 +2,14 @@
 import { Button } from '@material-tailwind/react'
 import React from 'react'
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function DestinationCard({ data }) {
   return (
-    <div className='w-full h-[380px] group relative p-[15px] flex items-end' style={{ backgroundImage: `url(${data.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className='w-full h-[380px] group relative p-[15px] flex items-end'
+      // style={{ backgroundImage: `url(${data.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+    >
+      <Image src={data?.image} height={700} width={500} alt='top' className='absolute left-0 top-0 h-full w-full object-cover' />
       <motion.p
         className='font-[700] text-[36px] leading-[50px] text-white group-hover:hidden'
         initial={{ opacity: 1 }}
