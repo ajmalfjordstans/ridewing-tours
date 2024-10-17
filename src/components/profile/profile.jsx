@@ -28,12 +28,16 @@ export default function Profile({ user, handleSignOut }) {
   const pinRef = useRef(null);
 
   const validatePhone = (phone) => {
-    // Remove all non-digit characters from the phone string
-    const cleanedPhone = phone.replace(/\D/g, '');
+    // Remove spaces, dashes, parentheses, and other common formatting symbols
+    const cleanedPhone = phone.replace(/[\s()-]/g, '');
 
-    // Check if the length of the cleaned phone number is at least 10 digits
-    return cleanedPhone.length >= 10;
+    // Match numbers that start with '+' for international formats or just digits for local formats
+    const internationalFormat = /^\+?\d{7,15}$/;
+
+    // Return true if the phone number matches the international format
+    return internationalFormat.test(cleanedPhone);
   };
+
 
   // Scroll to the first missing required field when page loads
   useEffect(() => {
@@ -113,6 +117,11 @@ export default function Profile({ user, handleSignOut }) {
     }
     if (!data.city) {
       setErrors({ ...errors, city: 'City is required' });
+      cityRef.current?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (!data.country) {
+      setErrors({ ...errors, country: 'Country is required' });
       cityRef.current?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
@@ -295,6 +304,7 @@ export default function Profile({ user, handleSignOut }) {
               className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
               onChange={handleInputChange}
             />
+            {errors.address1 && <p className='text-red-600'>{errors.address1}</p>}
           </div>
 
           <div className='flex flex-col gap-2 col-span-2'>
@@ -307,18 +317,33 @@ export default function Profile({ user, handleSignOut }) {
               className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
               onChange={handleInputChange}
             />
+            {errors.city && <p className='text-red-600'>{errors.city}</p>}
+          </div>
+
+          <div className='flex flex-col gap-2 col-span-2'>
+            <p className='font-[600]'>Country:</p>
+            <input
+              // ref={cityRef}
+              type='text'
+              name='country'
+              value={data?.country}
+              className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
+              onChange={handleInputChange}
+            />
+            {errors.country && <p className='text-red-600'>{errors.country}</p>}
           </div>
 
           <div className='flex flex-col gap-2 col-span-2'>
             <p className='font-[600]'>Zip / Post Code / Pin Code:</p>
             <input
               // ref={pinRef}
-              type='number'
+              type='text'
               name='pin'
               value={data?.pin}
               className='p-[10px] border-[1px] border-black outline-none rounded-[5px]'
               onChange={handleInputChange}
             />
+            {errors.pin && <p className='text-red-600'>{errors.pin}</p>}
           </div>
 
           <div className='col-span-2 flex justify-end'>

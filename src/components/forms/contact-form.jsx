@@ -1,21 +1,33 @@
 'use client'
 import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { sendMail } from '../services/send-mail';
 
 export default function ContactForm() {
   const [success, setSuccess] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const sendMail = async (values, { resetForm }) => {
+
+  const handleSendMail = async (values, { resetForm }) => {
+    const emailPayload = {
+      to: 'frontend.fjordstans@gmail.com',
+      subject: 'Contact Form',
+      // text: "Hello, Welcome to Ridewing",
+      html: `<!DOCTYPE html> <html lang='en'> <head> <meta charset='UTF-8'> <meta name='viewport' content='width=device-width, initial-scale=1.0'> <title>Email Template</title> <style> body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; } .container { width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); } .header { text-align: center; padding: 10px 0; background-color: #4CAF50; color: #ffffff; } .header h1 { margin: 0; font-size: 24px; } .content { padding: 20px; } .content p { font-size: 16px; line-height: 1.6; } .footer { text-align: center; padding: 10px 0; color: #888888; font-size: 14px; } </style> </head> <body> <div class='container'> <div class='header'> <h1>New Message Notification</h1> </div> <div class='content'> <p><strong>First Name:</strong> ${values.firstName}</p> <p><strong>Last Name:</strong> ${values.lastName}</p> <p><strong>Email:</strong> ${values.email}</p> <p><strong>Subject:</strong> ${values.subject}</p> <p><strong>Message:</strong></p> <p>${values.message}</p> </div> <div class='footer'> <p>This is an automated email. Please do not reply.</p> </div> </div> </body> </html>`,
+    };
     try {
+      console.log(emailPayload);
       setSubmitting(true)
-      const response = await fetch('https://riod-backend.onrender.com/contact-us-sconcierge', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(values)
-      })
-      if (response.ok) {
+      const response = await sendMail(emailPayload)
+      // const response = await fetch('https://riod-backend.onrender.com/contact-us-sconcierge', {
+      //   method: 'POST',
+      //   headers: {
+      //     'content-type': 'application/json'
+      //   },
+      //   body: JSON.stringify(values)
+      // })
+      console.log(response);
+      
+      if (response.status == '200') {
         console.log('Form submitted successfully.');
         resetForm()
         setSuccess(true)
@@ -25,7 +37,7 @@ export default function ContactForm() {
       console.error('Error submitting form.', error);
       setSubmitting(false)
     }
-    console.log(response);
+    // console.log(response);
     setTimeout(() => {
       setSuccess(false)
     }, [5000])
@@ -69,7 +81,7 @@ export default function ContactForm() {
           onSubmit={(values, { setSubmitting, resetForm }) => {
             // Handle form submission here
             // console.log(values);
-            sendMail(values, { resetForm })
+            handleSendMail(values, { resetForm })
             setSubmitting(false);
           }}
         >
