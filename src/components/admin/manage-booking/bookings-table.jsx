@@ -413,7 +413,7 @@ export function BookingTable({ bookings, setAllBookings }) {
                           variant="small"
                           className="font-normal"
                         >
-                          Date: {booking && booking.date ? formatDateFromTimestamp(booking.date) : (booking && booking.travelDetails ? booking.travelDetails.date : 'N/A')}
+                          Date: {booking && booking.date ? (booking.date) : (booking && booking.travelDetails ? booking.travelDetails.date : 'N/A')}
                         </Typography>
                         <Typography
                           variant="small"

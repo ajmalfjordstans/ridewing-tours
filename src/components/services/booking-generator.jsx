@@ -12,7 +12,7 @@ export function createBookingObject(booking, user) {
     customer = {
       name: booking.displayName || "N/A", // Using displayName as the customer's name
       email: booking.email || "N/A",
-      phone: booking.phone || "N/A", // Assuming phone might be part of the booking object
+      phone: booking.contact || "N/A", // Assuming phone might be part of the booking object
       bookingNo: booking.bookingId || "N/A",
       bookingDate: booking.date
         // ? new Date(booking.date.seconds * 1000).toLocaleDateString()
@@ -70,7 +70,7 @@ export function createBookingObject(booking, user) {
     // Type 3: Guide Booking
     bookingDetails.push({
       booking: 'guide',
-      name: booking.name,
+      name: booking.travelDetails.name,
       language: booking.travelDetails.language,
       time: booking.travelDetails.meetingTime,
       date: booking.travelDetails.date,
@@ -81,7 +81,7 @@ export function createBookingObject(booking, user) {
     });
 
     customer = {
-      name: booking.travelDetails.displayName || "N/A", // Using displayName as the customer's name
+      name: booking.travelDetails.name || "N/A", // Using displayName as the customer's name
       email: booking.travelDetails.email || "N/A",
       phone: booking.travelDetails.contact || "N/A", // Assuming phone might be part of the booking object
       bookingNo: booking.bookingId || "N/A",

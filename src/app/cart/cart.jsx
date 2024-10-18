@@ -242,15 +242,17 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
 
   const handleCheckout = async () => {
     // console.log(user.userInfo);
-    
-    if (user.userInfo.userRole == 'agent' && user.userInfo.active == false) {
+
+    if (user?.userInfo?.userRole == 'agent' && user?.userInfo?.active == false) {
       alert('Your account is inactive')
       return
     }
-    if(cartItems.length == 0){
+
+    if (cartItems?.length == 0) {
       alert('Cart is empty')
       return
     }
+
     let item = transformDataForStripe(cartItems)
 
     setLoading(true);
@@ -305,60 +307,67 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
   }, []);
 
   return (
-    <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full pb-[10px]'>
-      <div className='w-full p-[30px]'>
-        <p className='text-[24px] font-semibold'>Summary</p>
-        {/* <Button onClick={() => console.log(cartItems)}>Show Items</Button> */}
-        <div className='w-full mt-[20px] flex flex-col gap-4'>
-          <div className='w-full flex justify-between text-[#ABABAB]'>
-            <p>Subtotal</p>
-            <p>{subtotal?.toLocaleString()}</p>
-          </div>
-          <div className='w-full flex justify-between text-[#ABABAB]'>
-            <p>Additional Tickets</p>
-            <p>{additionalTicketsTotal.toLocaleString()}</p>
-          </div>
-          <div className='h-[1px] w-full bg-black'></div>
-          <div className='flex gap-2'>
-            <input type="text" value={couponCode} className='p-[10px] rounded-[5px]' placeholder='Enter Coupon Code' onChange={(e) => setCouponCode(e.target.value)} />
-            <Button className='bg-secondary text-white mx-auto'
-              onClick={() => {
-                checkCouponCode()
-              }}
-            >
-              Apply Code
-            </Button>
-          </div>
-          {couponNotFound && <p className='text-red-500 text-[12px]'>Coupon Not Found</p>}
-          <div className='w-full flex justify-between'>
-            <p>Total</p>
-            <div className='flex flex-col items-end'>
-              <p>{discountPrice}</p>
-              <div className='flex gap-2'>
-                <p>{discountPrice && discountOffer}</p>
-                <p className={`${discountPrice && 'line-through text-gray-600'}`}>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
+    <>
+      <div className='sticky top-[100px] w-full max-w-[423px] bg-[#F8F8F8] h-full pb-[10px]'>
+        <div className='w-full p-[30px]'>
+          <p className='text-[24px] font-semibold'>Summary</p>
+          {/* <Button onClick={() => console.log(cartItems)}>Show Items</Button> */}
+          <div className='w-full mt-[20px] flex flex-col gap-4'>
+            <div className='w-full flex justify-between text-[#ABABAB]'>
+              <p>Subtotal</p>
+              <p>{subtotal?.toLocaleString()}</p>
+            </div>
+            <div className='w-full flex justify-between text-[#ABABAB]'>
+              <p>Additional Tickets</p>
+              <p>{additionalTicketsTotal.toLocaleString()}</p>
+            </div>
+            <div className='h-[1px] w-full bg-black'></div>
+            <div className='flex gap-2'>
+              <input type="text" value={couponCode} className='p-[10px] rounded-[5px]' placeholder='Enter Coupon Code' onChange={(e) => setCouponCode(e.target.value)} />
+              <Button className='bg-secondary text-white mx-auto'
+                onClick={() => {
+                  checkCouponCode()
+                }}
+              >
+                Apply Code
+              </Button>
+            </div>
+            {couponNotFound && <p className='text-red-500 text-[12px]'>Coupon Not Found</p>}
+            <div className='w-full flex justify-between'>
+              <p>Total</p>
+              <div className='flex flex-col items-end'>
+                <p>{discountPrice}</p>
+                <div className='flex gap-2'>
+                  <p>{discountPrice && discountOffer}</p>
+                  <p className={`${discountPrice && 'line-through text-gray-600'}`}>{(subtotal + additionalTicketsTotal).toLocaleString()}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='w-full flex justify-center'>
-        {/* <Button className='bg-secondary text-white mx-auto'
+        <div className='w-full flex justify-center'>
+          {/* <Button className='bg-secondary text-white mx-auto'
           onClick={handleFirebaseUserCartUpdate}
         >
           Log
         </Button> */}
-        <Button className='bg-secondary text-white mx-auto'
-          onClick={() => {
-            handleCheckout()
-          }}
-        >
-          {/* <Link href={{ pathname: '/cart/checkout', query: { country: user.selectedCountry } }}> */}
-          Checkout
-          {/* </Link> */}
-        </Button>
-      </div>
-    </div >
+          <Button className='bg-secondary text-white mx-auto'
+            onClick={() => {
+              handleCheckout()
+            }}
+          >
+            {/* <Link href={{ pathname: '/cart/checkout', query: { country: user.selectedCountry } }}> */}
+            Checkout
+            {/* </Link> */}
+          </Button>
+        </div>
+      </div >
+      {loading &&
+        <div className='absolute top-0 left-0 h-[100vh] w-[100vw] flex justify-center items-center'>
+          <p className='text-white font-[600] text-[24px]'>Loading</p>
+        </div>
+      }
+    </>
   )
 }
 

@@ -38,7 +38,7 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
                 <p className='capitalize'>Category: {viewBooking.type || viewBooking.transfer}</p>
                 <p>Name: {viewBooking.name}</p>
                 <p>Total Passengers: {viewBooking.noOfPassengers}</p>
-                <p>Date: {viewBooking.date ? formatDateFromTimestamp(viewBooking.date) : viewBooking.travelDetails.date}</p>
+                <p>Date: {viewBooking.date ? (viewBooking.date) : viewBooking.travelDetails.date}</p>
                 <p>Meeting Point: {viewBooking.meetingPoint}</p>
                 <p>Upto 4 Price: {viewBooking.currency}{viewBooking.price}</p>
                 <p>From 4 Price: {viewBooking.currency}{viewBooking.bulkPrice}</p>

@@ -14,11 +14,11 @@ export default function TopChoicesCard({ data }) {
         //   backgroundImage: `url(${data.gallery[0]})`, backgroundSize: 'cover', backgroundPosition: 'center'
         // }}
       >
-        <Image src={data?.gallery[0]} height={700} width={500} alt='top' className='absolute top-0 h-full w-full object-cover'/>
+        <Image src={data?.gallery[0]} height={700} width={500} alt='top' className='absolute top-0 h-full w-full object-cover z-0'/>
         {data?.offers?.offerTitle &&
           <p className='absolute top-0 text-white text-right h-[40px] p-[10px] bg-[#FF0000]'>{data?.offers?.offerTitle} {data?.offers?.offerValue}{data?.offers?.isPercent ? "%" : ""} OFF</p>
         }
-        <div className='flex w-full justify-between '>
+        <div className='flex w-full justify-between relative z-2'>
           <div className='text-[16px] flex items-center gap-3 p-[12px]'>
             {/* <div className='h-[33px] w-[33px] rounded-full bg-[#FFFFFF4D] flex justify-center items-center text-white'>
               <p className=''>4.8</p>

@@ -26,7 +26,7 @@ export default function ManageBookings({ setShowSection }) {
                 displayName: userData.displayName,
                 email: userData.email,
                 photo: userData.photoURL,
-                contact: userData?.contact ? userData?.contact : booking.contact
+                contact: booking?.contact ? booking?.contact : userData?.contact ? userData?.contact : 'N/A'
               })
             })
           }
