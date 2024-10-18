@@ -27,7 +27,11 @@ export default function TourHero({ data }) {
   const cart = useSelector(state => state.cart.items);
 
   const addToCartHandler = (newData) => {
+    console.log("addToCartHandler called");
+    
     const itemExists = cart.find(item => item.id === bookingPackage.id);
+    console.log(itemExists);
+    
     if (!itemExists) {
       router.push(`/cart`)
       dispatch(addItem({ ...newData, status: "pending" }));
@@ -35,6 +39,7 @@ export default function TourHero({ data }) {
     } else {
       alert("Item already exists");
     }
+
   }
 
   useEffect(() => {

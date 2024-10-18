@@ -23,6 +23,8 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   // }
 
   const buttonHandler = () => {
+    console.log("add to cart form button called");
+
     if (date == null) {
       alert("Pick a date to continue")
       // } 
@@ -50,6 +52,8 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
       };
       // console.log(cartData)
       addToCartHandler(cartData);
+      console.log(cartData);
+
       setShowForm(false);
     }
   }
