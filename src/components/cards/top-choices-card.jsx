@@ -9,7 +9,6 @@ export default function TopChoicesCard({ data }) {
 
   // Handle image load event
   const handleImageLoad = () => {
-    console.log('func called');
     setLoading(false);
   };
   return (
