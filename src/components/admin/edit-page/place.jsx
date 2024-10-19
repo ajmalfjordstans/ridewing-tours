@@ -96,7 +96,7 @@ export default function Place() {
                 {data?.map((data, id) => {
                   // console.log(data)
                   return (
-                    <div key={id}>
+                    <div key={id} className=''>
                       <TopChoicesCard data={data} />
                       <div className='flex mt-[15px] gap-2'>
                         <Button fullWidth className='bg-[blue]'

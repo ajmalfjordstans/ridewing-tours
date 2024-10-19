@@ -94,11 +94,11 @@ export default function Hero() {
                   {data?.heading}
                 </p>
                 <p className='capitalize text-[24px] font-[600]'>Discover, book, go!!!</p>
-                <p className='text-[16px] md:text-[18px] leading-[24px] md:leading-[34px] text-white'>
+                <p className='text-[16px] md:text-[18px] leading-[24px] md:leading-[30px] text-white'>
                   {data?.tagline}
                 </p>
                 <motion.div
-                  className='w-[225px] h-[55px] bg-secondary rounded-[15px] absolute bottom-[-25px] flex items-center p-2 justify-center cursor-pointer'
+                  className='w-[225px] h-[55px] bg-secondary rounded-[15px] absolute bottom-[-45px] flex items-center p-2 justify-center cursor-pointer'
                   onClick={() => setShowAbout(true)}
                   whileHover={{ scale: 1.1 }}
                 >

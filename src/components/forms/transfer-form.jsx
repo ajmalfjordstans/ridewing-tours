@@ -89,7 +89,11 @@ export default function TransferForm({ data }) {
           const errors = {};
           if (!values.name) errors.name = 'Name is required';
           if (!values.contact) errors.contact = 'Contact is required';
-          if (!values.email) errors.email = 'Email is required';
+          if (!values.email) {
+            errors.email = 'Email is required';
+          } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+            errors.email = 'Invalid email address';
+          }
           if (!values.passengers) errors.passengers = 'Number of passengers is required';
           if (!values.luggage) errors.luggage = 'Number of luggage is required';
           if (!values.pickupTime) errors.pickupTime = 'Pickup time is required';

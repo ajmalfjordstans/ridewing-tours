@@ -1,20 +1,33 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link';
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 
 export default function TopChoicesCard({ data }) {
+  const [loading, setLoading] = useState(true)
 
+  // Handle image load event
+  const handleImageLoad = () => {
+    console.log('func called');
+    setLoading(false);
+  };
   return (
-    <div className='w-full rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
+    <div className='w-full h-full max-h-[513px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >
       <div className='h-[305px] flex items-end relative'
-        // style={{
-        //   backgroundImage: `url(${data.gallery[0]})`, backgroundSize: 'cover', backgroundPosition: 'center'
-        // }}
+      // style={{
+      //   backgroundImage: `url(${data.gallery[0]})`, backgroundSize: 'cover', backgroundPosition: 'center'
+      // }}
       >
-        <Image src={data?.gallery[0]} height={700} width={500} alt='top' className='absolute top-0 h-full w-full object-cover z-0'/>
+        {loading &&
+          <div className="bg-gray-200 absolute top-0 z-0 h-full w-full animate-pulse"></div>
+        }
+        <Image src={data?.gallery[0]} height={700} width={500} alt='top'
+          className={`absolute top-0 h-full w-full object-cover z-0 `} //${loading ? "hidden" : ""}
+          onLoadingComplete={handleImageLoad}
+        />
+
         {data?.offers?.offerTitle &&
           <p className='absolute top-0 text-white text-right h-[40px] p-[10px] bg-[#FF0000]'>{data?.offers?.offerTitle} {data?.offers?.offerValue}{data?.offers?.isPercent ? "%" : ""} OFF</p>
         }
