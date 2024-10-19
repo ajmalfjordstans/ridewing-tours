@@ -158,7 +158,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
       // console.log("Item already exists. Updating cart...");
       dispatch(updateItem({ id: newData.id, ...newData }));
     } else {
-      console.log("Added to cart");
+      console.log("Added to cart, card");
       dispatch(addItem({ ...newData, status: "pending" }));
     }
   }

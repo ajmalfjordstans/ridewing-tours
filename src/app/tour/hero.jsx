@@ -35,7 +35,7 @@ export default function TourHero({ data }) {
     if (!itemExists) {
       router.push(`/cart`)
       dispatch(addItem({ ...newData, status: "pending" }));
-      console.log("Added to cart");
+      console.log("Added to cart, Nav");
     } else {
       alert("Item already exists");
     }
