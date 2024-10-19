@@ -28,10 +28,10 @@ export default function TourHero({ data }) {
 
   const addToCartHandler = (newData) => {
     console.log("addToCartHandler called");
-    
+
     const itemExists = cart.find(item => item.id === bookingPackage.id);
     console.log(itemExists);
-    
+
     if (!itemExists) {
       router.push(`/cart`)
       dispatch(addItem({ ...newData, status: "pending" }));
@@ -111,8 +111,9 @@ export default function TourHero({ data }) {
             className='bg-custom-red mt-[5px] capitalize'
             fullWidth
             onClick={() => { setShowForm(true) }}
+            disabled={bookingPackage.details?.availability != true}
           // onClick={addToCartHandler}
-          >Add to Cart</Button>
+          >{bookingPackage.details?.availability ? "Add to Cart" : "Not available"}</Button>
         </div>
       </div>
 

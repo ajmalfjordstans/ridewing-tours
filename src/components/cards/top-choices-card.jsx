@@ -12,7 +12,7 @@ export default function TopChoicesCard({ data }) {
     setLoading(false);
   };
   return (
-    <div className='w-full h-full max-h-[513px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
+    <div className='w-full h-full max-h-[603px] rounded-[10px] overflow-hidden font-semibold shadow-xl capitalize'
     >
       <div className='h-[305px] flex items-end relative'
       // style={{

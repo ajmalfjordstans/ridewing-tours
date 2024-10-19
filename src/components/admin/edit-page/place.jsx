@@ -52,7 +52,7 @@ export default function Place() {
             showEdit ?
               <EditPlace data={values} setShowEdit={setShowEdit} />
               :
-              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full mt-[48px]'>
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full h-full mt-[48px]'>
                 <div className='h-full w-full shadow-lg rounded-md border-[2px] border-black flex items-center justify-center hover:cursor-pointer min-h-[400px]'
                   onClick={() => {
                     setValues({
@@ -96,7 +96,7 @@ export default function Place() {
                 {data?.map((data, id) => {
                   // console.log(data)
                   return (
-                    <div key={id} className=''>
+                    <div key={id} className='h-[650px]'>
                       <TopChoicesCard data={data} />
                       <div className='flex mt-[15px] gap-2'>
                         <Button fullWidth className='bg-[blue]'
