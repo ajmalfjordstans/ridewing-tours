@@ -283,11 +283,13 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                     <p>Flight Number: {data?.travelDetails?.flightNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.time}</p>
+                    <p className='text-[11px] text-red-500'>Transfers must start/end within the same country</p>
                   </>}
                   {data?.transfer === "station" && <>
                     <p>Station Number: {data?.travelDetails?.trainNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.time}</p>
+                    <p className='text-[11px] text-red-500'>Transfers must start/end within the same country</p>
                   </>}
                   {(data?.type === "guide" || data?.type == 'custom') && <>
                     <p>Meeting Time: {data?.travelDetails?.meetingTime}</p>
