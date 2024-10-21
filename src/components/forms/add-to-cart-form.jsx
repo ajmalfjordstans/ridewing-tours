@@ -23,7 +23,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   // }
 
   const buttonHandler = () => {
-    console.log("add to cart form button called");
+    // console.log("add to cart form button called");
 
     if (date == null) {
       alert("Pick a date to continue")
@@ -52,7 +52,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
       };
       // console.log(cartData)
       addToCartHandler(cartData);
-      console.log(cartData);
+      // console.log(cartData);
 
       setShowForm(false);
     }
@@ -119,7 +119,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
           <label className='flex flex-col w-full'>
             <span className='ml-2 font-[600] text-center'>Contact Number</span>
             <div className='mt-1'>
-              <input type="text"
+              <input type="number"
                 className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[280px]'
                 onChange={(e) => setContact(e.target.value)}
                 placeholder=''

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { bookingConfirmationTemplate, invoiceMailTemplate, welcomeAgentTemplate, welcomeUserTemplate } from "./email-templates";
+import { bookingConfirmationTemplate, cancelBookingTemplate, invoiceMailTemplate, welcomeAgentTemplate, welcomeUserTemplate } from "./email-templates";
 
 export const sendMail = async (emailPayload) => {
   // Send the email using axios
@@ -38,7 +38,12 @@ export const generatePayload = (content, template) => {
     subject = "Booking"
     templatePayload = bookingConfirmationTemplate(content.mail)
     attachments = content.attachments
-  } else if (template == 'invoice') {
+  }else if (template == 'cancel') {
+    email = content.email
+    subject = "Cancel Booking"
+    templatePayload = cancelBookingTemplate(content.mail)
+  }
+   else if (template == 'invoice') {
     email = content.email
     subject = "Invoice"
     templatePayload = invoiceMailTemplate(content.mail)

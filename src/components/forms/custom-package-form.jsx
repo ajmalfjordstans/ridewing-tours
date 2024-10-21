@@ -170,14 +170,14 @@ export default function CustomPackageForm({ }) {
                 <Field type="date" name="date" className='border-[1px] border-black rounded-md p-[10px]' min={new Date().toISOString().split("T")[0]} />
                 <ErrorMessage name="date" component="div" className="text-[red] text-[12px]" />
               </div>
-              <label className='flex items-center'>
+              {/* <label className='flex items-center'>
                 <input
                   type='checkbox'
                   checked={includeGuide}
                   onChange={() => setIncludeGuide(!includeGuide)}
                 />
                 <span className='ml-2 font-[600]'>Need Guide?</span>
-              </label>
+              </label> */}
               {includeGuide && (
                 <>
                   <div className='flex flex-col gap-1'>
@@ -189,8 +189,8 @@ export default function CustomPackageForm({ }) {
                       value={includeGuide ? values?.guideLanguage : ''}
                       onChange={(e) => setFieldValue('guideLanguage', e.target.value)}
                     />
-                    {/* <ErrorMessage name="guideLanguage" component="div" className="text-[red] text-[12px]" /> */}
                   </div>
+                  {/* <ErrorMessage name="guideLanguage" component="div" className="text-[red] text-[12px]" /> */}
                   {/* <div className='flex flex-col gap-1'>
                     <label htmlFor="guideHours">Guide Hours</label>
                     <Field type="number" name="guideHours" className='border-[1px] border-black rounded-md p-[10px]' />

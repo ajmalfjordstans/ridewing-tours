@@ -253,12 +253,12 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
       return
     }
 
-    let item = transformDataForStripe(cartItems)
-
     setLoading(true);
 
+    let item = transformDataForStripe(cartItems)
+
     await handleFirebaseUserCartUpdate(cartItems)
-    console.log(cartItems);
+    // console.log(cartItems);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}stripe/create-checkout-session`, {
@@ -352,6 +352,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
           Log
         </Button> */}
           <Button className='bg-secondary text-white mx-auto'
+            disabled={loading}
             onClick={() => {
               handleCheckout()
             }}
@@ -363,8 +364,8 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
         </div>
       </div >
       {loading &&
-        <div className='absolute top-0 left-0 h-[100vh] w-[100vw] flex justify-center items-center'>
-          <p className='text-white font-[600] text-[24px]'>Loading</p>
+        <div className='fixed top-0 left-0 h-[100vh] w-[100vw] flex justify-center items-center z-10 bg-black bg-opacity-50'>
+          <p className='text-white font-[600] text-[24px]'>Routing to payment page</p>
         </div>
       }
     </>

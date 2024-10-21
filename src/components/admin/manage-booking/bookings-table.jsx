@@ -126,6 +126,8 @@ export function BookingTable({ bookings, setAllBookings }) {
   const handleEdit = (bookingId, updatedBooking, action = 'update') => {
     if (updatedBooking.status == 'confirmed') {
       handleBookingPDFGeneration(updatedBooking)
+    } else if (updatedBooking.status == 'rejected') {
+      handleCancelBookingMail(updatedBooking)
     }
 
     return new Promise((resolve, reject) => {
@@ -149,6 +151,48 @@ export function BookingTable({ bookings, setAllBookings }) {
       } catch (error) {
         reject(error); // If something goes wrong, reject the promise with the error
       }
+    });
+  }
+
+  const handleCancelBookingMail = async (items) => {
+    console.log(items);
+    const bookingObj = createBookingObject(items);
+    const content = {
+      email: items.email, // items.travelDetails.email
+      mail: {
+        name: bookingObj.customer.name,
+        packageName: items.name,
+        bookingNo: bookingObj.customer.bookingNo,
+        date: bookingObj.customer.bookingDate,
+        guests: items.noOfPassengers,
+      },
+    };
+
+    const payload = generatePayload(content, 'cancel');
+
+    // Define a promise that sends the email after a 3-second delay
+    const sendMailPromise = new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          const mailSend = await sendMail(payload);
+          if (mailSend.status === 200) {
+            resolve(); // Resolve the promise if email sent successfully
+          } else {
+            reject(); // Reject the promise if there's an issue
+          }
+        } catch (error) {
+          reject(error); // Reject the promise if an error occurs
+        }
+      }, 3000);
+    });
+
+    console.log(sendMailPromise);
+
+    // Use toast.promise to display notifications based on the promise state
+    toast.promise(sendMailPromise, {
+      pending: "Cancelling Booking",
+      success: "Sending Email",
+      error: "Failed to Send Email",
     });
   }
 
