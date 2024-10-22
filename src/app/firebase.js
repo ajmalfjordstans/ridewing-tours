@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { getAuth, RecaptchaVerifier } from "firebase/auth";
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -161,4 +161,4 @@ export const deleteImage = async (imagePath) => {
   }
 };
 
-export { app, analytics, auth, db, storage };
+export { app, analytics, auth, db, storage, RecaptchaVerifier };

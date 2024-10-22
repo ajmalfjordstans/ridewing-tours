@@ -1,6 +1,7 @@
 'use client'
 import LoginForm from '@/components/forms/login-form'
 import SignupForm from '@/components/forms/signup-form'
+import PhoneSignIn from '@/components/phoneSignIn'
 import { UserAuth } from '@/context/AuthContext'
 import { Button } from '@material-tailwind/react'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -144,6 +145,7 @@ export default function Page() {
           </AnimatePresence>
         </motion.div>
       </div>
+      {/* <PhoneSignIn /> */}
     </div >
   )
 }

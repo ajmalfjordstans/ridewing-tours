@@ -7,8 +7,10 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPhoneNumber,
   signInWithPopup,
-  signOut
+  signOut,
+  RecaptchaVerifier
 } from "firebase/auth";
 import { useContext, createContext, useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,6 +49,14 @@ export const AuthContextProvider = ({ children }) => {
       console.error('Error signing in with Google: ', error);
     }
   };
+
+  const phoneOtpSignIn = async (phone) => {
+    const result = signInWithPhoneNumber(
+      auth,
+      phone,
+      // recap
+    )
+  }
 
   // New User
   const emailSignUp = async (formData) => {
