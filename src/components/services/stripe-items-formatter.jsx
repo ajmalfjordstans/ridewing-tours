@@ -24,13 +24,15 @@ export function transformDataForStripe(dataArray) {
     let price = parsePrice(obj.price);
     let type;
 
+    // console.log(obj?.type);
+
     // Handling 'guide' type
     if (obj.type === 'guide' && obj.travelDetails && typeof obj.travelDetails.hours === 'number') {
       quantity = obj.travelDetails.hours;
       type = "GUIDE"
-    } else {
+    } else if (obj.type === 'custom') {
       quantity = obj.noOfPassengers < 4 ? 4 : obj.noOfPassengers || 1; // Default to noOfPassengers or 1
-      type = "GUIDE"
+      type = "CUSTOM"
     }
 
     // Handling 'package' type with bulkPrice logic
@@ -45,6 +47,8 @@ export function transformDataForStripe(dataArray) {
     }
 
     if (obj.transfer == 'airport' || obj.transfer == 'station') {
+      // console.log(obj);
+      quantity = obj.travelDetails.passengers;
       type = 'TRANSFER'
     }
 

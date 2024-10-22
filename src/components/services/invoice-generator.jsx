@@ -62,7 +62,9 @@ const subtotal = (list) => {
   }, 0);
 };
 
-export function generateInvoiceObj(bookings, user, currency) {
+export function generateInvoiceObj(bookings, user, currency, coupons) {
+  console.log(coupons?.discountPrice);
+
   let item = transformDataForStripe(bookings)
   let total = subtotal(bookings)
   let contact = bookings[0].type == 'package' ? bookings[0].contact : bookings[0].travelDetails.contact
@@ -97,6 +99,8 @@ export function generateInvoiceObj(bookings, user, currency) {
     phone: contact,
     email: user.userInfo.email,
     subtotal: total,
+    discount: coupons?.discountPrice ? total - coupons?.discountPrice : 0,
+    total: coupons?.discountPrice ? coupons?.discountPrice : total,
     items: item.items.map(item => ({
       ...item,  // Copy existing properties
       total: item.price * item.quantity  // Add new total property

@@ -111,7 +111,7 @@ export default function TransferForm({ data }) {
           <Form>
             <p className='text-center text-[24px] font-[400]'>{data.name}</p>
             <div className='w-full h-[1px] mt-[20px] bg-black'></div>
-            <p className='text-[12px] text-red-500 text-center mt-1'>Transfers must start/end within the same country</p>
+            <p className='text-[12px] text-red-500 text-center mt-1'>Transfers must start/end within the same city</p>
             <div className='grid grid-cols-2 gap-2 pb-[40px]'>
               {/* Full Name Field */}
               <div className='flex flex-col gap-1 col-span-2'>

@@ -97,7 +97,7 @@ export default function BookingCard({ booking, status }) {
               <p className='text-[28px] font-bold'>{booking.name}</p>
             </div>
             {booking?.date ?
-              <p className='text-[16px] font-bold text-[#C9C8C8]'>{formatDateFromTimestamp(booking.date)}</p>
+              <p className='text-[16px] font-bold text-[#C9C8C8]'>{(booking.date)}</p>
               :
               <p className='text-[16px] font-bold text-[#C9C8C8]'>{booking.travelDetails.date}</p>
             }

@@ -30,7 +30,7 @@ export default function Page() {
       readFirebaseDocument(`users/${user?.userInfo?.uid}`).then((response) => {
 
         if (verified && response?.waitingPayment != null) {
-          handleInvoice(response?.waitingPayment?.booking)
+          handleInvoice(response?.waitingPayment?.booking, response?.waitingPayment?.coupons)
           handleFirebaseUserUpdate(response)
         }
         console.log(response);
@@ -62,10 +62,10 @@ export default function Page() {
     }
   };
 
-  const handleInvoice = async (items) => {
-    const invoiceObj = generateInvoiceObj(items, user, currency)
+  const handleInvoice = async (items, coupons) => {
+    const invoiceObj = generateInvoiceObj(items, user, currency, coupons)
     const invoiceUrl = await generateInvoice(invoiceObj)
-    // console.log(invoiceUrl);
+    console.log(invoiceUrl);
 
     const content = {
       email: user.userInfo.email,

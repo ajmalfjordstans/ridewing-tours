@@ -241,7 +241,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
   const calculateSubtotal = () => {
     // const total = calculateTotal(data) + calculateAdditionalTicketsTotal(data)
     const total = subtotal(data)
-    console.log(total);
+    // console.log(total);
     return total
   }
 
@@ -252,9 +252,9 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
     updateCartHandler({ ...data, noOfPassengers: count, total: totalCalculated })
   }, [count])
 
-  useEffect(() => {
-    console.log(data);
-  }, [])
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [])
   return (
     <>
       <div className='w-full border border-solid border-[rgba(255, 218, 50, 0.5)] shadow-[0px_-1px_6.9px_0px_rgba(0,0,0,0.25)] rounded-[20px] flex flex-col overflow-hidden mt-6'>
@@ -283,13 +283,13 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                     <p>Flight Number: {data?.travelDetails?.flightNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.time}</p>
-                    <p className='text-[11px] text-red-500'>Transfers must start/end within the same country</p>
+                    <p className='text-[11px] text-red-500'>Transfers must start/end within the same city</p>
                   </>}
                   {data?.transfer === "station" && <>
                     <p>Station Number: {data?.travelDetails?.trainNumber}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.date}</p>
                     <p className='text-[15px] mt-1'>{data.travelDetails.time}</p>
-                    <p className='text-[11px] text-red-500'>Transfers must start/end within the same country</p>
+                    <p className='text-[11px] text-red-500'>Transfers must start/end within the same city</p>
                   </>}
                   {(data?.type === "guide" || data?.type == 'custom') && <>
                     <p>Meeting Time: {data?.travelDetails?.meetingTime}</p>

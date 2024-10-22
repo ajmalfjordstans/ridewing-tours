@@ -23,6 +23,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
   const [couponNotFound, setCouponNotFound] = useState(false)
   const dispatch = useDispatch()
   // console.log("Cart items", items);
+
   const subtotal = items.reduce((acc, item) => {
     const noOfPassengers = Number(item.noOfPassengers); // Ensure noOfPassengers is a number
     const price = Number(item.price); // Ensure price is a number
@@ -66,6 +67,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
           ],
           coupons: {
             appliedCoupon: couponCode,
+            discountPrice: discountPrice,
           }
         }
       }
@@ -257,7 +259,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
 
     let item = transformDataForStripe(cartItems)
 
-    await handleFirebaseUserCartUpdate(cartItems)
+    await handleFirebaseUserCartUpdate(items)
     // console.log(cartItems);
 
     try {
