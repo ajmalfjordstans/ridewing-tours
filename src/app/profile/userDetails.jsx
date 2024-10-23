@@ -42,7 +42,7 @@ export default function UserDetails({ user }) {
               {user?.photoURL ?
                 <Image src={user?.photoURL} alt='profile' height={800} width={800} className='h-[100px] md:h-[250px] w-[100px] md:w-[250px] rounded-full border-[10px] border-white' />
                 :
-                <div className='h-[250px] w-[250px] rounded-full border-[10px] border-white bg-[green] flex justify-center items-center text-[90px] font-[600] text-white'>{user?.displayName[0]}</div>
+                <div className='h-[100px] md:h-[250px] w-[100px] md:w-[250px] rounded-full border-[10px] border-white bg-[green] flex justify-center items-center text-[36px] md:text-[90px] font-[600] text-white'>{user?.displayName[0]}</div>
               }
             </div>
             <div className='flex gap-3 md:mt-[100px] text-[20px] md:text-[38px] font-[600] md:font-[700] '>

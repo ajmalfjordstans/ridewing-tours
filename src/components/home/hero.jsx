@@ -106,7 +106,7 @@ export default function Hero() {
                   <p className='ml-2 text-[16px] leading-[18px] text-custom-red'>About {selectedCountry}</p>
                 </motion.div>
               </motion.div>
-              <div className='flex justify-center md:justify-end w-full py-[20px] md:pr-[5%] mt-3'>
+              <div className='flex justify-center md:justify-end w-full py-[20px] md:pr-[5%] mt-[30px]'>
                 {featuredOffer && featuredOffer?.active && featuredOffer.code != '' &&
                   <div className='px-[25px] py-[10px] md:py-[15px] bg-secondary rounded-[15px] flex flex-col justify-center items-center text-black border-dashed border-[4px] border-black'>
                     <p className='text-[24px] font-[600]'>{featuredOffer?.offerName}</p>

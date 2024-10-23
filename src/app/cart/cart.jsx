@@ -326,7 +326,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
             <div className='h-[1px] w-full bg-black'></div>
             <div className='flex gap-2'>
               <input type="text" value={couponCode} className='p-[10px] rounded-[5px]' placeholder='Enter Coupon Code' onChange={(e) => setCouponCode(e.target.value)} />
-              <Button className='bg-secondary text-white mx-auto'
+              <Button className='bg-secondary text-white mx-auto whitespace-nowrap'
                 onClick={() => {
                   checkCouponCode()
                 }}

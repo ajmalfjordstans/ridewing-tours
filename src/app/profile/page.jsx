@@ -42,7 +42,7 @@ export default function Page() {
   }, [])
 
   return (
-    <div className='pt-[100px]'>
+    <div className='pt-[80px] md:pt-[100px]'>
       <UserDetails user={user} />
     </div>
   )
