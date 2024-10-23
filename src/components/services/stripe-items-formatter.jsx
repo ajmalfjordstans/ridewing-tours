@@ -38,9 +38,11 @@ export function transformDataForStripe(dataArray) {
     // Handling 'package' type with bulkPrice logic
     if (obj.type === 'package') {
       if (obj.noOfPassengers > 4 && obj.bulkPrice) {
+        quantity = obj.noOfPassengers
         price = parsePrice(obj.bulkPrice); // Use bulkPrice if passengers are more than 4
         type = "PACKAGE"
       } else {
+        quantity = obj.noOfPassengers
         price = parsePrice(obj.price); // Fallback to normal price
         type = "PACKAGE"
       }

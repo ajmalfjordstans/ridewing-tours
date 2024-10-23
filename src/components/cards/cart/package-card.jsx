@@ -23,11 +23,17 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
     setCount(count + 1)
     setDiscountPrice(null)
     // handleAddAllTicketCount()
+    const totalCalculated = calculateSubtotal()
+    // console.log(totalCalculated);
+    updateCartHandler({ ...data, noOfPassengers: count + 1, total: totalCalculated })
   }
   const decrement = () => {
     if (count > 1) {
       setCount(count - 1);
       setDiscountPrice(null)
+      const totalCalculated = calculateSubtotal()
+      // console.log(totalCalculated);
+      updateCartHandler({ ...data, noOfPassengers: count - 1, total: totalCalculated })
       // handleSubtractAllTicketCount()
     }
   }
@@ -98,6 +104,24 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
     dispatch(updateItem({ ...data, includeGuide: false, guideLanguage: "", hoursGuideNeeded: null }));
   }
 
+  function calculateTotalPrice(data) {
+    // Calculate the total price for additional tickets
+    const additionalTicketsPrice = data.additionalTickets.reduce((total, ticket) => {
+      return total + ticket.price * ticket.ticketCount;
+    }, 0);
+
+    // Calculate the base price depending on the number of passengers
+    const basePrice = data.noOfPassengers < 5
+      ? data.price * 4
+      : data.bulkPrice
+        ? data.bulkPrice * data.noOfPassengers
+        : data.price * data.noOfPassengers;
+
+    // Return the total price formatted with locale
+    return (additionalTicketsPrice + basePrice).toLocaleString();
+  }
+
+
   const subtotal = (list) => {
     const items = transformDataForStripe([list])
 
@@ -153,7 +177,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
 
   const updateCartHandler = (newData) => {
     const itemExists = cart.find(item => item.id === newData.id);
-    // console.log(newData);
+    console.log(newData);
     if (itemExists) {
       // console.log("Item already exists. Updating cart...");
       dispatch(updateItem({ id: newData.id, ...newData }));
@@ -534,7 +558,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
             {calculateSubtotal() != 0 &&
               <div className='flex items-center justify-end gap-2 px-[15px]'>
                 <p>With Additional Ticket</p>
-                <p className='font-bold text-[22px] text-right'> {currency.sign + " " + calculateSubtotal().toLocaleString()}</p>
+                <p className='font-bold text-[22px] text-right'> {currency.sign + " " + calculateTotalPrice(data)}</p>
               </div>
             }
           </>

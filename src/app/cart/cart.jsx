@@ -255,12 +255,12 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
       return
     }
 
-    setLoading(true);
+    // setLoading(true);
 
     let item = transformDataForStripe(cartItems)
 
     await handleFirebaseUserCartUpdate(items)
-    // console.log(cartItems);
+    // console.log(item);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}stripe/create-checkout-session`, {
