@@ -58,7 +58,8 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
       }))
     };
 
-    dispatch(updateItem(updatedData));
+    if (count != 1)
+      dispatch(updateItem(updatedData));
   };
 
   // Remove ticket from card
@@ -337,11 +338,12 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
                       </button>
                       <span className="text-[20px] px-2">{count}</span>
                       <button
-                        className=" h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow hover:bg-gray-200 rounded-[5px]"
+                        className={`h-[32px] w-[32px] border-[1px] font-[500] text-[22px] shadow ${count == 1 ? "" : "hover:bg-gray-200"}  rounded-[5px]`}
                         onClick={() => {
                           decrement()
                           data?.type == 'package' ? handleSubtractAllTicketCount() : ""
                         }}
+                        disabled={count == 1}
                       >
                         -
                       </button>
