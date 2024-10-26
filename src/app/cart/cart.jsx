@@ -255,7 +255,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
       return
     }
 
-    // setLoading(true);
+    setLoading(true);
 
     let item = transformDataForStripe(cartItems)
 
