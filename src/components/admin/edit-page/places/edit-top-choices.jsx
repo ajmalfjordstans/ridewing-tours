@@ -75,8 +75,8 @@ export default function EditPlace({ data, setShowEdit }) {
     }
     setValues({
       ...values,
-      price: newPrice,
-      bulkPrice: newBulkPrice,
+      price: Math.round(newPrice),
+      bulkPrice: Math.round(newBulkPrice),
       isPercent: values.offers.isPercent
     });
   }
