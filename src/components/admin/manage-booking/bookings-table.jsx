@@ -197,7 +197,6 @@ export function BookingTable({ bookings, setAllBookings }) {
   }
 
   const handleBookingPDFGeneration = async (items) => {
-    console.log(items);
 
     const bookingObj = createBookingObject(items);
     const bookingUrl = await generateBookingPDF(bookingObj);
@@ -587,7 +586,6 @@ export function BookingTable({ bookings, setAllBookings }) {
         </CardFooter>
       </Card>
       {showBookingDetails &&
-        // console.log(viewBooking)
         <ViewBooking viewBooking={viewBooking} setShowBookingDetails={setShowBookingDetails} formatDateFromTimestamp={formatDateFromTimestamp} />
       }
     </>

@@ -15,8 +15,8 @@ export function createBookingObject(booking, user) {
       phone: booking.contact || "N/A", // Assuming phone might be part of the booking object
       bookingNo: booking.bookingId || "N/A",
       bookingDate: booking.date
-        // ? new Date(booking.date.seconds * 1000).toLocaleDateString()
-        // : "N/A"
+      // ? new Date(booking.date.seconds * 1000).toLocaleDateString()
+      // : "N/A"
     };
 
     payment = {
@@ -45,13 +45,13 @@ export function createBookingObject(booking, user) {
       phone: booking.travelDetails.contact || "N/A", // Assuming phone might be part of the booking object
       bookingNo: booking.bookingId || "N/A",
       bookingDate: booking.travelDetails.date
-        // ? new Date(booking.travelDetails.date.seconds * 1000).toLocaleDateString()
-        // : "N/A"
+      // ? new Date(booking.travelDetails.date.seconds * 1000).toLocaleDateString()
+      // : "N/A"
     };
     // Type 2: Airport or Station Pickup
     bookingDetails.push({
       booking: 'station',
-      station: booking.name,
+      station: booking.transfer,
       number: booking.travelDetails.flightNumber || booking.travelDetails.trainNumber,
       pickup: booking.travelDetails.pickupAddress,
       dropoff: booking.travelDetails.dropoffAddress,
@@ -86,8 +86,8 @@ export function createBookingObject(booking, user) {
       phone: booking.travelDetails.contact || "N/A", // Assuming phone might be part of the booking object
       bookingNo: booking.bookingId || "N/A",
       bookingDate: booking.travelDetails.date
-        // ? new Date(booking.travelDetails.date.seconds * 1000).toLocaleDateString()
-        // : "N/A"
+      // ? new Date(booking.travelDetails.date.seconds * 1000).toLocaleDateString()
+      // : "N/A"
     };
 
     payment = {
@@ -117,10 +117,10 @@ export function createBookingObject(booking, user) {
       phone: booking.travelDetails.contact || "N/A", // Assuming phone might be part of the booking object
       bookingNo: booking.bookingId || "N/A",
       bookingDate: booking.travelDetails.date
-        // ? new Date(booking.travelDetails.date.seconds * 1000).toLocaleDateString()
-        // : "N/A"
+      // ? new Date(booking.travelDetails.date.seconds * 1000).toLocaleDateString()
+      // : "N/A"
     };
-    
+
     payment = {
       total: booking.total || 0,
       status: 'PAID'// Adjust based on your payment logic
