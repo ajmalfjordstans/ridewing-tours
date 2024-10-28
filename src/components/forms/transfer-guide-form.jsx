@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTransferBooking } from '../store/userSlice';
 import { useRouter } from 'next/navigation';
 import { addItem } from '../store/cartSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function TransferGuideForm({ data, setShowForm }) {
   const [submitting, setSubmitting] = useState(false)
@@ -18,18 +20,29 @@ export default function TransferGuideForm({ data, setShowForm }) {
     const randomNum = Math.random().toString(36).substring(2, 10); // Generate a random base-36 string
     return `BK-${timestamp}-${randomNum}`; // Combine them with a prefix
   }
+  function convertTo12Hour(time) {
+    const [hour, minute] = time.split(':').map(Number);
 
+    const period = hour >= 12 ? 'PM' : 'AM';
+    const adjustedHour = hour % 12 || 12;
+
+    return `${adjustedHour}:${minute.toString().padStart(2, '0')} ${period}`;
+  }
   const addToCartHandler = (values) => {
     const itemExists = cart.find(item => item.id === data.id);
     if (!itemExists) {
       const newData = {
         ...data,
         bookingId: generateBookingId(),
-        travelDetails: values,
+        travelDetails: {
+          ...values,
+          meetingTime: convertTo12Hour(values.meetingTime)
+        },
         type: 'guide',
         status: "pending"
       }
       dispatch(addItem(newData));
+      toast("Item Added to Cart succesfully")
       setShowForm(false)
       // router.push(`/cart`)
     } else {

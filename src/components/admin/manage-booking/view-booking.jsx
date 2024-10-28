@@ -17,56 +17,60 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
         </div>
         <div>
           <p className="text-[26px] font-[600]">Customer Details</p>
-          <div className='flex justify-between'>
+          <div className='flex justify-between gap-[15px]'>
             <div>
-              <p>Name: {viewBooking.displayName}</p>
-              <p>Email: {viewBooking.email}</p>
-              {viewBooking.contact &&
-                <p>Contact: {viewBooking.contact}</p>
+              <p>Name: {viewBooking?.displayName}</p>
+              <p>Email: {viewBooking?.email}</p>
+              {viewBooking?.contact &&
+                <p>Contact: {viewBooking?.contact}</p>
               }
-              <p>User ID: {viewBooking.userId}</p>
+              <p>User ID: {viewBooking?.userId}</p>
             </div>
             <div className='flex flex-col items-end'>
-              <Image src={viewBooking.photo} width={100} height={100} alt={viewBooking.displayName} className='h-[70px] w-[70px]' />
-              <p className='text-[24px] font-[600]'>{viewBooking.currency}{viewBooking.total}</p>
+              {viewBooking.photo ?
+                <Image src={viewBooking?.photo} width={100} height={100} alt={viewBooking?.displayName} className='h-[70px] w-[70px]' />
+                :
+                <div className='h-[70px] w-[70px] rounded-full bg-[green] flex justify-center items-center text-[22px] font-[300] text-white capitalize'>{viewBooking?.displayName[0]}</div>
+              }
+              <p className='text-[24px] font-[600]'>{viewBooking?.currency}{viewBooking?.total}</p>
             </div>
           </div>
           <p className="text-[26px] font-[600]">Booking Details</p>
           <div>
-            {viewBooking.type == 'package' &&
+            {viewBooking?.type == 'package' &&
               <>
-                <p className='capitalize'>Category: {viewBooking.type || viewBooking.transfer}</p>
-                <p>Name: {viewBooking.name}</p>
-                <p>Total Passengers: {viewBooking.noOfPassengers}</p>
-                <p>Date: {viewBooking.date ? (viewBooking.date) : viewBooking.travelDetails.date}</p>
-                <p>Meeting Point: {viewBooking.meetingPoint}</p>
-                <p>Upto 4 Price: {viewBooking.currency}{viewBooking.price}</p>
-                <p>From 4 Price: {viewBooking.currency}{viewBooking.bulkPrice}</p>
+                <p className='capitalize'>Category: {viewBooking?.type || viewBooking?.transfer}</p>
+                <p>Name: {viewBooking?.name}</p>
+                <p>Total Passengers: {viewBooking?.noOfPassengers}</p>
+                <p>Date: {viewBooking?.date ? (viewBooking?.date) : viewBooking?.travelDetails.date}</p>
+                <p>Meeting Point: {viewBooking?.meetingPoint}</p>
+                <p>Upto 4 Price: {viewBooking?.currency}{viewBooking?.price}</p>
+                <p>From 4 Price: {viewBooking?.currency}{viewBooking?.bulkPrice}</p>
               </>
             }
             {/* {console.log(viewBooking.transfer, viewBooking.type)} */}
-            {viewBooking.transfer == 'airport' &&
+            {viewBooking?.transfer == 'airport' &&
               <>
                 <TransferDetails data={viewBooking} />
               </>
             }
-            {viewBooking.transfer == 'station' &&
+            {viewBooking?.transfer == 'station' &&
               <>
                 <TransferDetails data={viewBooking} />
               </>
             }
-            {viewBooking.type == 'guide' &&
+            {viewBooking?.type == 'guide' &&
               <>
                 <TransferGuideView data={viewBooking} />
               </>
             }
-            {viewBooking.type == 'custom' &&
+            {viewBooking?.type == 'custom' &&
               <>
                 <CustomPackageView data={viewBooking} />
               </>
             }
           </div>
-          {(Array.isArray(viewBooking.additionalTickets) && viewBooking.additionalTickets.length !== 0) &&
+          {(Array.isArray(viewBooking?.additionalTickets) && viewBooking?.additionalTickets.length !== 0) &&
             <>
               <div className='bg-secondary h-[1px] w-full'></div>
               <div className='p-[15px]'>
@@ -81,7 +85,7 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
                     </tr>
                   </thead>
                   <tbody className=''>
-                    {viewBooking.additionalTickets.map((ticket, id) => {
+                    {viewBooking?.additionalTickets?.map((ticket, id) => {
                       return (
                         <tr className='w-full justify-between' key={id}>
                           <td className='pl-[10px]'>{ticket.name}</td>
@@ -92,8 +96,8 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
                               </div>
                             </div>
                           </td>
-                          <td>{viewBooking.currency + " " + ticket.price}</td>
-                          <td>{viewBooking.currency + " " + ticket.price * ticket.ticketCount}</td>
+                          <td>{viewBooking?.currency + " " + ticket.price}</td>
+                          <td>{viewBooking?.currency + " " + ticket.price * ticket.ticketCount}</td>
                         </tr>
                       )
                     })}
@@ -104,7 +108,7 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
                       <td></td>
                       <td className='bg-[#D9D9D9] py-1 text-center'>Total</td>
                       <td className='bg-[#D9D9D9] py-1 text-center font-[600]'>
-                        {viewBooking.currency + " " + viewBooking.additionalTickets.reduce((total, ticket) => {
+                        {viewBooking?.currency + " " + viewBooking?.additionalTickets.reduce((total, ticket) => {
                           return total + ticket.price * ticket.ticketCount
                         }, 0)}
                       </td>

@@ -404,7 +404,11 @@ export function BookingTable({ bookings, setAllBookings }) {
                     </td>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
-                        <Avatar src={booking.photo} alt={booking.displayName} size="sm" />
+                        {booking.photo ?
+                          <Avatar src={booking.photo} alt={booking.displayName} size="sm" />
+                          :
+                          <div className='h-[36px] w-[36px] rounded-full bg-[green] flex justify-center items-center text-[22px] font-[300] text-white capitalize'>{booking?.displayName[0]}</div>
+                        }
                         <div className="flex flex-col">
                           {/* <Typography
                             variant="small"
@@ -583,6 +587,7 @@ export function BookingTable({ bookings, setAllBookings }) {
         </CardFooter>
       </Card>
       {showBookingDetails &&
+        // console.log(viewBooking)
         <ViewBooking viewBooking={viewBooking} setShowBookingDetails={setShowBookingDetails} formatDateFromTimestamp={formatDateFromTimestamp} />
       }
     </>
