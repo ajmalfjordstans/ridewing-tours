@@ -167,10 +167,10 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                           <p className='text-[#ADADAD] mt-2'>Opening Hours</p>
                           <div className='grid grid-cols-2 mt-1'>
                             {ticket?.opening &&
-                              <p>Opening: {formatTo12HourTime(convertTimestampToDate(ticket?.opening))}</p>
+                              <p>Opening: {ticket?.opening}</p>
                             }
                             {ticket?.closing &&
-                              <p>Closing: {formatTo12HourTime(convertTimestampToDate(ticket?.closing))}</p>
+                              <p>Closing: {ticket?.closing}</p>
                             }
                           </div>
                         </div>

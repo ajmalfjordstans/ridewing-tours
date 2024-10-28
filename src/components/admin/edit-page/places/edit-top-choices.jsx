@@ -407,7 +407,7 @@ export default function EditPlace({ data, setShowEdit }) {
                 <p className='font-bold text-[16px]'>Price without offer</p>
                 <p className='font-bold text-[16px] text-custom-red'>Upto 4 Persons</p>
                 <input type="text"
-                  value={values?.offers?.price}
+                  // value={values?.offers?.price}
                   defaultValue={values?.price}
                   onChange={(e) => setOffer(e.target.value, 'price')}
                   className='p-[5px] border-[2px] border-black rounded-[5px]'
@@ -417,7 +417,7 @@ export default function EditPlace({ data, setShowEdit }) {
               <div className='flex flex-col gap-2'>
               <p className='font-bold text-[16px] text-custom-red'>From 4 Persons</p>
                 <input type="text"
-                  value={values?.offers?.bulkPrice}
+                  // value={values?.offers?.bulkPrice}
                   defaultValue={values?.bulkPrice}
                   onChange={(e) => setOffer(e.target.value, 'bulkPrice')}
                   className='p-[5px] border-[2px] border-black rounded-[5px]'

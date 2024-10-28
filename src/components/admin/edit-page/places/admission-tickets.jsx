@@ -24,29 +24,46 @@ export default function AdmissionTickets({ values, setValues }) {
   const selectedCountry = useSelector(state => state.user.selectedCountry)
   // console.log(values.tickets);
 
+  function formatTo12HourTime(dateString) {
+    const date = new Date(dateString);
+
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+
+    const strTime = `${hours}:${minutesStr} ${ampm}`;
+    return strTime;
+  }
+
   const addTicket = async (e) => {
     e.preventDefault();
+    console.log(formatTo12HourTime(openingHours));
+
     try {
       console.log("Starting upload...");
       const imageUrl = await handleUpload();
       console.log("Upload completed. Image URL:", imageUrl);
-  
+
       if (ticketName && ticketPrice) {
         const newTicket = {
           name: ticketName,
           price: parseFloat(ticketPrice),
           image: imageUrl,
-          opening: dayjs(openingHours).toDate(),
-          closing: dayjs(closingHours).toDate(),
+          opening: formatTo12HourTime(openingHours),
+          closing: formatTo12HourTime(closingHours),
           description: description
         };
-  
+
         // Ensure values?.tickets is an array before spreading it
         const newTickets = [...(values?.tickets || []), newTicket];
-  
+
         // Update state with new ticket
         setValues({ ...values, tickets: newTickets });
-  
+
         // Reset form fields
         setTicketName('');
         setTicketPrice('');
@@ -62,8 +79,6 @@ export default function AdmissionTickets({ values, setValues }) {
       console.error("Error uploading image:", error);
     }
   };
-  
-
 
   const deleteTicket = (index) => {
     const newTickets = values.tickets.filter((_, i) => i !== index);
@@ -117,20 +132,7 @@ export default function AdmissionTickets({ values, setValues }) {
     return null;
   };
 
-  function formatTo12HourTime(dateString) {
-    const date = new Date(dateString);
 
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-
-    const strTime = `${hours}:${minutesStr} ${ampm}`;
-    return strTime;
-  }
   return (
     <div className="flex flex-col items-center justify-center h-full p-6 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800">
       <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">Additional Tickets</h2>
@@ -150,7 +152,7 @@ export default function AdmissionTickets({ values, setValues }) {
               value={ticketName}
               onChange={(e) => setTicketName(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+            // required
             />
             <input
               type="number"
@@ -158,7 +160,7 @@ export default function AdmissionTickets({ values, setValues }) {
               value={ticketPrice}
               onChange={(e) => setTicketPrice(e.target.value)}
               className="w-1/4 p-2 ml-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+            // required
             />
           </div>
           <div className='flex gap-3'>
@@ -172,7 +174,7 @@ export default function AdmissionTickets({ values, setValues }) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-[150px]"
-              required
+            // required
             />
           </div>
           <div className='flex gap-5'>
@@ -207,10 +209,10 @@ export default function AdmissionTickets({ values, setValues }) {
                     <p className='text-[#ADADAD] mt-2'>Opening Hours</p>
                     <div className='grid grid-cols-2 mt-1'>
                       {ticket?.opening &&
-                        <p>Opening: {formatTo12HourTime(convertTimestampToDate(ticket?.opening))}</p>
+                        <p>Opening: {ticket?.opening}</p>
                       }
                       {ticket?.closing &&
-                        <p>Closing: {formatTo12HourTime(convertTimestampToDate(ticket?.closing))}</p>
+                        <p>Closing: {ticket?.closing}</p>
                       }
                     </div>
                   </div>
