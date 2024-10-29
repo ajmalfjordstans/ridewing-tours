@@ -25,7 +25,7 @@ export function TourImageGallery({ data }) {
             width={800}
             alt="image"
             className={`object-cover ${loading ? "hidden" : ""} w-full h-full`}
-            onLoad={handleImageLoad}
+            onLoadingComplete={handleImageLoad}
           />
         </div>
 
@@ -44,7 +44,7 @@ export function TourImageGallery({ data }) {
                 width={400}
                 alt="image"
                 className="md:h-full md:w-full object-cover h-[10vh] w-[15vh] md:max-h-[25vh] hover:cursor-pointer"
-                onLoad={() => setLoading(false)} // Reset the loading state
+                onLoadingComplete={() => setLoading(false)} // Reset the loading state
               />
             </div>
           ))}

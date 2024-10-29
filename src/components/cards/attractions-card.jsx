@@ -19,7 +19,7 @@ export default function AttractionsCard({ data }) {
       <Image
         src={data.image ? data.image : "/images/background/image-template.jpg"}
         alt={data.title}
-        // onLoad={() => alert('loaded')}
+        // onLoadingComplete={() => alert('loaded')}
         height={700}
         width={700}
         className={`w-full h-full object-cover ${isLoaded ? 'block' : 'hidden'}`}

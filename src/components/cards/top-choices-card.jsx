@@ -24,7 +24,7 @@ export default function TopChoicesCard({ data }) {
         }
         <Image src={data?.gallery[0]} height={700} width={500} alt='top'
           className={`absolute top-0 h-full w-full object-cover z-0 `} //${loading ? "hidden" : ""}
-          onLoad={handleImageLoad}
+          onLoadingComplete={handleImageLoad}
         />
 
         {data?.offers?.offerTitle &&

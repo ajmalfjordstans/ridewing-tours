@@ -33,7 +33,7 @@ export default function Page() {
   const handleSignIn = async () => {
     try {
       await googleSignIn()
-      // router.push(`/profile?country=${country}`)
+      router.push(`/profile`)
     } catch (err) {
       console.log(err);
     }
@@ -46,7 +46,7 @@ export default function Page() {
   useEffect(() => {
     if (user) {
       console.log("Routing"); //If user logged in route to profile page
-      router.push("/profile")
+      router.push("/")
     }
   }, [user, router])
 
