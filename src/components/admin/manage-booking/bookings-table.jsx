@@ -122,14 +122,7 @@ export function BookingTable({ bookings, setAllBookings }) {
     return formattedDate;
   }
 
-  // Function to handle editing of a booking
-  const handleEdit = (bookingId, updatedBooking, action = 'update') => {
-    if (updatedBooking.status == 'confirmed') {
-      handleBookingPDFGeneration(updatedBooking)
-    } else if (updatedBooking.status == 'rejected') {
-      handleCancelBookingMail(updatedBooking)
-    }
-
+  const updateBookingState = (bookingId, updatedBooking, action) => {
     return new Promise((resolve, reject) => {
       try {
         const updatedBookings = [...bookings];
@@ -146,12 +139,31 @@ export function BookingTable({ bookings, setAllBookings }) {
         }
 
         setAllBookings(updatedBookings); // Update the state with the new bookings array
-
         resolve(); // Resolve the promise after the state update
       } catch (error) {
         reject(error); // If something goes wrong, reject the promise with the error
       }
     });
+  };
+
+  // Function to handle editing of a booking
+  const handleEdit = async (bookingId, updatedBooking, action = 'update') => {
+    if (updatedBooking.status == 'confirmed') {
+      let mailSent = await handleBookingPDFGeneration(updatedBooking)
+      console.log("Response: ", mailSent);
+      if (mailSent) {
+        // Update booking state only if the email was sent successfully
+        await updateBookingState(bookingId, updatedBooking, action);
+        console.log("Booking state updated as email was sent successfully.");
+      } else {
+        console.log("Booking state not updated as email failed to send.");
+      }
+    } else if (updatedBooking.status == 'rejected') {
+      await handleCancelBookingMail(updatedBooking)
+      return updateBookingState(bookingId, updatedBooking, action);
+    } else {
+      return updateBookingState(bookingId, updatedBooking, action);
+    }
   }
 
   const handleCancelBookingMail = async (items) => {
@@ -186,7 +198,7 @@ export function BookingTable({ bookings, setAllBookings }) {
       }, 3000);
     });
 
-    console.log(sendMailPromise);
+    // console.log(sendMailPromise);
 
     // Use toast.promise to display notifications based on the promise state
     toast.promise(sendMailPromise, {
@@ -194,16 +206,17 @@ export function BookingTable({ bookings, setAllBookings }) {
       success: "Sending Email",
       error: "Failed to Send Email",
     });
+
+    return sendMailPromise
   }
 
   const handleBookingPDFGeneration = async (items) => {
-
     const bookingObj = createBookingObject(items);
     const bookingUrl = await generateBookingPDF(bookingObj);
     console.log(bookingUrl);
 
     const content = {
-      email: items.email, // items.travelDetails.email
+      email: items.email,
       mail: {
         name: bookingObj.customer.name,
         packageName: items.name,
@@ -216,34 +229,32 @@ export function BookingTable({ bookings, setAllBookings }) {
     };
 
     const payload = generatePayload(content, 'booking');
-    console.log(items, bookingObj, payload);
 
-    // Define a promise that sends the email after a 3-second delay
+    // Create the sendMailPromise
     const sendMailPromise = new Promise((resolve, reject) => {
       setTimeout(async () => {
         try {
           const mailSend = await sendMail(payload);
           if (mailSend.status === 200) {
-            resolve(); // Resolve the promise if email sent successfully
+            resolve(true); // Email sent successfully
           } else {
-            reject(); // Reject the promise if there's an issue
+            reject(false); // Email failed to send
           }
         } catch (error) {
-          reject(error); // Reject the promise if an error occurs
+          reject(false); // Error occurred, email failed to send
         }
       }, 3000);
     });
 
-    console.log(sendMailPromise);
-
-    // Use toast.promise to display notifications based on the promise state
-    toast.promise(sendMailPromise, {
+    // Use toast.promise with sendMailPromise and await the result
+    const mailSuccess = await toast.promise(sendMailPromise, {
       pending: "Generating Booking PDF",
       success: "Sending Email",
       error: "Failed to Send Email",
     });
-  };
 
+    return mailSuccess;
+  };
 
   // Helper function to remove undefined values from an object
   const removeUndefinedValues = (obj) => {
