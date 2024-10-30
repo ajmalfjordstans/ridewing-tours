@@ -47,9 +47,48 @@ const Extras = ({ values, setValues }) => {
     setValues({ ...values, otherDetails: { ...values.otherDetails, information: updatedInformation } });
   };
 
-  const handleChangeCancellationPolicy = (e) => {
-    setValues({ ...values, otherDetails: { ...values.otherDetails, cancellationPolicy: e.target.value } });
+  const handleChangeCancellationPolicy = (e, id) => {
+    const cancellationPolicy = Array.isArray(values.otherDetails.cancellationPolicy)
+      ? values.otherDetails.cancellationPolicy
+      : [values.otherDetails.cancellationPolicy || ''];
+
+    const updatedPolicy = cancellationPolicy.map((item, index) => (
+      index === id ? e.target.value : item
+    ));
+
+    setValues({ ...values, otherDetails: { ...values.otherDetails, cancellationPolicy: updatedPolicy } });
   };
+
+  const handleAddCancellationPolicy = () => {
+    const cancellationPolicy = Array.isArray(values.otherDetails.cancellationPolicy)
+      ? values.otherDetails.cancellationPolicy
+      : [values.otherDetails.cancellationPolicy || ''];
+
+    setValues(prevValues => ({
+      ...prevValues,
+      otherDetails: {
+        ...prevValues.otherDetails,
+        cancellationPolicy: [...cancellationPolicy, '']
+      }
+    }));
+  };
+
+  const handleRemoveCancellationPolicy = (id) => {
+    const cancellationPolicy = Array.isArray(values.otherDetails.cancellationPolicy)
+      ? values.otherDetails.cancellationPolicy
+      : [values.otherDetails.cancellationPolicy || ''];
+
+    const updatedPolicy = cancellationPolicy.filter((_, index) => index !== id);
+
+    setValues({ ...values, otherDetails: { ...values.otherDetails, cancellationPolicy: updatedPolicy } });
+  };
+
+
+  // const handleChangeCancellationPolicy = (e) => {
+  //   setValues({ ...values, otherDetails: { ...values.otherDetails, cancellationPolicy: e.target.value } });
+  //   console.log(values.otherDetails.cancellationPolicy);
+
+  // };
 
   return (
     <div className='w-full max-w-[900px] flex flex-col gap-7 mx-auto mt-[30px]'>
@@ -113,18 +152,51 @@ const Extras = ({ values, setValues }) => {
       </div>
 
       {/* Cancellation Policy */}
-      {/* {values?.otherDetails?.cancellationPolicy && */}
       <div>
+        <p className='font-bold text-[20px]'>Cancellation Policy</p>
+        <div>
+          {values?.otherDetails?.cancellationPolicy && (
+            <ul className='list-disc pl-[15px] font-medium mt-[15px]'>
+              {(Array.isArray(values.otherDetails.cancellationPolicy)
+                ? values.otherDetails.cancellationPolicy
+                : [values.otherDetails.cancellationPolicy]
+              ).map((cancellationPolicy, id) => {
+                return (
+                  <li key={id} className="flex items-center gap-2 mt-2">
+                    <textarea
+                      type="text"
+                      value={cancellationPolicy}
+                      onChange={(e) => handleChangeCancellationPolicy(e, id)}
+                      className='border border-gray-300 p-1 rounded w-full h-[50px]'
+                    />
+                    <button
+                      onClick={() => handleRemoveCancellationPolicy(id)}
+                      className="border border-red-500 px-2 rounded-md text-red-500">
+                      Remove
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+
+          <Button
+            onClick={handleAddCancellationPolicy}
+            className="border border-green-500 px-2 rounded-md bg-green-500 mt-2">Add Information</Button>
+        </div>
+      </div>
+      {/* {values?.otherDetails?.cancellationPolicy && */}
+      {/* <div>
         <p className='font-bold text-[20px]'>Cancellation Policy</p>
         <div>
           <textarea
             type="text"
             value={values.otherDetails.cancellationPolicy}
-            onChange={handleChangeCancellationPolicy}
+            onChange={(e) => (handleChangeCancellationPolicy(e))}
             className='border border-gray-300 p-1 rounded w-full h-[150px]'
           />
         </div>
-      </div>
+      </div> */}
       {/* } */}
     </div>
   );

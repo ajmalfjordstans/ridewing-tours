@@ -293,9 +293,18 @@ export default function TourHero({ data }) {
             <div>
               <div>
                 <p className='font-bold text-[20px]'>Cancellation Policy</p>
+                {console.log(bookingPackage?.otherDetails?.cancellationPolicy)}
                 <div>
                   <ul className='list-disc pl-[15px] font-medium mt-[15px]'>
-                    <li >{bookingPackage?.otherDetails?.cancellationPolicy}</li>
+                    {Array.isArray(bookingPackage?.otherDetails?.cancellationPolicy) ? (
+                      // If it's an array, map over it
+                      bookingPackage.otherDetails.cancellationPolicy.map((policy, index) => (
+                        <li key={index} className="mt-2">{policy}</li>
+                      ))
+                    ) : (
+                      // If it's a string, render as a single list item
+                      <li>{bookingPackage?.otherDetails?.cancellationPolicy}</li>
+                    )}
                   </ul>
                 </div>
               </div>
