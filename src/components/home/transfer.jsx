@@ -35,7 +35,7 @@ export default function Transfer() {
   return (
     <section className='py-[50px] container mx-auto px-[5%] lg:px-0'>
       <div className=' w-full flex flex-col '>
-        <p className='font-bold text-[32px] leading-[42px]'>Transfers</p>
+        <p className='font-bold text-[32px] leading-[42px]'>Services</p>
         <div className='h-[1px] w-full bg-[#00000080] mt-[20px]'>
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
