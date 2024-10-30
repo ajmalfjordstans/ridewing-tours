@@ -27,7 +27,7 @@ export default function Page() {
   }, [selectedCountry]);
   return (
     <div className='pb-[150px]'>
-      <CommonHero title={"Packages"} bg={'/images/background/categories.jpg'} />
+      <CommonHero title={"Day Tours"} bg={'/images/background/categories.jpg'} />
       <div className='mx-auto container'>
         <div className='mt-[80px] flex relative '>
           <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10'>
