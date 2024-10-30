@@ -14,7 +14,6 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
   const [date, setDate] = useState(null)
   const [contact, setContact] = useState(null)
   const [meetingPoint, setMeetingPoint] = useState(null)
-  const guideLanguages = ['English', 'Chinese', 'Japanese']; // predefined guide languages
 
   // function generateBookingId() {
   //   const timestamp = Date.now().toString(36); // Convert the current timestamp to a base-36 string
@@ -88,24 +87,12 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
     return null;
   };
 
-  function formatTo12HourTime(dateString) {
-    const date = new Date(dateString);
-
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-
-    const strTime = `${hours}:${minutesStr} ${ampm}`;
-    return strTime;
+  function convertTimestampTo12HourTime(timestamp) {
+    const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    return date.toLocaleTimeString('en-US', options);
   }
 
-  const serializeTimestamp = (timestamp) => {
-    return timestamp.toDate().toISOString();
-  };
   return (
     <div className='max-h-[80vh] overflow-y-scroll no-scrollbar'>
       <div className='flex flex-col gap-1 mt-4 w-full'>
@@ -167,10 +154,19 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                           <p className='text-[#ADADAD] mt-2'>Opening Hours</p>
                           <div className='grid grid-cols-2 mt-1'>
                             {ticket?.opening &&
-                              <p>Opening: {ticket?.opening}</p>
+                              <p>Opening: {
+                                typeof ticket?.opening === 'object' && ticket.opening?.seconds
+                                  ? convertTimestampTo12HourTime(ticket.opening)  // Convert if timestamp object
+                                  : ticket?.opening  // Display as-is if it's already a string
+                              }</p>
+
                             }
                             {ticket?.closing &&
-                              <p>Closing: {ticket?.closing}</p>
+                              <p>Opening: {
+                                typeof ticket?.closing === 'object' && ticket?.closing?.seconds
+                                  ? convertTimestampTo12HourTime(ticket?.closing)  // Convert if timestamp object
+                                  : ticket?.closing  // Display as-is if it's already a string
+                              }</p>
                             }
                           </div>
                         </div>

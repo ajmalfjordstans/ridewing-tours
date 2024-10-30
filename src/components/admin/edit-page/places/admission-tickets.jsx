@@ -132,6 +132,11 @@ export default function AdmissionTickets({ values, setValues }) {
     return null;
   };
 
+  function convertTimestampTo12HourTime(timestamp) {
+    const date = new Date(timestamp.seconds * 1000); // Convert seconds to milliseconds
+    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    return date.toLocaleTimeString('en-US', options);
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-6 bg-gray-100 rounded-lg shadow-md dark:bg-gray-800">
@@ -209,10 +214,19 @@ export default function AdmissionTickets({ values, setValues }) {
                     <p className='text-[#ADADAD] mt-2'>Opening Hours</p>
                     <div className='grid grid-cols-2 mt-1'>
                       {ticket?.opening &&
-                        <p>Opening: {ticket?.opening}</p>
+                        <p>Opening: {
+                          typeof ticket?.opening === 'object' && ticket.opening?.seconds
+                            ? convertTimestampTo12HourTime(ticket.opening)  // Convert if timestamp object
+                            : ticket?.opening  // Display as-is if it's already a string
+                        }</p>
+
                       }
                       {ticket?.closing &&
-                        <p>Closing: {ticket?.closing}</p>
+                        <p>Opening: {
+                          typeof ticket?.closing === 'object' && ticket?.closing?.seconds
+                            ? convertTimestampTo12HourTime(ticket?.closing)  // Convert if timestamp object
+                            : ticket?.closing  // Display as-is if it's already a string
+                        }</p>
                       }
                     </div>
                   </div>

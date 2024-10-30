@@ -293,7 +293,6 @@ export default function TourHero({ data }) {
             <div>
               <div>
                 <p className='font-bold text-[20px]'>Cancellation Policy</p>
-                {console.log(bookingPackage?.otherDetails?.cancellationPolicy)}
                 <div>
                   <ul className='list-disc pl-[15px] font-medium mt-[15px]'>
                     {Array.isArray(bookingPackage?.otherDetails?.cancellationPolicy) ? (
