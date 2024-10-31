@@ -11,6 +11,7 @@ import { db, readFirebaseCollection, readFirebaseDocument } from '@/app/firebase
 import { collection, doc } from 'firebase/firestore';
 import { useCollectionData, useDocumentData } from 'react-firebase-hooks/firestore';
 import Loading from '@/app/loading';
+import { setCart } from './store/cartSlice';
 
 export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -92,6 +93,9 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!user) dispatch(setUser(null))
+    // console.log(user?.waitingPayment?.booking, items);
+    if (user?.waitingPayment?.booking)
+      dispatch(setCart(user?.waitingPayment?.booking))
   }, [user])
 
   useEffect(() => {
