@@ -30,6 +30,7 @@ export function TourImageGallery({ data }) {
             alt="image"
             className={`object-cover ${loading ? "hidden" : ""} w-full h-full`}
             onLoadingComplete={handleImageLoad}
+            unoptimized
           />
         </div>
 
@@ -45,6 +46,8 @@ export function TourImageGallery({ data }) {
                     setLoading(true); // Set loading state when changing the image
                 }}
                 src={imgelink}
+                unoptimized
+                quality={40}
                 height={400}
                 width={400}
                 alt="image"
