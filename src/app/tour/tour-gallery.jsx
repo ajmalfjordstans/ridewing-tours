@@ -40,6 +40,7 @@ export function TourImageGallery({ data }) {
               <Image
                 onClick={() => {
                   setActive(imgelink);
+                  console.log(imgelink);
                   if (active !== imgelink)
                     setLoading(true); // Set loading state when changing the image
                 }}
