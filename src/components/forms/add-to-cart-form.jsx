@@ -109,7 +109,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
               <input type="number"
                 className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[280px]'
                 onChange={(e) => setContact(e.target.value)}
-                placeholder=''
+                placeholder='Enter with country code'
                 required
               />
             </div>
