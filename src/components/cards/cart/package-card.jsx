@@ -6,12 +6,12 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPrice }) {
-  console.log("Passengers: ", data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers, data)
+  // console.log("Passengers: ", data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers == undefined ? 1 : data.noOfPassengers, data)
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart.items);
   const currency = useSelector(state => state.user.currency)
   const [ticketCosts, setTicketCosts] = useState(null)
-  const [count, setCount] = useState(data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers);
+  const [count, setCount] = useState(data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers == undefined ? 1 : data.noOfPassengers);
   const [currentPackage, setCurrentPackage] = useState(data);
   const [includeTicket, setIncludeTicket] = useState(data?.details?.entranceFeeIncluded);
   const [addedTickets, setAddedTickets] = useState([]);

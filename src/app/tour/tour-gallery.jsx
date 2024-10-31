@@ -5,6 +5,10 @@ export function TourImageGallery({ data }) {
   const [active, setActive] = useState(data[0]);
   const [loading, setLoading] = useState(true); // Track loading state
 
+  useEffect(() => {
+    console.log(data);
+  }, [])
+
   // Handle image load event
   const handleImageLoad = (index) => {
     setLoading(false);
