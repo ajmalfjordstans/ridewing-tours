@@ -143,7 +143,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
                     />
                     <div className='flex flex-col md:flex-row gap-1'>
                       <div className='h-[80px] min-w-[120px]'>
-                        <Image src={ticket.image ? ticket.image : '/images/background/image-template.jpg'} height={500} width={500} alt='ticket image' className='h-full w-full max-w-[320px] object-cover' />
+                        <Image src={ticket.image ? ticket.image : '/images/background/image-template.jpg'} height={500} width={500} alt='ticket image' className='h-full w-full max-w-[320px] object-cover' unoptimized/>
                       </div>
                       <div>
                         <div className='flex gap-2 w-[300px] justify-between'>
