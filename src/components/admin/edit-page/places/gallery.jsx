@@ -134,7 +134,7 @@ export default function Gallery({ values, setValues }) {
       <div className='grid grid-cols-4 gap-5 mt-[15px]'>
         {values?.gallery && values?.gallery.map((image, id) =>
           <div className=' w-full object-cover h-[25vh] relative flex justify-center items-center rounded-[10px] overflow-hidden' key={id}>
-            <Image src={image ? image : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' />
+            <Image src={image ? image : '/images/background/image-template.jpg'} height={800} width={1200} className='absolute z-1 rounded-[10px] h-[25vh] w-full object-cover max-h-[25vh]' alt='banner' unoptimized/>
             <div className='h-[20px] w-[20px] bg-white rounded-full absolute top-5 right-5 flex justify-center items-center hover:cursor-pointer' onClick={() => handleRemove(id)}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />

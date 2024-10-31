@@ -203,7 +203,7 @@ export default function AdmissionTickets({ values, setValues }) {
                 className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-gray-600"
               >
                 <div className='h-[100px] w-[150px] relative flex justify-center items-center rounded-[10px] overflow-hidden'>
-                  <Image src={ticket.image ? ticket.image : '/images/background/image-template.jpg'} height={500} width={500} className='absolute z-1 rounded-[10px] h-full object-cover' alt='Ticket' />
+                  <Image src={ticket.image ? ticket.image : '/images/background/image-template.jpg'} height={500} width={500} className='absolute z-1 rounded-[10px] h-full object-cover' alt='Ticket' unoptimized/>
                 </div>
                 <div className='flex flex-col w-full p-[20px]'>
                   <div className='w-full flex justify-between'>
