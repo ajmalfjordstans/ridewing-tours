@@ -28,6 +28,7 @@ export default function TransferForm({ data }) {
       const newData = {
         ...data,
         bookingId: generateBookingId(),
+        noOfPassengers: values.passengers,
         travelDetails: values,
         status: "pending"
       };

@@ -6,19 +6,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPrice }) {
-  // console.log("Passengers: ", data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers == undefined ? 1 : data.noOfPassengers, data)
+  // console.log("Passengers: ", data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers == undefined ? 1 : data.noOfPassengers)
+  console.log("Passengers: ", data?.noOfPassengers ? data?.noOfPassengers : data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers == undefined ? 1 : data.noOfPassengers)
+  console.log("Data", data);
+
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart.items);
   const currency = useSelector(state => state.user.currency)
-  const [ticketCosts, setTicketCosts] = useState(null)
-  const [count, setCount] = useState(data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers == undefined ? 1 : data.noOfPassengers);
-  const [currentPackage, setCurrentPackage] = useState(data);
-  const [includeTicket, setIncludeTicket] = useState(data?.details?.entranceFeeIncluded);
-  const [addedTickets, setAddedTickets] = useState([]);
-  const [includeGuide, setIncludeGuide] = useState(data?.details?.guidedTour);
-  // const [guideLanguage, setGuideLanguage] = useState(data?.details?.guideLanguage[0]);
-  const [hoursGuideNeeded, setHoursGuideNeeded] = useState(1);
-  const guideLanguages = ['English', 'Chinese', 'Japanese'];
+  const [count, setCount] = useState(data?.noOfPassengers ? data?.noOfPassengers : data?.travelDetails ? data?.travelDetails?.passengers ? data?.travelDetails?.passengers : data?.travelDetails?.guests : data.noOfPassengers == undefined ? 1 : data.noOfPassengers);
 
   const increment = () => {
     setCount(count + 1)
@@ -50,6 +45,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
 
     dispatch(updateItem(updatedData));
   };
+  
   const handleSubtractAllTicketCount = () => {
     const updatedData = {
       ...data,
@@ -123,7 +119,6 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
     return (additionalTicketsPrice + basePrice).toLocaleString();
   }
 
-
   const subtotal = (list) => {
     const items = transformDataForStripe([list])
 
@@ -132,6 +127,7 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
     }
 
     return items.items.reduce((total, item, index) => {
+
       // Destructure price and quantity from the item
       let { price, quantity } = item;
 
@@ -189,80 +185,6 @@ export default function PackageCard({ data, setSubtotal, subTotal, setDiscountPr
     }
   }
 
-  function convertTo12HourFormat(time) {
-    let [hours, minutes] = time.split(':');
-    hours = parseInt(hours);
-
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-
-    return `${hours}:${minutes} ${ampm}`;
-  }
-
-  const convertTimestampToDate = (timestamp) => {
-    if (timestamp && timestamp.seconds) {
-      return new Date(timestamp.seconds * 1000);
-    }
-    return null;
-  };
-
-  function formatTo12HourTime(dateString) {
-    const date = new Date(dateString);
-
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-
-    const strTime = `${hours}:${minutesStr} ${ampm}`;
-    return strTime;
-  }
-
-
-  // Calculate price of package with no of passengers
-  const calculateTotal = (booking) => {
-    let total = 0
-    let noOfPassengers = 0
-    // console.log('booking', booking)
-    if (booking.transfer === 'airport' || booking.transfer === 'station') {
-      noOfPassengers = Number(booking?.travelDetails.passengers); // Ensure noOfPassengers is a number
-    } else {
-      noOfPassengers = Number(booking?.noOfPassengers); // Ensure noOfPassengers is a number
-    }
-    const price = Number(booking?.price); // Ensure price is a number
-    const bulkPrice = Number(booking?.bulkPrice); // Ensure price is a number
-
-    if (booking?.type === 'package') {
-      const itemPrice = noOfPassengers < 5 ? price * 4 : bulkPrice ? bulkPrice * noOfPassengers : price * noOfPassengers;
-      total += itemPrice;
-    } else if (booking?.type === 'guide') {
-      total += price;
-    } else if (booking.transfer === 'airport' || booking.transfer === 'station') {
-      const itemPrice = noOfPassengers < 4 ? price * 4 : price * noOfPassengers;
-      total += itemPrice;
-    }
-    return total;
-  }
-  // Calculate prices of additional tickets
-  const calculateAdditionalTicketsTotal = (booking) => {
-    let total = 0;
-
-    const item = booking;
-
-    if (item.additionalTickets && item.additionalTickets.length > 0) {
-      const ticketsTotal = item.additionalTickets.reduce((ticketTotal, ticket) => {
-        return ticketTotal + (ticket.price * ticket.ticketCount);
-      }, 0);
-
-      total += ticketsTotal;
-    }
-    // setTicketCosts()
-    return total;
-  }
   // calculate subtotal
   const calculateSubtotal = () => {
     // const total = calculateTotal(data) + calculateAdditionalTicketsTotal(data)

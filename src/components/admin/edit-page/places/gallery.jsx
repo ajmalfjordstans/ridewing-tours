@@ -120,7 +120,7 @@ export default function Gallery({ values, setValues }) {
         <div className='border-[2px] border-custom-red rounded-[10px] flex justify-center items-center hover:cursor-pointer flex-col gap-2 p-[20px]'
         // onClick={() => setShowInput(true)}
         >
-          <Image src={currentImage ? URL.createObjectURL(currentImage) : '/images/background/image-template.jpg'} height={800} width={1200} className=' rounded-[10px] w-[250px] h-[250px] object-cover max-h-[25vh]' alt='banner' />
+          <Image src={currentImage ? URL.createObjectURL(currentImage) : '/images/background/image-template.jpg'} height={800} width={1200} className=' rounded-[10px] w-[250px] h-[250px] object-cover max-h-[25vh]' alt='banner' unoptimized/>
           <input type="file" onChange={(e) => handleChange(e)} className='relative z-3 bg-secondary p-[15px] rounded-[30px] bg-opacity-50 w-min' />
         </div>
         <div className='flex mt-[15px] items-center gap-3'>

@@ -53,7 +53,7 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
     }, 0);
   }
 
-  const handleFirebaseUserCartUpdate = async (bookings = cartItems) => {
+  const handleFirebaseUserCartUpdate = async (bookings = items) => {
     let booking = Array.isArray(bookings) ? bookings : bookings.items
     console.log(booking);
 
@@ -257,10 +257,10 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
 
     setLoading(true);
 
-    let item = transformDataForStripe(cartItems)
+    let item = transformDataForStripe(items)
 
     await handleFirebaseUserCartUpdate(items)
-    // console.log(item);
+    console.log(item);
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}stripe/create-checkout-session`, {
@@ -287,9 +287,9 @@ const CheckoutMenu = ({ items, discountPrice, setDiscountPrice }) => {
   }
 
   useEffect(() => {
-    handleFirebaseUserCartUpdate()
-    console.log('update func called');
-  }, [])
+    handleFirebaseUserCartUpdate(items)
+    console.log("Firebase updated");
+  }, [items.length])
 
   useEffect(() => {
     setCartItems(items)

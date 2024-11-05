@@ -17,12 +17,13 @@ export default function Page() {
 
   useEffect(() => {
     if (!user.isLoggedIn) {
-      router.back();
+      // router.back();
       console.log("No user");
     }
     if (user?.userInfo?.id != null)
       setLoading(false)
 
+    setLoading(false)
     console.log(user);
   }, [user.userInfo]);
 

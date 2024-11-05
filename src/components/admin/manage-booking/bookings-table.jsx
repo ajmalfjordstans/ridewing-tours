@@ -219,6 +219,7 @@ export function BookingTable({ bookings, setAllBookings }) {
       email: items.email,
       mail: {
         name: bookingObj.customer.name,
+        packageType: bookingObj.bookingDetails[0].booking.charAt(0).toUpperCase() + bookingObj.bookingDetails[0].booking.slice(1),
         packageName: items.name,
         bookingNo: bookingObj.customer.bookingNo,
         bookingUrl: bookingUrl,
@@ -227,8 +228,10 @@ export function BookingTable({ bookings, setAllBookings }) {
       },
       attachments: [bookingUrl, process.env.NEXT_PUBLIC_TERMS_OF_USE],
     };
-
+    
     const payload = generatePayload(content, 'booking');
+
+    // console.log(payload, bookingObj, bookingObj.bookingDetails[0].booking);
 
     // Create the sendMailPromise
     const sendMailPromise = new Promise((resolve, reject) => {

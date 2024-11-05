@@ -49,6 +49,7 @@ export default function TourHero({ data }) {
       document.body.style.overflow = "auto";
     }
   }, [showForm])
+
   return (
     <>
       <div className=' w-full flex flex-col '>
@@ -57,6 +58,7 @@ export default function TourHero({ data }) {
           <div className='h-[3px] w-[320px] bg-[#E4322C] translate-y-[-1.5px]'></div>
         </div>
       </div>
+      
       <TourImageGallery data={bookingPackage?.gallery} />
 
       <div className='w-full flex flex-col md:flex-row justify-between mt-[20px] border-[1px] border-[#212529] p-[15px] bg-[#EFEFEF] gap-[20px]'>

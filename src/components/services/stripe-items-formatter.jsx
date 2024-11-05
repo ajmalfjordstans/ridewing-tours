@@ -50,7 +50,7 @@ export function transformDataForStripe(dataArray) {
 
     if (obj.transfer == 'airport' || obj.transfer == 'station') {
       // console.log(obj);
-      quantity = obj.travelDetails.passengers;
+      quantity = obj.noOfPassengers ? obj.noOfPassengers : obj.travelDetails.passengers;
       type = 'TRANSFER'
     }
 
