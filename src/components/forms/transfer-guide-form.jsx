@@ -136,7 +136,7 @@ export default function TransferGuideForm({ data, setShowForm }) {
               </div>
               <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>
                 <label htmlFor="contact">Phone*</label>
-                <Field type="number" name="contact" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
+                <Field type="tel" name="contact" className='border-[1px] border-black rounded-md p-[10px]' min="1" />
                 <ErrorMessage name="contact" component="div" className="text-[red] text-[12px]" />
               </div>
               <div className='flex flex-col gap-1 col-span-2 md:col-span-1'>

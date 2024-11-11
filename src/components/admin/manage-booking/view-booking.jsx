@@ -5,6 +5,8 @@ import TransferGuideView from './category-details/guide'
 import CustomPackageView from './category-details/custom'
 
 export default function ViewBooking({ setShowBookingDetails, viewBooking, formatDateFromTimestamp }) {
+  console.log(viewBooking);
+
   return (
     <div className="fixed top-0 left-0 h-[100vh] w-[100vw] bg-black bg-opacity-80 z-10 flex justify-center items-center">
       <div className="bg-white max-h-[90vh] max-w-[90vw] rounded-[15px] p-[20px] overflow-y-scroll no-scrollbar flex flex-col">
@@ -21,7 +23,7 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
             <div>
               <p>Name: {viewBooking?.displayName}</p>
               <p>Email: {viewBooking?.email}</p>
-              {viewBooking?.contact &&
+              {viewBooking?.contact && viewBooking?.contact != 'N/A' &&
                 <p>Contact: {viewBooking?.contact}</p>
               }
               <p>User ID: {viewBooking?.userId}</p>
@@ -32,7 +34,9 @@ export default function ViewBooking({ setShowBookingDetails, viewBooking, format
                 :
                 <div className='h-[70px] w-[70px] rounded-full bg-[green] flex justify-center items-center text-[22px] font-[300] text-white capitalize'>{viewBooking?.displayName[0]}</div>
               }
-              <p className='text-[24px] font-[600]'>{viewBooking?.currency}{viewBooking?.total}</p>
+              {viewBooking.type != 'custom' &&
+                <p className='text-[24px] font-[600]'>{viewBooking?.currency}{viewBooking?.total ? viewBooking.total : viewBooking.price * viewBooking.noOfPassengers}</p>
+              }
             </div>
           </div>
           <p className="text-[26px] font-[600]">Booking Details</p>

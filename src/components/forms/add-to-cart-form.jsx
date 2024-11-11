@@ -107,7 +107,7 @@ export default function AddToCart({ data, setData, addToCartHandler, setShowForm
           <label className='flex flex-col w-full'>
             <span className='ml-2 font-[600] text-center'>Contact Number</span>
             <div className='mt-1'>
-              <input type="number"
+              <input type="tel"
                 className='p-[15px] bg-inherit border-black border-[1px] outline-none w-full rounded-[10px] min-w-[280px]'
                 onChange={(e) => setContact(e.target.value)}
                 placeholder='Enter with country code'

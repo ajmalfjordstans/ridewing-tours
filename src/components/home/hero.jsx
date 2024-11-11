@@ -161,13 +161,13 @@ export default function Hero() {
                 <div className='h-[167px] overflow-y-scroll px-[20px]'>
                   <p>{data?.description}</p>
                 </div>
-                <div className='flex mt-2'>
+                <div className='flex mt-2 justify-between'>
                   <div className='w-full lg:w-[70%]'>
                     <div className='w-full bg-secondary h-[50px] items-center flex px-[20px] text-[20px] rounded-[3px]'>
                       Local Weather
                     </div>
                     <div className='flex flex-col items-center mt-3'>
-                      <div className='flex flex-col lg:flex-row gap-2'>
+                      <div className='flex flex-wrap lg:flex-row gap-2'>
                         {/* <Swiper
                           spaceBetween={20}
                           slidesPerView={4}
@@ -180,7 +180,7 @@ export default function Hero() {
                             // <SwiperSlide key={id}>
                             <div
                               style={{ boxShadow: '0px 4px 11.2px 0px #00000040' }}
-                              className='rounded-[10px] p-[15px] h-[96px] w-[184px] flex items-center'
+                              className='rounded-[10px] p-[15px] h-[96px] max-w-[184px] flex items-center'
                               key={id}
                             >
                               <svg

@@ -148,7 +148,9 @@ export function BookingTable({ bookings, setAllBookings }) {
 
   // Function to handle editing of a booking
   const handleEdit = async (bookingId, updatedBooking, action = 'update') => {
-    if (updatedBooking.status == 'confirmed') {
+    if (action == 'booking') {
+      await updateBookingState(bookingId, updatedBooking, action);
+    } else if (updatedBooking.status == 'confirmed') {
       let mailSent = await handleBookingPDFGeneration(updatedBooking)
       console.log("Response: ", mailSent);
       if (mailSent) {
@@ -228,7 +230,7 @@ export function BookingTable({ bookings, setAllBookings }) {
       },
       attachments: [bookingUrl, process.env.NEXT_PUBLIC_TERMS_OF_USE],
     };
-    
+
     const payload = generatePayload(content, 'booking');
 
     // console.log(payload, bookingObj, bookingObj.bookingDetails[0].booking);
@@ -449,7 +451,7 @@ export function BookingTable({ bookings, setAllBookings }) {
                             color="blue-gray"
                             className="font-normal opacity-70"
                           >
-                            {booking.contact}
+                            {booking.contact != 'N/A' ? booking.contact : booking.travelDetails.contact}
                           </Typography>
                         </div>
                       </div>
