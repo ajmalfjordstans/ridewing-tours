@@ -41,15 +41,23 @@ export default function Page() {
             <Image src={"/images/background/profile-banner.jpg"} alt='profile' height={800} width={1400} className='h-[260px] w-screen object-cover bg-bottom' />
             {!user?.isLoggedIn ?
               <div className='fixed h-[100vh] w-[100vw] top-[100px] left-0 z-10 flex justify-center  bg-black bg-opacity-50'>
-                <div className='shadow-md w-[400px] h-[200px] mt-[20vh] bg-white p-[20px] rounded-[5px] text-center flex flex-col items-center justify-center gap-4'>
+                <div className='shadow-md w-[400px] h-[210px] mt-[20vh] bg-white p-[20px] rounded-[5px] text-center flex flex-col items-center justify-center gap-4'>
+                  <div className='flex justify-end w-full'>
+                    <Link href={{ pathname: '/', query: { country: user?.selectedCountry } }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 hover:cursor-pointer">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                      </svg>
+                    </Link>
+                  </div>
                   <p className='font-[600]'>Log in to continue to cart</p>
                   <div className='flex flex-col gap-4'>
                     <Link href={{ pathname: '/login/user', query: { country: user?.selectedCountry } }}>
-                      <Button className='bg-custom-red capitalize font-[500]'>Sign In as User</Button>
+                      <Button className='bg-custom-red capitalize font-[500] cursor-pointer'>Sign In as User</Button>
                     </Link>
                     <Link href={{ pathname: '/login/agent', query: { country: user?.selectedCountry } }}>
-                      <Button className='bg-custom-red capitalize font-[500]'>Sign In as Travel Agent</Button>
+                      <Button className='bg-custom-red capitalize font-[500] cursor-pointer'>Sign In as Travel Agent</Button>
                     </Link>
+
                   </div>
                 </div>
               </div>
