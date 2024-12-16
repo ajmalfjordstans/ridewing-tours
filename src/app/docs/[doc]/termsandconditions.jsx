@@ -1,105 +1,76 @@
 import React from 'react';
 
 const termsData = {
-  title: "Ridewing Ticketz and Tourz Terms and Conditions",
-  intro: "Welcome to Ridewing Ticketz and Tourz! By accessing or using the Ridewing Ticketz and Tourz website or services, you agree to the following Terms and Conditions. Please read them carefully before making a purchase. If you disagree with any part of the Terms, you must stop using our Services.",
+  lastUpdated: "15 December 2024",
+  introduction: "Welcome to Kingdom Holidays Group Ltd. These Terms and Conditions (\"Terms\") govern your use of our services and websites operated under the trading names RIDEWING, Kingdom Experiences & Tours Company, and Signature Concierge (DMC). By using our services, you agree to comply with and be bound by these Terms.",
+  companyInfo: {
+    name: "Kingdom Holidays Group Ltd",
+    registration: "11730934",
+    address: "491-Sipson Road, West Drayton, London, United Kingdom - UB7 0JB",
+    contact: {
+      phone: ["+44 (0) 208 897 2173", "+44 (0) 208 432 432 5"],
+      email: "operations@kingdomholidaysgroup.com",
+    },
+    tradingNames: [
+      "RIDEWING",
+      "Kingdom Experiences & Tours Company",
+      "Signature Concierge (DMC)"
+    ]
+  },
   sections: [
     {
-      title: "1. About Us",
-      content: "Ridewing Ticketz and Tourz Ltd. is a Trading name of Signature Concierge Ltd, which is registered at West Drayton, United Kingdom with registration number: 14026674, VAT registration number: 467311882. Our platform allows users to book tours, activities, and admission tickets from various third-party suppliers."
+      title: "1. Services Provided",
+      content: [
+        "Airport Transfers",
+        "Chauffeured Luxury Car Service",
+        "Ground Transport",
+        "Coach Booking",
+        "Private Tours",
+        "Concierge Service",
+        "Airport Transfer Group Coordination & Meet & Greet"
+      ]
     },
     {
-      title: "2. Acceptance of Terms",
-      content: "By using Ridewing, you confirm that you are at least 18 years old or have the consent of a legal guardian to use the Site and Services. Your continued use of the Site signifies your acceptance of these Terms."
+      title: "2. Our Role",
+      content: "Kingdom Holidays Group Ltd acts as an intermediary between you and various service providers, including but not limited to hotels, transportation companies, and tour operators. Our role involves arranging and coordinating travel-related services on your behalf. While we strive to work with reputable providers, we are not responsible for the performance or non-performance of these service providers. Any issues arising from the services provided by third parties should be directed to the respective service provider."
     },
     {
-      title: "3. Our Role",
-      content: "Ridewing is a marketplace for booking travel-related services. We do not operate tours or attractions directly. The third-party service providers are responsible for delivering the services, and your contract for those services is directly with them."
-    },
-    {
-      title: "4. Booking Process",
+      title: "3. Booking and Payment",
       content: {
-        "Placing a Booking": "Once you choose a service (tour, ticket, etc.), follow the booking process outlined on our Site. Bookings are subject to availability.",
-        "Payment": "All payments must be made in full at the time of booking. We accept major credit and debit cards.",
-        "Confirmation": "Upon successful payment, you will receive a booking confirmation via email. This confirmation serves as proof of your reservation."
+        Booking: "All bookings are subject to availability and confirmation. A booking is considered confirmed only after full payment or deposit is received, and you receive a confirmation email from us.",
+        Payment: "Payments can be made via credit/debit card, bank transfer, or other payment methods as specified at the time of booking. Full payment details will be provided during the booking process.",
+        "Cancellation and Refunds": "Please refer to our specific cancellation and refund policies for each service at the time of booking. Note that cancellation and refund policies for admission tickets are determined by the issuing authority."
       }
     },
     {
-      title: "5. Pricing and Availability",
+      title: "4. Changes and Amendments",
       content: {
-        "Prices": "All prices on our Site are in GBP (British Pounds) unless otherwise stated. Prices are subject to change without notice, but any changes will not affect confirmed bookings.",
-        "Availability": "All services are offered subject to availability. We make every effort to ensure accurate availability on our platform, but Ridewing is not responsible for availability changes by third-party suppliers.",
-        "Vehicle Variability": "Please note that vehicles may vary depending on the country of service, and their models, features, and availability may differ. In the event of any issues with the booked vehicle, a replacement vehicle of a suitable seating capacity will be arranged to ensure your comfort and convenience, subject to availability.",
-        "Baggage Allowance": "In Airport Transfers and Station Transfers, each passenger is allowed only one piece of hand luggage and one check-in baggage. Any additional luggage exceeding this limit must be arranged directly by the guest."
+        "Customer-Initiated Changes": "If you wish to change your booking, please contact us as soon as possible. Changes are subject to availability and may incur additional fees.",
+        "Company-Initiated Changes": "We reserve the right to make changes to your itinerary, including accommodation and services, in the event of unforeseen circumstances. We will notify you as soon as possible and provide alternative arrangements of equal or higher value."
       }
     },
     {
-      title: "6. Cancellations and Refunds",
+      title: "5. Responsibilities and Liabilities",
       content: {
-        "User Cancellations": "Cancellation policies vary depending on the supplier. Please review the specific terms of each service before booking. Some bookings may be non-refundable or subject to cancellation fees.",
-        "Supplier Cancellations": "In the rare event that a supplier cancels your booking, Ridewing will notify you and either arrange an alternative service or provide a full refund.",
-        "Refund Policy": "Refunds (if applicable) will be processed within 7-10 business days of receiving a cancellation request or supplier cancellation."
+        "Customer Responsibilities": "You are responsible for ensuring that all travel documents (e.g., passport, visa) are valid and up-to-date. You must comply with all health, safety, and customs regulations of the destination countries.",
+        "Company Liabilities": "We are not liable for any loss, damage, or injury resulting from factors beyond our control, including but not limited to natural disasters, acts of terrorism, and strikes. Our liability for any service-related issue is limited to the amount paid for that service."
       }
     },
     {
-      title: "7. Changes to Bookings",
-      content: "If you need to amend your booking, contact Ridewing or the service provider directly. Not all bookings are eligible for changes, and additional fees may apply."
+      title: "6. Privacy and Data Protection",
+      content: "Your privacy is important to us. Please review our Privacy Policy here for detailed information on how we collect, use, and protect your personal data."
     },
     {
-      title: "8. User Responsibilities",
-      content: {
-        "Accurate Information": "It is your responsibility to provide accurate and complete information when making a booking.",
-        "Meeting Requirements": "You must comply with all service requirements, including arrival times, dress codes, age restrictions, and any health or safety regulations set by the supplier.",
-        "Travel Documents": "Ensure you have the necessary documentation for your travel or tour, such as identification, tickets, or visas (if applicable)."
-      }
+      title: "7. Intellectual Property",
+      content: "All content on our websites, including text, graphics, logos, and images, is the property of Kingdom Holidays Group Ltd or our content suppliers and is protected by international copyright laws. You may not use, reproduce, or distribute any content without our explicit permission."
     },
     {
-      title: "9. Limitations of Liability",
-      content: {
-        "Third-Party Services": "Ridewing acts solely as an intermediary between you and the service providers. We are not liable for any injuries, losses, or damages caused by the suppliers’ services.",
-        "No Guarantee": "Ridewing does not guarantee the accuracy of information provided on the Site, nor are we responsible for any interruptions or errors in service.",
-        "Maximum Liability": "Our liability, if any, is limited to the amount you paid for the service in question."
-      }
+      title: "8. Governing Law",
+      content: "These Terms are governed by and construed in accordance with the laws of the United Kingdom. Any disputes arising from or relating to these Terms shall be subject to the exclusive jurisdiction of the courts of the United Kingdom."
     },
     {
-      title: "10. Intellectual Property",
-      content: "All content on the Site, including text, images, logos, and software, is the intellectual property of Ridewing or its licensors. You may not use any of our content without our prior written permission."
-    },
-    {
-      title: "11. Privacy",
-      content: "We take your privacy seriously. Please review our Privacy Policy to understand how we collect, store, and use your personal data."
-    },
-    {
-      title: "12. Website Use",
-      content: {
-        "Use Restrictions": "By accessing or using the Ridewing website, you agree to use the Site only for lawful purposes and in a way that does not infringe upon the rights of others or restrict or inhibit their use and enjoyment of the Site.",
-        "Prohibited Actions": [
-          "Transmit or upload any material that is unlawful, defamatory, offensive, or infringes on the intellectual property or privacy rights of others.",
-          "Distribute any content that is harmful, abusive, obscene, discriminatory, or otherwise objectionable.",
-          "Upload, post, or share any content containing viruses, malware, or other harmful software that could damage the website or its users.",
-          "Attempt to gain unauthorized access to the website, servers, or networks connected to Ridewing."
-        ],
-        "Compliance": "You agree to comply with all applicable laws and regulations when using our website. Failure to comply with these terms may result in the suspension or termination of your access to the website and any legal action where necessary."
-      }
-    },
-    {
-      title: "13. Termination",
-      content: "Ridewing reserves the right to terminate or suspend your access to the Site and Services at our discretion, including for any violation of these Terms."
-    },
-    {
-      title: "14. Amendments",
-      content: "Ridewing may update these Terms from time to time. Any changes will be posted on this page, and the \"Effective Date\" will be updated. Continued use of the Site after such changes signifies your acceptance of the revised Terms."
-    },
-    {
-      title: "15. Governing Law",
-      content: "These Terms and any disputes arising out of your use of the Site are governed by the laws of England and Wales. Any legal proceedings must be brought before the courts of England and Wales."
-    },
-    {
-      title: "16. Contact Us",
-      content: {
-        "Email": "info@ridewing.uk",
-        "Phone": "+44(0)2084324325"
-      }
+      title: "9. Contact Us",
+      content: "If you have any questions or concerns about these Terms, please contact us at: Kingdom Holidays Group Ltd 491-Sipson Road, West Drayton, London, United Kingdom - UB7 0JB Email: operations@kingdomholidaysgroup.com Tel: +44 (0) 208 897 2173 | +44 (0) 208 432 432 5"
     }
   ]
 };
@@ -107,21 +78,45 @@ const termsData = {
 const TermsAndConditions = () => {
   return (
     <div className="px-4 md:px-8 lg:px-16 py-8 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-center">{termsData.title}</h1>
-      <p className="mb-8">{termsData.intro}</p>
+      <h1 className="text-3xl font-bold mb-6 text-center">Terms and Conditions</h1>
+      <p className="mb-4 text-sm text-gray-600">Last Updated: {termsData.lastUpdated}</p>
+      <p className="mb-8">{termsData.introduction}</p>
+
+      <div className="mb-8">
+        <h2 className="text-lg font-semibold">Company Information</h2>
+        <p>{termsData.companyInfo.name}</p>
+        <p>Registration: {termsData.companyInfo.registration}</p>
+        <p>Address: {termsData.companyInfo.address}</p>
+        <p>Contact Information:</p>
+        <ul className="list-disc pl-6">
+          {termsData.companyInfo.contact.phone.map((phone, index) => (
+            <li key={index}>Tel: {phone}</li>
+          ))}
+          <li>Email: {termsData.companyInfo.contact.email}</li>
+        </ul>
+        <p>Trading Names:</p>
+        <ul className="list-disc pl-6">
+          {termsData.companyInfo.tradingNames.map((name, index) => (
+            <li key={index}>{name}</li>
+          ))}
+        </ul>
+      </div>
+
       {termsData.sections.map((section, index) => (
         <div key={index} className="mb-6">
           <h2 className="text-xl font-semibold mb-4">{section.title}</h2>
-          {typeof section.content === 'object' ? (
+          {typeof section.content === 'object' && !Array.isArray(section.content) ? (
             <ul className="list-disc pl-6">
               {Object.entries(section.content).map(([key, value], idx) => (
                 <li key={idx} className="mb-2">
-                  <strong>{key}: </strong> {typeof value === 'string' ? value : (
-                    <ul className="list-disc pl-6">
-                      {value.map((item, i) => <li key={i}>{item}</li>)}
-                    </ul>
-                  )}
+                  <strong>{key}: </strong> {value}
                 </li>
+              ))}
+            </ul>
+          ) : Array.isArray(section.content) ? (
+            <ul className="list-disc pl-6">
+              {section.content.map((item, idx) => (
+                <li key={idx}>{item}</li>
               ))}
             </ul>
           ) : (

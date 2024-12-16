@@ -64,6 +64,9 @@ export default function Footer() {
                 <Link href={`/docs/termsandconditions?country=${country}`}>
                   <p className=''>Terms and Conditions</p>
                 </Link>
+                <Link href={`/docs/privacypolicy?country=${country}`}>
+                  <p className=''>Privacy Policy</p>
+                </Link>
                 <Link href={`/docs/cookiepolicy?country=${country}`}>
                   <p className=''>Cookie Policy</p>
                 </Link>

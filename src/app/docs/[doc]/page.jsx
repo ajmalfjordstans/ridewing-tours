@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import TermsAndConditions from './termsandconditions';
+import PrivacyPolicy from './privacypolicy'
 import RefundPolicy from './refundpolicy';
 import CookiePolicy from './cookiepolicy';
 import CancellationPolicy from './cancellationpolicy';
@@ -17,6 +18,7 @@ const Page = ({ params }) => {
 
   const componentMap = {
     termsandconditions: TermsAndConditions,
+    privacypolicy: PrivacyPolicy,
     refundpolicy: RefundPolicy,
     cookiepolicy: CookiePolicy,
     cancellationpolicy: CancellationPolicy,
